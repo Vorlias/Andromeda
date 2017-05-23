@@ -52,7 +52,7 @@ namespace VorliasEngine2D.Entities
 
             if (arr.Length > 0)
             {
-                existing = elements.First(c => component.Name == c.Name);
+                existing = elements.First();
                 return existing;
             }
             else
