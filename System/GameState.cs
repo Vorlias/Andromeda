@@ -32,7 +32,7 @@ namespace VorliasEngine2D.System
         GameStatePriority priority;
         HashSet<Entity> entities;
 
-        private UserInputManager inputService = new UserInputManager();
+        private UserInputManager inputService;
         public UserInputManager InputService
         {
             get
@@ -145,6 +145,8 @@ namespace VorliasEngine2D.System
             {
                 this.manager = manager;
                 this.id = id;
+                inputService = new UserInputManager();
+                entities = new HashSet<Entity>();
                 OnInit();
             }
             else
