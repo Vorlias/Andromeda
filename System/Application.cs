@@ -173,8 +173,9 @@ namespace VorliasEngine2D.System
 
             while (window.IsOpen)
             {
-                deltaClock.Restart();
                 deltaTime = deltaClock.ElapsedTime.AsSeconds();
+                deltaClock.Restart();
+                
                 fps = 1.0f / deltaTime;
 
                 window.Clear();
