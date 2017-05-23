@@ -13,7 +13,7 @@ namespace VorliasEngine2D.System
 
         private TextureManager()
         {
-
+            textures = new Dictionary<string, Texture>();
         }
 
         private static TextureManager instance;
