@@ -8,8 +8,33 @@ using VorliasEngine2D.System;
 
 namespace VorliasEngine2D.Entities.Components
 {
+    public enum SpriteRenderOrder
+    {
+        Background = 0,
+        Normal = 10,
+        Character = 100,
+        Foreground = 1000
+    }
+
     public class SpriteRenderer : Drawable, IComponent
     {
+        private SpriteRenderOrder renderOrder = SpriteRenderOrder.Normal;
+
+        /// <summary>
+        /// The render order of this sprite
+        /// </summary>
+        public SpriteRenderOrder RenderOrder
+        {
+            get
+            {
+                return renderOrder;
+            }
+            set
+            {
+                renderOrder = value;
+            }
+        }
+
         public string Name
         {
             get
