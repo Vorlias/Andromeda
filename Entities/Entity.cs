@@ -7,7 +7,7 @@ using VorliasEngine2D.Entities.Components;
 
 namespace VorliasEngine2D.Entities
 {
-    class Entity
+    public class Entity
     {
         HashSet<IComponent> components;
         Transform transform;
