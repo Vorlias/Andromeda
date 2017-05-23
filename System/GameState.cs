@@ -25,12 +25,19 @@ namespace VorliasEngine2D.System
 
     public class GameState
     {
-
-
         bool active;
         string id;
         StateManager manager;
         GameStatePriority priority;
+
+        private UserInputManager inputService = new UserInputManager();
+        public UserInputManager InputService
+        {
+            get
+            {
+                return inputService;
+            }
+        }
 
         /// <summary>
         /// The game state's priority
