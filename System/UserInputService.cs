@@ -8,6 +8,13 @@ using SFML.System;
 
 namespace VorliasEngine2D.System
 {
+    public enum InputBindingPriority
+    {
+        First = 1,
+        Character = 100,
+        Last = 1000,
+    }
+
     public class UserInputManager
     {
         Dictionary<string, Mouse.Button> buttonBindings = new Dictionary<string, Mouse.Button>();
