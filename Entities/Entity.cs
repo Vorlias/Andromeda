@@ -26,6 +26,11 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        public T GetComponent<T>() where T : IComponent
+        {
+            return components.OfType<T>().First();
+        }
+
         public T AddComponent<T>() where T : IComponent, new()
         {
             T component = new T();
