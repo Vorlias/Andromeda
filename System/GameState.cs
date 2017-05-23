@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SFML.Window;
 using SFML.Graphics;
 using VorliasEngine2D.Entities;
+using VorliasEngine2D.Entities.Components;
 
 namespace VorliasEngine2D.System
 {
@@ -133,6 +134,18 @@ namespace VorliasEngine2D.System
         public virtual void OnRender(RenderWindow window)
         {
 
+        }
+
+        public void RenderSprites(RenderWindow window)
+        {
+            foreach (Entity entity in entities)
+            {
+                var renderer = entity.GetComponent<SpriteRenderer>();
+                if (renderer != null)
+                {
+                    window.Draw(renderer);
+                }
+            }
         }
 
         /// <summary>

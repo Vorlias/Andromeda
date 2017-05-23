@@ -73,6 +73,7 @@ namespace VorliasEngine2D.System
             foreach (GameState state in states)
             {
                 state.OnRender(Window);
+                state.RenderSprites(Window);
             }
 
             RenderEnd();
