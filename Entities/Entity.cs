@@ -26,6 +26,17 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        /// <summary>
+        /// The sprite renderer (if there's one attached to this entity)
+        /// </summary>
+        public SpriteRenderer SpriteRenderer
+        {
+            get
+            {
+                return GetComponent<SpriteRenderer>();
+            }
+        }
+
         public T GetComponent<T>() where T : IComponent
         {
             return components.OfType<T>().First();
