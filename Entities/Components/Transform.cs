@@ -9,6 +9,20 @@ namespace VorliasEngine2D.Entities.Components
 {
     public class Transform : Transformable, IComponent
     {
+        private Entity entity;
+        public Entity Entity
+        {
+            get
+            {
+                return entity;
+            }
+
+            set
+            {
+                entity = value;
+            }
+        }
+
         public string Name
         {
             get

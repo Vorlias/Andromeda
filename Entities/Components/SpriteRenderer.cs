@@ -71,11 +71,27 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        private Entity entity;
+        public Entity Entity
+        {
+            get
+            {
+                return entity;
+            }
+
+            set
+            {
+                entity = value;
+            }
+        }
+
         public void Draw(RenderTarget target, RenderStates states)
         {
+            Transform transform = entity.Transform;
             if (texture == null)
             {
-                RectangleShape rs = new RectangleShape(new SFML.System.Vector2f(10, 10));
+                RectangleShape rs = new RectangleShape(new SFML.System.Vector2f(100, 100));
+                rs.Position = transform.Position;
                 target.Draw(rs);
             }
         }

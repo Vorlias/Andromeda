@@ -8,6 +8,12 @@ namespace VorliasEngine2D.Entities.Components
 {
     public interface IComponent
     {
+        Entity Entity
+        {
+            get;
+            set;
+        }
+
         string Name
         {
             get;

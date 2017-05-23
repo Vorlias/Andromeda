@@ -60,6 +60,7 @@ namespace VorliasEngine2D.Entities
             }
             else
             {
+                component.Entity = this;
                 components.Add(component);
                 return component;
             }
