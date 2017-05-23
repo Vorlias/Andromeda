@@ -11,7 +11,7 @@ namespace VorliasEngine2D.System
     public class StateApplication : Application
     {
 
-        StateManager stateManager = new StateManager();
+        StateManager stateManager;
 
         private UserInputManager inputService = new UserInputManager();
         public UserInputManager InputService
@@ -94,7 +94,7 @@ namespace VorliasEngine2D.System
 
         public StateApplication(VideoMode mode, string title, Styles styles = Styles.Default) : base(mode, title, styles)
         {
-            
+            stateManager = new StateManager(this);
         }
 
         protected sealed override void BeforeStart()
@@ -108,21 +108,45 @@ namespace VorliasEngine2D.System
         private void Window_MouseButtonReleased(object sender, MouseButtonEventArgs e)
         {
             InputService.InvokeInput(this, e.Button, InputState.Inactive);
+
+            var states = States.StatesByPriority;
+            foreach (GameState state in states)
+            {
+                state.InputService.InvokeInput(this, e.Button, InputState.Inactive);
+            }
         }
 
         private void Window_MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             InputService.InvokeInput(this, e.Button, InputState.Active);
+
+            var states = States.StatesByPriority;
+            foreach (GameState state in states)
+            {
+                state.InputService.InvokeInput(this, e.Button, InputState.Active);
+            }
         }
 
         private void Window_KeyReleased(object sender, KeyEventArgs e)
         {
             InputService.InvokeInput(this, e.Code, InputState.Inactive);
+
+            var states = States.StatesByPriority;
+            foreach (GameState state in states)
+            {
+                state.InputService.InvokeInput(this, e.Code, InputState.Inactive);
+            }
         }
 
         private void Window_KeyPressed(object sender, KeyEventArgs e)
         {
             InputService.InvokeInput(this, e.Code, InputState.Active);
+
+            var states = States.StatesByPriority;
+            foreach (GameState state in states)
+            {
+                state.InputService.InvokeInput(this, e.Code, InputState.Active);
+            }
         }
     }
 }

@@ -42,6 +42,14 @@ namespace VorliasEngine2D.System
             }
         }
 
+        public StateApplication Application
+        {
+            get
+            {
+                return manager.Application;
+            }
+        }
+
         /// <summary>
         /// Returns all the entities with sprites, ordered by the render order
         /// </summary>

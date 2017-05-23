@@ -9,10 +9,20 @@ namespace VorliasEngine2D.System
     public class StateManager
     {
         Dictionary<string, GameState> states;
+        StateApplication application;
 
-        public StateManager()
+        public StateApplication Application
+        {
+            get
+            {
+                return application;
+            }
+        }
+
+        public StateManager(StateApplication application)
         {
             states = new Dictionary<string, GameState>();
+            this.application = application;
         }
 
         /// <summary>
