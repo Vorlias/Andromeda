@@ -12,13 +12,13 @@ namespace VorliasEngine2D.System
     {
         Dictionary<string, Mouse.Button> buttonBindings = new Dictionary<string, Mouse.Button>();
         Dictionary<string, Keyboard.Key> keyBindings = new Dictionary<string, Keyboard.Key>();
-        List<InputAction> actions = new List<InputAction>();
+        List<InputBindingAction> actions = new List<InputBindingAction>();
+        List<InputBinding> bindings = new List<InputBinding>();
 
-        public class InputAction
+        public class InputBinding
         {
-            Action<string, UserInputAction> action;
-            object[] inputs;
-            string actionName;
+            protected object[] inputs;
+            protected string actionName;
 
             /// <summary>
             /// The name of the action
@@ -28,17 +28,6 @@ namespace VorliasEngine2D.System
                 get
                 {
                     return actionName;
-                }
-            }
-
-            /// <summary>
-            /// The function that is called
-            /// </summary>
-            public Action<string, UserInputAction> Action
-            {
-                get
-                {
-                    return action;
                 }
             }
 
@@ -75,17 +64,37 @@ namespace VorliasEngine2D.System
                 }
             }
 
+            public InputBinding(string actionName, object[] inputs)
+            {
+                this.actionName = actionName;
+                this.inputs = inputs;
+            }
+        }
+
+        public class InputBindingAction : InputBinding
+        {
+            Action<string, UserInputAction> action;
+
+            /// <summary>
+            /// The function that is called
+            /// </summary>
+            public Action<string, UserInputAction> Action
+            {
+                get
+                {
+                    return action;
+                }
+            }
+
             /// <summary>
             /// Creates a new input action
             /// </summary>
             /// <param name="name">The name of the action</param>
             /// <param name="action">The action that is taken</param>
             /// <param name="inputs">The inputs that invoke this action</param>
-            public InputAction(string name, Action<string, UserInputAction> action, object[] inputs)
+            public InputBindingAction(string name, Action<string, UserInputAction> action, object[] inputs) : base(name, inputs)
             {
-                this.actionName = name;
-                this.action = action;
-                this.inputs = inputs;
+                this.action = action;   
             }
         }
 
@@ -97,7 +106,7 @@ namespace VorliasEngine2D.System
         /// <param name="inputs">The inputs (Key, MouseButton, etc.)</param>
         public void BindAction(string name, Action<string, UserInputAction> actionMethod, params object[] inputs)
         {
-            InputAction action = new InputAction(name, actionMethod, inputs);
+            InputBindingAction action = new InputBindingAction(name, actionMethod, inputs);
             actions.Add(action);
         }
 
@@ -114,7 +123,7 @@ namespace VorliasEngine2D.System
         /// <param name="state">The state of the mouse button</param>
         public void InvokeInput(Application application, Mouse.Button input, InputState state)
         {
-            foreach (InputAction action in actions)
+            foreach (InputBindingAction action in actions)
             {
                 foreach (Mouse.Button button in action.MouseButtons)
                     if (button == input)
@@ -130,7 +139,7 @@ namespace VorliasEngine2D.System
         /// <param name="state">The state of the key</param>
         public void InvokeInput(Application application, Keyboard.Key input, InputState state)
         {
-            foreach (InputAction action in actions)
+            foreach (InputBindingAction action in actions)
             {
                 foreach (Keyboard.Key key in action.KeyCodes)
                     if (key == input)
