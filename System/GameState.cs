@@ -121,7 +121,7 @@ namespace VorliasEngine2D.System
         /// <exception cref="GameStateInitException">Will be thrown if the state's already initialized</exception>
         public void Init(StateManager manager, string id)
         {
-            if (manager == null)
+            if (this.manager == null)
             {
                 this.manager = manager;
                 this.id = id;
