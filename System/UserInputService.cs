@@ -64,6 +64,19 @@ namespace VorliasEngine2D.System
                 }
             }
 
+            /// <summary>
+            /// Method used to check if any of the keys are down
+            /// </summary>
+            /// <returns>True if one of the keys are pressed</returns>
+            public bool HasKeyDown()
+            {
+                foreach (Keyboard.Key key in KeyCodes)
+                    if (Keyboard.IsKeyPressed(key))
+                        return true;
+
+                return false;
+            }
+
             public InputBinding(string actionName, object[] inputs)
             {
                 this.actionName = actionName;
@@ -108,6 +121,7 @@ namespace VorliasEngine2D.System
         {
             InputBindingAction action = new InputBindingAction(name, actionMethod, inputs);
             actions.Add(action);
+            bindings.Add(action);
         }
         
         /// <summary>
@@ -119,6 +133,19 @@ namespace VorliasEngine2D.System
         {
             InputBinding binding = new InputBinding(name, inputs);
             bindings.Add(binding);
+        }
+
+        public bool IsKeyDown(string name)
+        {
+            var binding = bindings.Find(b => b.ActionName == name);
+            if (binding != null)
+            {
+                return binding.HasKeyDown();
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void InvokeInput(Application application, Mouse.Wheel input, Vector2f delta, InputState state)
