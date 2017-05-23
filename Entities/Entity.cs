@@ -45,10 +45,14 @@ namespace VorliasEngine2D.Entities
         public T AddComponent<T>() where T : IComponent, new()
         {
             T component = new T();
-            T existing = (T) components.First(c => component.Name == c.Name);
 
-            if (existing != null)
+            var elements = components.OfType<T>();
+            var arr = elements.ToArray();
+            T existing = component;
+
+            if (arr.Length > 0)
             {
+                existing = elements.First(c => component.Name == c.Name);
                 return existing;
             }
             else

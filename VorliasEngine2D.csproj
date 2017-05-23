@@ -56,7 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Components\Component.cs" />
+    <Compile Include="Entities\Components\IComponent.cs" />
+    <Compile Include="Entities\Components\SpriteRenderer.cs" />
     <Compile Include="Entities\Components\Transform.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="System\Application.cs" />
