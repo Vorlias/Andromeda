@@ -43,6 +43,18 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// Returns all the entities with sprites, ordered by the render order
+        /// </summary>
+        public Entity[] SpriteEntities
+        {
+            get
+            {
+                var sprites = entities.Where(entity => entity.GetComponent<SpriteRenderer>() != null);
+                return sprites.OrderBy(entity => entity.SpriteRenderer.RenderOrder).ToArray();
+            }
+        }
+
+        /// <summary>
         /// The entities in this GameState
         /// </summary>
         public HashSet<Entity> Entities
@@ -138,13 +150,9 @@ namespace VorliasEngine2D.System
 
         public void RenderSprites(RenderWindow window)
         {
-            foreach (Entity entity in entities)
+            foreach (Entity entity in SpriteEntities)
             {
-                var renderer = entity.GetComponent<SpriteRenderer>();
-                if (renderer != null)
-                {
-                    window.Draw(renderer);
-                }
+                window.Draw(entity.SpriteRenderer);
             }
         }
 
