@@ -9,7 +9,7 @@ namespace VorliasEngine2D.Entities
 {
     public class Entity
     {
-        HashSet<IComponent> components;
+        HashSet<IComponent> components = new HashSet<IComponent>();
         Transform transform;
 
         /// <summary>
