@@ -109,6 +109,17 @@ namespace VorliasEngine2D.System
             InputBindingAction action = new InputBindingAction(name, actionMethod, inputs);
             actions.Add(action);
         }
+        
+        /// <summary>
+        /// Binds the inputs to an action name
+        /// </summary>
+        /// <param name="name">The name of the action</param>
+        /// <param name="inputs">The inputs for this action</param>
+        public void Bind(string name, params object[] inputs)
+        {
+            InputBinding binding = new InputBinding(name, inputs);
+            bindings.Add(binding);
+        }
 
         public void InvokeInput(Application application, Mouse.Wheel input, Vector2f delta, InputState state)
         {
