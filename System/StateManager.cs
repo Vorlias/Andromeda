@@ -55,7 +55,7 @@ namespace VorliasEngine2D.System
         /// </summary>
         /// <typeparam name="T">The type of the state</typeparam>
         /// <param name="name">The name of the state</param>
-        public void AddState<T>(string name) where T : GameState, new()
+        public void Add<T>(string name) where T : GameState, new()
         {
             T state = new T();
             state.Init(this, name);
@@ -67,10 +67,30 @@ namespace VorliasEngine2D.System
         /// </summary>
         /// <param name="name">The name of the state</param>
         /// <param name="state">The state</param>
-        public void AddState(string name, GameState state)
+        public void Add(string name, GameState state)
         {
             states.Add(name, state);
             state.Init(this, name);
+        }
+
+        /// <summary>
+        /// Sets the specified state inactive
+        /// </summary>
+        /// <param name="name">The name of the state</param>
+        public void SetInactive(string name)
+        {
+            if (states.ContainsKey(name))
+                states[name].IsActive = false;
+        }
+
+        /// <summary>
+        /// Sets the specified state active
+        /// </summary>
+        /// <param name="name">The name of the state</param>
+        public void SetActive(string name)
+        {
+            if (states.ContainsKey(name))
+                states[name].IsActive = true;
         }
     }
 }
