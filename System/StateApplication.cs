@@ -99,6 +99,8 @@ namespace VorliasEngine2D.System
 
         protected sealed override void BeforeStart()
         {
+            Window.SetFramerateLimit(60);
+            Window.SetKeyRepeatEnabled(false);
             Window.KeyPressed += Window_KeyPressed;
             Window.MouseButtonPressed += Window_MouseButtonPressed;
             Window.MouseButtonReleased += Window_MouseButtonReleased;
