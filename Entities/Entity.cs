@@ -7,6 +7,9 @@ using VorliasEngine2D.Entities.Components;
 
 namespace VorliasEngine2D.Entities
 {
+    /// <summary>
+    /// An entity
+    /// </summary>
     public class Entity
     {
         HashSet<IComponent> components = new HashSet<IComponent>();

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.Graphics;
+using VorliasEngine2D.Entities;
 
 namespace VorliasEngine2D.System
 {
@@ -29,6 +30,7 @@ namespace VorliasEngine2D.System
         string id;
         StateManager manager;
         GameStatePriority priority;
+        HashSet<Entity> entities;
 
         private UserInputManager inputService = new UserInputManager();
         public UserInputManager InputService
@@ -36,6 +38,17 @@ namespace VorliasEngine2D.System
             get
             {
                 return inputService;
+            }
+        }
+
+        /// <summary>
+        /// The entities in this GameState
+        /// </summary>
+        public HashSet<Entity> Entities
+        {
+            get
+            {
+                return entities;
             }
         }
 
