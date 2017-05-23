@@ -16,7 +16,7 @@ namespace VorliasEngine2D.System
 
         public class InputAction
         {
-            Action<UserInputAction> action;
+            Action<string, UserInputAction> action;
             object[] inputs;
             string actionName;
 
@@ -34,7 +34,7 @@ namespace VorliasEngine2D.System
             /// <summary>
             /// The function that is called
             /// </summary>
-            public Action<UserInputAction> Action
+            public Action<string, UserInputAction> Action
             {
                 get
                 {
@@ -81,7 +81,7 @@ namespace VorliasEngine2D.System
             /// <param name="name">The name of the action</param>
             /// <param name="action">The action that is taken</param>
             /// <param name="inputs">The inputs that invoke this action</param>
-            public InputAction(string name, Action<UserInputAction> action, object[] inputs)
+            public InputAction(string name, Action<string, UserInputAction> action, object[] inputs)
             {
                 this.actionName = name;
                 this.action = action;
@@ -95,7 +95,7 @@ namespace VorliasEngine2D.System
         /// <param name="name">The name of this binding</param>
         /// <param name="actionMethod">The method that is called when these inputs are invoked</param>
         /// <param name="inputs">The inputs (Key, MouseButton, etc.)</param>
-        public void BindAction(string name, Action<UserInputAction> actionMethod, params object[] inputs)
+        public void BindAction(string name, Action<string, UserInputAction> actionMethod, params object[] inputs)
         {
             InputAction action = new InputAction(name, actionMethod, inputs);
             actions.Add(action);
@@ -118,7 +118,7 @@ namespace VorliasEngine2D.System
             {
                 foreach (Mouse.Button button in action.MouseButtons)
                     if (button == input)
-                        action.Action.Invoke(new MouseInputAction(button, state, Mouse.GetPosition(application.Window)));
+                        action.Action.Invoke(action.ActionName, new MouseInputAction(button, state, Mouse.GetPosition(application.Window)));
             }
         }
 
@@ -134,11 +134,11 @@ namespace VorliasEngine2D.System
             {
                 foreach (Keyboard.Key key in action.KeyCodes)
                     if (key == input)
-                        action.Action.Invoke(new KeyboardInputAction(key, state));
+                        action.Action.Invoke(action.ActionName, new KeyboardInputAction(key, state));
 
                 foreach (string stringKey in action.Strings)
                     if (stringKey == input.ToString())
-                        action.Action.Invoke(new KeyboardInputAction(input, state));
+                        action.Action.Invoke(action.ActionName, new KeyboardInputAction(input, state));
             }
         }
     }
