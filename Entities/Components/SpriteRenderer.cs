@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    class SpriteRenderer : Drawable, IComponent
+    public class SpriteRenderer : Drawable, IComponent
     {
         public string Name
         {
