@@ -193,6 +193,14 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// Close the application
+        /// </summary>
+        public void Close()
+        {
+            window.Close();
+        }
+
+        /// <summary>
         /// Called when the window close is requested
         /// </summary>
         /// <param name="sender"></param>
