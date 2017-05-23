@@ -94,6 +94,12 @@ namespace VorliasEngine2D.Entities.Components
                 rs.Position = transform.Position;
                 target.Draw(rs);
             }
+            else
+            {
+                Sprite sprite = new Sprite(texture);
+                sprite.Position = transform.Position;
+                target.Draw(sprite);
+            }
         }
     }
 }
