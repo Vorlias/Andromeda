@@ -11,6 +11,7 @@ namespace VorliasEngine2D.System
     public enum InputBindingPriority
     {
         First = 1,
+        Normal = 50,
         Character = 100,
         Last = 1000,
     }
@@ -94,6 +95,18 @@ namespace VorliasEngine2D.System
         public class InputBindingAction : InputBinding
         {
             Action<string, UserInputAction> action;
+            InputBindingPriority priority = InputBindingPriority.Normal;
+
+            /// <summary>
+            /// The binding priority
+            /// </summary>
+            public InputBindingPriority BindingPriority
+            {
+                get
+                {
+                    return priority;
+                }
+            }
 
             /// <summary>
             /// The function that is called
@@ -112,9 +125,10 @@ namespace VorliasEngine2D.System
             /// <param name="name">The name of the action</param>
             /// <param name="action">The action that is taken</param>
             /// <param name="inputs">The inputs that invoke this action</param>
-            public InputBindingAction(string name, Action<string, UserInputAction> action, object[] inputs) : base(name, inputs)
+            public InputBindingAction(string name, Action<string, UserInputAction> action, object[] inputs, InputBindingPriority priority = InputBindingPriority.Normal) : base(name, inputs)
             {
-                this.action = action;   
+                this.action = action;
+                this.priority = priority;
             }
         }
 
