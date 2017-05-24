@@ -91,6 +91,7 @@ namespace VorliasEngine2D.Entities.Components
             if (texture == null)
             {
                 RectangleShape rs = new RectangleShape(new SFML.System.Vector2f(100, 100));
+                rs.Origin = transform.Origin;
                 rs.Position = transform.Position;
                 target.Draw(rs);
             }

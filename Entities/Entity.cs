@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,11 @@ namespace VorliasEngine2D.Entities
             get
             {
                 if (transform == null)
+                {
                     transform = AddComponent<Transform>();
+                    transform.Origin = new Vector2f(50, 50);
+                }
+                   
 
                 return transform;
             }
