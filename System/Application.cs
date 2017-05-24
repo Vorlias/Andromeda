@@ -81,6 +81,17 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// The position of the centre of the window
+        /// </summary>
+        public Vector2f Center
+        {
+            get
+            {
+                return new Vector2f(Size.X / 2f, Size.Y / 2f);
+            }
+        }
+
+        /// <summary>
         /// The VideoMode of the application
         /// </summary>
         public VideoMode VideoMode
