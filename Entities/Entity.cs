@@ -75,11 +75,21 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        /// <summary>
+        /// Gets the component of the specified type
+        /// </summary>
+        /// <typeparam name="T">The component type</typeparam>
+        /// <returns>The component if it exists, otherwise null</returns>
         public T GetComponent<T>() where T : IComponent
         {
             return components.OfType<T>().First();
         }
 
+        /// <summary>
+        /// Adds the component of the specified type if it does not exist and returns the component
+        /// </summary>
+        /// <typeparam name="T">The component type</typeparam>
+        /// <returns>The component</returns>
         public T AddComponent<T>() where T : IComponent, new()
         {
             T component = new T();
@@ -119,6 +129,9 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        /// <summary>
+        /// Method called when the entity is initialized
+        /// </summary>
         public void Init()
         {
             var scriptedComponents = components.OfType<EntityBehaviour>();
@@ -128,11 +141,20 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        /// <summary>
+        /// Gets the child entities of this entity
+        /// </summary>
+        /// <returns></returns>
         public Entity[] GetChildren()
         {
             return children.ToArray();
         }
 
+        /// <summary>
+        /// Gets the first child entity with the specified name
+        /// </summary>
+        /// <param name="name">The name of the entity to find</param>
+        /// <returns>An entity if it's found, otherwise null</returns>
         public Entity FindFirstChild(string name)
         {
             return children.First(entity => entity.Name == name);
@@ -165,7 +187,32 @@ namespace VorliasEngine2D.Entities
             return entity;
         }
 
-        public Entity()
+        /// <summary>
+        /// Spawn an entity under another entity
+        /// </summary>
+        /// <param name="parent">The parent entity</param>
+        /// <returns>The spawned entity</returns>
+        public static Entity Spawn(Entity parent)
+        {
+            Entity entity = new Entity();
+            entity.input = parent.input;
+            return entity;
+        }
+
+        /// <summary>
+        /// Spawns the entity under the specified GameState
+        /// </summary>
+        /// <param name="state">The state to spawn the entity under</param>
+        /// <returns></returns>
+        public static Entity Spawn(GameState state)
+        {
+            Entity entity = new Entity();
+            entity.input = state.Input;
+            state.AddEntity(entity);
+            return entity;
+        }
+
+        private Entity()
         {
             children = new HashSet<Entity>();
         }

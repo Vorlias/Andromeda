@@ -208,7 +208,7 @@ namespace VorliasEngine2D.System
         /// <param name="child">The entity to add</param>
         public void AddEntity(Entity child)
         {
-            child.SetInputManager(this.inputService);
+            child.SetInputManager(inputService);
             child.Init();
             entities.Add(child);
         }
@@ -219,11 +219,7 @@ namespace VorliasEngine2D.System
         /// <returns>The spawned entity</returns>
         public Entity SpawnEntity()
         {
-            Entity entity = new Entity();
-            
-            entity.SetInputManager(this.inputService);
-            entities.Add(entity);
-
+            Entity entity = Entity.Spawn(this);
             return entity;
         }
     }
