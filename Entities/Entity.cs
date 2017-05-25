@@ -71,6 +71,33 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        public void Update()
+        {
+            var scriptedComponents = components.OfType<EntityBehaviour>();
+            foreach (EntityBehaviour behaviour in scriptedComponents)
+            {
+                behaviour.BeforeUpdate();
+
+                behaviour.Update();
+
+                foreach (Entity child in children)
+                {
+                    child.Update();
+                }
+
+                behaviour.AfterUpdate();
+            }
+        }
+
+        public void Init()
+        {
+            var scriptedComponents = components.OfType<EntityBehaviour>();
+            foreach (EntityBehaviour behaviour in scriptedComponents)
+            {
+                behaviour.Init();
+            }
+        }
+
         public Entity()
         {
             
