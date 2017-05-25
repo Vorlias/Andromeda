@@ -17,8 +17,70 @@ namespace VorliasEngine2D.Entities
         HashSet<IComponent> components = new HashSet<IComponent>();
         Transform transform;
         HashSet<Entity> children;
+        Entity parentEntity;
+        GameState parentState;
+        bool prefab = false;
+        bool useLocalSpace = true;
         UserInputManager input;
         string name = "Entity";
+
+        /// <summary>
+        /// The parent state of this entity (If applicable)
+        /// </summary>
+        public GameState ParentState
+        {
+            get
+            {
+                return parentState;
+            }
+        }
+
+        /// <summary>
+        /// The parent entity of this entity (If applicable)
+        /// </summary>
+        public Entity Parent
+        {
+            get
+            {
+                return parentEntity;
+            }
+        }
+
+        internal void SetParentState(GameState state)
+        {
+            parentState = state;
+        }
+
+        internal void SetParent(Entity parent)
+        {
+            parentEntity = parent;
+        }
+
+        /// <summary>
+        /// Whether or not this entity is positioned in local space if parented to another entity
+        /// </summary>
+        public bool UseLocalSpace
+        {
+            get
+            {
+                return useLocalSpace;
+            }
+            set
+            {
+                useLocalSpace = value;
+            }
+        }
+
+        /// <summary>
+        /// Whether or not this entity has been set as a prefab entity
+        /// </summary>
+        public bool IsPrefab
+        {
+            get
+            {
+                return prefab;
+            }
+        }
 
         /// <summary>
         /// Gets the InputManager for this entity
@@ -44,6 +106,11 @@ namespace VorliasEngine2D.Entities
             {
                 name = value;
             }
+        }
+
+        internal void SetIsPrefab(bool value)
+        {
+            prefab = value;
         }
 
         /// <summary>
@@ -111,7 +178,7 @@ namespace VorliasEngine2D.Entities
             }
         }
 
-        public void Update()
+        internal void Update()
         {
             var scriptedComponents = components.OfType<EntityBehaviour>();
             foreach (EntityBehaviour behaviour in scriptedComponents)
@@ -130,9 +197,21 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// Awaken the script components
+        /// </summary>
+        internal void StartBehaviours()
+        {
+            var scriptedComponents = components.OfType<EntityBehaviour>();
+            foreach (EntityBehaviour behaviour in scriptedComponents)
+            {
+                behaviour.Start();
+            }
+        }
+
+        /// <summary>
         /// Method called when the entity is initialized
         /// </summary>
-        public void Init()
+        internal void Init()
         {
             var scriptedComponents = components.OfType<EntityBehaviour>();
             foreach (EntityBehaviour behaviour in scriptedComponents)
@@ -172,7 +251,6 @@ namespace VorliasEngine2D.Entities
         /// <param name="child">The entity</param>
         public void AddEntity(Entity child)
         {
-            child.input = this.input;
             children.Add(child);
         }
 
@@ -183,7 +261,6 @@ namespace VorliasEngine2D.Entities
         public Entity SpawnEntity()
         {
             Entity entity = new Entity();
-            entity.input = this.input;
             children.Add(entity);
             return entity;
         }
@@ -196,7 +273,14 @@ namespace VorliasEngine2D.Entities
         public static Entity Spawn(Entity parent)
         {
             Entity entity = new Entity();
-            entity.input = parent.input;
+            entity.SetParent(parent);
+            entity.SetParentState(parent.ParentState);
+            return entity;
+        }
+
+        public static Entity Spawn()
+        {
+            Entity entity = new Entity();
             return entity;
         }
 
@@ -208,7 +292,7 @@ namespace VorliasEngine2D.Entities
         public static Entity Spawn(GameState state)
         {
             Entity entity = new Entity();
-            entity.input = state.Input;
+            entity.SetParentState(state);
             state.AddEntity(entity);
             return entity;
         }
@@ -278,6 +362,7 @@ namespace VorliasEngine2D.Entities
         private Entity()
         {
             children = new HashSet<Entity>();
+            input = new UserInputManager();
         }
     }
 }

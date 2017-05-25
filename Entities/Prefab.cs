@@ -27,7 +27,7 @@ namespace VorliasEngine2D.Entities
         public Entity Clone(GameState parent)
         {
             Entity child = original.Clone();
-            child.SetInputManager(parent.Input);
+            child.SetParentState(parent);
             parent.AddEntity(child);
 
             return child;
@@ -40,14 +40,17 @@ namespace VorliasEngine2D.Entities
         public Entity Clone(Entity parent)
         {
             Entity child = original.Clone();
+            child.SetParentState(parent.ParentState);
+            child.SetParent(parent);
             parent.AddEntity(child);
-            child.SetInputManager(parent.Input);
 
             return child;
         }
 
         public static Prefab Create(Entity original)
         {
+            original.SetIsPrefab(true);
+
             Prefab prefab = new Prefab();
             prefab.original = original;
 
