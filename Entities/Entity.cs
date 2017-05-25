@@ -15,6 +15,22 @@ namespace VorliasEngine2D.Entities
     {
         HashSet<IComponent> components = new HashSet<IComponent>();
         Transform transform;
+        string name = "Entity";
+
+        /// <summary>
+        /// The name of this entity
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
 
         /// <summary>
         /// The Transform of this entity
