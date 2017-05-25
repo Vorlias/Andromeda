@@ -52,7 +52,7 @@ namespace VorliasEngine2D.Entities.Components
         {
             set
             {
-                texture = TextureManager.Instance.GetTexture(value);
+                Texture = TextureManager.Instance.GetTexture(value);
             }
         }
 
