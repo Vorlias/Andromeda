@@ -125,7 +125,7 @@ namespace VorliasEngine2D.System
         /// </summary>
         public void DeactivateAll()
         {
-            (from keyPair in states select keyPair.Value).ForEach(value => value.IsActive = false);
+            (from keyPair in states where keyPair.Value.IsActive select keyPair.Value).ForEach(value => value.IsActive = false);
         }
     }
 }
