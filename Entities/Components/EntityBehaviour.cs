@@ -13,6 +13,15 @@ namespace VorliasEngine2D.Entities.Components
     public class EntityBehaviour : IComponent
     {
         private Entity entity;
+        private bool initialized = false;
+
+        public bool Initialized
+        {
+            get
+            {
+                return initialized;
+            }
+        }
 
         /// <summary>
         /// Access the InputManager for this entity
@@ -130,6 +139,7 @@ namespace VorliasEngine2D.Entities.Components
             {
                 this.entity = entity;
                 Init();
+                initialized = true;
             }  
             else
                 throw new SetEntityInvalidException();
@@ -141,6 +151,19 @@ namespace VorliasEngine2D.Entities.Components
             {
                 return "EntityBehaviour";
             }
+        }
+
+        public virtual bool MultipleAllowed
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public virtual void OnComponentCopy(Entity source, Entity copy)
+        {
+            // Do nothing, this is a custom component.
         }
     }
 }

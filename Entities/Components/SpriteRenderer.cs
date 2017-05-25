@@ -80,6 +80,14 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        public bool MultipleAllowed
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public void Draw(RenderTarget target, RenderStates states)
         {
             Transform transform = entity.Transform;
@@ -109,6 +117,15 @@ namespace VorliasEngine2D.Entities.Components
                 this.entity = entity;
             else
                 throw new SetEntityInvalidException();
+        }
+
+        public void OnComponentCopy(Entity source, Entity copy)
+        {
+            SpriteRenderer renderer = copy.AddComponent<SpriteRenderer>();
+
+            // Set the texture to be the same
+            if (texture != null)
+                renderer.texture = texture;
         }
     }
 }

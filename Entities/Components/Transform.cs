@@ -18,6 +18,14 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        public bool MultipleAllowed
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public string Name
         {
             get
@@ -37,6 +45,17 @@ namespace VorliasEngine2D.Entities.Components
                 this.entity = entity;
             else
                 throw new SetEntityInvalidException();
+        }
+
+        public void OnComponentCopy(Entity source, Entity copy)
+        {
+            var sourceTransform = source.Transform;
+            var copyTransform = copy.Transform;
+
+            // Just set the properties the same :-)
+            copyTransform.Origin = sourceTransform.Origin;
+            copyTransform.Position = sourceTransform.Position;
+            copyTransform.Scale = sourceTransform.Scale;
         }
     }
 }

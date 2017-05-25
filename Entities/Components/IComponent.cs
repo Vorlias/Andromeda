@@ -21,6 +21,14 @@ namespace VorliasEngine2D.Entities.Components
             get;
         }
 
+        /// <summary>
+        /// Whether or not the component
+        /// </summary>
+        bool MultipleAllowed
+        {
+            get;
+        }
+
         string Name
         {
             get;
@@ -32,5 +40,6 @@ namespace VorliasEngine2D.Entities.Components
         /// <param name="entity">The entity it is added to</param>
         /// <exception cref="SetEntityInvalidException">Called if the user tries to set it</exception>
         void OnComponentInit(Entity entity);
+        void OnComponentCopy(Entity source, Entity copy);
     }
 }

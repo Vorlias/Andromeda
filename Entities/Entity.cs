@@ -12,7 +12,7 @@ namespace VorliasEngine2D.Entities
     /// <summary>
     /// An entity
     /// </summary>
-    public class Entity : IInstanceTree
+    public sealed class Entity : IInstanceTree
     {
         HashSet<IComponent> components = new HashSet<IComponent>();
         Transform transform;
@@ -137,7 +137,8 @@ namespace VorliasEngine2D.Entities
             var scriptedComponents = components.OfType<EntityBehaviour>();
             foreach (EntityBehaviour behaviour in scriptedComponents)
             {
-                behaviour.Init();
+                if (!behaviour.Initialized)
+                    behaviour.Init();
             }
         }
 
@@ -160,7 +161,7 @@ namespace VorliasEngine2D.Entities
             return children.First(entity => entity.Name == name);
         }
 
-        public void SetInputManager(UserInputManager inputManager)
+        internal void SetInputManager(UserInputManager inputManager)
         {
             input = inputManager;
         }
@@ -210,6 +211,68 @@ namespace VorliasEngine2D.Entities
             entity.input = state.Input;
             state.AddEntity(entity);
             return entity;
+        }
+
+        /// <summary>
+        /// Creates a component with the specified type
+        /// </summary>
+        /// <param name="type">The type of the component</param>
+        /// <param name="created">The component returned, null if it could not be created</param>
+        /// <returns>If the component was successfully created</returns>
+        internal bool AddComponent(Type type, out IComponent created)
+        {
+            // This is a bit of a messy function, mainly for the cloning... :3
+
+            IComponent component = (IComponent)Activator.CreateInstance(type);
+
+            if (component.MultipleAllowed)
+            {
+                created = component;
+                components.Add(component);
+
+                return true;
+            }
+            else
+            {
+                var existing = components.Where(c => c.GetType() == type).First();
+                if (existing == null)
+                {
+                    components.Add(component);
+                    created = component;
+                    return true;
+                }
+                else
+                {
+                    created = null;
+                    return false;
+                }
+            }
+           
+        }
+
+        /// <summary>
+        /// Create a copy entity of this entity
+        /// </summary>
+        /// <returns>A copy of this entity</returns>
+        internal Entity Clone()
+        {
+            Entity copy = new Entity();
+            foreach (IComponent component in components)
+            {
+                if (component is EntityBehaviour)
+                {
+                   
+                    IComponent componentCopy;
+                    if (copy.AddComponent(component.GetType(), out componentCopy))
+                    {
+                        componentCopy.OnComponentInit(copy);
+                    }
+                }
+                else
+                    component.OnComponentCopy(this, copy);
+            }
+
+            return copy;
         }
 
         private Entity()
