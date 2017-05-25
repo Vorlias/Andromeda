@@ -28,7 +28,7 @@ namespace VorliasEngine2D.Entities
             return original.Clone();
         }
 
-        public Prefab Create(Entity original)
+        public static Prefab Create(Entity original)
         {
             Prefab prefab = new Prefab();
             prefab.original = original;
