@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.System;
 
 namespace VorliasEngine2D.Entities
 {
@@ -23,9 +24,24 @@ namespace VorliasEngine2D.Entities
         /// Creates a copy of the prefab entity
         /// </summary>
         /// <returns>A copy of the prefab entity</returns>
-        public Entity Clone()
+        public Entity Clone(GameState parent)
         {
-            return original.Clone();
+            Entity child = original.Clone();
+            child.SetInputManager(parent.Input);
+
+            return child;
+        }
+
+        /// <summary>
+        /// Creates a copy of the prefab entity
+        /// </summary>
+        /// <returns>A copy of the prefab entity</returns>
+        public Entity Clone(Entity parent)
+        {
+            Entity child = original.Clone();
+            child.SetInputManager(parent.Input);
+
+            return child;
         }
 
         public static Prefab Create(Entity original)
