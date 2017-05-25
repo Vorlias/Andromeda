@@ -208,9 +208,10 @@ namespace VorliasEngine2D.System
         /// <param name="child">The entity to add</param>
         public void AddEntity(Entity child)
         {
-            child.SetInputManager(inputService);
+            //child.SetInputManager(inputService);
             child.Init();
             entities.Add(child);
+            child.StartBehaviours();
         }
 
         /// <summary>
@@ -221,6 +222,24 @@ namespace VorliasEngine2D.System
         {
             Entity entity = Entity.Spawn(this);
             return entity;
+        }
+
+        internal void InvokeInput(Application application, Mouse.Button input, InputState state)
+        {
+            Input.InvokeInput(application, input, state);
+            foreach (Entity entity in entities)
+            {
+                entity.Input.InvokeInput(application, input, state);
+            }
+        }
+
+        internal void InvokeInput(Application application, Keyboard.Key input, InputState state)
+        {
+            Input.InvokeInput(application, input, state);
+            foreach (Entity entity in entities)
+            {
+                entity.Input.InvokeInput(application, input, state);
+            }
         }
     }
 }

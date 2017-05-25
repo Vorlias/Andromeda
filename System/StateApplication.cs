@@ -128,7 +128,7 @@ namespace VorliasEngine2D.System
             var states = States.StatesByPriority;
             foreach (GameState state in states)
             {
-                state.Input.InvokeInput(this, e.Button, InputState.Inactive);
+                state.InvokeInput(this, e.Button, InputState.Inactive);
             }
         }
 
@@ -139,7 +139,7 @@ namespace VorliasEngine2D.System
             var states = States.StatesByPriority;
             foreach (GameState state in states)
             {
-                state.Input.InvokeInput(this, e.Button, InputState.Active);
+                state.InvokeInput(this, e.Button, InputState.Active);
             }
         }
 
@@ -150,7 +150,7 @@ namespace VorliasEngine2D.System
             var states = States.StatesByPriority;
             foreach (GameState state in states)
             {
-                state.Input.InvokeInput(this, e.Code, InputState.Inactive);
+                state.InvokeInput(this, e.Code, InputState.Inactive);
             }
         }
 
@@ -161,7 +161,7 @@ namespace VorliasEngine2D.System
             var states = States.StatesByPriority;
             foreach (GameState state in states)
             {
-                state.Input.InvokeInput(this, e.Code, InputState.Active);
+                state.InvokeInput(this, e.Code, InputState.Active);
             }
         }
     }
