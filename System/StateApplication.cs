@@ -119,6 +119,13 @@ namespace VorliasEngine2D.System
             Window.MouseButtonPressed += Window_MouseButtonPressed;
             Window.MouseButtonReleased += Window_MouseButtonReleased;
             Window.KeyReleased += Window_KeyReleased;
+
+            
+        }
+
+        protected sealed override void AfterStart()
+        {
+            States.Start();
         }
 
         private void Window_MouseButtonReleased(object sender, MouseButtonEventArgs e)

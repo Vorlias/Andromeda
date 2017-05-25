@@ -117,7 +117,15 @@ namespace VorliasEngine2D.System
         /// <summary>
         /// Method called when the state is added to the state manager
         /// </summary>
-        public virtual void OnInit()
+        public virtual void OnAdded()
+        {
+
+        }
+
+        /// <summary>
+        /// Method called when the application starts
+        /// </summary>
+        public virtual void OnStart()
         {
 
         }
@@ -172,11 +180,16 @@ namespace VorliasEngine2D.System
             }
         }
 
+        internal void Start()
+        {
+            OnStart();
+        }
+
         /// <summary>
         /// Internal function that sets up the state
         /// </summary>
         /// <exception cref="GameStateInitException">Will be thrown if the state's already initialized</exception>
-        public void Init(StateManager manager, string id)
+        public void Added(StateManager manager, string id)
         {
             if (this.manager == null)
             {
@@ -184,13 +197,14 @@ namespace VorliasEngine2D.System
                 this.id = id;
                 inputService = new UserInputManager();
                 entities = new HashSet<Entity>();
-                OnInit();
+                OnAdded();
             }
             else
             {
                 throw new GameStateInitException();
             }
         }
+
 
         public Entity FindFirstChild(string name)
         {

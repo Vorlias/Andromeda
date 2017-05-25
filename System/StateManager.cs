@@ -72,7 +72,7 @@ namespace VorliasEngine2D.System
         public void Add<T>(string name, GameStatePriority priority) where T : GameState, new()
         {
             T state = new T();
-            state.Init(this, name);
+            state.Added(this, name);
             state.Priority = priority;
             states.Add(name, state);
         }
@@ -85,7 +85,7 @@ namespace VorliasEngine2D.System
         public void Add<T>(string name) where T : GameState, new()
         {
             T state = new T();
-            state.Init(this, name);
+            state.Added(this, name);
             states.Add(name, state);
         }
 
@@ -97,7 +97,15 @@ namespace VorliasEngine2D.System
         public void Add(string name, GameState state)
         {
             states.Add(name, state);
-            state.Init(this, name);
+            state.Added(this, name);
+        }
+
+        /// <summary>
+        /// Call the start method of the states
+        /// </summary>
+        internal void Start()
+        {
+            states.Select(v => v.Value).ForEach(state => state.Start());
         }
 
         /// <summary>

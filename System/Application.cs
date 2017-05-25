@@ -170,6 +170,11 @@ namespace VorliasEngine2D.System
 
         }
 
+        protected virtual void AfterStart()
+        {
+
+        }
+
         /// <summary>
         /// Runs the application
         /// </summary>
@@ -181,6 +186,7 @@ namespace VorliasEngine2D.System
 
             BeforeStart();
             Start();
+            AfterStart();
 
             while (window.IsOpen)
             {
