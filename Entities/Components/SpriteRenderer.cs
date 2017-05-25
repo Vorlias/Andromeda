@@ -16,7 +16,7 @@ namespace VorliasEngine2D.Entities.Components
         Foreground = 1000
     }
 
-    public class SpriteRenderer : Drawable, IComponent
+    public sealed class SpriteRenderer : Drawable, IComponent
     {
         private SpriteRenderOrder renderOrder = SpriteRenderOrder.Normal;
 

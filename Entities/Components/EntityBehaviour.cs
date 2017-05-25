@@ -36,6 +36,9 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        /// <summary>
+        /// The SpriteRenderer associated with the entity
+        /// </summary>
         public SpriteRenderer SpriteRenderer
         {
             get
@@ -44,6 +47,9 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        /// <summary>
+        /// The Transform associated with the entity
+        /// </summary>
         public Transform Transform
         {
             get
@@ -52,6 +58,9 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        /// <summary>
+        /// The parent entity of this behaviour
+        /// </summary>
         public Entity Entity
         {
             get
@@ -78,21 +87,33 @@ namespace VorliasEngine2D.Entities.Components
 
         }
 
+        /// <summary>
+        /// Called when the entity is updated
+        /// </summary>
         public virtual void Update()
         {
 
         }
 
+        /// <summary>
+        /// Called when the entity is rendered
+        /// </summary>
         public virtual void Render()
         {
 
         }
 
+        /// <summary>
+        /// Called before the child entities are updated
+        /// </summary>
         public virtual void BeforeUpdate()
         {
 
         }
 
+        /// <summary>
+        /// Called after the child entities are updated
+        /// </summary>
         public virtual void AfterUpdate()
         {
 

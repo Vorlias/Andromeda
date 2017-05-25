@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    public class Transform : Transformable, IComponent
+    public sealed class Transform : Transformable, IComponent
     {
         private Entity entity;
         public Entity Entity
