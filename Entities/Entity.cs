@@ -11,7 +11,7 @@ namespace VorliasEngine2D.Entities
     /// <summary>
     /// An entity
     /// </summary>
-    public class Entity
+    public class Entity : IInstanceTree
     {
         HashSet<IComponent> components = new HashSet<IComponent>();
         Transform transform;
@@ -114,9 +114,19 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        public Entity[] GetChildren()
+        {
+            return children.ToArray();
+        }
+
+        public Entity FindFirstChild(string name)
+        {
+            return children.First(entity => entity.Name == name);
+        }
+
         public Entity()
         {
-            
+            children = new HashSet<Entity>();
         }
     }
 }
