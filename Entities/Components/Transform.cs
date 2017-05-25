@@ -16,11 +16,6 @@ namespace VorliasEngine2D.Entities.Components
             {
                 return entity;
             }
-
-            set
-            {
-                entity = value;
-            }
         }
 
         public string Name
@@ -29,6 +24,19 @@ namespace VorliasEngine2D.Entities.Components
             {
                 return "Transform";
             }
+        }
+
+        /// <summary>
+        /// Called when the component is added to an entity
+        /// </summary>
+        /// <param name="entity">The entity it is added to</param>
+        /// <exception cref="SetEntityInvalidException">Called if the user tries to set it</exception>
+        public void OnComponentInit(Entity entity)
+        {
+            if (this.entity == null)
+                this.entity = entity;
+            else
+                throw new SetEntityInvalidException();
         }
     }
 }

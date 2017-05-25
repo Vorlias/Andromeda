@@ -34,7 +34,7 @@ namespace VorliasEngine2D.System
         HashSet<Entity> entities;
 
         private UserInputManager inputService;
-        public UserInputManager InputService
+        public UserInputManager Input
         {
             get
             {
@@ -200,6 +200,31 @@ namespace VorliasEngine2D.System
         public Entity[] GetChildren()
         {
             return entities.ToArray();
+        }
+
+        /// <summary>
+        /// Add an entity to this GameState
+        /// </summary>
+        /// <param name="child">The entity to add</param>
+        public void AddEntity(Entity child)
+        {
+            child.SetInputManager(this.inputService);
+            child.Init();
+            entities.Add(child);
+        }
+
+        /// <summary>
+        /// Spawn an entity under this GameState
+        /// </summary>
+        /// <returns>The spawned entity</returns>
+        public Entity SpawnEntity()
+        {
+            Entity entity = new Entity();
+            
+            entity.SetInputManager(this.inputService);
+            entities.Add(entity);
+
+            return entity;
         }
     }
 }

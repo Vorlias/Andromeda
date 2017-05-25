@@ -17,7 +17,19 @@ namespace VorliasEngine2D.Entities
         HashSet<IComponent> components = new HashSet<IComponent>();
         Transform transform;
         HashSet<Entity> children;
+        UserInputManager input;
         string name = "Entity";
+
+        /// <summary>
+        /// Gets the InputManager for this entity
+        /// </summary>
+        public UserInputManager Input
+        {
+            get
+            {
+                return input;
+            }
+        }
 
         /// <summary>
         /// The name of this entity
@@ -83,7 +95,7 @@ namespace VorliasEngine2D.Entities
             }
             else
             {
-                component.Entity = this;
+                component.OnComponentInit(this);
                 components.Add(component);
                 return component;
             }
@@ -124,6 +136,33 @@ namespace VorliasEngine2D.Entities
         public Entity FindFirstChild(string name)
         {
             return children.First(entity => entity.Name == name);
+        }
+
+        public void SetInputManager(UserInputManager inputManager)
+        {
+            input = inputManager;
+        }
+
+        /// <summary>
+        /// Add a child entity to this entity
+        /// </summary>
+        /// <param name="child">The entity</param>
+        public void AddEntity(Entity child)
+        {
+            child.input = this.input;
+            children.Add(child);
+        }
+
+        /// <summary>
+        /// Spawn an entity as a child of this entity
+        /// </summary>
+        /// <returns>The spawned entity</returns>
+        public Entity SpawnEntity()
+        {
+            Entity entity = new Entity();
+            entity.input = this.input;
+            children.Add(entity);
+            return entity;
         }
 
         public Entity()
