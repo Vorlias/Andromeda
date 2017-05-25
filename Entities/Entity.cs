@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VorliasEngine2D.Entities.Components;
+using VorliasEngine2D.System;
 
 namespace VorliasEngine2D.Entities
 {
