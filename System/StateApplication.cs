@@ -10,6 +10,18 @@ namespace VorliasEngine2D.System
 {
     public class StateApplication : Application
     {
+        static StateApplication application;
+
+        /// <summary>
+        /// Returns the main StateApplication
+        /// </summary>
+        public static StateApplication Application
+        {
+            get
+            {
+                return application;
+            }
+        }
 
         StateManager stateManager;
 
@@ -86,6 +98,7 @@ namespace VorliasEngine2D.System
             var states = States.StatesByPriority;
             foreach (GameState state in states)
             {
+                state.UpdateEntities();
                 state.OnUpdate(this);
             }
 
@@ -95,6 +108,7 @@ namespace VorliasEngine2D.System
         public StateApplication(VideoMode mode, string title, Styles styles = Styles.Default) : base(mode, title, styles)
         {
             stateManager = new StateManager(this);
+            application = this;
         }
 
         protected sealed override void BeforeStart()
