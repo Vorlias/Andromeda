@@ -9,7 +9,7 @@ namespace VorliasEngine2D.Entities.Components
     /// <summary>
     /// Base class for custom scripted components
     /// </summary>
-    class EntityBehaviour : IComponent
+    public class EntityBehaviour : IComponent
     {
         private Entity entity;
 
@@ -72,7 +72,7 @@ namespace VorliasEngine2D.Entities.Components
 
         }
 
-        public string Name
+        public virtual string Name
         {
             get
             {
