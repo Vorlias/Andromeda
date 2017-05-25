@@ -8,6 +8,14 @@ using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.System
 {
+    public class InvalidTextureIdException : Exception
+    {
+        public InvalidTextureIdException(string textureId) : base ("Invalid texture id given: " + textureId)
+        {
+
+        }
+    }
+
     public class TextureManager
     {
         Dictionary<string, Texture> textures;
@@ -44,6 +52,7 @@ namespace VorliasEngine2D.System
         /// </summary>
         /// <param name="id">The id of the texture</param>
         /// <returns>The texture if it exists, otherwise null</returns>
+        /// <exception cref="InvalidTextureIdException">Thrown when the texture id is not found</exception>
         public Texture this[string id]
         {
             get
@@ -51,7 +60,7 @@ namespace VorliasEngine2D.System
                 if (textures.ContainsKey(id))
                     return textures[id];
                 else
-                    return null;
+                    throw new InvalidTextureIdException(id);
             }
         }
 
@@ -60,12 +69,13 @@ namespace VorliasEngine2D.System
         /// </summary>
         /// <param name="id">The id of the texture</param>
         /// <returns>The texture if it exists, otherwise null</returns>
+        /// <exception cref="InvalidTextureIdException">Thrown when the texture id is not found</exception>
         public Texture GetTexture(string id)
         {
             if (textures.ContainsKey(id))
                 return textures[id];
             else
-                return null;
+                throw new InvalidTextureIdException(id);
         }
 
         /// <summary>
