@@ -81,7 +81,7 @@ namespace VorliasEngine2D.System
         {
             RenderStart();
 
-            var states = States.StatesByPriority;
+            var states = States.ActiveStatesByPriority;
             foreach (GameState state in states)
             {
                 state.OnRender(Window);
@@ -95,7 +95,7 @@ namespace VorliasEngine2D.System
         {
             UpdateStart();
 
-            var states = States.StatesByPriority;
+            var states = States.ActiveStatesByPriority;
             foreach (GameState state in states)
             {
                 state.UpdateEntities();

@@ -72,6 +72,7 @@
     <Compile Include="System\StateManager.cs" />
     <Compile Include="System\TextureManager.cs" />
     <Compile Include="System\UserInputService.cs" />
+    <Compile Include="System\Utility\VectorUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -231,6 +231,16 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// Gets the child entities of this entity via a predicate
+        /// </summary>
+        /// <param name="condition">The predicate</param>
+        /// <returns>The children, filtered by the predicate</returns>
+        public Entity[] GetChildren(Func<Entity, bool> predicate)
+        {
+            return children.Where(predicate).ToArray();
+        }
+
+        /// <summary>
         /// Gets the first child entity with the specified name
         /// </summary>
         /// <param name="name">The name of the entity to find</param>

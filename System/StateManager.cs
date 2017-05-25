@@ -38,6 +38,18 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// Get the active GameStates by order of priority
+        /// </summary>
+        public GameState[] ActiveStatesByPriority
+        {
+            get
+            {
+                var stateArray = states.Values.ToArray();
+                return stateArray.Where(state => state.IsActive).OrderBy(state => state.Priority).ToArray();
+            }
+        }
+
+        /// <summary>
         /// Get a GameState by the key
         /// </summary>
         /// <param name="key">The key of the GameState</param>
