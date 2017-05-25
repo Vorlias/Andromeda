@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.System
 {
@@ -14,6 +15,12 @@ namespace VorliasEngine2D.System
         private TextureManager()
         {
             textures = new Dictionary<string, Texture>();
+        }
+
+        ~TextureManager()
+        {
+            textures.ForEach(texture => texture.Value.Dispose());
+            textures.Clear();
         }
 
         private static TextureManager instance;
@@ -70,6 +77,11 @@ namespace VorliasEngine2D.System
         {
             Texture newTexture = new Texture(new Image(file), area);
             textures.Add(id, newTexture);
+        }
+
+        public void Add(string id, Texture texture)
+        {
+            textures.Add(id, texture);
         }
     }
 }
