@@ -25,7 +25,7 @@ namespace VorliasEngine2D.System
         }
     }
 
-    public class GameState
+    public class GameState : IInstanceTree
     {
         bool active;
         string id;
@@ -156,6 +156,14 @@ namespace VorliasEngine2D.System
 
         }
 
+        public void UpdateEntities()
+        {
+            foreach (Entity entity in Entities)
+            {
+                entity.Update();
+            }
+        }
+
         public void RenderSprites(RenderWindow window)
         {
             foreach (Entity entity in SpriteEntities)
@@ -182,6 +190,16 @@ namespace VorliasEngine2D.System
             {
                 throw new GameStateInitException();
             }
+        }
+
+        public Entity FindFirstChild(string name)
+        {
+            return entities.First(entity => entity.Name == name);
+        }
+
+        public Entity[] GetChildren()
+        {
+            return entities.ToArray();
         }
     }
 }
