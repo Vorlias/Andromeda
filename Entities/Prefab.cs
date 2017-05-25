@@ -28,6 +28,7 @@ namespace VorliasEngine2D.Entities
         {
             Entity child = original.Clone();
             child.SetInputManager(parent.Input);
+            parent.AddEntity(child);
 
             return child;
         }
@@ -39,6 +40,7 @@ namespace VorliasEngine2D.Entities
         public Entity Clone(Entity parent)
         {
             Entity child = original.Clone();
+            parent.AddEntity(child);
             child.SetInputManager(parent.Input);
 
             return child;
