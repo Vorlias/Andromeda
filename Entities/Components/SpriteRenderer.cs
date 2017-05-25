@@ -1,4 +1,5 @@
 ﻿using SFML.Graphics;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,27 @@ namespace VorliasEngine2D.Entities.Components
         Normal = 10,
         Character = 100,
         Foreground = 1000
+    }
+
+    public sealed class AnchorPoint
+    {
+        public float X
+        {
+            get;
+            set;
+        }
+
+        public float Y
+        {
+            get;
+            set;
+        }
+
+        public AnchorPoint(float x, float y)
+        {
+            X = Math.Min(Math.Max(0.0f, x), 1.0f);
+            Y = Math.Min(Math.Max(0.0f, y), 1.0f);
+        }
     }
 
     public sealed class SpriteRenderer : Drawable, IComponent
@@ -32,6 +54,23 @@ namespace VorliasEngine2D.Entities.Components
             set
             {
                 renderOrder = value;
+            }
+        }
+
+        private AnchorPoint renderAnchor = new AnchorPoint(0.5f, 0.5f);
+
+        /// <summary>
+        /// The origin for rendering
+        /// </summary>
+        public AnchorPoint RenderOriginAnchor
+        {
+            get
+            {
+                return renderAnchor;
+            }
+            set
+            {
+                renderAnchor = value;
             }
         }
 
@@ -94,13 +133,14 @@ namespace VorliasEngine2D.Entities.Components
             if (texture == null)
             {
                 RectangleShape rs = new RectangleShape(new SFML.System.Vector2f(100, 100));
-                rs.Origin = transform.Origin;
+                rs.Origin = new Vector2f( 100 * renderAnchor.X, 100 * renderAnchor.Y);
                 rs.Position = transform.Position;
                 target.Draw(rs);
             }
             else
             {
                 Sprite sprite = new Sprite(texture);
+                sprite.Origin = new Vector2f(texture.Size.X * renderAnchor.X, texture.Size.Y * renderAnchor.Y);
                 sprite.Position = transform.Position;
                 target.Draw(sprite);
             }
