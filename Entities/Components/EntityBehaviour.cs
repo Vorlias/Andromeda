@@ -86,7 +86,7 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// Called when the component is initialized
         /// </summary>
-        public void Init()
+        public virtual void Init()
         {
 
         }
