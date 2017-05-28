@@ -164,6 +164,14 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        internal IEnumerable<IComponent> Components
+        {
+            get
+            {
+                return components;
+            }
+        }
+
         /// <summary>
         /// The behaviours attached to this entity
         /// </summary>
@@ -233,7 +241,7 @@ namespace VorliasEngine2D.Entities
             var arr = elements.ToArray();
             T existing = component;
 
-            if (arr.Length > 0)
+            if (arr.Length > 0 && !component.MultipleAllowed)
             {
                 existing = elements.First();
                 return existing;
