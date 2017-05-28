@@ -48,7 +48,7 @@ namespace VorliasEngine2D.Entities
         {
             get
             {
-                return components.Where(component => component is IRenderableComponent).Select(component => component as IRenderableComponent);
+                return components.Where(component => component is IRenderableComponent).Select(component => component as IRenderableComponent).OrderBy(component => component.RenderOrder);
             }
         }
 
