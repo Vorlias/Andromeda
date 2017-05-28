@@ -11,14 +11,13 @@ namespace VorliasEngine2D.System.Debug
 {
     public static class DebugExtension
     {
-        public static void DebugInstanceTree(this IInstanceTree state, string prefix = " ")
+        public static void DebugInstanceTree(this IInstanceTree state, int level = 0, string prefix = " ")
         {
             if (state is GameState)
                 Console.WriteLine(" ■ GameState");
-            else if (state is Entity)
+            else if (state is Entity && level == 0)
             {
-                //Entity parent = state as Entity;
-                //Console.WriteLine(prefix + " * " + parent.Name);
+                Console.WriteLine(" ■ " + (state as Entity).Name);
             }
 
             Entity[] children = state.GetChildren();
@@ -26,26 +25,24 @@ namespace VorliasEngine2D.System.Debug
             {
                 Console.WriteLine(prefix + "└─■≡ " + child.Name);
 
-                if (child.HasComponent<Transform>())
-                {
-                    var transform = child.GetComponent<Transform>();
-                    Console.WriteLine(prefix + "  │└≡[Transform " + transform.Position + " Rot(" + transform.Rotation + ")]");
-                }
-                    
+                child.Components.ForEach(component => {
+                    if (component is Transform)
+                    {
+                        var transform = component as Transform;
+                        Console.WriteLine(prefix + "  │└≡[Transform " + transform.Position + " Rot(" + transform.Rotation + ")]");
+                    }
+                    else if (component is SpriteRenderer)
+                    {
+                        var renderer = component as SpriteRenderer;
+                        Console.WriteLine(prefix + "  │└≡[SpriteRenderer `" + renderer.TextureId + "`]");
+                    }
+                    else if (component is EntityBehaviour)
+                    {
+                        Console.WriteLine(prefix + "  │└≡[EntityBehaviour `" + component.GetType().Name + "`]");
+                    }
+                });
 
-                if (child.HasComponent<SpriteRenderer>())
-                {
-                    var renderer = child.GetComponent<SpriteRenderer>();
-                    Console.WriteLine(prefix + "  │└≡[SpriteRenderer `" + renderer.TextureId + "`]");
-                }
-
-
-                if (child.HasComponent<EntityBehaviour>())
-                {
-                    child.Behaviours.ForEach(behaviour => Console.WriteLine(prefix + "  │└≡[EntityBehaviour `" + behaviour.GetType().Name + "`]"));
-                }
-
-                child.DebugInstanceTree(prefix + "  ");
+                child.DebugInstanceTree(level + 1, prefix + "  ");
             }
         }
     }
