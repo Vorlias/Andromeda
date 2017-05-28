@@ -152,6 +152,7 @@ namespace VorliasEngine2D.Entities.Components
                 Sprite sprite = new Sprite(texture);
                 sprite.Origin = new Vector2f(texture.Size.X * renderAnchor.X, texture.Size.Y * renderAnchor.Y);
                 sprite.Position = transform.Position;
+                sprite.Rotation = transform.Rotation - 180;
                 target.Draw(sprite);
             }
         }
