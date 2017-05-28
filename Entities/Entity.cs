@@ -9,6 +9,14 @@ using VorliasEngine2D.System;
 
 namespace VorliasEngine2D.Entities
 {
+    public sealed class ComponentNotFoundException<T> : Exception
+    {
+        public ComponentNotFoundException() : base("Could not find component: " + typeof(T).Name)
+        {
+
+        }
+    }
+
     /// <summary>
     /// An entity
     /// </summary>
@@ -114,6 +122,21 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// The position of this entity (alias of Transform.Position)
+        /// </summary>
+        public Vector2f Position
+        {
+            get
+            {
+                return Transform.Position;
+            }
+            set
+            {
+                Transform.Position = value;
+            }
+        }
+
+        /// <summary>
         /// The Transform of this entity
         /// </summary>
         public Transform Transform
@@ -123,7 +146,6 @@ namespace VorliasEngine2D.Entities
                 if (transform == null)
                 {
                     transform = AddComponent<Transform>();
-                    transform.Origin = new Vector2f(50, 50);
                 }
                    
 
@@ -142,6 +164,11 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        public bool HasComponent<T>() where T : IComponent
+        {
+            return components.OfType<T>().Count() > 0;
+        }
+
         /// <summary>
         /// Gets the component of the specified type
         /// </summary>
@@ -150,6 +177,36 @@ namespace VorliasEngine2D.Entities
         public T GetComponent<T>() where T : IComponent
         {
             return components.OfType<T>().First();
+        }
+
+        /// <summary>
+        /// Finds the component  of the specified type, and returns whether or not it was found and assigns the component parameter
+        /// to be used if it's found.
+        /// </summary>
+        /// <typeparam name="T">The type of the component</typeparam>
+        /// <param name="component">The component variable to set</param>
+        /// <param name="create">Whether or not to create it if it doesn't exist</param>
+        /// <returns>True if the component is found</returns>
+        public bool FindComponent<T>(out T component, bool create = false) where T : IComponent, new()
+        {
+            if (HasComponent<T>())
+            {
+                component = GetComponent<T>();
+                return true;
+            }
+            else
+            {
+                if (create)
+                {
+                    component = AddComponent<T>();
+                    return true;
+                }
+                else
+                {
+                    component = default(T); // unfortunately. :c
+                    return false;
+                }
+            }
         }
 
         /// <summary>
