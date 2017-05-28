@@ -7,6 +7,8 @@ using SFML.Window;
 using SFML.Graphics;
 using VorliasEngine2D.Entities;
 using VorliasEngine2D.Entities.Components;
+using SFML.System;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.System
 {
@@ -56,8 +58,20 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// Returns all the drawable entities
+        /// </summary>
+        public Entity[] DrawableEntities
+        {
+            get
+            {
+                return entities.Where(entity => entity.DrawableComponents.Count() > 0).ToArray();
+            }
+        }
+
+        /// <summary>
         /// Returns all the entities with sprites, ordered by the render order
         /// </summary>
+        [Obsolete("Use 'DrawableEntities' instead.")]
         public Entity[] SpriteEntities
         {
             get
@@ -177,11 +191,11 @@ namespace VorliasEngine2D.System
             }
         }
 
-        public void RenderSprites(RenderWindow window)
+        public void RenderEntities(RenderWindow window)
         {
-            foreach (Entity entity in SpriteEntities)
+            foreach (Entity entity in DrawableEntities)
             {
-                window.Draw(entity.SpriteRenderer);
+                entity.DrawableComponents.ForEach(component => window.Draw(component));
             }
         }
 
