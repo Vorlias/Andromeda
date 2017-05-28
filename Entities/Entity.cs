@@ -164,6 +164,17 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        /// <summary>
+        /// The behaviours attached to this entity
+        /// </summary>
+        internal IEnumerable<EntityBehaviour> Behaviours
+        {
+            get
+            {
+                return components.OfType<EntityBehaviour>();
+            }
+        }
+
         public bool HasComponent<T>() where T : IComponent
         {
             return components.OfType<T>().Count() > 0;
