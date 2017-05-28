@@ -83,15 +83,24 @@ namespace VorliasEngine2D.Entities.Components
         }
 
         Texture texture;
+        string textureId;
 
         /// <summary>
-        /// The TextureId of the sprite (Settable only atm)
+        /// The TextureId of the sprite
         /// </summary>
         public string TextureId
         {
             set
             {
-                Texture = TextureManager.Instance.GetTexture(value);
+                textureId = value;
+                texture = TextureManager.Instance.GetTexture(value);
+            }
+            get
+            {
+                if (textureId == null)
+                    return "";
+                else
+                    return textureId;
             }
         }
 
@@ -107,6 +116,7 @@ namespace VorliasEngine2D.Entities.Components
             set
             {
                 texture = value;
+                textureId = null;
             }
         }
 
