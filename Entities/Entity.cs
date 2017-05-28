@@ -404,7 +404,7 @@ namespace VorliasEngine2D.Entities
             }
             else
             {
-                var existing = components.Where(c => c.GetType() == type).First();
+                var existing = components.Where(c => c.GetType() == type).FirstOrDefault();
                 if (existing == null)
                 {
                     components.Add(component);
