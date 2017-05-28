@@ -69,6 +69,9 @@ namespace VorliasEngine2D.Entities.Components
             set;
         }
 
+        /// <summary>
+        /// The position of this transform
+        /// </summary>
         public new Vector2f Position
         {
             get
