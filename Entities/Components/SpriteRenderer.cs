@@ -38,7 +38,7 @@ namespace VorliasEngine2D.Entities.Components
         }
     }
 
-    public sealed class SpriteRenderer : Drawable, IComponent
+    public sealed class SpriteRenderer : ITextureComponent
     {
         private SpriteRenderOrder renderOrder = SpriteRenderOrder.Normal;
 

@@ -44,11 +44,11 @@ namespace VorliasEngine2D.Entities
             }
         }
 
-        internal IEnumerable<Drawable> DrawableComponents
+        internal IEnumerable<IRenderableComponent> DrawableComponents
         {
             get
             {
-                return components.Where(component => component is Drawable).Select(component => component as Drawable);
+                return components.Where(component => component is IRenderableComponent).Select(component => component as IRenderableComponent);
             }
         }
 
