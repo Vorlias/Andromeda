@@ -10,11 +10,16 @@ using VorliasEngine2D.Entities.Components;
 
 namespace VorliasEngine2D.System
 {
+    /// <summary>
+    /// The GameState's priority
+    /// </summary>
     public enum GameStatePriority
     {
-        Background,
-        Normal,
-        Interface,
+        First = 0,
+        Background = 10,
+        Normal = 100,
+        Interface = 500,
+        Last = 1000,
     }
 
     public class GameStateInitException : Exception
@@ -57,7 +62,7 @@ namespace VorliasEngine2D.System
         {
             get
             {
-                var sprites = entities.Where(entity => entity.GetComponent<SpriteRenderer>() != null);
+                var sprites = entities.Where(entity => entity.HasComponent<SpriteRenderer>());
                 return sprites.OrderBy(entity => entity.SpriteRenderer.RenderOrder).ToArray();
             }
         }
@@ -205,6 +210,10 @@ namespace VorliasEngine2D.System
             }
         }
 
+        public override string ToString()
+        {
+            return "[GameState " + GetType().Name + "@"+GetType().GUID+"]";
+        }
 
         public Entity FindFirstChild(string name)
         {
