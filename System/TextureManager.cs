@@ -25,12 +25,6 @@ namespace VorliasEngine2D.System
             textures = new Dictionary<string, Texture>();
         }
 
-        ~TextureManager()
-        {
-            textures.ForEach(texture => texture.Value.Dispose());
-            textures.Clear();
-        }
-
         private static TextureManager instance;
 
         /// <summary>
