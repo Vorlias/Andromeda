@@ -84,9 +84,7 @@ namespace VorliasEngine2D.Entities.Components
 
                 if(PositionConstraint != null && PositionConstraint.IsEnabled)
                 {
-                    Console.WriteLine(newPosition);
                     newPosition = newPosition.Clamp(PositionConstraint.Min, PositionConstraint.Max);
-                    Console.WriteLine(newPosition);
                 }
                     
 
