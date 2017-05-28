@@ -241,7 +241,7 @@ namespace VorliasEngine2D.Entities
             var arr = elements.ToArray();
             T existing = component;
 
-            if (arr.Length > 0 && !component.MultipleAllowed)
+            if (arr.Length > 0 && !component.AllowsMultipleInstances)
             {
                 existing = elements.First();
                 return existing;
@@ -395,7 +395,7 @@ namespace VorliasEngine2D.Entities
 
             IComponent component = (IComponent)Activator.CreateInstance(type);
 
-            if (component.MultipleAllowed)
+            if (component.AllowsMultipleInstances)
             {
                 created = component;
                 components.Add(component);
