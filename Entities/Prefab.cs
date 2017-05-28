@@ -47,6 +47,17 @@ namespace VorliasEngine2D.Entities
             return child;
         }
 
+        public static Prefab Create()
+        {
+            Entity original = Entity.Spawn();
+            original.SetIsPrefab(true);
+
+            Prefab prefab = new Prefab();
+            prefab.original = original;
+
+            return prefab;
+        }
+
         public static Prefab Create(Entity original)
         {
             original.SetIsPrefab(true);
