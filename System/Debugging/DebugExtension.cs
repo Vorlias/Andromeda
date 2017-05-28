@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SFML.Graphics;
+using SFML.System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,16 @@ namespace VorliasEngine2D.System.Debug
 {
     public static class DebugExtension
     {
+        public static void DebugDrawBox(this RectCollider collider, RenderTarget target, Color renderColor, int thickness = 1)
+        {
+            RectangleShape rs = new RectangleShape(new Vector2f(collider.WorldCollisionRect.Width, collider.WorldCollisionRect.Height));
+            rs.Position = new Vector2f(collider.WorldCollisionRect.Left, collider.WorldCollisionRect.Top);
+            rs.FillColor = Color.Transparent;
+            rs.OutlineColor = renderColor;
+            rs.OutlineThickness = thickness;
+            target.Draw(rs);
+        }
+
         public static void DebugInstanceTree(this IInstanceTree state, int level = 0, string prefix = " ")
         {
             if (state is GameState)
@@ -26,9 +38,9 @@ namespace VorliasEngine2D.System.Debug
                 Console.WriteLine(prefix + "└─■≡ " + child.Name);
 
                 child.Components.ForEach(component => {
-                    if (component is Transform)
+                    if (component is Entities.Components.Transform)
                     {
-                        var transform = component as Transform;
+                        var transform = component as Entities.Components.Transform;
                         Console.WriteLine(prefix + "  │└≡[Transform " + transform.Position + " Rot(" + transform.Rotation + ")]");
                     }
                     else if (component is SpriteRenderer)

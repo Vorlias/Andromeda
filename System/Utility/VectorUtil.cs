@@ -1,4 +1,5 @@
-﻿using SFML.System;
+﻿using SFML.Graphics;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace VorliasEngine2D.System.Utility
 {
+
     public static class VectorExtension
     {
+        public static FloatRect Combine(this FloatRect lhs, Vector2f target)
+        {
+            return new FloatRect(new Vector2f(lhs.Left, lhs.Top) + target, new Vector2f(lhs.Width, lhs.Height));
+        }
+
         public static Vector2f ToFloatVector(this Vector2u old)
         {
             return new Vector2f(old.X, old.Y);

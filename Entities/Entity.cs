@@ -263,6 +263,24 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        internal void Render()
+        {
+            var scriptedComponents = components.OfType<EntityBehaviour>();
+            foreach (EntityBehaviour behaviour in scriptedComponents)
+            {
+                //behaviour.BeforeUpdate();
+
+                behaviour.Render();
+
+                foreach (Entity child in children)
+                {
+                    child.Render();
+                }
+
+               // behaviour.AfterUpdate();
+            }
+        }
+
         internal void Update()
         {
             var scriptedComponents = components.OfType<EntityBehaviour>();

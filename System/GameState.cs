@@ -195,6 +195,7 @@ namespace VorliasEngine2D.System
         {
             foreach (Entity entity in DrawableEntities)
             {
+                entity.Render();
                 entity.DrawableComponents.ForEach(component => window.Draw(component));
             }
         }
