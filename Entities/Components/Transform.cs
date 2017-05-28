@@ -1,12 +1,49 @@
 ﻿using SFML.Graphics;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
 {
+    public sealed class PositionConstraint
+    {
+        public Vector2f Min
+        {
+            get;
+            set;
+        }
+
+        public Vector2f Max
+        {
+            get;
+            set;
+        }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return (Max - Min) != new Vector2f(0, 0);
+            }
+        }
+
+        public PositionConstraint()
+        {
+            Min = new Vector2f(0, 0);
+            Max = new Vector2f(0, 0);
+        }
+
+        public PositionConstraint(Vector2f min, Vector2f max)
+        {
+            Min = min;
+            Max = max;
+        }
+    }
+
     public sealed class Transform : Transformable, IComponent
     {
         private Entity entity;
@@ -23,6 +60,34 @@ namespace VorliasEngine2D.Entities.Components
             get
             {
                 return false;
+            }
+        }
+
+        public PositionConstraint PositionConstraint
+        {
+            get;
+            set;
+        }
+
+        public new Vector2f Position
+        {
+            get
+            {
+                return base.Position;
+            }
+            set
+            {
+                Vector2f newPosition = value;
+
+                if(PositionConstraint != null && PositionConstraint.IsEnabled)
+                {
+                    Console.WriteLine(newPosition);
+                    newPosition = newPosition.Clamp(PositionConstraint.Min, PositionConstraint.Max);
+                    Console.WriteLine(newPosition);
+                }
+                    
+
+                base.Position = newPosition;
             }
         }
 

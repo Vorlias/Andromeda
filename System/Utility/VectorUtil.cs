@@ -9,6 +9,16 @@ namespace VorliasEngine2D.System.Utility
 {
     public static class VectorExtension
     {
+        public static Vector2f ToFloatVector(this Vector2u old)
+        {
+            return new Vector2f(old.X, old.Y);
+        }
+
+        public static Vector2f ToFloatVector(this Vector2i old)
+        {
+            return new Vector2f(old.X, old.Y);
+        }
+
         /// <summary>
         /// Gets the angle between this vector and another vector
         /// </summary>
@@ -34,6 +44,18 @@ namespace VorliasEngine2D.System.Utility
         public static Vector2f Rotate(this Vector2f self, float angle)
         {
             return VectorUtil.GetRotatedVector(self, angle);
+        }
+
+        /// <summary>
+        /// Clamps a vector between two vector values
+        /// </summary>
+        /// <param name="value">The vector value</param>
+        /// <param name="min">The minimum vector value</param>
+        /// <param name="max">The maximum vector value</param>
+        /// <returns></returns>
+        internal static Vector2f Clamp(this Vector2f value, Vector2f min, Vector2f max)
+        {
+            return new Vector2f(Math.Min(max.X, Math.Max(min.X, value.X)), Math.Min(max.Y, Math.Max(min.Y, value.Y)));
         }
     }
 
