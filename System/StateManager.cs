@@ -64,12 +64,32 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// Selects the game states of the specified priority
+        /// </summary>
+        /// <param name="priority">The priority</param>
+        /// <returns>Enumerable of game states matching this priority</returns>
+        public IEnumerable<GameState> OfPriority(GameStatePriority priority)
+        {
+            return states.Select(kp => kp.Value).Where(state => state.Priority == priority);
+        }
+
+        /// <summary>
+        /// Selects the game states of the specified type
+        /// </summary>
+        /// <typeparam name="T">The type</typeparam>
+        /// <returns>Enumerable of game states matching this type</returns>
+        public IEnumerable<T> OfType<T>()
+        {
+            return states.OfType<T>();
+        }
+
+        /// <summary>
         /// Adds a state of the specified type and priority to the StateManager using the default constructor
         /// </summary>
         /// <typeparam name="T">The type of the state</typeparam>
         /// <param name="name">The name of the state</param>
         /// <param name="priority">The priority of the state</param>
-        public void Add<T>(string name, GameStatePriority priority) where T : GameState, new()
+        public void Add<T>(string name, GameStatePriority priority = GameStatePriority.Normal) where T : GameState, new()
         {
             T state = new T();
             state.Added(this, name);
@@ -78,15 +98,15 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// Adds a state of the specified type to the StateManager using the default constructor
+        /// Creates a game state of the specified type, with the type's name as the name
         /// </summary>
-        /// <typeparam name="T">The type of the state</typeparam>
-        /// <param name="name">The name of the state</param>
-        public void Add<T>(string name) where T : GameState, new()
+        /// <typeparam name="T">The type of the GameState</typeparam>
+        /// <param name="priority">The priority of the GameState</param>
+        public void AddDefault<T>(GameStatePriority priority = GameStatePriority.Normal) where T : GameState, new()
         {
             T state = new T();
-            state.Added(this, name);
-            states.Add(name, state);
+            state.Added(this, state.GetType().Name);
+            states.Add(state.GetType().Name, state);
         }
 
         /// <summary>
@@ -115,7 +135,9 @@ namespace VorliasEngine2D.System
         public void SetInactive(string name)
         {
             if (states.ContainsKey(name))
+            { 
                 states[name].IsActive = false;
+            }
         }
 
         /// <summary>
@@ -125,7 +147,9 @@ namespace VorliasEngine2D.System
         public void SetActive(string name)
         {
             if (states.ContainsKey(name))
+            { 
                 states[name].IsActive = true;
+            }
         }
 
         /// <summary>
