@@ -9,13 +9,7 @@ using VorliasEngine2D.System;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    public enum SpriteRenderOrder
-    {
-        Background = 0,
-        Normal = 10,
-        Character = 100,
-        Foreground = 1000
-    }
+
 
     public sealed class AnchorPoint
     {
@@ -40,12 +34,12 @@ namespace VorliasEngine2D.Entities.Components
 
     public sealed class SpriteRenderer : ITextureComponent
     {
-        private SpriteRenderOrder renderOrder = SpriteRenderOrder.Normal;
+        private RenderOrder renderOrder = RenderOrder.Normal;
 
         /// <summary>
         /// The render order of this sprite
         /// </summary>
-        public SpriteRenderOrder RenderOrder
+        public RenderOrder RenderOrder
         {
             get
             {
