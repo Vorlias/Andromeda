@@ -28,6 +28,7 @@ namespace VorliasEngine2D.Entities
         {
             Entity child = original.Clone();
             child.SetParentState(parent);
+            child.Name = original.Name + " (Instance)";
             parent.AddEntity(child);
 
             return child;
@@ -42,6 +43,7 @@ namespace VorliasEngine2D.Entities
             Entity child = original.Clone();
             child.SetParentState(parent.ParentState);
             child.SetParent(parent);
+            child.Name = original.Name + " (Instance)";
             parent.AddEntity(child);
 
             return child;
