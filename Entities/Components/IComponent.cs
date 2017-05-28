@@ -24,7 +24,7 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// Whether or not the component
         /// </summary>
-        bool MultipleAllowed
+        bool AllowsMultipleInstances
         {
             get;
         }

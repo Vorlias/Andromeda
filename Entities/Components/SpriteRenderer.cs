@@ -129,7 +129,7 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        public bool MultipleAllowed
+        public bool AllowsMultipleInstances
         {
             get
             {
