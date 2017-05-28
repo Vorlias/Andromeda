@@ -1,4 +1,5 @@
-﻿using SFML.System;
+﻿using SFML.Graphics;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace VorliasEngine2D.Entities
     public sealed class Entity : IInstanceTree
     {
         HashSet<IComponent> components = new HashSet<IComponent>();
-        Transform transform;
+        Components.Transform transform;
         HashSet<Entity> children;
         Entity parentEntity;
         GameState parentState;
@@ -40,6 +41,14 @@ namespace VorliasEngine2D.Entities
             get
             {
                 return parentState;
+            }
+        }
+
+        internal IEnumerable<Drawable> DrawableComponents
+        {
+            get
+            {
+                return components.Where(component => component is Drawable).Select(component => component as Drawable);
             }
         }
 
@@ -139,13 +148,13 @@ namespace VorliasEngine2D.Entities
         /// <summary>
         /// The Transform of this entity
         /// </summary>
-        public Transform Transform
+        public Components.Transform Transform
         {
             get
             {
                 if (transform == null)
                 {
-                    transform = AddComponent<Transform>();
+                    transform = AddComponent<Components.Transform>();
                 }
                    
 
