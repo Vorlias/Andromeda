@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SFML.System;
+using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +33,15 @@ namespace VorliasEngine2D.Entities.Components
             get
             {
                 return entity.Input;
+            }
+        }
+
+        public Vector2f MousePosition
+        {
+            get
+            {
+                Vector2i mousePosition = Mouse.GetPosition(Application.Window);
+                return new Vector2f(mousePosition.X, mousePosition.Y);
             }
         }
 
