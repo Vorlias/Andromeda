@@ -70,7 +70,9 @@
     <Compile Include="Entities\Components\Transform.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Prefab.cs" />
+    <Compile Include="Entities\SerializePropertyAttribute.cs" />
     <Compile Include="Graphics\NineSliceTexture.cs" />
+    <Compile Include="Serialization\PerfabSerializer.cs" />
     <Compile Include="Serialization\SerializedProperty.cs" />
     <Compile Include="System\Application.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,11 +88,8 @@
     <Compile Include="System\UserInputService.cs" />
     <Compile Include="System\Utility\Extensions.cs" />
     <Compile Include="System\Utility\Polygon.cs" />
-    <Compile Include="System\Utility\StringParser.cs" />
+    <Compile Include="System\Utility\StringTokenizer.cs" />
     <Compile Include="System\Utility\VectorUtil.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

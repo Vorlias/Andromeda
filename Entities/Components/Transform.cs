@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.Serialization;
 using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
@@ -69,6 +70,7 @@ namespace VorliasEngine2D.Entities.Components
             set;
         }
 
+        [PersistentProperty("Position")]
         /// <summary>
         /// The position of this transform
         /// </summary>
@@ -89,6 +91,19 @@ namespace VorliasEngine2D.Entities.Components
                     
 
                 base.Position = newPosition;
+            }
+        }
+
+        [PersistentProperty("Rotation")]
+        public new float Rotation
+        {
+            get
+            {
+                return base.Rotation;
+            }
+            set
+            {
+                base.Rotation = value;
             }
         }
 
