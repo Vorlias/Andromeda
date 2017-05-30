@@ -32,6 +32,15 @@ namespace VorliasEngine2D.Entities
         bool useLocalSpace = true;
         UserInputManager input;
         string name = "Entity";
+        List<string> tags = new List<string>();
+
+        public List<string> Tags
+        {
+            get
+            {
+                return tags;
+            }
+        }
 
         /// <summary>
         /// The parent state of this entity (If applicable)
