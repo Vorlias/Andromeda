@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VorliasEngine2D.System;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
 {
@@ -115,12 +116,17 @@ namespace VorliasEngine2D.Entities.Components
 
         }
 
+        public virtual void Collision(Entity other)
+        {
+
+        }
+
         /// <summary>
         /// Called when the entity is rendered
         /// </summary>
         public virtual void Render()
         {
-
+           
         }
 
         /// <summary>

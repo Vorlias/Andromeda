@@ -204,7 +204,7 @@ namespace VorliasEngine2D.Entities
         /// <returns>The component if it exists, otherwise null</returns>
         public T GetComponent<T>() where T : IComponent
         {
-            return components.OfType<T>().First();
+            return components.OfType<T>().FirstOrDefault();
         }
 
         /// <summary>

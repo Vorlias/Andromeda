@@ -13,14 +13,21 @@ namespace VorliasEngine2D.System.Debug
 {
     public static class DebugExtension
     {
-        public static void DebugDrawBox(this RectCollider collider, RenderTarget target, Color renderColor, int thickness = 1)
+        /// <summary>
+        /// Draws the polygon collider
+        /// </summary>
+        /// <param name="collider"></param>
+        /// <param name="target"></param>
+        /// <param name="renderColor"></param>
+        public static void DebugRenderPolygonCollider(this IPolygonColliderComponent collider, RenderTarget target, Color renderColor)
         {
-            RectangleShape rs = new RectangleShape(new Vector2f(collider.WorldCollisionRect.Width, collider.WorldCollisionRect.Height));
-            rs.Position = new Vector2f(collider.WorldCollisionRect.Left, collider.WorldCollisionRect.Top);
-            rs.FillColor = Color.Transparent;
-            rs.OutlineColor = renderColor;
-            rs.OutlineThickness = thickness;
-            target.Draw(rs);
+            Entities.Components.Transform transform = collider.Entity.Transform;
+
+            Polygon polygon = collider.Polygon.Transform(transform.Position, collider.Origin, transform.Rotation);
+            VertexArray vert = polygon.VertexArray;
+            vert.PrimitiveType = PrimitiveType.LineStrip;
+
+            target.Draw(vert);
         }
 
         public static void DebugInstanceTree(this IInstanceTree state, int level = 0, string prefix = " ")

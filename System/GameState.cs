@@ -56,6 +56,22 @@ namespace VorliasEngine2D.System
                 return manager.Application;
             }
         }
+    
+        protected IEnumerable<ICollisionComponent> EntityColliders
+        {
+            get
+            {
+                return entities.Where(entity => entity.HasComponent<ICollisionComponent>()).Select(e => e.GetComponent<ICollisionComponent>());
+            }
+        }
+
+        public Entity[] CollidableEntities
+        {
+            get
+            {
+                return entities.Where(entity => entity.HasComponent<ICollisionComponent>()).ToArray();
+            }
+        }
 
         /// <summary>
         /// Returns all the drawable entities
@@ -183,15 +199,32 @@ namespace VorliasEngine2D.System
 
         }
 
-        public void UpdateEntities()
+        private void UpdateCollisions()
+        {
+            var colldiers = EntityColliders;
+            foreach (var collider in colldiers)
+            {
+                foreach (var collider2 in colldiers.Where(c => c != collider))
+                {
+                    if (collider.CollidesWith(collider2))
+                    {
+                        collider.Entity.Behaviours.ForEach(behaviour => behaviour.Collision(collider2.Entity));
+                        collider2.Entity.Behaviours.ForEach(behaviour => behaviour.Collision(collider.Entity));
+                    }
+                }
+            }
+        }
+
+        internal void UpdateEntities()
         {
             foreach (Entity entity in Entities)
             {
                 entity.Update();
             }
+            UpdateCollisions();
         }
 
-        public void RenderEntities(RenderWindow window)
+        internal void RenderEntities(RenderWindow window)
         {
             foreach (Entity entity in DrawableEntities)
             {
@@ -209,7 +242,7 @@ namespace VorliasEngine2D.System
         /// Internal function that sets up the state
         /// </summary>
         /// <exception cref="GameStateInitException">Will be thrown if the state's already initialized</exception>
-        public void Added(StateManager manager, string id)
+        internal void Added(StateManager manager, string id)
         {
             if (this.manager == null)
             {

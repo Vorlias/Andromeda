@@ -37,6 +37,11 @@ namespace VorliasEngine2D.System.Utility
             return (float)VectorUtil.GetAngle(left, right);
         }
 
+        public static float Dot(this Vector2f left, Vector2f right)
+        {
+            return (left.X * right.X) + (left.Y * right.Y);
+        }
+
         /// <summary>
         /// Returns the normal of the vector
         /// </summary>
@@ -66,11 +71,15 @@ namespace VorliasEngine2D.System.Utility
         }
     }
 
+    public class MathUtil
+    {
+        public const double DEGREES_TO_RADIANS = Math.PI / 180;
+        public const double RADIANS_TO_DEGREES = 180 / Math.PI;
+    }
 
     internal class VectorUtil
     {
-        const double DEGREES_TO_RADIANS = Math.PI / 180;
-        const double RADIANS_TO_DEGREES = 180 / Math.PI;
+
         
         /// <summary>
         /// Returns a Vector2f rotated by the specified angle
@@ -80,19 +89,19 @@ namespace VorliasEngine2D.System.Utility
         /// <returns>The vector rotated by the angle</returns>
         public static Vector2f GetRotatedVector(Vector2f vector, float angle)
         {
-            float targetCos = (float)Math.Cos(angle * DEGREES_TO_RADIANS);
-            float targetSin = (float)Math.Sin(DEGREES_TO_RADIANS * angle);
+            float targetCos = (float)Math.Cos(angle * MathUtil.DEGREES_TO_RADIANS);
+            float targetSin = (float)Math.Sin(MathUtil.DEGREES_TO_RADIANS * angle);
 
             return new Vector2f(
                 targetCos * vector.X - targetSin * vector.Y,
-                targetSin * vector.X - targetCos * vector.Y
+                targetSin * vector.X + targetCos * vector.Y
             );
         }
 
         public static double GetAngle(Vector2f end, Vector2f start)
         {
             Vector2f dir = (end - start);
-            return RADIANS_TO_DEGREES * Math.Atan2(-dir.X, dir.Y);
+            return MathUtil.RADIANS_TO_DEGREES * Math.Atan2(-dir.X, dir.Y);
         }
     }
 }

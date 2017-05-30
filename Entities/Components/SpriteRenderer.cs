@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VorliasEngine2D.System;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
 {
@@ -29,6 +30,15 @@ namespace VorliasEngine2D.Entities.Components
         {
             X = Math.Min(Math.Max(0.0f, x), 1.0f);
             Y = Math.Min(Math.Max(0.0f, y), 1.0f);
+        }
+        
+        internal Vector2f AppliedTo(SpriteRenderer renderer)
+        {
+            Vector2f textureSize = renderer.Texture.Size.ToFloatVector();
+            textureSize.X *= X;
+            textureSize.Y *= Y;
+
+            return textureSize;
         }
     }
 
@@ -65,6 +75,14 @@ namespace VorliasEngine2D.Entities.Components
             set
             {
                 renderAnchor = value;
+            }
+        }
+
+        public Vector2f Origin
+        {
+            get
+            {
+                return renderAnchor.AppliedTo(this);
             }
         }
 
@@ -146,7 +164,7 @@ namespace VorliasEngine2D.Entities.Components
                 Sprite sprite = new Sprite(texture);
                 sprite.Origin = new Vector2f(texture.Size.X * renderAnchor.X, texture.Size.Y * renderAnchor.Y);
                 sprite.Position = transform.Position;
-                sprite.Rotation = transform.Rotation - 180;
+                sprite.Rotation = transform.Rotation;
                 target.Draw(sprite);
             }
         }

@@ -10,11 +10,21 @@ using VorliasEngine2D.System.Utility;
 namespace VorliasEngine2D.Entities.Components
 {
     /// <summary>
-    /// Rectangle Collider component
+    /// Rectangle Collider component (Polygon rectangle)
     /// </summary>
-    public class RectCollider : ICollisionComponent
+    public class PolygonRectCollider : IPolygonColliderComponent
     {
         private Entity entity;
+
+        internal Polygon polygon;
+
+        public Polygon Polygon
+        {
+            get
+            {
+                return polygon;
+            }
+        }
 
         public bool AllowsMultipleInstances
         {
@@ -40,7 +50,17 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        private FloatRect collisionRect;
+        /// <summary>
+        /// Creates a collider with the specified size
+        /// </summary>
+        /// <param name="size">The size of the collider</param>
+        public void CreateRectCollider(Vector2f size)
+        {
+            // Using polygons because they're easier to work with than IntRect/FloatRect when coming to rotation
+            polygon = Polygon.CreateRectangle(size.X, size.Y);
+        }
+
+        /*private FloatRect collisionRect;
         public FloatRect LocalCollisionRect
         {
             get
@@ -50,20 +70,9 @@ namespace VorliasEngine2D.Entities.Components
             set
             {
                 collisionRect = value;
+                polygon = Polygon.CreateRectangle(value.Width, value.Height);
             }
-        }
-
-        /// <summary>
-        /// Gets the rectangle to world coordinates
-        /// </summary>
-        public FloatRect WorldCollisionRect
-        {
-            get
-            {
-                Vector2f startPosition = Entity.Position;
-                return LocalCollisionRect.Combine(startPosition);
-            }
-        }
+        }*/
 
         private bool trigger;
 
@@ -83,15 +92,23 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        public bool CollidesWith(ICollisionComponent other)
+        private Vector2f origin;
+        public Vector2f Origin
         {
-            if (other is RectCollider)
+            get
             {
-                var otherCollider = other as RectCollider;
-                return otherCollider.LocalCollisionRect.Intersects(LocalCollisionRect);
+                return origin;
             }
 
-            return false;
+            set
+            {
+                origin = value;
+            }
+        }
+
+        public bool CollidesWith(ICollisionComponent other)
+        {
+            return this.CheckCollision(other);
         }
 
         public void OnComponentCopy(Entity source, Entity copy)
@@ -111,7 +128,8 @@ namespace VorliasEngine2D.Entities.Components
             {
                 var spriteRenderer = entity.GetComponent<SpriteRenderer>();
                 var textureSize = spriteRenderer.Texture.Size.ToFloatVector();
-                LocalCollisionRect = new FloatRect(-textureSize.X / 2, -textureSize.Y / 2, textureSize.X, textureSize.Y);
+                CreateRectCollider(new Vector2f(textureSize.X, textureSize.Y)); // Create a collider with the size of the sprite (ish)
+                origin = -(textureSize / 2);
             }
         }
     }
