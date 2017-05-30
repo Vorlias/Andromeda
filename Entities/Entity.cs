@@ -34,6 +34,9 @@ namespace VorliasEngine2D.Entities
         string name = "Entity";
         List<string> tags = new List<string>();
 
+        /// <summary>
+        /// The tags this entity has
+        /// </summary>
         public List<string> Tags
         {
             get
