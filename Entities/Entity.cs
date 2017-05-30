@@ -397,15 +397,23 @@ namespace VorliasEngine2D.Entities
         /// <returns>The spawned entity</returns>
         public static Entity Spawn(Entity parent)
         {
-            Entity entity = new Entity();
+            Entity entity = Spawn();
             entity.SetParent(parent);
             entity.SetParentState(parent.ParentState);
             return entity;
         }
 
-        public static Entity Spawn()
+        public static Entity Spawn(Components.Transform transform = null)
         {
             Entity entity = new Entity();
+
+            if (transform != null)
+            {
+                entity.Position = transform.Position;
+                entity.Transform.Rotation = transform.Rotation;
+                entity.Transform.Scale = transform.Scale;
+            }
+
             return entity;
         }
 
@@ -414,9 +422,9 @@ namespace VorliasEngine2D.Entities
         /// </summary>
         /// <param name="state">The state to spawn the entity under</param>
         /// <returns></returns>
-        public static Entity Spawn(GameState state)
+        public static Entity Spawn(GameState state, Components.Transform transform = null)
         {
-            Entity entity = new Entity();
+            Entity entity = Spawn(transform);
             entity.SetParentState(state);
             state.AddEntity(entity);
             return entity;

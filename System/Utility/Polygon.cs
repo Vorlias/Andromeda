@@ -226,7 +226,22 @@ namespace VorliasEngine2D.System.Utility
             return new Polygon(this.Select(vec => (vec + origin).Rotate(angle) + offset ).ToList());
         }
 
-        
+
+
+        /// <summary>
+        /// Turns it into a drawable VertexArray
+        /// </summary>
+        /// <param name="color">The colour</param>
+        /// <returns></returns>
+        public VertexArray ToVertexArray(Color color)
+        {
+            VertexArray vertices = new VertexArray();
+            ForEach(vert => vertices.Append(new Vertex(vert, color)));
+            return vertices;
+        }
+
+
+        [Obsolete("Use 'ToVertexArray' instead.")]
         public VertexArray VertexArray
         {
             get

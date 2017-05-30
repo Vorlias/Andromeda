@@ -24,7 +24,8 @@ namespace VorliasEngine2D.System.Debug
             Entities.Components.Transform transform = collider.Entity.Transform;
 
             Polygon polygon = collider.Polygon.Transform(transform.Position, collider.Origin, transform.Rotation);
-            VertexArray vert = polygon.VertexArray;
+            VertexArray vert = polygon.ToVertexArray(renderColor);
+   
             vert.PrimitiveType = PrimitiveType.LineStrip;
 
             target.Draw(vert);
@@ -57,7 +58,15 @@ namespace VorliasEngine2D.System.Debug
                     }
                     else if (component is EntityBehaviour)
                     {
-                        Console.WriteLine(prefix + "  │└≡[EntityBehaviour `" + component.GetType().Name + "`]");
+                        Console.WriteLine(prefix + "  │└≡[" + component.GetType().Name + " (Script)]");
+                    }
+                    else if (component is ICollisionComponent)
+                    {
+                        Console.WriteLine(prefix + "  │└≡[" + component.GetType().Name + " (Collider)]");
+                    }
+                    else
+                    {
+                        Console.WriteLine(prefix + "  │└≡[IComponent `" + component.GetType().Name + "`]");
                     }
                 });
 

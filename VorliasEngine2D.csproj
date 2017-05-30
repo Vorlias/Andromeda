@@ -59,13 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Components\PolygonCircleCollider.cs" />
-    <Compile Include="Entities\Components\IPolygonColliderComponent.cs" />
+    <Compile Include="Entities\Components\Internal\IPolygonColliderComponent.cs" />
     <Compile Include="Entities\Components\PolygonCollider.cs" />
     <Compile Include="Entities\Components\PolygonRectCollider.cs" />
     <Compile Include="Entities\Components\EntityBehaviour.cs" />
-    <Compile Include="Entities\Components\ICollisionComponent.cs" />
-    <Compile Include="Entities\Components\IComponent.cs" />
-    <Compile Include="Entities\Components\IRenderableComponent.cs" />
+    <Compile Include="Entities\Components\Internal\ICollisionComponent.cs" />
+    <Compile Include="Entities\Components\Internal\IComponent.cs" />
+    <Compile Include="Entities\Components\Internal\IRenderableComponent.cs" />
     <Compile Include="Entities\Components\SpriteRenderer.cs" />
     <Compile Include="Entities\Components\Transform.cs" />
     <Compile Include="Entities\Entity.cs" />
