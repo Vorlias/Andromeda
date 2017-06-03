@@ -84,6 +84,7 @@ namespace VorliasEngine2D.Entities
         internal void SetParent(Entity parent)
         {
             parentEntity = parent;
+            parent.children.Add(this);
         }
 
         /// <summary>
@@ -298,7 +299,7 @@ namespace VorliasEngine2D.Entities
         internal void Update()
         {
             var scriptedComponents = components.OfType<EntityBehaviour>();
-            foreach (EntityBehaviour behaviour in scriptedComponents)
+            foreach (EntityBehaviour behaviour in scriptedComponents.ToList())
             {
                 behaviour.BeforeUpdate();
 
@@ -402,6 +403,7 @@ namespace VorliasEngine2D.Entities
             Entity entity = Spawn();
             entity.SetParent(parent);
             entity.SetParentState(parent.ParentState);
+
             return entity;
         }
 
@@ -476,6 +478,9 @@ namespace VorliasEngine2D.Entities
         internal Entity Clone()
         {
             Entity copy = new Entity();
+            copy.SetParentState(ParentState);
+            
+
             foreach (IComponent component in components)
             {
                 if (component is EntityBehaviour)
@@ -489,6 +494,16 @@ namespace VorliasEngine2D.Entities
                 }
                 else
                     component.OnComponentCopy(this, copy);
+            }
+
+            foreach (Entity child in children)
+            {
+                Entity childCopy = child.Clone();
+                childCopy.Name = child.Name;
+                childCopy.SetParent(copy);
+                childCopy.SetParentState(copy.parentState);
+                copy.children.Add(childCopy);
+                Console.WriteLine("Test!");
             }
 
             return copy;
