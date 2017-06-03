@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
 using SFML.Graphics;
+using System.Runtime.InteropServices;
 
 namespace VorliasEngine2D.System
 {
@@ -14,6 +15,16 @@ namespace VorliasEngine2D.System
     /// </summary>
     public class Application
     {
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        const int SW_HIDE = 0;
+        const int SW_SHOW = 5;
+
+
         RenderWindow window;
         VideoMode mode;
         string title;
@@ -175,11 +186,15 @@ namespace VorliasEngine2D.System
 
         }
 
+
+
         /// <summary>
         /// Runs the application
         /// </summary>
         public void Run()
         {
+
+
             Clock deltaClock = new Clock();
             window = new RenderWindow(mode, title, styles);
             window.Closed += WindowClosed;
@@ -187,6 +202,10 @@ namespace VorliasEngine2D.System
             BeforeStart();
             Start();
             AfterStart();
+
+#if !DEBUG
+            ShowWindow(GetConsoleWindow(), SW_HIDE);
+#endif
 
             while (window.IsOpen)
             {
