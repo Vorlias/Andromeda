@@ -18,8 +18,21 @@ namespace VorliasEngine2D.System
 
     }
 
+    internal class PrefabSyntaxErrorException : Exception
+    {
+        public PrefabSyntaxErrorException(string message) : base ("Syntax Error: " + message)
+        {
+
+        }
+    }
+
+    /// <summary>
+    /// Experimental Prefab Serialization
+    /// </summary>
     public class PrefabSerialization
     {
+        const string COMPONENT_NAMESPACE = "VorliasEngine2D.Entities.Components";
+
         List<string> lines = new List<string>();
         Entity prefabEntity;
         int line = 0;
@@ -29,9 +42,12 @@ namespace VorliasEngine2D.System
         enum Mode
         {
             Main,
+            Prefab,
             Entity,
+            EntityChild,
             Component,
             Scripted,
+            
         }
 
         private void SetVector2Attribute(Type type, object instance, string propertyName, int x, int y)
@@ -109,7 +125,8 @@ namespace VorliasEngine2D.System
             IComponent com;
             prefabEntity.AddComponent(componentType, out com);
 
-            
+            if (com == null)
+                throw new Exception("Component wasn't added at all you fuckwit");
 
             while (mode == Mode.Component && line < lineCount)
             {
@@ -127,7 +144,6 @@ namespace VorliasEngine2D.System
                         string name = tokenizer.Read();
                         int x = tokenizer.ReadInt();
                         int y = tokenizer.ReadInt();
-                        Console.WriteLine("{0} = ({1}, {2})", name, x, y);
                         SetVector2Attribute(componentType, com, name, x, y);
                     }
                     else if (type == "float")
@@ -135,7 +151,6 @@ namespace VorliasEngine2D.System
                         string name = tokenizer.Read();
                         float x = tokenizer.ReadFloat();
 
-                        Console.WriteLine("{0} = {1}f", name, x);
                         SetFloatAttribute(componentType, com, name, x);
                     }
                     else if (type == "string")
@@ -160,6 +175,50 @@ namespace VorliasEngine2D.System
             }
         }
 
+        private void ParseEntityChild(Entity instance)
+        {
+            while (line < lineCount)
+            {
+                string next = lines[line];
+                StringTokenizer tokenizer = new StringTokenizer(next);
+                string key = tokenizer.Read();
+
+                line++;
+
+                if (key == "property")
+                {
+                    string type = tokenizer.Read();
+                    if (type == "string")
+                    {
+                        string attribName = tokenizer.Read();
+                        SetStringAttribute(prefabEntity.GetType(), instance, attribName, tokenizer.ReadLine());
+                    }
+                    else
+                    {
+                        throw new InvalidDataException("Invalid type: " + type);
+                    }
+                }
+                else if (key == "component")
+                {
+                    mode = Mode.Component;
+                    ParseComponent(tokenizer.Read(), COMPONENT_NAMESPACE + ".");
+                }
+                else if (key == "end" || key == ";")
+                {
+                    break;
+                }
+                else if (key == "scripted")
+                {
+                    mode = Mode.Component;
+                    ParseComponent(tokenizer.Read(), "", Assembly.GetEntryAssembly());
+                }
+                else if (key == "entity")
+                {
+                    // child entity
+                    ParseEntityChild(Entity.Spawn(instance));
+                }
+            }
+        }
 
         private void ParseEntity()
         {
@@ -168,8 +227,16 @@ namespace VorliasEngine2D.System
                 string next = lines[line];
                 StringTokenizer tokenizer = new StringTokenizer(next);
                 string key = tokenizer.Read();
+                bool defaultMode = false;
 
                 line++;
+
+                if (key == "default")
+                {
+                    defaultMode = true;
+                    key = tokenizer.Read();
+                }
+                    
 
                 if (key == "property")
                 {
@@ -187,9 +254,9 @@ namespace VorliasEngine2D.System
                 else if (key == "component")
                 {
                     mode = Mode.Component;
-                    ParseComponent(tokenizer.Read(), "VorliasEngine2D.Entities.Components.");
+                    ParseComponent(tokenizer.Read(), COMPONENT_NAMESPACE + ".");
                 }
-                else if (key == "end")
+                else if (key == "end" || key == ";")
                 {
                     mode = Mode.Main;
                     break;
@@ -199,8 +266,18 @@ namespace VorliasEngine2D.System
                     mode = Mode.Component;
                     ParseComponent(tokenizer.Read(), "", Assembly.GetEntryAssembly());
                 }
+                else if (key == "entity")
+                {
+                    // child entity
+                    Console.WriteLine("Create Child");
+                    ParseEntityChild(Entity.Spawn(prefabEntity));
+                }
 
-                
+                if (defaultMode)
+                {
+                    mode = Mode.Main;
+                    break;
+                }
             }
         }
 
