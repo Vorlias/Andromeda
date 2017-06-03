@@ -31,16 +31,21 @@ namespace VorliasEngine2D.System.Debug
             target.Draw(vert);
         }
 
-        public static void DebugInstanceTree(this IInstanceTree state, int level = 0, string prefix = " ")
+        private static void PrintEntityTree(Entity entity, int level, string prefix = " ")
         {
-            if (state is GameState)
+
+        }
+
+        public static void DebugInstanceTree(this IInstanceTree instance, int level = 0, string prefix = " ")
+        {
+            if (instance is GameState)
                 Console.WriteLine(" ■ GameState");
-            else if (state is Entity && level == 0)
+            else if (instance is Entity && level == 0)
             {
-                Console.WriteLine(" ■ " + (state as Entity).Name);
+                Console.WriteLine(" ■ " + (instance as Entity).Name);
             }
 
-            Entity[] children = state.GetChildren();
+            Entity[] children = instance.GetChildren();
             foreach (Entity child in children)
             {
                 Console.WriteLine(prefix + "└─■≡ " + child.Name);
