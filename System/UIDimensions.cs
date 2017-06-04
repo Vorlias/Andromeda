@@ -62,6 +62,17 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// Gets the absolute value relative to the window
+        /// </summary>
+        public Vector2f GlobalAbsolute
+        {
+            get
+            {
+                return Absolute(StateApplication.Application.Window);
+            }
+        }
+
+        /// <summary>
         /// Returns the absolute Vector2 based on the RenderTarget size
         /// </summary>
         /// <param name="window"></param>
