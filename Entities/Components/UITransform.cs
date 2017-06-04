@@ -12,13 +12,13 @@ namespace VorliasEngine2D.Entities.Components
     {
         private Transform transform;
 
-        public UIVector4 Size
+        public UICoordinates Size
         {
             get;
             set;
         }
 
-        public UIVector4 Position
+        public UICoordinates Position
         {
             get;
             set;
