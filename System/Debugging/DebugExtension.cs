@@ -71,7 +71,7 @@ namespace VorliasEngine2D.System.Debug
                     }
                     else
                     {
-                        Console.WriteLine(prefix + "  │└≡[IComponent `" + component.GetType().Name + "`]");
+                        Console.WriteLine(prefix + "  │└≡[" + component.GetType().Name + "]");
                     }
                 });
 

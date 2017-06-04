@@ -101,7 +101,7 @@ namespace VorliasEngine2D.Entities.Components
 
         }
 
-        public void OnComponentInit(Entity entity)
+        public void ComponentInit(Entity entity)
         {
             if (this.entity == null)
                 this.entity = entity;

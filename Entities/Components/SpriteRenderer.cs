@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.Entities.Components.Internal;
 using VorliasEngine2D.Serialization;
 using VorliasEngine2D.System;
 using VorliasEngine2D.System.Utility;
@@ -43,7 +44,7 @@ namespace VorliasEngine2D.Entities.Components
         }
     }
 
-    public sealed class SpriteRenderer : ITextureComponent
+    public sealed class SpriteRenderer : Component, ITextureComponent
     {
         private RenderOrder renderOrder = RenderOrder.Normal;
 
@@ -87,7 +88,7 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        public string Name
+        public override string Name
         {
             get
             {
@@ -134,16 +135,7 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        private Entity entity;
-        public Entity Entity
-        {
-            get
-            {
-                return entity;
-            }
-        }
-
-        public bool AllowsMultipleInstances
+        public override bool AllowsMultipleInstances
         {
             get
             {
@@ -171,20 +163,7 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        /// <summary>
-        /// Called when the component is added to an entity
-        /// </summary>
-        /// <param name="entity">The entity it is added to</param>
-        /// <exception cref="SetEntityInvalidException">Called if the user tries to set it</exception>
-        public void OnComponentInit(Entity entity)
-        {
-            if (this.entity == null)
-                this.entity = entity;
-            else
-                throw new SetEntityInvalidException();
-        }
-
-        public void OnComponentCopy(Entity source, Entity copy)
+        public override void OnComponentCopy(Entity source, Entity copy)
         {
             SpriteRenderer renderer = copy.AddComponent<SpriteRenderer>();
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.Entities.Components.Internal;
 using VorliasEngine2D.System;
 using VorliasEngine2D.System.Utility;
 
@@ -13,9 +14,8 @@ namespace VorliasEngine2D.Entities.Components
     /// <summary>
     /// Base class for custom scripted components
     /// </summary>
-    public class EntityBehaviour : IComponent
+    public class EntityBehaviour : Component
     {
-        private Entity entity;
         private bool initialized = false;
 
         public bool Initialized
@@ -80,22 +80,6 @@ namespace VorliasEngine2D.Entities.Components
         }
 
         /// <summary>
-        /// The parent entity of this behaviour
-        /// </summary>
-        public Entity Entity
-        {
-            get
-            {
-                return entity;
-            }
-
-            set
-            {
-                entity = value;
-            }
-        }
-
-        /// <summary>
         /// Called when the component is initialized
         /// </summary>
         public virtual void Init()
@@ -150,19 +134,12 @@ namespace VorliasEngine2D.Entities.Components
         /// </summary>
         /// <param name="entity">The entity it is added to</param>
         /// <exception cref="SetEntityInvalidException">Called if the user tries to set it</exception>
-        public void OnComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
-            if (this.entity == null)
-            {
-                this.entity = entity;
-                Init();
-                initialized = true;
-            }  
-            else
-                throw new SetEntityInvalidException();
+            Init();
         }
 
-        public virtual string Name
+        public override string Name
         {
             get
             {
@@ -170,7 +147,7 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        public virtual bool AllowsMultipleInstances
+        public override bool AllowsMultipleInstances
         {
             get
             {
@@ -178,7 +155,7 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        public virtual void OnComponentCopy(Entity source, Entity copy)
+        public new virtual void OnComponentCopy(Entity source, Entity copy)
         {
             // Do nothing, this is a custom component.
         }

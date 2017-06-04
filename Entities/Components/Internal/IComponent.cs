@@ -50,7 +50,7 @@ namespace VorliasEngine2D.Entities.Components
         /// </summary>
         /// <param name="entity">The entity it is added to</param>
         /// <exception cref="SetEntityInvalidException">Called if the user tries to set it</exception>
-        void OnComponentInit(Entity entity);
+        void ComponentInit(Entity entity);
         void OnComponentCopy(Entity source, Entity copy);
     }
 }

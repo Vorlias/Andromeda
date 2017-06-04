@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.Entities.Components.Internal;
 using VorliasEngine2D.Serialization;
 using VorliasEngine2D.System.Utility;
 
@@ -70,6 +71,20 @@ namespace VorliasEngine2D.Entities.Components
             set;
         }
 
+        private bool enabled;
+        public bool IsEnabled
+        {
+            get
+            {
+                return enabled;
+            }
+        }
+
+        internal void SetEnabled(bool enabled)
+        {
+            this.enabled = enabled;
+        }
+
         [PersistentProperty("Position")]
         /// <summary>
         /// The position of this transform
@@ -120,7 +135,7 @@ namespace VorliasEngine2D.Entities.Components
         /// </summary>
         /// <param name="entity">The entity it is added to</param>
         /// <exception cref="SetEntityInvalidException">Called if the user tries to set it</exception>
-        public void OnComponentInit(Entity entity)
+        public void ComponentInit(Entity entity)
         {
             if (this.entity == null)
                 this.entity = entity;

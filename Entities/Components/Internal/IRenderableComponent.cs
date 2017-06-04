@@ -15,7 +15,7 @@ namespace VorliasEngine2D.Entities.Components
         Foreground = 1000
     }
 
-    public interface IRenderableComponent : IComponent, Drawable
+    public interface IRenderableComponent : Drawable
     {
         RenderOrder RenderOrder
         {

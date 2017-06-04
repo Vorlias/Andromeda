@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VorliasEngine2D.Entities.Components;
+using VorliasEngine2D.Entities.Components.Internal;
 using VorliasEngine2D.Serialization;
 using VorliasEngine2D.System;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities
 {
@@ -167,7 +169,7 @@ namespace VorliasEngine2D.Entities
         {
             get
             {
-                if (transform == null)
+                if (transform == null && !HasComponent<UITransform>())
                 {
                     transform = AddComponent<Components.Transform>();
                 }
@@ -272,7 +274,7 @@ namespace VorliasEngine2D.Entities
             }
             else
             {
-                component.OnComponentInit(this);
+                component.ComponentInit(this);
                 components.Add(component);
                 return component;
             }
@@ -390,6 +392,9 @@ namespace VorliasEngine2D.Entities
         {
             Entity entity = new Entity();
             children.Add(entity);
+
+            components.Where(component => component is IContainerComponent).Select(component => component as IContainerComponent).ForEach(component => component.ChildAdded(entity));
+
             return entity;
         }
 
@@ -403,6 +408,8 @@ namespace VorliasEngine2D.Entities
             Entity entity = Spawn();
             entity.SetParent(parent);
             entity.SetParentState(parent.ParentState);
+
+            parent.components.Where(component => component is IContainerComponent).Select(component => component as IContainerComponent).ForEach(component => component.ChildAdded(entity));
 
             return entity;
         }
@@ -489,7 +496,7 @@ namespace VorliasEngine2D.Entities
                     IComponent componentCopy;
                     if (copy.AddComponent(component.GetType(), out componentCopy))
                     {
-                        componentCopy.OnComponentInit(copy);
+                        componentCopy.ComponentInit(copy);
                     }
                 }
                 else
