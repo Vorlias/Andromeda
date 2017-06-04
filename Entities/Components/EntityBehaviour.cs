@@ -14,7 +14,7 @@ namespace VorliasEngine2D.Entities.Components
     /// <summary>
     /// Base class for custom scripted components
     /// </summary>
-    public class EntityBehaviour : Component
+    public class EntityBehaviour : Component, IUpdatableComponent
     {
         private bool initialized = false;
 

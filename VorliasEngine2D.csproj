@@ -58,8 +58,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Components\ImageButton.cs" />
     <Compile Include="Entities\Components\Internal\Component.cs" />
     <Compile Include="Entities\Components\Internal\IContainerComponent.cs" />
+    <Compile Include="Entities\Components\Internal\IUpdatableComponent.cs" />
     <Compile Include="Entities\Components\PolygonCircleCollider.cs" />
     <Compile Include="Entities\Components\Internal\IPolygonColliderComponent.cs" />
     <Compile Include="Entities\Components\PolygonCollider.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Entities\Components\Internal\IRenderableComponent.cs" />
     <Compile Include="Entities\Components\SpriteRenderer.cs" />
     <Compile Include="Entities\Components\Transform.cs" />
+    <Compile Include="Entities\Components\UIRenderer.cs" />
     <Compile Include="Entities\Components\UITransform.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Prefab.cs" />

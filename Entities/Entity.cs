@@ -63,7 +63,7 @@ namespace VorliasEngine2D.Entities
         {
             get
             {
-                return components.Where(component => component is IRenderableComponent).Select(component => component as IRenderableComponent).OrderBy(component => component.RenderOrder);
+                return components.OfType<IRenderableComponent>().OrderBy(component => component.RenderOrder);
             }
         }
 
@@ -169,7 +169,7 @@ namespace VorliasEngine2D.Entities
         {
             get
             {
-                if (transform == null && !HasComponent<UITransform>())
+                if (transform == null)
                 {
                     transform = AddComponent<Components.Transform>();
                 }
@@ -222,6 +222,26 @@ namespace VorliasEngine2D.Entities
         public T GetComponent<T>() where T : IComponent
         {
             return components.OfType<T>().FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Renders the entity and children of the entity
+        /// </summary>
+        /// <param name="window"></param>
+        internal void Render(RenderTarget target)
+        {
+            var scriptedComponents = components.OfType<EntityBehaviour>();
+            foreach (EntityBehaviour behaviour in scriptedComponents)
+            {
+                behaviour.Render();
+            }
+
+            foreach (Entity child in children)
+            {
+                child.Render(target);
+            }
+
+            DrawableComponents.ForEach(component => target.Draw(component));
         }
 
         /// <summary>
@@ -280,39 +300,19 @@ namespace VorliasEngine2D.Entities
             }
         }
 
-        internal void Render()
-        {
-            var scriptedComponents = components.OfType<EntityBehaviour>();
-            foreach (EntityBehaviour behaviour in scriptedComponents)
-            {
-                //behaviour.BeforeUpdate();
-
-                behaviour.Render();
-
-                foreach (Entity child in children)
-                {
-                    child.Render();
-                }
-
-               // behaviour.AfterUpdate();
-            }
-        }
-
         internal void Update()
         {
-            var scriptedComponents = components.OfType<EntityBehaviour>();
-            foreach (EntityBehaviour behaviour in scriptedComponents.ToList())
+            var updatableComponents = components.OfType<IUpdatableComponent>();
+            foreach (IUpdatableComponent com in updatableComponents.ToList())
             {
-                behaviour.BeforeUpdate();
+                com.BeforeUpdate();
+                com.Update();
+                com.AfterUpdate();
+            }
 
-                behaviour.Update();
-
-                foreach (Entity child in children)
-                {
-                    child.Update();
-                }
-
-                behaviour.AfterUpdate();
+            foreach (Entity child in children)
+            {
+                child.Update();
             }
         }
 
