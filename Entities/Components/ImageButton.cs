@@ -54,10 +54,9 @@ namespace VorliasEngine2D.Entities.Components
         }
 
         public override void Draw(RenderTarget target, RenderStates states)
-        {
-            Console.WriteLine("Draw");
-            UICoordinates position = Transform.Position;
-            Vector2f totalSize = position.Absolute(target);
+        { 
+            UICoordinates size = Transform.Size;
+            Vector2f totalSize = size.Absolute(target);
             Sprite sprite = new Sprite(texture);
             sprite.Scale = new Vector2f(totalSize.X / texture.Size.X, totalSize.Y / texture.Size.Y);
 

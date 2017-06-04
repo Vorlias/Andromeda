@@ -44,8 +44,8 @@ namespace VorliasEngine2D.Entities.Components
         {
            // Create the transform if it doesn't exist.
            entity.FindComponent(out transform, true);
-            Position = new UICoordinates(0, 0, 0, 0);
-            Size = new UICoordinates(0, 0, 0, 0);
+           Position = new UICoordinates(0, 0, 0, 0);
+           Size = new UICoordinates(0, 0, 0, 0);
         }
 
         public override string Name
