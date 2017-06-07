@@ -12,7 +12,12 @@ namespace VorliasEngine2D.Serialization
         Int32,
         Int64,
         Float,
-        Double
+        Double,
+        Vector2,
+        UICoordinates,
+        Enum,
+        Polygon,
+        Bool,
     }
 
     /// <summary>

@@ -1,8 +1,11 @@
-﻿using System;
+﻿using SFML.System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.Entities;
+using VorliasEngine2D.Entities.Components;
 
 namespace VorliasEngine2D.System.Utility
 {
@@ -20,6 +23,17 @@ namespace VorliasEngine2D.System.Utility
             {
                 action.Invoke(value);
             }
+        }
+
+        public static bool InArray(this string item, IEnumerable<string> array)
+        {
+            return array.Contains(item);
+        }
+
+        internal static void For<T>(this List<T> self, int count, Func<int, T> predicate)
+        {
+            for (int i = 0; i < count; i++)
+                self.Add(predicate(i));
         }
     }
 }

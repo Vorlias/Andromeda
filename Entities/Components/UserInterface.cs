@@ -7,7 +7,7 @@ using SFML.Graphics;
 using VorliasEngine2D.Entities.Components;
 using VorliasEngine2D.Entities.Components.Internal;
 
-namespace VorliasEngine2D.Entities
+namespace VorliasEngine2D.Entities.Components
 {
     // TODO: Figure out why it requires IRenderableComponent to render child UIRenderer
     public class UserInterface : Component, IContainerComponent, IRenderableComponent
@@ -18,6 +18,16 @@ namespace VorliasEngine2D.Entities
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Shortcut for adding an image button entity to this UserInterface
+        /// </summary>
+        /// <returns></returns>
+        public ImageButton AddImageButton()
+        {
+            Entity child = Entity.SpawnEntity();
+            return child.AddComponent<ImageButton>();
         }
 
         public override void OnComponentInit(Entity entity)
@@ -41,6 +51,21 @@ namespace VorliasEngine2D.Entities
             {
                 return "UserInterface";
             }
+        }
+
+        public override void OnComponentCopy(Entity source, Entity copy)
+        {
+            var ui = copy.AddComponent<UserInterface>();
+        }
+
+        public override string ToString()
+        {
+            int count = Entity.GetComponentsInDescendants<UIComponent>().Count;
+
+            if (count == 1)
+                return Name + " - " + count + " UIComponent";
+            else
+                return Name + " - " + count +" UIComponents";
         }
 
         public RenderOrder RenderOrder

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.Serialization;
 using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
@@ -18,11 +19,16 @@ namespace VorliasEngine2D.Entities.Components
 
         internal Polygon polygon;
 
+        [PersistentProperty("Polygon", PropertyType = SerializedPropertyType.Polygon)]
         public Polygon Polygon
         {
             get
             {
                 return polygon;
+            }
+            set
+            {
+                polygon = value;
             }
         }
 
@@ -113,7 +119,8 @@ namespace VorliasEngine2D.Entities.Components
 
         public void OnComponentCopy(Entity source, Entity copy)
         {
-            
+            var com = copy.AddComponent<PolygonRectCollider>();
+            com.polygon = polygon;
         }
 
         public void ComponentInit(Entity entity)

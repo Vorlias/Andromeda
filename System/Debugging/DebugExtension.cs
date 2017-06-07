@@ -54,7 +54,7 @@ namespace VorliasEngine2D.System.Debug
                     if (component is Entities.Components.Transform)
                     {
                         var transform = component as Entities.Components.Transform;
-                        Console.WriteLine(prefix + "  │└≡[Transform " + transform.Position + " Rot(" + transform.Rotation + ")]");
+                        Console.WriteLine(prefix + "  │└≡[Transform " + transform.Position + " " + transform.LocalPosition + " [float] Rot(" + transform.Rotation + ")]");
                     }
                     else if (component is SpriteRenderer)
                     {
@@ -71,7 +71,7 @@ namespace VorliasEngine2D.System.Debug
                     }
                     else
                     {
-                        Console.WriteLine(prefix + "  │└≡[" + component.GetType().Name + "]");
+                        Console.WriteLine(prefix + "  │└≡[" + component.ToString() + "]");
                     }
                 });
 

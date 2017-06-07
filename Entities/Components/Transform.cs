@@ -48,6 +48,29 @@ namespace VorliasEngine2D.Entities.Components
 
     public sealed class Transform : Transformable, IComponent
     {
+        /// <summary>
+        /// Flag for enabling local coordinates by default
+        /// </summary>
+        public const bool USE_LOCAL_COORDINATES_DEFAULT = false;
+
+        bool localCoordinates = USE_LOCAL_COORDINATES_DEFAULT;
+
+        /// <summary>
+        /// If the transform is local based (if true, it will be affected by the parent entity's transform)
+        /// </summary>
+        [PersistentProperty("IsTransformLocal", PropertyType = SerializedPropertyType.Bool)]
+        public bool IsTransformLocal
+        {
+            get
+            {
+                return localCoordinates;
+            }
+            set
+            {
+                localCoordinates = value;
+            }
+        }
+
         private Entity entity;
         public Entity Entity
         {
@@ -85,32 +108,39 @@ namespace VorliasEngine2D.Entities.Components
             this.enabled = enabled;
         }
 
-        [PersistentProperty("Position")]
+        private Vector2f localPosition = new Vector2f(-1, -1);
+
+
+
         /// <summary>
-        /// The position of this transform
+        /// The local position of this transform
         /// </summary>
-        public new Vector2f Position
+        [PersistentProperty("LocalPosition")]
+        public Vector2f LocalPosition
         {
             get
             {
-                return base.Position;
+                if (IsTransformLocal && Entity.Parent != null)
+                    return localPosition;
+                else
+                {
+                    return Position;
+                }
+                    
             }
             set
             {
-                Vector2f newPosition = value;
-
-                if(PositionConstraint != null && PositionConstraint.IsEnabled)
-                {
-                    newPosition = newPosition.Clamp(PositionConstraint.Min, PositionConstraint.Max);
-                }
-                    
-
-                base.Position = newPosition;
+                if (IsTransformLocal && Entity.Parent != null)
+                    localPosition = value;
+                else
+                    Position = value;
             }
         }
 
-        [PersistentProperty("Rotation")]
-        public new float Rotation
+        /// <summary>
+        /// Rotation of this Transform
+        /// </summary>
+        public float LocalRotation
         {
             get
             {
@@ -121,6 +151,79 @@ namespace VorliasEngine2D.Entities.Components
                 base.Rotation = value;
             }
         }
+
+        /// <summary>
+        /// Rotation of this transform + the parent transforms (If IsTransformLocal is enabled)
+        /// </summary>
+        [PersistentProperty("Rotation")]
+        public new float Rotation
+        {
+            get
+            {
+                if (IsTransformLocal && Entity.Parent != null)
+                {
+                    return Entity.Parent.Transform.Rotation + base.Rotation;
+                }
+                else
+                    return base.Rotation;
+            }
+            set
+            {
+                if (IsTransformLocal && Entity.Parent != null)
+                {
+                    LocalRotation = Entity.Parent.Transform.Rotation + value;
+                }
+                else
+                    base.Rotation = value;
+            }
+        }
+
+
+        /// <summary>
+        /// The position of this transform offset from parent transforms (If IsTransformLocal is enabled, otherwise this local position)
+        /// </summary>
+        [PersistentProperty("Position")]
+        public new Vector2f Position
+        {
+            get
+            {
+                if (IsTransformLocal && Entity.Parent != null)
+                {
+                    // The Vector2(0,0) thing is a digusting hack xD - but here because we want to rotate at 0, 0 for local rotation then apply offset rotation
+                    return (Origin.Rotate(LocalRotation) + LocalPosition.Rotate(Rotation - LocalRotation) + Entity.Parent.Transform.Position);
+                }
+                else
+                    return base.Position;
+            }
+            set
+            {
+                if (IsTransformLocal && Entity.Parent != null)
+                {
+                    localPosition = value - Entity.Parent.Position;
+                    //base.Position = Entity.Parent.Position + value;
+                }
+                else
+                { 
+                    Vector2f newPosition = value;
+
+                    if(PositionConstraint != null && PositionConstraint.IsEnabled)
+                    {
+                        newPosition = newPosition.Clamp(PositionConstraint.Min, PositionConstraint.Max);
+                    }
+                    
+
+                    base.Position = newPosition;
+                }
+
+                //foreach (var child in Entity.Children)
+                //{
+                //    if (child.Transform.IsTransformLocal)
+                //        child.Transform.Position = value;
+                //}
+            }
+        }
+
+        
 
         public string Name
         {
@@ -149,9 +252,15 @@ namespace VorliasEngine2D.Entities.Components
             var copyTransform = copy.Transform;
 
             // Just set the properties the same :-)
+            copyTransform.IsTransformLocal = sourceTransform.IsTransformLocal;
+            
+            
             copyTransform.Origin = sourceTransform.Origin;
             copyTransform.Position = sourceTransform.Position;
+
+            //copyTransform.LocalPosition = sourceTransform.LocalPosition;
             copyTransform.Scale = sourceTransform.Scale;
+            
         }
     }
 }

@@ -28,6 +28,7 @@ namespace VorliasEngine2D.System
 
     /// <summary>
     /// Experimental Prefab Serialization
+    /// Note: This is a huge clusterfuck of code... that works.
     /// </summary>
     public class PrefabSerialization
     {
@@ -47,7 +48,86 @@ namespace VorliasEngine2D.System
             EntityChild,
             Component,
             Scripted,
-            
+        }
+
+        private string[] validPropertyTypes =
+        {
+            "string",
+            "float",
+            "int",
+            "double",
+            "UICoordinates",
+            "Vector2",
+            "Enum",
+            "vertices",
+            "bool",
+            "boolean",
+        };
+
+        private void SetEnumAttribute(Type type, object instance, string propertyName, string value)
+        {
+            try
+            {
+                var property = type.GetProperty(propertyName);
+                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+
+                if (attr != null)
+                    property.SetValue(instance, Enum.Parse(property.PropertyType, value));
+                else
+                    Console.WriteLine("Unable to write property: " + propertyName);
+            }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine("Invalid property: " + propertyName + " (Enum) for " + type.AssemblyQualifiedName);
+            }
+            catch (ArgumentNullException e2)
+            {
+                Console.WriteLine("Invalid property: " + propertyName + " (Enum) for " + type.AssemblyQualifiedName);
+            }
+        }
+
+        private void SetBoolAttribute(Type type, object instance, string propertyName, bool value)
+        {
+            try
+            {
+                var property = type.GetProperty(propertyName);
+                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+
+                if (attr != null)
+                    property.SetValue(instance, value);
+                else
+                    Console.WriteLine("Unable to write property: " + propertyName);
+            }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine("Invalid property: " + propertyName + " (bool) for " + type.AssemblyQualifiedName);
+            }
+            catch (ArgumentNullException e2)
+            {
+                Console.WriteLine("Invalid property: " + propertyName + " (bool) for " + type.AssemblyQualifiedName);
+            }
+        }
+
+        private void SetUICoordinatesAttribute(Type type, object instance, string propertyName, float scaleX, float offsetX, float scaleY, float offsetY)
+        {
+            try
+            {
+                var property = type.GetProperty(propertyName);
+                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+
+                if (attr != null)
+                    property.SetValue(instance, new UICoordinates(scaleX, offsetX, scaleY, offsetY));
+                else
+                    Console.WriteLine("Unable to write property: " + propertyName);
+            }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine("Invalid property: " + propertyName + " (UICoordinates) for " + type.AssemblyQualifiedName);
+            }
+            catch (ArgumentNullException e2)
+            {
+                Console.WriteLine("Invalid property: " + propertyName + " (UICoordinates) for " + type.AssemblyQualifiedName);
+            }
         }
 
         private void SetVector2Attribute(Type type, object instance, string propertyName, int x, int y)
@@ -66,7 +146,7 @@ namespace VorliasEngine2D.System
             }
             catch (NullReferenceException e)
             {
-                Console.WriteLine("Invalid property: " + propertyName + " (vec2) for " + type.AssemblyQualifiedName);
+                Console.WriteLine("Invalid property: " + propertyName + " (Vector2) for " + type.AssemblyQualifiedName);
             }
         }
 
@@ -86,6 +166,24 @@ namespace VorliasEngine2D.System
             catch (NullReferenceException e)
             {
                 Console.WriteLine("Invalid property: " + propertyName + " (float) for " + type.AssemblyQualifiedName);
+            }
+        }
+
+        private void SetPolygonAttribute(Type type, object instance, string propertyName, Polygon newPoly)
+        {
+            try
+            {
+                var property = type.GetProperty(propertyName);
+                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+
+                if (attr != null)
+                    property.SetValue(instance, newPoly);
+                else
+                    Console.WriteLine("Unable to write property: " + propertyName);
+            }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine("Invalid property: " + propertyName + " (polygon) for " + type.AssemblyQualifiedName);
             }
         }
 
@@ -109,7 +207,7 @@ namespace VorliasEngine2D.System
             
         }
 
-        private void ParseComponent(string componentName, string ns = "", Assembly assembly = null)
+        private void ParseComponent(string componentName, Entity targetEntity, string ns = "", Assembly assembly = null)
         {
             //Assembly ass = Assembly.Load("VE2D");
             Type componentType;
@@ -123,28 +221,55 @@ namespace VorliasEngine2D.System
             }
 
             IComponent com;
-            prefabEntity.AddComponent(componentType, out com);
+            targetEntity.FindOrCreateComponent(componentType, out com);
 
             if (com == null)
-                throw new Exception("Component wasn't added at all you fuckwit");
+                throw new Exception("Tried adding component of  type: " + componentName + " to " + targetEntity.Name);
+            else
+                Console.WriteLine("Added component of type: " + com.GetType().Name + " to " + targetEntity.Name);
 
             while (mode == Mode.Component && line < lineCount)
             {
                 string next = lines[line];
                 StringTokenizer tokenizer = new StringTokenizer(next);
                 string key = tokenizer.Read();
+                bool isType = key.InArray(validPropertyTypes);
 
                 line++;
 
-                if (key == "property")
+                if (isType || key == "property" || key == "attr" || key == "attribute")
                 {
-                    string type = tokenizer.Read();
-                    if (type == "vec2")
+                    string type = isType ? key : tokenizer.Read();
+                    if (type == "vec2" || type == "Vector2")
                     {
                         string name = tokenizer.Read();
                         int x = tokenizer.ReadInt();
                         int y = tokenizer.ReadInt();
                         SetVector2Attribute(componentType, com, name, x, y);
+                    }
+                    else if (type == "boolean" || type == "bool")
+                    {
+                        string name = tokenizer.Read();
+                        string value = tokenizer.Read();
+                        SetBoolAttribute(componentType, com, name, !value.ToLower().Equals("false"));
+                    }
+                    else if (type == "vertices")
+                    {
+                        string name = tokenizer.Read();
+                        line++;
+                        Polygon newPoly;
+                        ParsePolygon(out newPoly);
+                        SetPolygonAttribute(componentType, com, name, newPoly);
+                    }
+                    else if (type == "uicoords" || type == "UICoordinates")
+                    {
+                        string name = tokenizer.Read();
+
+                        float x1 = tokenizer.ReadFloat();
+                        float x2 = tokenizer.ReadFloat();
+                        float y1 = tokenizer.ReadFloat();
+                        float y2 = tokenizer.ReadFloat();
+                        SetUICoordinatesAttribute(componentType, com, name, x1, x2, y1, y2);
                     }
                     else if (type == "float")
                     {
@@ -160,9 +285,34 @@ namespace VorliasEngine2D.System
 
                         SetStringAttribute(componentType, com, name, value);
                     }
+                    else if (type == "enum" || type == "Enum")
+                    {
+                        string name = tokenizer.Read();
+                        string value = tokenizer.ReadLine();
+
+                        SetEnumAttribute(componentType, com, name, value);
+                    }
                     else
                     {
                         Console.WriteLine("Unknown: " + type);
+                    }
+                }
+                else if (key == "@debug") // debug component
+                {
+                    try
+                    {
+                        Console.WriteLine("\t### == DEBUG == ");
+                        var properties = com.GetType().GetProperties();
+                        foreach (var property in properties)
+                        {
+                            if (property.CanRead)
+                                Console.WriteLine("\t###\t{0} = {1}", property.Name, property.GetValue(com));
+
+                        }
+                    }
+                    catch (NullReferenceException e)
+                    {
+
                     }
                 }
                 else if (key == "end")
@@ -175,19 +325,52 @@ namespace VorliasEngine2D.System
             }
         }
 
-        private void ParseEntityChild(Entity instance)
+
+
+        private void ParsePolygon(out Polygon polygon)
         {
+            polygon = new Polygon();
             while (line < lineCount)
             {
                 string next = lines[line];
                 StringTokenizer tokenizer = new StringTokenizer(next);
                 string key = tokenizer.Read();
+                if (key == "end")
+                {
+                    line++;
+                    break;
+                }
+                else if (key == "vertex" || key == "Vector2")
+                {
+                    int x = tokenizer.ReadInt();
+                    int y = tokenizer.ReadInt();
+                    polygon.Add(new Vector2f(x, y));
+                    line++;
+                }
+                else
+                {
+                    throw new InvalidDataException("Unknown vertex syntax on line: " + next);
+                }
+            }
+        }
+
+        private void ParseEntityChild(Entity instance, string childName)
+        {
+            if (childName != "")
+                instance.Name = childName;
+
+            while (line < lineCount)
+            {
+                string next = lines[line];
+                StringTokenizer tokenizer = new StringTokenizer(next);
+                string key = tokenizer.Read();
+                bool isType = key.InArray(validPropertyTypes);
 
                 line++;
 
-                if (key == "property")
+                if (isType || key == "property" || key == "attr" || key == "attribute")
                 {
-                    string type = tokenizer.Read();
+                    string type =  isType ? key : tokenizer.Read();
                     if (type == "string")
                     {
                         string attribName = tokenizer.Read();
@@ -201,7 +384,7 @@ namespace VorliasEngine2D.System
                 else if (key == "component")
                 {
                     mode = Mode.Component;
-                    ParseComponent(tokenizer.Read(), COMPONENT_NAMESPACE + ".");
+                    ParseComponent(tokenizer.Read(), instance, COMPONENT_NAMESPACE + ".");
                 }
                 else if (key == "end" || key == ";")
                 {
@@ -210,24 +393,38 @@ namespace VorliasEngine2D.System
                 else if (key == "scripted")
                 {
                     mode = Mode.Component;
-                    ParseComponent(tokenizer.Read(), "", Assembly.GetEntryAssembly());
+                    ParseComponent(tokenizer.Read(), instance, "", Assembly.GetEntryAssembly());
                 }
                 else if (key == "entity")
                 {
                     // child entity
-                    ParseEntityChild(Entity.Spawn(instance));
+                    ParseEntityChild(Entity.Spawn(instance), tokenizer.Read());
+                }
+                else if (key == "@debug")
+                {
+                    Console.WriteLine("\t### == DEBUG " + instance.FullName +" == ");
+
+                    foreach (var component in instance.Components)
+                    {
+                        Console.WriteLine("\t###\tCOMPONENT " + component.Name);
+                    }
                 }
             }
         }
 
-        private void ParseEntity()
+        private void ParseEntity(string entityName)
         {
+            if (entityName != "")
+                prefabEntity.Name = entityName;
+
             while (mode == Mode.Entity && line < lineCount)
             {
                 string next = lines[line];
                 StringTokenizer tokenizer = new StringTokenizer(next);
                 string key = tokenizer.Read();
                 bool defaultMode = false;
+
+                
 
                 line++;
 
@@ -236,9 +433,8 @@ namespace VorliasEngine2D.System
                     defaultMode = true;
                     key = tokenizer.Read();
                 }
-                    
 
-                if (key == "property")
+                if (key == "property" || key == "attr" || key == "attribute")
                 {
                     string type = tokenizer.Read();
                     if (type == "string")
@@ -254,7 +450,7 @@ namespace VorliasEngine2D.System
                 else if (key == "component")
                 {
                     mode = Mode.Component;
-                    ParseComponent(tokenizer.Read(), COMPONENT_NAMESPACE + ".");
+                    ParseComponent(tokenizer.Read(), prefabEntity, COMPONENT_NAMESPACE + ".");
                 }
                 else if (key == "end" || key == ";")
                 {
@@ -264,13 +460,13 @@ namespace VorliasEngine2D.System
                 else if (key == "scripted")
                 {
                     mode = Mode.Component;
-                    ParseComponent(tokenizer.Read(), "", Assembly.GetEntryAssembly());
+                    ParseComponent(tokenizer.Read(), prefabEntity, "", Assembly.GetEntryAssembly());
                 }
                 else if (key == "entity")
                 {
                     // child entity
                     Console.WriteLine("Create Child");
-                    ParseEntityChild(Entity.Spawn(prefabEntity));
+                    ParseEntityChild(Entity.Spawn(prefabEntity), tokenizer.Read());
                 }
 
                 if (defaultMode)
@@ -283,26 +479,40 @@ namespace VorliasEngine2D.System
 
         public void RunLexer()
         {
+            bool isParsing = false;
             while (line < lineCount)
             {
                 string next = lines[line];
                 StringTokenizer tokenizer = new StringTokenizer(next);
                 string key = tokenizer.Read();
+                
 
                 line++;
 
-                if (key.StartsWith("#"))
+                
+                if (key.StartsWith("#prefab"))
                 {
-                    // ignore comment
+                    isParsing = true;
                 }
                 else if (key == "entity")
                 {
+                    isParsing = true;
                     mode = Mode.Entity;
-                    ParseEntity();
+                    ParseEntity(tokenizer.Read());
+                }
+                else if (key.StartsWith("--") || !isParsing)
+                {
+                    // ignore comment
+                }
+                else if (key.StartsWith("#end"))
+                {
+                    isParsing = false;
+                    break;
                 }
                 else
                 {
-                    Console.WriteLine("Unknown: '" + key + "' @line " + line );
+                    Console.WriteLine("Unknown: '" + key + "' @line " + line + " have you parsed?");
+                    
                 }
 
                 

@@ -60,31 +60,22 @@ namespace VorliasEngine2D.System.Utility
             return null;
         }
 
+        public string[] Read(int count)
+        {
+            string[] results = new string[count];
+            for (int i = 0; i < count; i++)
+            {
+                results[i] = Read();
+            }
+            return results;
+        }
+
         /// <summary>
-        /// Resets the token position
+        /// Resets the reader
         /// </summary>
         public void Reset()
         {
-            position = 0;
-        }
-
-        public string Peek()
-        {
-            char next;
-            string result = "";
-            do
-            {
-                next = (char)reader.Peek();
-                if (next != '\n' && next != ' ' && next != '\r' && next != 0xFFFF)
-                {
-                    result += next;
-                }
-                else
-                    break;
-            }
-            while (true);
-
-            return result.Trim();
+            reader = new StringReader(source);
         }
 
         /// <summary>
@@ -126,6 +117,11 @@ namespace VorliasEngine2D.System.Utility
         public double ReadDouble()
         {
             return double.Parse(Read());
+        }
+
+        public bool TryReadInt(out int target)
+        {
+            return int.TryParse(Read(), out target);
         }
 
         public int ReadInt()

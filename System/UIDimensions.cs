@@ -28,6 +28,11 @@ namespace VorliasEngine2D.System
             Scale = scale;
             Offset = offset;
         }
+
+        public override string ToString()
+        {
+            return Scale + ", " + Offset;
+        }
     }
 
     /// <summary>
@@ -44,6 +49,28 @@ namespace VorliasEngine2D.System
             get
             {
                 return x;
+            }
+        }
+
+        /// <summary>
+        /// Same as X
+        /// </summary>
+        public UIAxis Width
+        {
+            get
+            {
+                return x;
+            }
+        }
+
+        /// <summary>
+        /// Same as Y
+        /// </summary>
+        public UIAxis Height
+        {
+            get
+            {
+                return y;
             }
         }
 
@@ -79,8 +106,12 @@ namespace VorliasEngine2D.System
         /// <returns></returns>
         internal Vector2f Absolute(RenderTarget window)
         {
-            Vector2f windowSize = window.Size.ToFloatVector();
-            return new Vector2f(windowSize.X * x.Scale + x.Offset, windowSize.Y * y.Scale + y.Offset);
+            return new Vector2f(x.Offset + window.Size.X * x.Scale, y.Offset + window.Size.Y * y.Scale);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}; {1}", X, Y);
         }
     }
 }

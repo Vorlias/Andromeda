@@ -13,7 +13,6 @@ namespace VorliasEngine2D.Entities
     public sealed class Prefab
     {
         Entity original;
-        Entity[] entities;
 
         private Prefab()
         {
@@ -40,9 +39,8 @@ namespace VorliasEngine2D.Entities
         /// <returns>A copy of the prefab entity</returns>
         public Entity Clone(Entity parent)
         {
-            Entity child = original.Clone();
+            Entity child = original.Clone(parent);
             child.SetParentState(parent.ParentState);
-            child.SetParent(parent);
             child.Name = original.Name + " (Instance)";
             parent.AddEntity(child);
 

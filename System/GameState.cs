@@ -9,6 +9,7 @@ using VorliasEngine2D.Entities;
 using VorliasEngine2D.Entities.Components;
 using SFML.System;
 using VorliasEngine2D.System.Utility;
+using VorliasEngine2D.Entities.Components.Internal;
 
 namespace VorliasEngine2D.System
 {
@@ -56,20 +57,40 @@ namespace VorliasEngine2D.System
                 return manager.Application;
             }
         }
+
+        public Entity[] Descendants
+        {
+            get
+            {
+                List<Entity> entityList = new List<Entity>();
+                entityList.AddRange(Children);
+                foreach (var child in Children)
+                {
+                    entityList.AddRange(child.Descendants);
+                }
+                return entityList.ToArray();
+            }
+        }
     
+        /// <summary>
+        /// The collision components
+        /// </summary>
         protected IEnumerable<ICollisionComponent> EntityColliders
         {
             get
             {
-                return entities.Where(entity => entity.HasComponent<ICollisionComponent>()).Select(e => e.GetComponent<ICollisionComponent>());
+                return CollidableEntities.Select(e => e.GetComponent<ICollisionComponent>());
             }
         }
 
+        /// <summary>
+        /// Entities that have a collision component
+        /// </summary>
         public Entity[] CollidableEntities
         {
             get
             {
-                return entities.Where(entity => entity.HasComponent<ICollisionComponent>()).ToArray();
+                return Descendants.Where(entity => entity.HasComponent<ICollisionComponent>()).ToArray();
             }
         }
 
@@ -80,7 +101,7 @@ namespace VorliasEngine2D.System
         {
             get
             {
-                return entities.Where(entity => entity.DrawableComponents.Count() > 0).ToArray();
+                return Descendants.Where(entity => entity.DrawableComponents.Count() > 0).ToArray();
             }
         }
 
@@ -94,6 +115,18 @@ namespace VorliasEngine2D.System
             {
                 var sprites = entities.Where(entity => entity.HasComponent<SpriteRenderer>());
                 return sprites.OrderBy(entity => entity.SpriteRenderer.RenderOrder).ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Entities that have a UIComponent
+        /// </summary>
+        public Entity[] UIEntities
+        {
+            get
+            {
+                var entities = this.entities.Where(entity => entity.HasComponent<UIComponent>());
+                return entities.ToArray();
             }
         }
 
@@ -267,6 +300,18 @@ namespace VorliasEngine2D.System
             return entities.First(entity => entity.Name == name);
         }
 
+        /// <summary>
+        /// The child entities of this GameState
+        /// </summary>
+        public Entity[] Children
+        {
+            get
+            {
+                return entities.ToArray();
+            }
+        }
+
+        [Obsolete("Use 'Children' instead.")]
         public Entity[] GetChildren()
         {
             return entities.ToArray();
@@ -294,6 +339,14 @@ namespace VorliasEngine2D.System
             return entity;
         }
 
+        public Entity[] AllDescendants
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         internal void InvokeInput(Application application, Mouse.Button input, InputState state)
         {
             Input.InvokeInput(application, input, state);
@@ -301,6 +354,8 @@ namespace VorliasEngine2D.System
             {
                 entity.Input.InvokeInput(application, input, state);
             }
+
+            
         }
 
         internal void InvokeInput(Application application, Keyboard.Key input, InputState state)

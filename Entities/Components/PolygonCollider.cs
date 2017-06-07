@@ -24,7 +24,6 @@ namespace VorliasEngine2D.Entities.Components
 
         private Texture collisionTexture;
         private Image collisionImage;
-        internal VertexArray vertices;
 
         public Texture CollisionTexture
         {

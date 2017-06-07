@@ -67,6 +67,22 @@ namespace VorliasEngine2D.Entities
             }
         }
 
+        public List<Entity> Descendants
+        {
+            get
+            {
+                List<Entity> entities = new List<Entity>();
+                entities.AddRange(children);
+
+                foreach (var child in children)
+                {
+                    entities.AddRange(child.Descendants);
+                }
+
+                return entities;
+            }
+        }
+
         /// <summary>
         /// The parent entity of this entity (If applicable)
         /// </summary>
@@ -225,6 +241,28 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// Gets the components of the specified type in descendants
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public List<T> GetComponentsInDescendants<T>() where T: IComponent
+        {
+            List<T> components = new List<T>();
+            Entity[] descendants = Children;
+
+            if (HasComponent<T>())
+                components.Add(GetComponent<T>());
+
+            foreach (var child in descendants)
+            {
+                if (child.HasComponent<T>())
+                    components.Add(child.GetComponent<T>());
+            }
+
+            return components;
+        }
+
+        /// <summary>
         /// Renders the entity and children of the entity
         /// </summary>
         /// <param name="window"></param>
@@ -345,9 +383,21 @@ namespace VorliasEngine2D.Entities
         /// Gets the child entities of this entity
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Use 'Children' instead.")]
         public Entity[] GetChildren()
         {
-            return children.ToArray();
+            return Children;
+        }
+
+        /// <summary>
+        /// The child entities of this entity
+        /// </summary>
+        public Entity[] Children
+        {
+            get
+            {
+                return children.ToArray();
+            }
         }
 
         /// <summary>
@@ -361,6 +411,25 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// Returns the full path of this entity
+        /// </summary>
+        public string FullName
+        {
+            get
+            {
+                if (Parent != null)
+                    return Parent.FullName + "[\"" + Name + "\"]";
+                else
+                    return Name;
+            }
+        }
+
+        public override string ToString()
+        {
+            return FullName;
+        }
+
+        /// <summary>
         /// Gets the first child entity with the specified name
         /// </summary>
         /// <param name="name">The name of the entity to find</param>
@@ -368,11 +437,6 @@ namespace VorliasEngine2D.Entities
         public Entity FindFirstChild(string name)
         {
             return children.First(entity => entity.Name == name);
-        }
-
-        internal void SetInputManager(UserInputManager inputManager)
-        {
-            input = inputManager;
         }
 
         /// <summary>
@@ -442,12 +506,12 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
-        /// Creates a component with the specified type
+        /// Tries to find the component of the specified type, otherwise creates it
         /// </summary>
         /// <param name="type">The type of the component</param>
         /// <param name="created">The component returned, null if it could not be created</param>
         /// <returns>If the component was successfully created</returns>
-        internal bool AddComponent(Type type, out IComponent created)
+        internal bool FindOrCreateComponent(Type type, out IComponent created, bool returnExisting = true)
         {
             // This is a bit of a messy function, mainly for the cloning... :3
 
@@ -456,6 +520,7 @@ namespace VorliasEngine2D.Entities
             if (component.AllowsMultipleInstances)
             {
                 created = component;
+                component.ComponentInit(this);
                 components.Add(component);
 
                 return true;
@@ -466,13 +531,22 @@ namespace VorliasEngine2D.Entities
                 if (existing == null)
                 {
                     components.Add(component);
+                    component.ComponentInit(this);
                     created = component;
                     return true;
                 }
                 else
                 {
-                    created = null;
-                    return false;
+                    if (returnExisting)
+                    {
+                        created = existing;
+                        return true;
+                    }
+                    else
+                    {
+                        created = null;
+                        return false;
+                    }
                 }
             }
            
@@ -482,10 +556,12 @@ namespace VorliasEngine2D.Entities
         /// Create a copy entity of this entity
         /// </summary>
         /// <returns>A copy of this entity</returns>
-        internal Entity Clone()
+        internal Entity Clone(Entity parent = null)
         {
             Entity copy = new Entity();
             copy.SetParentState(ParentState);
+            if (parent != null)
+                copy.SetParent(parent);
             
 
             foreach (IComponent component in components)
@@ -494,9 +570,9 @@ namespace VorliasEngine2D.Entities
                 {
                    
                     IComponent componentCopy;
-                    if (copy.AddComponent(component.GetType(), out componentCopy))
+                    if (copy.FindOrCreateComponent(component.GetType(), out componentCopy))
                     {
-                        componentCopy.ComponentInit(copy);
+                        //componentCopy.ComponentInit(copy);
                     }
                 }
                 else
@@ -505,9 +581,9 @@ namespace VorliasEngine2D.Entities
 
             foreach (Entity child in children)
             {
-                Entity childCopy = child.Clone();
+                Entity childCopy = child.Clone(copy);
                 childCopy.Name = child.Name;
-                childCopy.SetParent(copy);
+                //childCopy.SetParent(copy);
                 childCopy.SetParentState(copy.parentState);
                 copy.children.Add(childCopy);
                 Console.WriteLine("Test!");

@@ -271,5 +271,13 @@ namespace VorliasEngine2D.System.Utility
 
             return true;
         }
+
+        public override string ToString()
+        {
+            string arrayString = "";
+            ForEach(axis => arrayString += "<" + axis.X + ", " + axis.Y + ">; ");
+
+            return "Polygon {" + arrayString + "}";
+        }
     }
 }
