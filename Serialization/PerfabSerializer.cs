@@ -209,119 +209,127 @@ namespace VorliasEngine2D.System
 
         private void ParseComponent(string componentName, Entity targetEntity, string ns = "", Assembly assembly = null)
         {
-            //Assembly ass = Assembly.Load("VE2D");
-            Type componentType;
-            if (assembly != null)
+            try
             {
-                componentType = assembly.GetType(ns + componentName, true);
-            }
-            else
-            {
-                componentType = Type.GetType(ns + componentName, true);
-            }
-
-            IComponent com;
-            targetEntity.FindOrCreateComponent(componentType, out com);
-
-            if (com == null)
-                throw new Exception("Tried adding component of  type: " + componentName + " to " + targetEntity.Name);
-            else
-                Console.WriteLine("Added component of type: " + com.GetType().Name + " to " + targetEntity.Name);
-
-            while (mode == Mode.Component && line < lineCount)
-            {
-                string next = lines[line];
-                StringTokenizer tokenizer = new StringTokenizer(next);
-                string key = tokenizer.Read();
-                bool isType = key.InArray(validPropertyTypes);
-
-                line++;
-
-                if (isType || key == "property" || key == "attr" || key == "attribute")
+                Type componentType;
+                if (assembly != null)
                 {
-                    string type = isType ? key : tokenizer.Read();
-                    if (type == "vec2" || type == "Vector2")
-                    {
-                        string name = tokenizer.Read();
-                        int x = tokenizer.ReadInt();
-                        int y = tokenizer.ReadInt();
-                        SetVector2Attribute(componentType, com, name, x, y);
-                    }
-                    else if (type == "boolean" || type == "bool")
-                    {
-                        string name = tokenizer.Read();
-                        string value = tokenizer.Read();
-                        SetBoolAttribute(componentType, com, name, !value.ToLower().Equals("false"));
-                    }
-                    else if (type == "vertices")
-                    {
-                        string name = tokenizer.Read();
-                        line++;
-                        Polygon newPoly;
-                        ParsePolygon(out newPoly);
-                        SetPolygonAttribute(componentType, com, name, newPoly);
-                    }
-                    else if (type == "uicoords" || type == "UICoordinates")
-                    {
-                        string name = tokenizer.Read();
-
-                        float x1 = tokenizer.ReadFloat();
-                        float x2 = tokenizer.ReadFloat();
-                        float y1 = tokenizer.ReadFloat();
-                        float y2 = tokenizer.ReadFloat();
-                        SetUICoordinatesAttribute(componentType, com, name, x1, x2, y1, y2);
-                    }
-                    else if (type == "float")
-                    {
-                        string name = tokenizer.Read();
-                        float x = tokenizer.ReadFloat();
-
-                        SetFloatAttribute(componentType, com, name, x);
-                    }
-                    else if (type == "string")
-                    {
-                        string name = tokenizer.Read();
-                        string value = tokenizer.ReadLine();
-
-                        SetStringAttribute(componentType, com, name, value);
-                    }
-                    else if (type == "enum" || type == "Enum")
-                    {
-                        string name = tokenizer.Read();
-                        string value = tokenizer.ReadLine();
-
-                        SetEnumAttribute(componentType, com, name, value);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Unknown: " + type);
-                    }
+                    componentType = assembly.GetType(ns + componentName, true);
                 }
-                else if (key == "@debug") // debug component
+                else
                 {
-                    try
+                    componentType = Type.GetType(ns + componentName, true);
+                }
+
+                IComponent com;
+                targetEntity.FindOrCreateComponent(componentType, out com);
+
+                if (com == null)
+                    throw new Exception("Tried adding component of  type: " + componentName + " to " + targetEntity.Name);
+                else
+                    Console.WriteLine("Added component of type: " + com.GetType().Name + " to " + targetEntity.Name);
+
+                while (mode == Mode.Component && line < lineCount)
+                {
+                    string next = lines[line];
+                    StringTokenizer tokenizer = new StringTokenizer(next);
+                    string key = tokenizer.Read();
+                    bool isType = key.InArray(validPropertyTypes);
+
+                    line++;
+
+                    if (isType || key == "property" || key == "attr" || key == "attribute")
                     {
-                        Console.WriteLine("\t### == DEBUG == ");
-                        var properties = com.GetType().GetProperties();
-                        foreach (var property in properties)
+                        string type = isType ? key : tokenizer.Read();
+                        if (type == "vec2" || type == "Vector2")
                         {
-                            if (property.CanRead)
-                                Console.WriteLine("\t###\t{0} = {1}", property.Name, property.GetValue(com));
+                            string name = tokenizer.Read();
+                            int x = tokenizer.ReadInt();
+                            int y = tokenizer.ReadInt();
+                            SetVector2Attribute(componentType, com, name, x, y);
+                        }
+                        else if (type == "boolean" || type == "bool")
+                        {
+                            string name = tokenizer.Read();
+                            string value = tokenizer.Read();
+                            SetBoolAttribute(componentType, com, name, !value.ToLower().Equals("false"));
+                        }
+                        else if (type == "vertices")
+                        {
+                            string name = tokenizer.Read();
+                            line++;
+                            Polygon newPoly;
+                            ParsePolygon(out newPoly);
+                            SetPolygonAttribute(componentType, com, name, newPoly);
+                        }
+                        else if (type == "uicoords" || type == "UICoordinates")
+                        {
+                            string name = tokenizer.Read();
+
+                            float x1 = tokenizer.ReadFloat();
+                            float x2 = tokenizer.ReadFloat();
+                            float y1 = tokenizer.ReadFloat();
+                            float y2 = tokenizer.ReadFloat();
+                            SetUICoordinatesAttribute(componentType, com, name, x1, x2, y1, y2);
+                        }
+                        else if (type == "float")
+                        {
+                            string name = tokenizer.Read();
+                            float x = tokenizer.ReadFloat();
+
+                            SetFloatAttribute(componentType, com, name, x);
+                        }
+                        else if (type == "string")
+                        {
+                            string name = tokenizer.Read();
+                            string value = tokenizer.ReadLine();
+
+                            SetStringAttribute(componentType, com, name, value);
+                        }
+                        else if (type == "enum" || type == "Enum")
+                        {
+                            string name = tokenizer.Read();
+                            string value = tokenizer.ReadLine();
+
+                            SetEnumAttribute(componentType, com, name, value);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Unknown: " + type);
+                        }
+                    }
+                    else if (key == "@debug") // debug component
+                    {
+                        try
+                        {
+                            Console.WriteLine("\t### == DEBUG == ");
+                            var properties = com.GetType().GetProperties();
+                            foreach (var property in properties)
+                            {
+                                if (property.CanRead)
+                                    Console.WriteLine("\t###\t{0} = {1}", property.Name, property.GetValue(com));
+
+                            }
+                        }
+                        catch (NullReferenceException e)
+                        {
 
                         }
                     }
-                    catch (NullReferenceException e)
+                    else if (key == "end")
                     {
-
+                        mode = Mode.Entity;
+                        break;
                     }
-                }
-                else if (key == "end")
-                {
-                    mode = Mode.Entity;
-                    break;
-                }
 
                 
+                }
+
+            }
+            catch (TypeLoadException e)
+            {
+                Console.Error.WriteLine("Failed to load component: " + componentName);
+                Environment.Exit(0xDEADC0);
             }
         }
 

@@ -13,7 +13,8 @@ namespace VorliasEngine2D.Entities.Components
         Normal = 10,
         Character = 100,
         Interface = 1000,
-        Foreground = 5000
+        Foreground = 5000,
+        Camera = 10000,
     }
 
     public interface IRenderableComponent : Drawable

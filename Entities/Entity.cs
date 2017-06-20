@@ -22,6 +22,54 @@ namespace VorliasEngine2D.Entities
     }
 
     /// <summary>
+    /// The result of FindComponent
+    /// </summary>
+    /// <typeparam name="T">The component type</typeparam>
+    public struct FindComponentResult<T> where T : IComponent
+    {
+        /// <summary>
+        /// Whether or not the component exists
+        /// </summary>
+        public bool IsExisting
+        {
+            get;
+        }
+
+        /// <summary>
+        /// The component instance
+        /// </summary>
+        public T Instance
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Whether or not this component was created with FindComponent
+        /// </summary>
+        public bool IsNew
+        {
+            get;
+        }
+
+        public static implicit operator T(FindComponentResult<T> result)
+        {
+            return result.Instance;
+        }
+
+        public static implicit operator bool(FindComponentResult<T> result)
+        {
+            return result.IsExisting;
+        }
+
+        internal FindComponentResult(T component, bool exists, bool created = false)
+        {
+            Instance = component;
+            IsExisting = exists;
+            IsNew = created;
+        }
+    }
+
+    /// <summary>
     /// An entity
     /// </summary>
     public sealed class Entity : IInstanceTree
@@ -30,7 +78,7 @@ namespace VorliasEngine2D.Entities
         Components.Transform transform;
         HashSet<Entity> children;
         Entity parentEntity;
-        GameState parentState;
+        GameView parentState;
         bool prefab = false;
         bool useLocalSpace = true;
         UserInputManager input;
@@ -51,7 +99,7 @@ namespace VorliasEngine2D.Entities
         /// <summary>
         /// The parent state of this entity (If applicable)
         /// </summary>
-        public GameState ParentState
+        public GameView ParentState
         {
             get
             {
@@ -63,7 +111,7 @@ namespace VorliasEngine2D.Entities
         {
             get
             {
-                return components.OfType<IRenderableComponent>().OrderBy(component => component.RenderOrder);
+                return components.OfType<IRenderableComponent>().OrderByDescending(component => component.RenderOrder);
             }
         }
 
@@ -94,7 +142,7 @@ namespace VorliasEngine2D.Entities
             }
         }
 
-        internal void SetParentState(GameState state)
+        internal void SetParentState(GameView state)
         {
             parentState = state;
         }
@@ -283,6 +331,20 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// Find the component of the specified type
+        /// </summary>
+        /// <typeparam name="T">The component type</typeparam>
+        /// <param name="create">Whether or not the type should be created if not found</param>
+        /// <returns></returns>
+        public FindComponentResult<T> FindComponent<T>(bool create = false) where T: IComponent, new()
+        {
+            if (HasComponent<T>())
+                return new FindComponentResult<T>(GetComponent<T>(), true);
+            else
+                return new FindComponentResult<T>(create ? AddComponent<T>() : default(T), create, create);
+        }
+
+        /// <summary>
         /// Finds the component  of the specified type, and returns whether or not it was found and assigns the component parameter
         /// to be used if it's found.
         /// </summary>
@@ -290,6 +352,7 @@ namespace VorliasEngine2D.Entities
         /// <param name="component">The component variable to set</param>
         /// <param name="create">Whether or not to create it if it doesn't exist</param>
         /// <returns>True if the component is found</returns>
+        [Obsolete("Use 'FindComponent<T>()' instead")]
         public bool FindComponent<T>(out T component, bool create = false) where T : IComponent, new()
         {
             if (HasComponent<T>())
@@ -497,7 +560,7 @@ namespace VorliasEngine2D.Entities
         /// </summary>
         /// <param name="state">The state to spawn the entity under</param>
         /// <returns></returns>
-        public static Entity Spawn(GameState state, Components.Transform transform = null)
+        public static Entity Spawn(GameView state, Components.Transform transform = null)
         {
             Entity entity = Spawn(transform);
             entity.SetParentState(state);

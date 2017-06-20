@@ -21,13 +21,14 @@ namespace VorliasEngine2D.Entities.Components
         }
 
         /// <summary>
-        /// Shortcut for adding an image button entity to this UserInterface
+        /// Adds a UIComponent of the specified type to this UserInterface
         /// </summary>
+        /// <typeparam name="UIComponentType"></typeparam>
         /// <returns></returns>
-        public ImageButton AddImageButton()
+        public UIComponentType Add<UIComponentType>() where UIComponentType : UIComponent, new()
         {
             Entity child = Entity.SpawnEntity();
-            return child.AddComponent<ImageButton>();
+            return child.AddComponent<UIComponentType>();
         }
 
         public override void OnComponentInit(Entity entity)

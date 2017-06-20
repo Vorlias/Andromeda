@@ -14,6 +14,8 @@ namespace VorliasEngine2D.Entities.Components.Internal
 {
     public abstract class UIComponent : Component, IRenderableComponent, IUpdatableComponent
     {
+        public delegate void MouseButtonClick(MouseInputAction action);
+
         public UIComponent()
         {
             input = new UserInputManager();

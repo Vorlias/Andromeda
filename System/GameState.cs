@@ -1,370 +1,206 @@
-﻿using System;
+﻿using SFML.Audio;
+using SFML.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SFML.Window;
-using SFML.Graphics;
-using VorliasEngine2D.Entities;
-using VorliasEngine2D.Entities.Components;
-using SFML.System;
 using VorliasEngine2D.System.Utility;
-using VorliasEngine2D.Entities.Components.Internal;
 
 namespace VorliasEngine2D.System
 {
     /// <summary>
-    /// The GameState's priority
+    /// A game state
     /// </summary>
-    public enum GameStatePriority
+    public class GameState
     {
-        First = 0,
-        Background = 10,
-        Normal = 100,
-        Interface = 500,
-        Last = 1000,
-    }
+        HashSet<GameView> views;
 
-    public class GameStateInitException : Exception
-    {
-        public GameStateInitException() : base("GameState already initialized!")
+        public Music BackgroundMusic
         {
-
+            get;
+            set;
         }
-    }
 
-    public class GameState : IInstanceTree
-    {
-        bool active;
-        string id;
-        StateManager manager;
-        GameStatePriority priority;
-        HashSet<Entity> entities;
-
-        private UserInputManager inputService;
         public UserInputManager Input
         {
-            get
-            {
-                return inputService;
-            }
+            get;
         }
 
         public StateApplication Application
         {
-            get
-            {
-                return manager.Application;
-            }
+            get => StateApplication.Application;
         }
 
-        public Entity[] Descendants
+        public StateManager StateManager
         {
-            get
-            {
-                List<Entity> entityList = new List<Entity>();
-                entityList.AddRange(Children);
-                foreach (var child in Children)
-                {
-                    entityList.AddRange(child.Descendants);
-                }
-                return entityList.ToArray();
-            }
-        }
-    
-        /// <summary>
-        /// The collision components
-        /// </summary>
-        protected IEnumerable<ICollisionComponent> EntityColliders
-        {
-            get
-            {
-                return CollidableEntities.Select(e => e.GetComponent<ICollisionComponent>());
-            }
+            get;
+            internal set;
         }
 
-        /// <summary>
-        /// Entities that have a collision component
-        /// </summary>
-        public Entity[] CollidableEntities
+        public IEnumerable<GameView> ActiveViewsByPriority
         {
-            get
-            {
-                return Descendants.Where(entity => entity.HasComponent<ICollisionComponent>()).ToArray();
-            }
+            get => Views.Where(view => view.IsActive).OrderBy(view => view.Priority);
         }
 
-        /// <summary>
-        /// Returns all the drawable entities
-        /// </summary>
-        public Entity[] DrawableEntities
+        public IEnumerable<GameView> Views
         {
-            get
-            {
-                return Descendants.Where(entity => entity.DrawableComponents.Count() > 0).ToArray();
-            }
+            get => views;
         }
 
-        /// <summary>
-        /// Returns all the entities with sprites, ordered by the render order
-        /// </summary>
-        [Obsolete("Use 'DrawableEntities' instead.")]
-        public Entity[] SpriteEntities
+        public string Name
         {
-            get
-            {
-                var sprites = entities.Where(entity => entity.HasComponent<SpriteRenderer>());
-                return sprites.OrderBy(entity => entity.SpriteRenderer.RenderOrder).ToArray();
-            }
+            get;
+            internal set;
         }
 
-        /// <summary>
-        /// Entities that have a UIComponent
-        /// </summary>
-        public Entity[] UIEntities
-        {
-            get
-            {
-                var entities = this.entities.Where(entity => entity.HasComponent<UIComponent>());
-                return entities.ToArray();
-            }
-        }
-
-        /// <summary>
-        /// The entities in this GameState
-        /// </summary>
-        public HashSet<Entity> Entities
-        {
-            get
-            {
-                return entities;
-            }
-        }
-
-        /// <summary>
-        /// The game state's priority
-        /// </summary>
-        public GameStatePriority Priority
-        {
-            get
-            {
-                return priority;
-            }
-            set
-            {
-                priority = value;
-            }
-        }
-
-        /// <summary>
-        /// The state's Id assigned by the StateManager
-        /// </summary>
-        public string Id
-        {
-            get
-            {
-                return id;
-            }
-        }
-
-        /// <summary>
-        /// The active state of the state
-        /// </summary>
-        public bool IsActive
-        {
-            get
-            {
-                return active;
-            }
-            set
-            {
-                active = value;
-            }
-        }
-
-        /// <summary>
-        /// Method called when the state is added to the state manager
-        /// </summary>
-        public virtual void OnAdded()
+        public virtual void InitViews()
         {
 
         }
 
-        /// <summary>
-        /// Method called when the application starts
-        /// </summary>
-        public virtual void OnStart()
+        public virtual void Update()
         {
 
         }
 
-        /// <summary>
-        /// Method called when the state is activated
-        /// </summary>
-        public virtual void OnActivated()
+        public virtual void Render()
         {
 
         }
 
-        /// <summary>
-        /// Method called when the state is deactivated
-        /// </summary>
-        public virtual void OnDeactivated()
+        public IEnumerable<GameView> GetViewsByName(string viewName)
         {
+            return views.Where(view => view.Id == viewName);
+        }
+
+        public IEnumerable<ViewType> GetViewsByType<ViewType>() where ViewType : GameView
+        {
+            return views.OfType<ViewType>();
+        }
+
+        /// <summary>
+        /// Finds the first view with the specified name
+        /// </summary>
+        /// <param name="name">The name of the view</param>
+        /// <returns>The view, if it exsits.</returns>
+        public GameView FindFirstView(string name)
+        {
+            var views = GetViewsByName(name);
+            return views.Count() > 0 ? views.First() : null;
 
         }
 
         /// <summary>
-        /// Method called when the state is updated
+        /// Finds the first view with the specified type
         /// </summary>
-        /// <param name="application">The application</param>
-        public virtual void OnUpdate(Application application)
+        /// <typeparam name="ViewType">The type of the view</typeparam>
+        /// <returns>The view, if it exists.</returns>
+        public ViewType FindFirstView<ViewType>() where ViewType : GameView
+        {
+            var views = GetViewsByType<ViewType>();
+            return views.Count() > 0 ? views.First() : null;
+        }
+
+        /// <summary>
+        /// Adds a view of the specified type, using the type's name as the view name
+        /// </summary>
+        /// <typeparam name="ViewType">The type of view</typeparam>
+        /// <param name="priority">The priority of the view</param>
+        /// <returns></returns>
+        public ViewType AddView<ViewType>(GameViewPriority priority = GameViewPriority.Normal) where ViewType : GameView, new()
+        {
+            ViewType newView = new ViewType();
+            newView.Added(StateManager.GameManager, newView.GetType().Name);
+            Add(newView);
+
+            return newView;
+        }
+
+        public ViewType AddInterfaceView<ViewType>(string name = null) where ViewType : GameView, new()
+        {
+            return name != null ? AddView<ViewType>(name, GameViewPriority.Interface) : AddView<ViewType>(GameViewPriority.Interface);
+        }
+
+        public ViewType AddBackgroundView<ViewType>(string name = null) where ViewType : GameView, new()
+        {
+            return name != null ? AddView<ViewType>(name, GameViewPriority.Background) : AddView<ViewType>(GameViewPriority.Background);
+        }
+
+        /// <summary>
+        /// Adds a new view to this GameState
+        /// </summary>
+        /// <typeparam name="ViewType">The type of view</typeparam>
+        /// <param name="viewName">The name of the view</param>
+        /// <param name="priority">The view's priority</param>
+        /// <returns>The created view</returns>
+        public ViewType AddView<ViewType>(string viewName, GameViewPriority priority = GameViewPriority.Normal) where ViewType : GameView, new()
+        {
+            ViewType newView = new ViewType();
+            newView.Added(StateManager.GameManager, viewName);
+            Add(newView);
+
+            return newView;
+        }
+
+        internal void Add(GameView view)
+        {
+            views.Add(view);
+        }
+
+        internal void SetName(string name)
+        {
+            Name = name;
+        }
+
+        internal void SetManager(StateManager manager)
+        {
+            StateManager = manager;
+        }
+
+        protected GameState()
+        {
+            views = new HashSet<GameView>();
+            Init();
+        }
+
+        internal static GameState Create()
+        {
+            return new GameState();
+        }
+
+
+        /// <summary>
+        /// Activates this state
+        /// </summary>
+        public void Activate()
+        {
+            StateManager.SetActive(Name);
+        }
+
+        public virtual void Deactivated()
+        {
+
+        }
+
+        public virtual void Activated()
+        {
+
+        }
+
+        public virtual void Init()
         {
 
         }
 
         /// <summary>
-        /// Method called when the state is rendered
+        /// Start the views
         /// </summary>
-        /// <param name="window"></param>
-        public virtual void OnRender(RenderWindow window)
-        {
-
-        }
-
-        private void UpdateCollisions()
-        {
-            var colldiers = EntityColliders;
-            foreach (var collider in colldiers)
-            {
-                foreach (var collider2 in colldiers.Where(c => c != collider))
-                {
-                    if (collider.CollidesWith(collider2))
-                    {
-                        collider.Entity.Behaviours.ForEach(behaviour => behaviour.Collision(collider2.Entity));
-                        collider2.Entity.Behaviours.ForEach(behaviour => behaviour.Collision(collider.Entity));
-                    }
-                }
-            }
-        }
-
-        internal void UpdateEntities()
-        {
-            foreach (Entity entity in Entities)
-            {
-                entity.Update();
-            }
-            UpdateCollisions();
-        }
-
-        internal void RenderEntities(RenderWindow window)
-        {
-            foreach (Entity entity in DrawableEntities)
-            {
-                entity.Render(window);
-            }
-        }
-
         internal void Start()
         {
-            OnStart();
-        }
-
-        /// <summary>
-        /// Internal function that sets up the state
-        /// </summary>
-        /// <exception cref="GameStateInitException">Will be thrown if the state's already initialized</exception>
-        internal void Added(StateManager manager, string id)
-        {
-            if (this.manager == null)
-            {
-                this.manager = manager;
-                this.id = id;
-                inputService = new UserInputManager();
-                entities = new HashSet<Entity>();
-                OnAdded();
-            }
-            else
-            {
-                throw new GameStateInitException();
-            }
-        }
-
-        public override string ToString()
-        {
-            return "[GameState " + GetType().Name + "@"+GetType().GUID+"]";
-        }
-
-        public Entity FindFirstChild(string name)
-        {
-            return entities.First(entity => entity.Name == name);
-        }
-
-        /// <summary>
-        /// The child entities of this GameState
-        /// </summary>
-        public Entity[] Children
-        {
-            get
-            {
-                return entities.ToArray();
-            }
-        }
-
-        [Obsolete("Use 'Children' instead.")]
-        public Entity[] GetChildren()
-        {
-            return entities.ToArray();
-        }
-
-        /// <summary>
-        /// Add an entity to this GameState
-        /// </summary>
-        /// <param name="child">The entity to add</param>
-        public void AddEntity(Entity child)
-        {
-            //child.SetInputManager(inputService);
-            child.Init();
-            entities.Add(child);
-            child.StartBehaviours();
-        }
-
-        /// <summary>
-        /// Spawn an entity under this GameState
-        /// </summary>
-        /// <returns>The spawned entity</returns>
-        public Entity SpawnEntity()
-        {
-            Entity entity = Entity.Spawn(this);
-            return entity;
-        }
-
-        public Entity[] AllDescendants
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        internal void InvokeInput(Application application, Mouse.Button input, InputState state)
-        {
-            Input.InvokeInput(application, input, state);
-            foreach (Entity entity in entities)
-            {
-                entity.Input.InvokeInput(application, input, state);
-            }
-
             
-        }
-
-        internal void InvokeInput(Application application, Keyboard.Key input, InputState state)
-        {
-            Input.InvokeInput(application, input, state);
-            foreach (Entity entity in entities)
-            {
-                entity.Input.InvokeInput(application, input, state);
-            }
+            InitViews();
+            views.ForEach(view => view.Start());
         }
     }
 }

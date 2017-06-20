@@ -38,7 +38,7 @@ namespace VorliasEngine2D.System.Debug
 
         public static void DebugInstanceTree(this IInstanceTree instance, int level = 0, string prefix = " ")
         {
-            if (instance is GameState)
+            if (instance is GameView)
                 Console.WriteLine(" ■ GameState");
             else if (instance is Entity && level == 0)
             {

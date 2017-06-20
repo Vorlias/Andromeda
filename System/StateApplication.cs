@@ -23,7 +23,7 @@ namespace VorliasEngine2D.System
             }
         }
 
-        StateManager stateManager;
+        StateGameManager stateManager;
 
         private UserInputManager inputService = new UserInputManager();
         public UserInputManager InputService
@@ -37,12 +37,28 @@ namespace VorliasEngine2D.System
         /// <summary>
         /// The states of this state application
         /// </summary>
-        public StateManager States
+        public StateGameManager Game
         {
             get
             {
                 return stateManager;
             }
+        }
+
+        /// <summary>
+        /// The Views of this StateApplication
+        /// </summary>
+        public ViewManager Views
+        {
+            get => Game.Views;
+        }
+
+        /// <summary>
+        /// The States of this StateApplication
+        /// </summary>
+        public StateManager States
+        {
+            get => Game.States;
         }
 
         /// <summary>
@@ -81,11 +97,13 @@ namespace VorliasEngine2D.System
         {
             RenderStart();
 
-            var states = States.ActiveStatesByPriority;
-            foreach (GameState state in states)
+            States.ActiveState.Render();
+
+            var views = Game.ActiveViewsByPriority;
+            foreach (GameView view in views)
             {
-                state.OnRender(Window);
-                state.RenderEntities(Window);
+                view.RenderEntities(Window);
+                view.OnRender(Window);
             }
 
             RenderEnd();
@@ -95,11 +113,13 @@ namespace VorliasEngine2D.System
         {
             UpdateStart();
 
-            var states = States.ActiveStatesByPriority;
-            foreach (GameState state in states)
+            States.ActiveState.Update();
+
+            var views = Game.ActiveViewsByPriority;
+            foreach (GameView view in views)
             {
-                state.UpdateEntities();
-                state.OnUpdate(this);
+                view.OnUpdate(this);
+                view.UpdateEntities();
             }
 
             UpdateEnd();
@@ -107,7 +127,7 @@ namespace VorliasEngine2D.System
 
         public StateApplication(VideoMode mode, string title, Styles styles = Styles.Default) : base(mode, title, styles)
         {
-            stateManager = new StateManager(this);
+            stateManager = new StateGameManager(this);
             application = this;
         }
 
@@ -125,15 +145,15 @@ namespace VorliasEngine2D.System
 
         protected sealed override void AfterStart()
         {
-            States.Start();
+            Game.Start();
         }
 
         private void Window_MouseButtonReleased(object sender, MouseButtonEventArgs e)
         {
             InputService.InvokeInput(this, e.Button, InputState.Inactive);
 
-            var states = States.ActiveStatesByPriority;
-            foreach (GameState state in states)
+            var states = Game.ActiveViewsByPriority;
+            foreach (GameView state in states)
             {
                 state.InvokeInput(this, e.Button, InputState.Inactive);
             }
@@ -143,8 +163,8 @@ namespace VorliasEngine2D.System
         {
             InputService.InvokeInput(this, e.Button, InputState.Active);
 
-            var states = States.ActiveStatesByPriority;
-            foreach (GameState state in states)
+            var states = Game.ActiveViewsByPriority;
+            foreach (GameView state in states)
             {
                 state.InvokeInput(this, e.Button, InputState.Active);
             }
@@ -154,8 +174,8 @@ namespace VorliasEngine2D.System
         {
             InputService.InvokeInput(this, e.Code, InputState.Inactive);
 
-            var states = States.ActiveStatesByPriority;
-            foreach (GameState state in states)
+            var states = Game.ActiveViewsByPriority;
+            foreach (GameView state in states)
             {
                 state.InvokeInput(this, e.Code, InputState.Inactive);
             }
@@ -165,8 +185,8 @@ namespace VorliasEngine2D.System
         {
             InputService.InvokeInput(this, e.Code, InputState.Active);
 
-            var states = States.ActiveStatesByPriority;
-            foreach (GameState state in states)
+            var states = Game.ActiveViewsByPriority;
+            foreach (GameView state in states)
             {
                 state.InvokeInput(this, e.Code, InputState.Active);
             }

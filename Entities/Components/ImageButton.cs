@@ -8,11 +8,15 @@ using VorliasEngine2D.System;
 using SFML.System;
 using VorliasEngine2D.Entities.Components.Internal;
 using VorliasEngine2D.System.Debug;
+using SFML.Window;
+using VorliasEngine2D.Entities.Components.UI;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    public class ImageButton : UIComponent, ITextureComponent
+    public class UIImageButton : UIButton, ITextureComponent, IComponentEventListener
     {
+        public event MouseButtonClick OnButtonPressed;
+
         public override string Name
         {
             get
@@ -20,6 +24,7 @@ namespace VorliasEngine2D.Entities.Components
                 return "ImageButton";
             }
         }
+
 
         private Texture texture;
         private string textureId;
@@ -50,21 +55,13 @@ namespace VorliasEngine2D.Entities.Components
                 Transform.Size = new UICoordinates(0, texture.Size.X, 0, texture.Size.Y);
                 textureId = value;
                 RenderOrder = RenderOrder.Interface;
-                RectCollider.CreateRectCollider(Transform.Size.GlobalAbsolute);
-            }
-        }
-
-        public PolygonRectCollider RectCollider
-        {
-            get
-            {
-                return Entity.GetComponent<PolygonRectCollider>();
+                ButtonCollider.CreateRectCollider(Transform.Size.GlobalAbsolute);
             }
         }
 
         public override void OnComponentCopy(Entity source, Entity copy)
         {
-            var copyComponent = copy.AddComponent<ImageButton>();
+            var copyComponent = copy.AddComponent<UIImageButton>();
 
             if (TextureId != null)
                 copyComponent.TextureId = TextureId;
@@ -72,24 +69,18 @@ namespace VorliasEngine2D.Entities.Components
                 copyComponent.Texture = texture;
         }
 
-        public override void OnComponentInit(Entity entity)
-        {
-            var rectCollider = Entity.AddComponent<PolygonRectCollider>();
-            rectCollider.CreateRectCollider(new Vector2f(100, 20));
-        }
-
         public override void Draw(RenderTarget target, RenderStates states)
         {
-            
-
             UICoordinates size = Transform.Size;
             Vector2f totalSize = size.Absolute(target);
 
             if (texture != null)
-            { 
-                Sprite sprite = new Sprite(texture);
-                sprite.Position = Entity.Transform.Position;
-                sprite.Scale = new Vector2f(totalSize.X / texture.Size.X, totalSize.Y / texture.Size.Y);
+            {
+                Sprite sprite = new Sprite(texture)
+                {
+                    Position = Entity.Transform.Position,
+                    Scale = new Vector2f(totalSize.X / texture.Size.X, totalSize.Y / texture.Size.Y)
+                };
 
                 target.Draw(sprite);
             }
@@ -100,13 +91,23 @@ namespace VorliasEngine2D.Entities.Components
                 target.Draw(rect);
             }
 
-            RectCollider.DebugRenderPolygonCollider(target, Color.Red);
+            ButtonCollider.DebugRenderPolygonCollider(target, Color.Red);
+        }
+
+        public override void OnButtonInit(Entity entity)
+        {
+            var rectCollider = Entity.AddComponent<PolygonRectCollider>();
+            rectCollider.CreateRectCollider(new Vector2f(100, 20));
+        }
+
+        public override void ButtonClick(MouseInputAction inputAction)
+        {
+            OnButtonPressed?.Invoke(inputAction);
         }
 
         public override void Update()
         {
-            if (IsMouseOver)
-                Console.WriteLine("Ayy");   
+            
         }
 
         public override void AfterUpdate()
@@ -117,16 +118,6 @@ namespace VorliasEngine2D.Entities.Components
         public override void BeforeUpdate()
         {
             
-        }
-
-        public override string ToString()
-        {
-            if (textureId != null)
-                return Name + " (Textured) - TextureId: " + textureId;
-            else if (texture != null)
-                return Name + " (Textured)";
-            else
-                return Name + " (No Texture)";
         }
     }
 }

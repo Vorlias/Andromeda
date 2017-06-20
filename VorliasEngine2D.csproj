@@ -58,10 +58,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Components\Camera.cs" />
     <Compile Include="Entities\Components\ImageButton.cs" />
     <Compile Include="Entities\Components\Internal\Component.cs" />
     <Compile Include="Entities\Components\Internal\IContainerComponent.cs" />
+    <Compile Include="Entities\Components\Internal\IComponentEventListener.cs" />
     <Compile Include="Entities\Components\Internal\IUpdatableComponent.cs" />
+    <Compile Include="Entities\Components\Internal\IViewComponent.cs" />
     <Compile Include="Entities\Components\PolygonCircleCollider.cs" />
     <Compile Include="Entities\Components\Internal\IPolygonColliderComponent.cs" />
     <Compile Include="Entities\Components\PolygonCollider.cs" />
@@ -74,6 +77,8 @@
     <Compile Include="Entities\Components\Transform.cs" />
     <Compile Include="Entities\Components\Internal\UIComponent.cs" />
     <Compile Include="Entities\Components\UITransform.cs" />
+    <Compile Include="Entities\Components\UI\Button.cs" />
+    <Compile Include="Entities\Components\UIImage.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Prefab.cs" />
     <Compile Include="Entities\Components\UserInterface.cs" />
@@ -84,13 +89,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\Debugging\DebugExtension.cs" />
     <Compile Include="System\Experimental\Experimental.cs" />
-    <Compile Include="System\Experimental\GameScene.cs" />
     <Compile Include="System\GameState.cs" />
+    <Compile Include="System\GameView.cs" />
     <Compile Include="System\IInstanceTree.cs" />
     <Compile Include="System\UIDimensions.cs" />
     <Compile Include="System\UserInputAction.cs" />
     <Compile Include="System\StateApplication.cs" />
-    <Compile Include="System\StateManager.cs" />
+    <Compile Include="System\GameManager.cs" />
     <Compile Include="System\TextureManager.cs" />
     <Compile Include="System\UserInputService.cs" />
     <Compile Include="System\Utility\Extensions.cs" />

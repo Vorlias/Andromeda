@@ -52,14 +52,14 @@ namespace VorliasEngine2D.System
             get;
         }
 
-        public MouseInputAction Mouse()
+        public MouseInputAction Mouse
         {
-            return this as MouseInputAction;
+            get => this as MouseInputAction;
         }
 
-        public KeyboardInputAction Keyboard()
+        public KeyboardInputAction Keyboard
         {
-            return this as KeyboardInputAction;
+            get => this as KeyboardInputAction;
         }
     }
 

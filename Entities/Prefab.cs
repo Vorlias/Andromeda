@@ -23,7 +23,7 @@ namespace VorliasEngine2D.Entities
         /// Creates a copy of the prefab entity
         /// </summary>
         /// <returns>A copy of the prefab entity</returns>
-        public Entity Clone(GameState parent)
+        public Entity Clone(GameView parent)
         {
             Entity child = original.Clone();
             child.SetParentState(parent);
