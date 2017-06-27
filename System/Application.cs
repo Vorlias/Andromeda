@@ -119,7 +119,7 @@ namespace VorliasEngine2D.System
         /// <summary>
         /// The position of the centre of the window
         /// </summary>
-        public Vector2f Center
+        public Vector2f WindowCenter
         {
             get
             {
