@@ -11,12 +11,24 @@ using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
 {
+    public enum CameraType
+    {
+        World,
+        Interface
+    }
+
     public class Camera : Component, IUpdatableComponent, IRenderableComponent
     {
 
         public override bool AllowsMultipleInstances => false;
  
         public override string Name => "Camera";
+
+        CameraType cameraType = CameraType.World;
+        public CameraType CameraType
+        {
+            get => cameraType;
+        }
 
         //private Vector2f position = new Vector2f(0, 0);
 
@@ -66,11 +78,11 @@ namespace VorliasEngine2D.Entities.Components
 
         public void Update()
         {
-            var window = StateApplication.Application.Window;
-            View currentView = window.GetView();
+            var application = StateApplication.Application;
+            View currentView = application.WorldView;
             currentView.Center = WorldPosition;
             currentView.Rotation = Entity.Transform.LocalRotation;
-            window.SetView(currentView);
+            application.Window.SetView(currentView);
         }
 
         public void Draw(RenderTarget target, RenderStates states)
