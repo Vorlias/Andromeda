@@ -15,7 +15,7 @@ namespace VorliasEngine2D.Entities.Components
 {
     public class UIImageButton : UIButton, ITextureComponent, IComponentEventListener
     {
-        public event MouseButtonClick OnButtonPressed;
+        public event MouseEvent OnButtonPressed;
 
         public override string Name
         {

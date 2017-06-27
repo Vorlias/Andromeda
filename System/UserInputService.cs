@@ -5,9 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.System
 {
+    public enum InputBindingBehaviour
+    {
+        Fallthrough,
+        Consume,
+    }
+
     public enum InputBindingPriority
     {
         First = 1,
@@ -16,6 +23,40 @@ namespace VorliasEngine2D.System
         Last = 1000,
     }
 
+    /// <summary>
+    /// A combination of keys
+    /// </summary>
+    public struct KeyCombination
+    {
+        public Keyboard.Key[] Keys
+        {
+            get;
+        }
+
+        public bool AllKeysPressed
+        {
+            get
+            {
+                bool isActive = true;
+                foreach (Keyboard.Key key in Keys)
+                {
+                    if (!Keyboard.IsKeyPressed(key))
+                        isActive = false;
+                }
+
+                return isActive;
+            }
+        }
+
+        public KeyCombination(params Keyboard.Key[] keys)
+        {
+            Keys = keys;
+        }
+    }
+
+    /// <summary>
+    /// The input manager
+    /// </summary>
     public class UserInputManager
     {
         Dictionary<string, Mouse.Button> buttonBindings = new Dictionary<string, Mouse.Button>();
@@ -23,10 +64,12 @@ namespace VorliasEngine2D.System
         List<InputBindingAction> actions = new List<InputBindingAction>();
         List<InputBinding> bindings = new List<InputBinding>();
 
+
         public class InputBinding
         {
             protected object[] inputs;
             protected string actionName;
+            //protected InputBindingBehaviour inputBehaviour = InputBindingBehaviour.Fallthrough;
 
             /// <summary>
             /// The name of the action
@@ -70,6 +113,27 @@ namespace VorliasEngine2D.System
                 {
                     return inputs.OfType<Keyboard.Key>().ToArray();
                 }
+            }
+
+            /// <summary>
+            /// The keyboard combinations associated with this action
+            /// </summary>
+            public IEnumerable<KeyCombination> KeyCombinations
+            {
+                get => inputs.OfType<KeyCombination>();
+            }
+
+            /// <summary>
+            /// Method used to check if any of the mouse buttons are down
+            /// </summary>
+            /// <returns>True if one of the mouse buttons are down</returns>
+            public bool HasMouseButtonPressed()
+            {
+                foreach (Mouse.Button key in MouseButtons)
+                    if (Mouse.IsButtonPressed(key))
+                        return true;
+
+                return false;
             }
 
             /// <summary>
@@ -125,11 +189,17 @@ namespace VorliasEngine2D.System
             /// <param name="name">The name of the action</param>
             /// <param name="action">The action that is taken</param>
             /// <param name="inputs">The inputs that invoke this action</param>
-            public InputBindingAction(string name, Action<string, UserInputAction> action, object[] inputs, InputBindingPriority priority = InputBindingPriority.Normal) : base(name, inputs)
+            internal InputBindingAction(string name, Action<string, UserInputAction> action, object[] inputs, InputBindingPriority priority = InputBindingPriority.Normal) : base(name, inputs)
             {
                 this.action = action;
                 this.priority = priority;
             }
+        }
+
+
+        internal IOrderedEnumerable<InputBindingAction> ActionsByPriority
+        {
+            get => actions.OrderBy(e => e.BindingPriority);
         }
 
         /// <summary>
@@ -156,6 +226,11 @@ namespace VorliasEngine2D.System
             bindings.Add(binding);
         }
 
+        /// <summary>
+        /// Returns whether or not the key is down
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public bool IsKeyDown(string name)
         {
             var binding = bindings.Find(b => b.ActionName == name);
@@ -169,6 +244,13 @@ namespace VorliasEngine2D.System
             }
         }
 
+        /// <summary>
+        /// Invoke the input for the mouse wheel
+        /// </summary>
+        /// <param name="application">The application for the input</param>
+        /// <param name="input">The input mouse button</param>
+        /// <param name="delta">The delta movement of the scroll wheel</param>
+        /// <param name="state">The state of the mouse button</param>
         public void InvokeInput(Application application, Mouse.Wheel input, Vector2f delta, InputState state)
         {
             
@@ -182,7 +264,7 @@ namespace VorliasEngine2D.System
         /// <param name="state">The state of the mouse button</param>
         public void InvokeInput(Application application, Mouse.Button input, InputState state)
         {
-            foreach (InputBindingAction action in actions)
+            foreach (InputBindingAction action in ActionsByPriority)
             {
                 foreach (Mouse.Button button in action.MouseButtons)
                     if (button == input)
@@ -198,15 +280,31 @@ namespace VorliasEngine2D.System
         /// <param name="state">The state of the key</param>
         public void InvokeInput(Application application, Keyboard.Key input, InputState state)
         {
-            foreach (InputBindingAction action in actions)
+            foreach (InputBindingAction action in ActionsByPriority)
             {
+                foreach (KeyCombination combo in action.KeyCombinations)
+                {
+                    if (combo.AllKeysPressed)
+                    {
+                        var keyInputAction = new KeyboardInputAction(state, combo.Keys);
+                        action.Action.Invoke(action.ActionName, keyInputAction);
+                    }
+                }
+
                 foreach (Keyboard.Key key in action.KeyCodes)
                     if (key == input)
-                        action.Action.Invoke(action.ActionName, new KeyboardInputAction(key, state));
+                    {
+                        var keyInputAction = new KeyboardInputAction(state, key);
+                        action.Action.Invoke(action.ActionName, keyInputAction);
+                    }
+
 
                 foreach (string stringKey in action.Strings)
                     if (stringKey == input.ToString())
-                        action.Action.Invoke(action.ActionName, new KeyboardInputAction(input, state));
+                    {
+                        var keyInputAction = new KeyboardInputAction(state, input);
+                        action.Action.Invoke(action.ActionName, keyInputAction);
+                    }
             }
         }
     }

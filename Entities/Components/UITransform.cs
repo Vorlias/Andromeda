@@ -83,5 +83,7 @@ namespace VorliasEngine2D.Entities.Components
                 return "UITransform";
             }
         }
+
+        public UpdatePriority UpdatePriority => UpdatePriority.Interface;
     }
 }

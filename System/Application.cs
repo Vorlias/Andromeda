@@ -7,9 +7,12 @@ using SFML.Window;
 using SFML.System;
 using SFML.Graphics;
 using System.Runtime.InteropServices;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.System
 {
+
+
     /// <summary>
     /// An application
     /// </summary>
@@ -24,6 +27,11 @@ namespace VorliasEngine2D.System
         const int SW_HIDE = 0;
         const int SW_SHOW = 5;
 
+        public class ApplicationSettings
+        {
+            public bool RescaleViewOnResize = true;
+            //public bool CameraIsRelativeToZeroCoord = true;
+        }
 
         RenderWindow window;
         VideoMode mode;
@@ -31,6 +39,23 @@ namespace VorliasEngine2D.System
         Styles styles;
         float deltaTime;
         float fps;
+        ApplicationSettings settings;
+        View gameView, interfaceView;
+
+        public ApplicationSettings Settings
+        {
+            get => settings;
+        }
+
+        internal View WorldView
+        {
+            get => gameView;
+        }
+
+        internal View InterfaceView
+        {
+            get => interfaceView;
+        }
 
         /// <summary>
         /// The delta time of the window
@@ -198,6 +223,7 @@ namespace VorliasEngine2D.System
             Clock deltaClock = new Clock();
             window = new RenderWindow(mode, title, styles);
             window.Closed += WindowClosed;
+            window.Resized += Window_Resized;
 
             BeforeStart();
             Start();
@@ -206,6 +232,9 @@ namespace VorliasEngine2D.System
 #if !DEBUG
             ShowWindow(GetConsoleWindow(), SW_HIDE);
 #endif
+
+            gameView = window.GetView();
+            interfaceView = new View(gameView.Center, gameView.Size);
 
             while (window.IsOpen)
             {
@@ -226,6 +255,22 @@ namespace VorliasEngine2D.System
             }
 
             End();
+        }
+
+       
+
+        private void Window_Resized(object sender, SizeEventArgs e)
+        {
+            var window = sender as RenderWindow;
+
+            gameView = new View(new FloatRect(0, 0, window.Size.X, window.Size.Y));
+            interfaceView = new View(new FloatRect(0, 0, window.Size.X, window.Size.Y));
+
+            window.SetView(gameView);
+
+            Console.WriteLine("Update ViewPort: {0} : {1}", window?.Size, gameView.Size);
+
+           
         }
 
         /// <summary>

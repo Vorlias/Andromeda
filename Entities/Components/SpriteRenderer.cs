@@ -145,10 +145,22 @@ namespace VorliasEngine2D.Entities.Components
 
         public void Draw(RenderTarget target, RenderStates states)
         {
+            target.SetView(StateApplication.Application.WorldView);
+
             Transform transform = entity.Transform;
+            Vector2f position = transform.Position;
+
+
+            if (transform.Axis == Transform.AxisType.World)
+            {
+                // TODO: Position based on world offset to window corner
+                //Vector2f middle = target.GetView().Size / 2;
+                //position = position - middle;
+            }
+
             if (texture == null)
             {
-                RectangleShape rs = new RectangleShape(new SFML.System.Vector2f(100, 100));
+                RectangleShape rs = new RectangleShape(new Vector2f(100, 100));
                 rs.Origin = new Vector2f( 100 * renderAnchor.X, 100 * renderAnchor.Y);
                 rs.Position = transform.Position;
                 target.Draw(rs);

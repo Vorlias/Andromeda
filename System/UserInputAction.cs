@@ -61,6 +61,20 @@ namespace VorliasEngine2D.System
         {
             get => this as KeyboardInputAction;
         }
+
+        public override string ToString()
+        {
+            if (this is KeyboardInputAction)
+            {
+                return "KeyboardInputAction: " + Keyboard.Key.ToString();
+            }
+            else if (this is MouseInputAction)
+            {
+                return "MouseInputAction: " + Mouse.Button.ToString();
+            }
+            else
+                return "UserInputAction";
+        }
     }
 
     public class JoystickInputAction : UserInputAction
@@ -81,7 +95,7 @@ namespace VorliasEngine2D.System
 
     public class KeyboardInputAction : UserInputAction
     {
-        Keyboard.Key key;
+        List<Keyboard.Key> keys;
 
         /// <summary>
         /// The key associated with this input object
@@ -90,8 +104,13 @@ namespace VorliasEngine2D.System
         {
             get
             {
-                return key;
+                return keys.FirstOrDefault();
             }
+        }
+
+        public IEnumerable<Keyboard.Key> Keys
+        {
+            get => keys;
         }
 
         /// <summary>
@@ -105,9 +124,16 @@ namespace VorliasEngine2D.System
             }
         }
 
-        public KeyboardInputAction(Keyboard.Key key, InputState state)
+        public KeyboardInputAction(InputState state, params Keyboard.Key[] keys)
         {
-            this.key = key;
+            this.keys = new List<Keyboard.Key>();
+            this.keys.AddRange(keys);
+        }
+
+        public KeyboardInputAction(InputState state, Keyboard.Key key)
+        {
+            keys = new List<Keyboard.Key>();
+            keys.Add(key);
             this.state = state;
         }
     }

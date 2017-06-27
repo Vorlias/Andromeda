@@ -97,9 +97,9 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
-        /// The parent state of this entity (If applicable)
+        /// The parent view of this entity (If applicable)
         /// </summary>
-        public GameView ParentState
+        public GameView GameView
         {
             get
             {
@@ -288,6 +288,11 @@ namespace VorliasEngine2D.Entities
             return components.OfType<T>().FirstOrDefault();
         }
 
+        public IEnumerable<T> GetComponents<T>() where T : IComponent
+        {
+            return components.OfType<T>();
+        }
+
         /// <summary>
         /// Gets the components of the specified type in descendants
         /// </summary>
@@ -298,13 +303,11 @@ namespace VorliasEngine2D.Entities
             List<T> components = new List<T>();
             Entity[] descendants = Children;
 
-            if (HasComponent<T>())
-                components.Add(GetComponent<T>());
+            components.AddRange(GetComponents<T>());
 
             foreach (var child in descendants)
             {
-                if (child.HasComponent<T>())
-                    components.Add(child.GetComponent<T>());
+                components.AddRange(child.GetComponentsInDescendants<T>());
             }
 
             return components;
@@ -403,13 +406,13 @@ namespace VorliasEngine2D.Entities
 
         internal void Update()
         {
-            var updatableComponents = components.OfType<IUpdatableComponent>();
+            /*var updatableComponents = components.OfType<IUpdatableComponent>();
             foreach (IUpdatableComponent com in updatableComponents.ToList())
             {
                 com.BeforeUpdate();
                 com.Update();
                 com.AfterUpdate();
-            }
+            }*/
 
             foreach (Entity child in children)
             {
@@ -534,7 +537,7 @@ namespace VorliasEngine2D.Entities
         {
             Entity entity = Spawn();
             entity.SetParent(parent);
-            entity.SetParentState(parent.ParentState);
+            entity.SetParentState(parent.GameView);
 
             parent.components.Where(component => component is IContainerComponent).Select(component => component as IContainerComponent).ForEach(component => component.ChildAdded(entity));
 
@@ -622,7 +625,7 @@ namespace VorliasEngine2D.Entities
         internal Entity Clone(Entity parent = null)
         {
             Entity copy = new Entity();
-            copy.SetParentState(ParentState);
+            copy.SetParentState(GameView);
             if (parent != null)
                 copy.SetParent(parent);
             

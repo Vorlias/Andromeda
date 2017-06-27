@@ -77,7 +77,7 @@
     <Compile Include="Entities\Components\Transform.cs" />
     <Compile Include="Entities\Components\Internal\UIComponent.cs" />
     <Compile Include="Entities\Components\UITransform.cs" />
-    <Compile Include="Entities\Components\UI\Button.cs" />
+    <Compile Include="Entities\Components\UI\UIButton.cs" />
     <Compile Include="Entities\Components\UIImage.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Prefab.cs" />

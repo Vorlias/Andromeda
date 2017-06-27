@@ -41,6 +41,28 @@ namespace VorliasEngine2D.System
         GameViewPriority priority;
         HashSet<Entity> entities;
 
+        Camera viewCamera;
+        public Camera Camera
+        {
+            get
+            {
+                if (viewCamera == null)
+                {
+                    var existing = UpdatableComponents.OfType<Camera>();
+                    if (existing.Count() > 0)
+                    {
+                        viewCamera = existing.First();
+                    }
+                    else
+                    {
+                        viewCamera = SpawnEntity().AddComponent<Camera>();
+                    }
+                }
+
+                return viewCamera;
+            }
+        }
+
         private UserInputManager inputService;
         protected UserInputManager Input
         {
@@ -58,6 +80,14 @@ namespace VorliasEngine2D.System
             }
         }
 
+        /// <summary>
+        /// The game's states
+        /// </summary>
+        protected StateManager States
+        {
+            get => manager.Application.States;
+        }
+
         public Entity[] Descendants
         {
             get
@@ -71,7 +101,7 @@ namespace VorliasEngine2D.System
                 return entityList.ToArray();
             }
         }
-    
+
         /// <summary>
         /// The collision components
         /// </summary>
@@ -264,12 +294,27 @@ namespace VorliasEngine2D.System
             }
         }
 
+        /// <summary>
+        /// All the updatatable components in this view
+        /// </summary>
+        internal IEnumerable<IUpdatableComponent> UpdatableComponents
+        {
+            get
+            {
+                List<IUpdatableComponent> components = new List<IUpdatableComponent>();
+                Entities.Select(entity => entity.GetComponentsInDescendants<IUpdatableComponent>()).ForEach(list => components.AddRange(list));
+                return components.OrderBy(component => component.UpdatePriority);
+            }
+        }
+
         internal void UpdateEntities()
         {
-            foreach (Entity entity in Entities)
-            {
-                entity.Update();
-            }
+            var updatableComponents = UpdatableComponents;
+
+            updatableComponents.ForEach(com => com.BeforeUpdate());
+            updatableComponents.ForEach(com => com.Update());
+            updatableComponents.ForEach(com => com.AfterUpdate());
+
             UpdateCollisions();
         }
 
@@ -311,7 +356,7 @@ namespace VorliasEngine2D.System
 
         public override string ToString()
         {
-            return "[GameState " + GetType().Name + "@"+GetType().GUID+"]";
+            return "[GameState " + GetType().Name + "@" + GetType().GUID + "]";
         }
 
         public Entity FindFirstChild(string name)
@@ -390,7 +435,7 @@ namespace VorliasEngine2D.System
 
             foreach (IComponentEventListener com in EventComponents)
             {
-                com.InputRecieved(new KeyboardInputAction(input, state));
+                com.InputRecieved(new KeyboardInputAction(state, input));
             }
         }
     }

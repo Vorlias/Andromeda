@@ -35,6 +35,8 @@ namespace VorliasEngine2D.Entities.Components
 
         public override void Draw(RenderTarget target, RenderStates states)
         {
+            target.SetView(StateApplication.Application.InterfaceView);
+
             if (texture != null)
             {
                 Sprite sprite = new Sprite(texture)

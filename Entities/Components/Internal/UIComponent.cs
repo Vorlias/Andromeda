@@ -14,7 +14,8 @@ namespace VorliasEngine2D.Entities.Components.Internal
 {
     public abstract class UIComponent : Component, IRenderableComponent, IUpdatableComponent
     {
-        public delegate void MouseButtonClick(MouseInputAction action);
+        public delegate void MouseEvent(MouseInputAction action);
+        public delegate void KeyboardEvent(KeyboardInputAction action);
 
         public UIComponent()
         {
@@ -97,6 +98,8 @@ namespace VorliasEngine2D.Entities.Components.Internal
                 return "UIRenderer";
             }
         }
+
+        public UpdatePriority UpdatePriority => UpdatePriority.Interface;
 
         public virtual void Draw(RenderTarget target, RenderStates states)
         {

@@ -46,12 +46,21 @@ namespace VorliasEngine2D.Entities.Components
         }
     }
 
+
+
     public sealed class Transform : Transformable, IComponent
     {
+        public enum AxisType
+        {
+            World,
+            Window
+        }
+
         /// <summary>
         /// Flag for enabling local coordinates by default
         /// </summary>
         public const bool USE_LOCAL_COORDINATES_DEFAULT = false;
+        public const AxisType ENTITY_DEFAULT_AXIS = AxisType.World;
 
         bool localCoordinates = USE_LOCAL_COORDINATES_DEFAULT;
 
@@ -69,6 +78,17 @@ namespace VorliasEngine2D.Entities.Components
             {
                 localCoordinates = value;
             }
+        }
+
+        private AxisType worldAxis = ENTITY_DEFAULT_AXIS;
+
+        /// <summary>
+        /// The axis this transform applies to, if Window it will start at 0, 0 with the window - else if World it will start at the world 0, 0
+        /// </summary>
+        public AxisType Axis
+        {
+            get => worldAxis;
+            set => worldAxis = value;
         }
 
         private Entity entity;

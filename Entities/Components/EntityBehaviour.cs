@@ -12,6 +12,52 @@ using VorliasEngine2D.System.Utility;
 namespace VorliasEngine2D.Entities.Components
 {
     /// <summary>
+    /// The coordinates of the mouse
+    /// </summary>
+    public struct MouseCoordinates
+    {
+        /// <summary>
+        /// The position of the mouse relative to the world
+        /// </summary>
+        public Vector2f WorldPosition
+        {
+            get;
+        }
+
+        /// <summary>
+        /// The position of the mouse relative to the window
+        /// </summary>
+        public Vector2f WindowPosition
+        {
+            get;
+        }
+
+        internal MouseCoordinates(Application application, GameView view)
+        {
+            Vector2i mousePosition = Mouse.GetPosition(application.Window);
+
+            if (view.Camera != null)
+            {
+                Vector2f viewCenter = application.WorldView.Center;
+                Vector2u windowSize = application.Window.Size;
+                Camera defaultCamera = view.Camera;
+                Vector2f offset = new Vector2f(
+                    viewCenter.X - ( windowSize.X / 2 ) + mousePosition.X,
+                    viewCenter.Y - ( windowSize.Y / 2 ) + mousePosition.Y
+                ).Rotate(application.WorldView.Rotation);
+
+                WorldPosition = offset;
+                WindowPosition = new Vector2f(mousePosition.X, mousePosition.Y);
+            }
+            else
+            {
+                WindowPosition = new Vector2f(mousePosition.X, mousePosition.Y);
+                WorldPosition = WindowPosition;
+            }
+        }
+    }
+
+    /// <summary>
     /// Base class for custom scripted components
     /// </summary>
     public class EntityBehaviour : Component, IUpdatableComponent
@@ -37,13 +83,12 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        public Vector2f MousePosition
+        /// <summary>
+        /// The position information about the mouse
+        /// </summary>
+        public MouseCoordinates MousePosition
         {
-            get
-            {
-                Vector2i mousePosition = Mouse.GetPosition(Application.Window);
-                return new Vector2f(mousePosition.X, mousePosition.Y);
-            }
+            get => new MouseCoordinates(Application, Entity.GameView);
         }
 
         /// <summary>
@@ -154,6 +199,8 @@ namespace VorliasEngine2D.Entities.Components
                 return true;
             }
         }
+
+        public virtual UpdatePriority UpdatePriority => UpdatePriority.Normal;
 
         public new virtual void OnComponentCopy(Entity source, Entity copy)
         {

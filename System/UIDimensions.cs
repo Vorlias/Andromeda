@@ -9,7 +9,7 @@ using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.System
 {
-    public class UIAxis
+    public struct UIAxis
     {
         public float Scale
         {
@@ -39,7 +39,7 @@ namespace VorliasEngine2D.System
     /// A vector that represents a UI coordinate
     /// (scale, offset) for (x, y)
     /// </summary>
-    public class UICoordinates // TODO: Think of better name
+    public struct UICoordinates // TODO: Think of better name
     {
         UIAxis x;
         UIAxis y;
@@ -107,6 +107,11 @@ namespace VorliasEngine2D.System
         internal Vector2f Absolute(RenderTarget window)
         {
             return new Vector2f(x.Offset + window.Size.X * x.Scale, y.Offset + window.Size.Y * y.Scale);
+        }
+
+        internal Vector2f Absolute(View view)
+        {
+            return new Vector2f(x.Offset + view.Size.X * x.Scale, y.Offset + view.Size.Y * y.Scale);
         }
 
         public override string ToString()

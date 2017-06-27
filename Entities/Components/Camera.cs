@@ -11,66 +11,45 @@ using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    public class Camera : Component, IViewComponent, IUpdatableComponent
+    public class Camera : Component, IUpdatableComponent, IRenderableComponent
     {
+
         public override bool AllowsMultipleInstances => false;
  
         public override string Name => "Camera";
 
-        View view;
+        //private Vector2f position = new Vector2f(0, 0);
 
-        public View View => view;
         /// <summary>
-        /// The size of the camera's view
+        /// The position of the camera relative to the world's center
         /// </summary>
-        public Vector2f ViewSize
+        public Vector2f WorldPosition
         {
-            get => view.Size;
-            set => view.Size = value;
-        }
-
-        public FloatRect Viewport
-        {
-            get => view.Viewport;
-            set => view.Viewport = value;
+            get => Entity.Transform.Position;
+            set => Entity.Transform.Position = value;
         }
 
         /// <summary>
-        /// A constraint based on the camera
+        /// The position of the camera relative to the view of the window. This _should_ always be the center. (Used for testing)
         /// </summary>
-        public PositionConstraint ViewportConstraint
+        [Obsolete("Not yet implemented.")]
+        internal Vector2f WindowPosition
         {
-            get => new PositionConstraint(
-                new Vector2f(
-                    view.Center.X - view.Size.X / 2, 
-                    view.Center.Y - view.Size.Y / 2), 
-                new Vector2f(
-                    view.Center.X + view.Size.X / 2,
-                    view.Center.Y + view.Size.Y / 2)
-                );
+            get => new Vector2f(0, 0);
         }
 
-        public Vector2f Position
-        {
-            get => view.Center;
-        }
+        public UpdatePriority UpdatePriority => UpdatePriority.Camera;
 
-        public void SetView(Vector2f size)
+        public RenderOrder RenderOrder
         {
-            SetView(new View(Position, new Vector2f(size.X, size.Y)));
-        }
-
-        public void SetView(View view)
-        {
-            this.view = view;
-            StateApplication app = StateApplication.Application;
-            app.Window.SetView(view);
+            get => RenderOrder.Camera;
+            set => throw new NotImplementedException();
         }
 
         public override void OnComponentInit(Entity entity)
         {
             StateApplication app = StateApplication.Application;
-            view = app.Window.DefaultView;
+            //view = app.Window.DefaultView;
 
             entity.AddComponent<Transform>();
         }
@@ -87,7 +66,21 @@ namespace VorliasEngine2D.Entities.Components
 
         public void Update()
         {
-            view.Center = Entity.GetComponent<Transform>().Position;
+            var window = StateApplication.Application.Window;
+            View currentView = window.GetView();
+            currentView.Center = WorldPosition;
+            currentView.Rotation = Entity.Transform.LocalRotation;
+            window.SetView(currentView);
+        }
+
+        public void Draw(RenderTarget target, RenderStates states)
+        {
+            RectangleShape rs = new RectangleShape();
+            rs.Size = new Vector2f(10, 10);
+            rs.Origin = new Vector2f(-5, -5);
+            rs.Position = Entity.Position;
+
+            target.Draw(rs);
         }
     }
 }

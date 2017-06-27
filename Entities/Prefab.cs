@@ -40,7 +40,7 @@ namespace VorliasEngine2D.Entities
         public Entity Clone(Entity parent)
         {
             Entity child = original.Clone(parent);
-            child.SetParentState(parent.ParentState);
+            child.SetParentState(parent.GameView);
             child.Name = original.Name + " (Instance)";
             parent.AddEntity(child);
 
