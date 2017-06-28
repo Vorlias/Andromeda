@@ -45,15 +45,16 @@ namespace VorliasEngine2D.Entities.Components
 
             if (view.Camera != null && view.Camera.View != null)
             {
-                Vector2f viewCenter = view.Camera.View.Center;
+                View cameraView = view.Camera.View;
+                Vector2f viewCenter = cameraView.Center;
                 Vector2u windowSize = application.Window.Size;
                 Camera defaultCamera = view.Camera;
                 Vector2f offset = new Vector2f(
                     viewCenter.X - ( windowSize.X / 2 ) + mousePosition.X,
                     viewCenter.Y - ( windowSize.Y / 2 ) + mousePosition.Y
-                ).Rotate(application.WorldView.Rotation);
+                );
 
-                WorldPosition = offset;
+                WorldPosition = offset.Rotate(cameraView.Rotation);
                 WindowPosition = new Vector2f(mousePosition.X, mousePosition.Y);
             }
             else
