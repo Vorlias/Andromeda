@@ -57,6 +57,9 @@ namespace VorliasEngine2D.Graphics
             Right = right;
             Bottom = bottom;
         }
+
+        {
+        }
     }
 
     public static class TextureExtension
