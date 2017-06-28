@@ -49,8 +49,6 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        //private Vector2f position = new Vector2f(0, 0);
-
         /// <summary>
         /// The position of the camera relative to the world's center
         /// </summary>
@@ -80,9 +78,6 @@ namespace VorliasEngine2D.Entities.Components
         public override void OnComponentInit(Entity entity)
         {
             StateApplication app = StateApplication.Application;
-            //view = app.Window.DefaultView;
-
-            
 
             entity.AddComponent<Transform>();
         }
