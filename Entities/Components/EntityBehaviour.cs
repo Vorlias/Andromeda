@@ -16,6 +16,11 @@ namespace VorliasEngine2D.Entities.Components
     /// </summary>
     public struct MouseCoordinates
     {
+        public GameView View
+        {
+            get;
+        }
+
         /// <summary>
         /// The position of the mouse relative to the world
         /// </summary>
@@ -35,10 +40,11 @@ namespace VorliasEngine2D.Entities.Components
         internal MouseCoordinates(Application application, GameView view)
         {
             Vector2i mousePosition = Mouse.GetPosition(application.Window);
+            View = view;
 
-            if (view.Camera != null)
+            if (view.Camera != null && view.Camera.View != null)
             {
-                Vector2f viewCenter = application.WorldView.Center;
+                Vector2f viewCenter = view.Camera.View.Center;
                 Vector2u windowSize = application.Window.Size;
                 Camera defaultCamera = view.Camera;
                 Vector2f offset = new Vector2f(

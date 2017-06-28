@@ -41,25 +41,25 @@ namespace VorliasEngine2D.System
         GameViewPriority priority;
         HashSet<Entity> entities;
 
-        Camera viewCamera;
+        Camera camera;
         public Camera Camera
         {
             get
             {
-                if (viewCamera == null)
+                if (camera == null)
                 {
                     var existing = UpdatableComponents.OfType<Camera>();
                     if (existing.Count() > 0)
                     {
-                        viewCamera = existing.First();
+                        camera = existing.First();
                     }
                     else
                     {
-                        viewCamera = SpawnEntity().AddComponent<Camera>();
+                        camera = SpawnEntity().AddComponent<Camera>();
                     }
                 }
 
-                return viewCamera;
+                return camera;
             }
         }
 
@@ -132,6 +132,20 @@ namespace VorliasEngine2D.System
             get
             {
                 return Descendants.Where(entity => entity.HasComponent<ICollisionComponent>()).ToArray();
+            }
+        }
+
+
+        /// <summary>
+        /// Returns all the drawable entities
+        /// </summary>
+        internal IEnumerable<IRenderableComponent> Renderable
+        {
+            get
+            {
+                List<IRenderableComponent> renderable = new List<IRenderableComponent>();
+                Descendants.ForEach(v => renderable.AddRange(v.GetComponents<IRenderableComponent>()));
+                return renderable.OrderBy(e => e.RenderOrder);
             }
         }
 
@@ -303,7 +317,7 @@ namespace VorliasEngine2D.System
             {
                 List<IUpdatableComponent> components = new List<IUpdatableComponent>();
                 Entities.Select(entity => entity.GetComponentsInDescendants<IUpdatableComponent>()).ForEach(list => components.AddRange(list));
-                return components.OrderBy(component => component.UpdatePriority);
+                return components.OrderByDescending(component => component.UpdatePriority);
             }
         }
 
@@ -320,9 +334,26 @@ namespace VorliasEngine2D.System
 
         internal void RenderEntities(RenderWindow window)
         {
-            foreach (Entity entity in DrawableEntities)
+            //foreach (Entity entity in DrawableEntities)
+            //{
+            //    entity.Render(window);
+            //}
+
+            if (camera != null)
             {
-                entity.Render(window);
+                if (Camera.CameraType == CameraType.Interface)
+                    window.SetView(Camera.View);
+                else if (Camera.CameraType == CameraType.World)
+                    window.SetView(Camera.View);
+            }
+            else
+            {
+                window.SetView(Application.InterfaceView);
+            }
+
+            foreach (var component in Renderable)
+            {
+                component.Draw(window, RenderStates.Default);
             }
         }
 

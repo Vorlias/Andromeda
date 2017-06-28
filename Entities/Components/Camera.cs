@@ -24,10 +24,29 @@ namespace VorliasEngine2D.Entities.Components
  
         public override string Name => "Camera";
 
+        View view;
+        public View View
+        {
+            get => view;
+        }
+
         CameraType cameraType = CameraType.World;
         public CameraType CameraType
         {
             get => cameraType;
+            set
+            {
+                if (value == CameraType.Interface)
+                {
+                    updatePriority = UpdatePriority.Interface - 1;
+                    cameraType = value;
+                }
+                else
+                {
+                    updatePriority = UpdatePriority.Camera;
+                    cameraType = value;
+                }
+            }
         }
 
         //private Vector2f position = new Vector2f(0, 0);
@@ -50,7 +69,8 @@ namespace VorliasEngine2D.Entities.Components
             get => new Vector2f(0, 0);
         }
 
-        public UpdatePriority UpdatePriority => UpdatePriority.Camera;
+        private UpdatePriority updatePriority = UpdatePriority.Camera;
+        public UpdatePriority UpdatePriority => updatePriority;
 
         public RenderOrder RenderOrder
         {
@@ -62,6 +82,8 @@ namespace VorliasEngine2D.Entities.Components
         {
             StateApplication app = StateApplication.Application;
             //view = app.Window.DefaultView;
+
+            
 
             entity.AddComponent<Transform>();
         }
@@ -79,10 +101,28 @@ namespace VorliasEngine2D.Entities.Components
         public void Update()
         {
             var application = StateApplication.Application;
-            View currentView = application.WorldView;
-            currentView.Center = WorldPosition;
-            currentView.Rotation = Entity.Transform.LocalRotation;
-            application.Window.SetView(currentView);
+            //View currentView = application.WorldView;
+
+            if (cameraType == CameraType.Interface)
+            {
+                if (view == null)
+                    view = new View(application.InterfaceView);
+
+                view.Rotation = 0;
+                view.Center = application.Window.Size.ToFloatVector() / 2;
+            }
+            else
+            {
+                if (view == null)
+                    view = new View(application.WorldView);
+
+                view.Center = WorldPosition;
+                view.Rotation = Entity.Transform.LocalRotation;
+            }
+                
+
+
+            application.Window.SetView(view);
         }
 
         public void Draw(RenderTarget target, RenderStates states)
@@ -91,6 +131,11 @@ namespace VorliasEngine2D.Entities.Components
             rs.Size = new Vector2f(10, 10);
             rs.Origin = new Vector2f(-5, -5);
             rs.Position = Entity.Position;
+
+            if (cameraType == CameraType.Interface)
+                rs.FillColor = Color.Magenta;
+            else if (cameraType == CameraType.World)
+                rs.FillColor = Color.Cyan;
 
             target.Draw(rs);
         }

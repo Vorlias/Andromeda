@@ -145,7 +145,7 @@ namespace VorliasEngine2D.Entities.Components
 
         public void Draw(RenderTarget target, RenderStates states)
         {
-            target.SetView(StateApplication.Application.WorldView);
+            //target.SetView(StateApplication.Application.WorldView);
 
             Transform transform = entity.Transform;
             Vector2f position = transform.Position;

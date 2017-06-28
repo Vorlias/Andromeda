@@ -17,7 +17,7 @@ namespace VorliasEngine2D.Entities.Components
         Camera = 10000,
     }
 
-    public interface IRenderableComponent : Drawable
+    public interface IRenderableComponent : Drawable, IComponent
     {
         RenderOrder RenderOrder
         {

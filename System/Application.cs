@@ -233,8 +233,10 @@ namespace VorliasEngine2D.System
             ShowWindow(GetConsoleWindow(), SW_HIDE);
 #endif
 
-            gameView = window.GetView();
-            interfaceView = new View(gameView.Center, gameView.Size);
+            View defaultView = window.DefaultView;
+
+            gameView = new View(defaultView.Center, defaultView.Size);
+            interfaceView = new View(defaultView.Center, defaultView.Size);
 
             while (window.IsOpen)
             {
@@ -266,7 +268,7 @@ namespace VorliasEngine2D.System
             gameView = new View(new FloatRect(0, 0, window.Size.X, window.Size.Y));
             interfaceView = new View(new FloatRect(0, 0, window.Size.X, window.Size.Y));
 
-            window.SetView(gameView);
+            //window.SetView(gameView);
 
             Console.WriteLine("Update ViewPort: {0} : {1}", window?.Size, gameView.Size);
 
