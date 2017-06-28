@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace VorliasEngine2D.Graphics
 {
-    public class SliceRect
+    public struct SliceRect
     {
         public int Right
         {
@@ -85,47 +85,105 @@ namespace VorliasEngine2D.Graphics
             bottomCentre,
             bottomRight;
 
-        RenderTexture renderTexture;
+        //RenderTexture renderTexture;
         SliceRect sliceRect;
+        Texture sourceTexture;
+        RenderTexture renderTexture;
+        Color color = Color.White;
 
-        public Texture ToTexture(Vector2u size, Color color = new Color())
+        /// <summary>
+        /// Creates a NineSlice texture
+        /// </summary>
+        /// <param name="size">The size of this texture</param>
+        /// <param name="color">The colour of this texture</param>
+        /// <returns></returns>
+        public Texture ToTexture(Vector2u size)
         {
-            RenderTexture rTexture = new RenderTexture(size.X, size.Y);
+            renderTexture = new RenderTexture(size.X, size.Y);
+
+            renderTexture.Clear(Color.Transparent);
 
             // TOP
 
-            Sprite topLeftSprite = new Sprite(topLeft);
-            topLeftSprite.Color = color;
-            rTexture.Draw(topLeftSprite);
+            Sprite topLeftSprite = new Sprite(topLeft)
+            {
+                Color = color
+            };
+            renderTexture.Draw(topLeftSprite);
 
-            Sprite topCentreSprite = new Sprite(topCentre);
-            topCentreSprite.Position = new Vector2f(sliceRect.Left, 0);
-            topCentreSprite.Color = color;
-            rTexture.Draw(topCentreSprite);
+            Sprite topCentreSprite = new Sprite(topCentre, new IntRect(sliceRect.Left, 0, (int) size.X - ( sliceRect.Width * 2 ), sliceRect.Height))
+            {
+                Position = new Vector2f(sliceRect.Left, 0),
+                Color = color
+            };
+            renderTexture.Draw(topCentreSprite);
 
-            Sprite topRightSprite = new Sprite(topRight);
-            topRightSprite.Position = new Vector2f(size.X - sliceRect.Width, 0);
-            topRightSprite.Color = color;
-            rTexture.Draw(topRightSprite);
+            Sprite topRightSprite = new Sprite(topRight)
+            {
+                Position = new Vector2f(size.X - sliceRect.Width, 0),
+                Color = color
+            };
+            renderTexture.Draw(topRightSprite);
 
             // CENTRE
 
-            Sprite centreLeftSprite = new Sprite(centreLeft);
-            centreLeftSprite.Position = new Vector2f(0, sliceRect.Top);
-            centreLeftSprite.Color = color;
-            rTexture.Draw(centreLeftSprite);
+            Sprite centreLeftSprite = new Sprite(centreLeft, new IntRect(0, 0, sliceRect.Width, ( (int) size.Y - sliceRect.Height * 2 )))
+            {
+                Position = new Vector2f(0, sliceRect.Top),
+                Color = color
+            };
+            renderTexture.Draw(centreLeftSprite);
 
-            Sprite centreSprite = new Sprite(centre);
-            centreSprite.Position = new Vector2f(sliceRect.Left, sliceRect.Top);
-            centreSprite.Color = color;
-            rTexture.Draw(centreSprite);
+            Sprite centreSprite = new Sprite(centre, new IntRect(0, 0, (int) size.X - ( sliceRect.Width * 2 ), (int) size.Y - ( sliceRect.Height * 2 )))
+            {
+                Position = new Vector2f(sliceRect.Left, sliceRect.Top),
+                Color = color
+            };
+            renderTexture.Draw(centreSprite);
 
-            Sprite centreRightSprite = new Sprite(centreRight);
-            centreRightSprite.Position = new Vector2f(size.X - sliceRect.Width, sliceRect.Height);
+            Sprite centreRightSprite = new Sprite(centreRight, new IntRect(0, 0, sliceRect.Width, ( (int) size.Y - sliceRect.Height * 2 )))
+            {
+                Position = new Vector2f(size.X - sliceRect.Width, sliceRect.Height),
+                Color = color
+            };
+            renderTexture.Draw(centreRightSprite);
 
             // BOTTOM
 
-            return null;
+            Sprite bottomLeftSprite = new Sprite(bottomLeft, new IntRect(0, 0, sliceRect.Width, sliceRect.Height))
+            {
+                Position = new Vector2f(0, size.Y - sliceRect.Height),
+                Color = color
+            };
+            renderTexture.Draw(bottomLeftSprite);
+
+            Sprite bottomCentreSprite = new Sprite(bottomCentre, new IntRect(0, 0, (int) size.X - ( sliceRect.Width * 2 ), sliceRect.Height))
+            {
+                Position = new Vector2f(sliceRect.Left, size.Y - sliceRect.Top),
+                Color = color
+            };
+            renderTexture.Draw(bottomCentreSprite);
+
+            Sprite bottomRightSprite = new Sprite(bottomRight, new IntRect(0, 0, sliceRect.Width, sliceRect.Height))
+            {
+                Position = new Vector2f(size.X - sliceRect.Left, size.Y - sliceRect.Top),
+                Color = color
+            };
+            renderTexture.Draw(bottomRightSprite);
+
+
+            renderTexture.Display();
+            return renderTexture.Texture;
+        }
+
+        /// <summary>
+        /// Creates a NineSliceTexture from a texture (expensive)
+        /// </summary>
+        /// <param name="texture">The texture to load it from</param>
+        /// <param name="sliceRect">The slice rect</param>
+        public NineSliceTexture(Texture texture, SliceRect sliceRect) : this(texture.CopyToImage(), sliceRect)
+        {
+            sourceTexture = texture;
         }
 
         public NineSliceTexture(Image image, SliceRect sliceRect)
