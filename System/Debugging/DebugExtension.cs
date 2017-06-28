@@ -37,7 +37,7 @@ namespace VorliasEngine2D.System.Debug
         /// <param name="collider"></param>
         /// <param name="target"></param>
         /// <param name="renderColor"></param>
-        public static void DebugRenderPolygonCollider(this IPolygonColliderComponent collider, RenderTarget target, Color renderColor)
+        public static void DebugRender(this IPolygonColliderComponent collider, RenderTarget target, Color renderColor)
         {
             Entities.Components.Transform transform = collider.Entity.Transform;
 

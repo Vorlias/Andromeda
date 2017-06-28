@@ -91,7 +91,7 @@ namespace VorliasEngine2D.Entities.Components
                 target.Draw(rect);
             }
 
-            ButtonCollider.DebugRenderPolygonCollider(target, Color.Red);
+            ButtonCollider.DebugRender(target, Color.Red);
         }
 
         public override void OnButtonInit(Entity entity)
