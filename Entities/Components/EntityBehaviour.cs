@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using VorliasEngine2D.Entities.Components.Internal;
 using VorliasEngine2D.System;
 using VorliasEngine2D.System.Utility;
+using SFML.Graphics;
 
 namespace VorliasEngine2D.Entities.Components
 {
@@ -66,7 +67,7 @@ namespace VorliasEngine2D.Entities.Components
     /// <summary>
     /// Base class for custom scripted components
     /// </summary>
-    public class EntityBehaviour : Component, IUpdatableComponent
+    public class EntityBehaviour : Component, IUpdatableComponent, IRenderableComponent
     {
         private bool initialized = false;
 
@@ -208,9 +209,22 @@ namespace VorliasEngine2D.Entities.Components
 
         public virtual UpdatePriority UpdatePriority => UpdatePriority.Normal;
 
+
+        private RenderOrder renderOrder = RenderOrder.Normal;
+        public virtual RenderOrder RenderOrder
+        {
+            get => renderOrder;
+            set => renderOrder = value;
+        }
+
         public new virtual void OnComponentCopy(Entity source, Entity copy)
         {
             // Do nothing, this is a custom component.
+        }
+
+        public void Draw(RenderTarget target, RenderStates states)
+        {
+            Render();
         }
     }
 }
