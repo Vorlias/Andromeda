@@ -13,6 +13,24 @@ namespace VorliasEngine2D.System.Debug
 {
     public static class DebugExtension
     {
+        public static void DebugRender(this Camera camera, RenderTarget target)
+        {
+            RectangleShape cameraPositionRect = new RectangleShape();
+            cameraPositionRect.FillColor = Color.Magenta;
+            cameraPositionRect.Origin = new Vector2f(-5, -5);
+            cameraPositionRect.Position = camera.WorldPosition;
+            cameraPositionRect.Size = new Vector2f(10, 10);
+
+            RectangleShape originPositionRect = new RectangleShape();
+            originPositionRect.FillColor = Color.Cyan;
+            originPositionRect.Origin = new Vector2f(-5, -5);
+            originPositionRect.Position = camera.ZeroPosition;
+            originPositionRect.Size = new Vector2f(10, 10);
+
+            target.Draw(cameraPositionRect);
+            target.Draw(originPositionRect);
+        }
+
         /// <summary>
         /// Draws the polygon collider
         /// </summary>

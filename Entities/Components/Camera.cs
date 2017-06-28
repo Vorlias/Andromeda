@@ -17,7 +17,7 @@ namespace VorliasEngine2D.Entities.Components
         Interface
     }
 
-    public class Camera : Component, IUpdatableComponent, IRenderableComponent
+    public class Camera : Component, IUpdatableComponent
     {
 
         public override bool AllowsMultipleInstances => false;
@@ -61,12 +61,11 @@ namespace VorliasEngine2D.Entities.Components
         }
 
         /// <summary>
-        /// The position of the camera relative to the view of the window. This _should_ always be the center. (Used for testing)
+        /// The position on the camera where the world's center (0, 0) is
         /// </summary>
-        [Obsolete("Not yet implemented.")]
-        internal Vector2f WindowPosition
+        internal Vector2f ZeroPosition
         {
-            get => new Vector2f(0, 0);
+            get => Entity.Transform.Position - View.Center;
         }
 
         private UpdatePriority updatePriority = UpdatePriority.Camera;
@@ -98,6 +97,15 @@ namespace VorliasEngine2D.Entities.Components
             
         }
 
+        /// <summary>
+        /// Resets the camera position and rotation
+        /// </summary>
+        public void Reset()
+        {
+            WorldPosition = new Vector2f(0, 0);
+            Entity.Transform.Rotation = 0;
+        }
+
         public void Update()
         {
             var application = StateApplication.Application;
@@ -123,21 +131,6 @@ namespace VorliasEngine2D.Entities.Components
 
 
             application.Window.SetView(view);
-        }
-
-        public void Draw(RenderTarget target, RenderStates states)
-        {
-            RectangleShape rs = new RectangleShape();
-            rs.Size = new Vector2f(10, 10);
-            rs.Origin = new Vector2f(-5, -5);
-            rs.Position = Entity.Position;
-
-            if (cameraType == CameraType.Interface)
-                rs.FillColor = Color.Magenta;
-            else if (cameraType == CameraType.World)
-                rs.FillColor = Color.Cyan;
-
-            target.Draw(rs);
         }
     }
 }
