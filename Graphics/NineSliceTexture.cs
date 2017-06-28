@@ -58,7 +58,12 @@ namespace VorliasEngine2D.Graphics
             Bottom = bottom;
         }
 
+        public SliceRect(int inset)
         {
+            Left = inset;
+            Top = inset;
+            Right = inset;
+            Bottom = inset;
         }
     }
 
