@@ -24,7 +24,7 @@ namespace VorliasEngine2D.System.Debug
             RectangleShape originPositionRect = new RectangleShape();
             originPositionRect.FillColor = Color.Cyan;
             originPositionRect.Origin = new Vector2f(-5, -5);
-            originPositionRect.Position = camera.ZeroPosition;
+            originPositionRect.Position = camera.WorldZeroPosition;
             originPositionRect.Size = new Vector2f(10, 10);
 
             target.Draw(cameraPositionRect);

@@ -63,7 +63,7 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// The position on the camera where the world's center (0, 0) is
         /// </summary>
-        internal Vector2f ZeroPosition
+        internal Vector2f WorldZeroPosition
         {
             get => Entity.Transform.Position - View.Center;
         }
