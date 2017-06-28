@@ -109,7 +109,6 @@ namespace VorliasEngine2D.Entities.Components
         public void Update()
         {
             var application = StateApplication.Application;
-            //View currentView = application.WorldView;
 
             if (cameraType == CameraType.Interface)
             {
@@ -128,8 +127,6 @@ namespace VorliasEngine2D.Entities.Components
                 view.Rotation = Entity.Transform.LocalRotation;
             }
                 
-
-
             application.Window.SetView(view);
         }
     }
