@@ -39,6 +39,9 @@ namespace VorliasEngine2D.Entities.Components
             set
             {
                 texture = value;
+                Transform.Size = new UICoordinates(0, texture.Size.X, 0, texture.Size.Y);
+                RenderOrder = RenderOrder.Interface;
+                ButtonCollider.CreateRectCollider(Transform.Size.GlobalAbsolute);
             }
         }
 
