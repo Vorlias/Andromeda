@@ -10,12 +10,33 @@ using VorliasEngine2D.System;
 
 namespace VorliasEngine2D.Entities.Components
 {
+
     /// <summary>
     /// User Interface Transform Component - Overrides the default Transform.
     /// </summary>
     public sealed class UITransform : Component, IUpdatableComponent
     {
         private Transform transform;
+
+        UICoordinateMode sizeMode = UICoordinateMode.ParentXY;
+        /// <summary>
+        /// How the size is calculated
+        /// </summary>
+        public UICoordinateMode SizeMode
+        {
+            get => sizeMode;
+            set => sizeMode = value;
+        }
+
+        UICoordinateMode posMode = UICoordinateMode.ParentXY;
+        /// <summary>
+        /// How the position is calculated
+        /// </summary>
+        public UICoordinateMode PositionMode
+        {
+            get => posMode;
+            set => posMode = value;
+        }
 
         [PersistentProperty("Size", PropertyType = SerializedPropertyType.UICoordinates)]
         public UICoordinates Size
@@ -31,6 +52,54 @@ namespace VorliasEngine2D.Entities.Components
             set;
         }
 
+        internal UICoordinates RelativeToSize(UICoordinates size, UICoordinates position)
+        {
+            return new UICoordinates(
+                new UIAxis(0, ( position.X.Scale * size.GlobalAbsolute.X ) + position.X.Offset),
+                new UIAxis(0, ( position.Y.Scale * size.GlobalAbsolute.Y ) + position.Y.Offset)
+            );
+        }
+
+        /// <summary>
+        /// The position relative to the parent
+        /// </summary>
+        internal UICoordinates PositionRelative
+        {
+            get
+            {
+                var parentTransform = Entity?.Parent?.GetComponent<UITransform>();
+                if (parentTransform != null && posMode == UICoordinateMode.ParentXY)
+                {
+                    var rel = RelativeToSize(parentTransform.Size, Position);
+                    var result = parentTransform.PositionRelative + rel; //Position + parentTransform.PositionRelative;
+                    return result;
+                }
+                else
+                {
+                    return Position;
+                }
+            }
+        }
+
+        /// <summary>
+        /// The size relative to the parent
+        /// </summary>
+        internal UICoordinates SizeRelative
+        {
+            get
+            {
+                var parentTransform = Entity?.Parent.GetComponent<UITransform>();
+                if (parentTransform != null && sizeMode == UICoordinateMode.ParentXY)
+                {
+                    return Size * parentTransform.SizeRelative.GlobalAbsolute;
+                }
+                else
+                {
+                    return Size;
+                }
+            }
+        }
+
         public override bool AllowsMultipleInstances
         {
             get
@@ -42,7 +111,7 @@ namespace VorliasEngine2D.Entities.Components
         public void Update()
         {
             // We want to update the transform to reflect this ;)
-            Entity.Transform.Position = Position.GlobalAbsolute;
+            Entity.Transform.Position = PositionRelative.GlobalAbsolute;
             Entity.Transform.Origin = new Vector2f(0, 0);
         }
 

@@ -23,11 +23,22 @@ namespace VorliasEngine2D.System
             set;
         }
 
-        internal UIAxis(float scale, float offset)
+        public UIAxis(float scale, float offset)
         {
             Scale = scale;
             Offset = offset;
         }
+
+        public static UIAxis operator +(UIAxis left, UIAxis right)
+        {
+            return new UIAxis(left.Scale + right.Scale, left.Offset + right.Offset);
+        }
+
+        public static UIAxis operator +(UIAxis left, float right)
+        {
+            return new UIAxis(left.Scale, left.Offset + right);
+        }
+
 
         public override string ToString()
         {
@@ -82,10 +93,42 @@ namespace VorliasEngine2D.System
             }
         }
 
+        public static UICoordinates operator +(UICoordinates left, UICoordinates right)
+        {
+            return new UICoordinates(left.X + right.X, left.Y + right.Y);
+        }
+
+        public static UICoordinates operator +(UICoordinates left, Vector2f right)
+        {
+            return new UICoordinates(left.X + right.X, left.Y + right.Y);
+        }
+
+        public static UICoordinates operator *(UICoordinates child, UICoordinates parent)
+        {
+            return new UICoordinates(
+                new UIAxis((child.X.Scale * parent.X.Scale), child.X.Offset),
+                new UIAxis((child.Y.Scale * parent.Y.Scale), child.Y.Offset)
+            );
+        }
+
+
+
+        public static UICoordinates operator *(UICoordinates left, Vector2f right)
+        {
+            // Used for size relative conversion
+            return new UICoordinates(new UIAxis(right.X / left.X.Scale, left.X.Offset), new UIAxis(right.Y * left.Y.Scale, left.Y.Offset));
+        }
+
         public UICoordinates(float scaleX, float offsetX, float scaleY, float offsetY)
         {
             x = new UIAxis(scaleX, offsetX);
             y = new UIAxis(scaleY, offsetY);
+        }
+
+        public UICoordinates(UIAxis left, UIAxis right)
+        {
+            x = left;
+            y = right;
         }
 
         /// <summary>

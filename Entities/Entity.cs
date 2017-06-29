@@ -522,7 +522,9 @@ namespace VorliasEngine2D.Entities
         public Entity SpawnEntity()
         {
             Entity entity = new Entity();
+            entity.SetParent(this);
             children.Add(entity);
+            
 
             components.Where(component => component is IContainerComponent).Select(component => component as IContainerComponent).ForEach(component => component.ChildAdded(entity));
 

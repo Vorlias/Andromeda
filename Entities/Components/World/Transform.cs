@@ -59,7 +59,7 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// Flag for enabling local coordinates by default
         /// </summary>
-        public const bool USE_LOCAL_COORDINATES_DEFAULT = false;
+        public const bool USE_LOCAL_COORDINATES_DEFAULT = true;
         public const AxisType ENTITY_DEFAULT_AXIS = AxisType.World;
 
         bool localCoordinates = USE_LOCAL_COORDINATES_DEFAULT;
