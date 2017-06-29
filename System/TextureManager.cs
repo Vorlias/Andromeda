@@ -73,6 +73,39 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// Gets the specified texture - Static alias of
+        /// <seealso cref="GetTexture(string)"/>
+        /// </summary>
+        /// <param name="id">The id of the texture</param>
+        /// <returns></returns>
+        public static Texture Get(string id)
+        {
+            return Instance.GetTexture(id);
+        }
+
+        /// <summary>
+        /// Attempts to fetch the texture with the specified id, if it's found it will set the texture variable and return true,
+        /// otherwise it will return false.
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="texture">The texture variable</param>
+        /// <returns>True if the texture was found</returns>
+        public static bool TryGet(string id, out Texture texture)
+        {
+            try
+            {
+                texture = Instance.GetTexture(id);
+                return true;
+            }
+            catch (InvalidTextureIdException e)
+            {
+                Console.Error.WriteLine(e.Message);
+                texture = null;
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Loads a texture to id from a file
         /// </summary>
         /// <param name="id">The id</param>
