@@ -152,7 +152,7 @@ namespace VorliasEngine2D.System
         {
             InputService.InvokeInput(this, e.Button, InputState.Inactive);
 
-            var states = Game.ActiveViewsByPriority;
+            var states = Game.UpdatableViewsByPriority;
             foreach (GameView state in states)
             {
                 state.InvokeInput(this, e.Button, InputState.Inactive);
@@ -163,7 +163,7 @@ namespace VorliasEngine2D.System
         {
             InputService.InvokeInput(this, e.Button, InputState.Active);
 
-            var states = Game.ActiveViewsByPriority;
+            var states = Game.UpdatableViewsByPriority;
             foreach (GameView state in states)
             {
                 state.InvokeInput(this, e.Button, InputState.Active);
@@ -174,7 +174,7 @@ namespace VorliasEngine2D.System
         {
             InputService.InvokeInput(this, e.Code, InputState.Inactive);
 
-            var states = Game.ActiveViewsByPriority;
+            var states = Game.UpdatableViewsByPriority;
             foreach (GameView state in states)
             {
                 state.InvokeInput(this, e.Code, InputState.Inactive);
@@ -185,7 +185,7 @@ namespace VorliasEngine2D.System
         {
             InputService.InvokeInput(this, e.Code, InputState.Active);
 
-            var states = Game.ActiveViewsByPriority;
+            var states = Game.UpdatableViewsByPriority;
             foreach (GameView state in states)
             {
                 state.InvokeInput(this, e.Code, InputState.Active);

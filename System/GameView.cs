@@ -9,6 +9,7 @@ using VorliasEngine2D.Entities;
 using VorliasEngine2D.Entities.Components;
 using SFML.System;
 using VorliasEngine2D.System.Utility;
+using VorliasEngine2D.System.Internal;
 using VorliasEngine2D.Entities.Components.Internal;
 
 namespace VorliasEngine2D.System

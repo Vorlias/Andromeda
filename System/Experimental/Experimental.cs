@@ -18,7 +18,7 @@ namespace VorliasEngine2D.System.Experimental
         /// </summary>
         /// <typeparam name="T">The type</typeparam>
         /// <param name="entity">The entity</param>
-        public static T[] GetComponentsInChildren<T>(this IInstanceTree entity) where T : IComponent
+        public static T[] GetComponentsInChildren<T>(this Internal.IInstanceTree entity) where T : IComponent
         {
             var result = entity.GetChildren().Where(child => child.HasComponent<T>()).Select(child => child.GetComponent<T>()).ToArray();
             return result;

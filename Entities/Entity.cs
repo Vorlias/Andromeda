@@ -9,6 +9,7 @@ using VorliasEngine2D.Entities.Components;
 using VorliasEngine2D.Entities.Components.Internal;
 using VorliasEngine2D.Serialization;
 using VorliasEngine2D.System;
+using VorliasEngine2D.System.Internal;
 using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities

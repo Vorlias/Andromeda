@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VorliasEngine2D.Entities;
 
-namespace VorliasEngine2D.System
+namespace VorliasEngine2D.System.Internal
 {
     /// <summary>
     /// Interface for instance containers

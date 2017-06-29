@@ -6,16 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VorliasEngine2D.System.Utility;
+using VorliasEngine2D.System.Internal;
 
 namespace VorliasEngine2D.System
 {
+
     /// <summary>
     /// A game state
     /// </summary>
     public class GameState
     {
         HashSet<GameView> views;
-        private GameView exclusiveView;
+        private ExclusiveGameViewProperty exclusiveView;
 
         public Music BackgroundMusic
         {
@@ -31,29 +33,9 @@ namespace VorliasEngine2D.System
         /// <summary>
         /// The exclusive view to update. Used for stuff like escape menus.
         /// </summary>
-        public GameView ExclusiveView
+        public ExclusiveGameViewProperty ExclusiveView
         {
             get => exclusiveView;
-        }
-
-        /// <summary>
-        /// Sets the exlusive view to the specified view
-        /// </summary>
-        /// <param name="view">The view to set exclusive</param>
-        public void SetExclusiveView(GameView view)
-        {
-            if (views.Contains(view))
-            {
-                exclusiveView = view;
-            }
-        }
-
-        /// <summary>
-        /// Removes the exclusive view
-        /// </summary>
-        public void RemoveExclusiveView()
-        {
-            exclusiveView = null;
         }
 
         public StateApplication Application
@@ -74,9 +56,9 @@ namespace VorliasEngine2D.System
         {
             get
             {
-                if (exclusiveView != null)
+                if (ExclusiveView.Current != null)
                 {
-                    return new GameView[] { exclusiveView };
+                    return new GameView[] { ExclusiveView.Current };
                 }
                 else
                     return ActiveViewsByPriority;
@@ -205,6 +187,7 @@ namespace VorliasEngine2D.System
 
         protected GameState()
         {
+            exclusiveView = new ExclusiveGameViewProperty(this);
             views = new HashSet<GameView>();
             Init();
         }
