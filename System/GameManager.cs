@@ -170,10 +170,18 @@ namespace VorliasEngine2D.System
             Views = new ViewManager(this, States);
         }
 
+        internal IEnumerable<GameView> UpdatableViewsByPriority
+        {
+            get
+            {
+                return States.ActiveState.UpdatableViewsByPriority;
+            }
+        }
+
         /// <summary>
         /// Get the active GameStates by order of priority
         /// </summary>
-        public IEnumerable<GameView> ActiveViewsByPriority
+        internal IEnumerable<GameView> ActiveViewsByPriority
         {
             get
             {

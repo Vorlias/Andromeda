@@ -15,6 +15,7 @@ namespace VorliasEngine2D.System
     public class GameState
     {
         HashSet<GameView> views;
+        private GameView exclusiveView;
 
         public Music BackgroundMusic
         {
@@ -27,6 +28,34 @@ namespace VorliasEngine2D.System
             get;
         }
 
+        /// <summary>
+        /// The exclusive view to update. Used for stuff like escape menus.
+        /// </summary>
+        public GameView ExclusiveView
+        {
+            get => exclusiveView;
+        }
+
+        /// <summary>
+        /// Sets the exlusive view to the specified view
+        /// </summary>
+        /// <param name="view">The view to set exclusive</param>
+        public void SetExclusiveView(GameView view)
+        {
+            if (views.Contains(view))
+            {
+                exclusiveView = view;
+            }
+        }
+
+        /// <summary>
+        /// Removes the exclusive view
+        /// </summary>
+        public void RemoveExclusiveView()
+        {
+            exclusiveView = null;
+        }
+
         public StateApplication Application
         {
             get => StateApplication.Application;
@@ -36,6 +65,22 @@ namespace VorliasEngine2D.System
         {
             get;
             internal set;
+        }
+
+        /// <summary>
+        /// All the views that can be updated
+        /// </summary>
+        public IEnumerable<GameView> UpdatableViewsByPriority
+        {
+            get
+            {
+                if (exclusiveView != null)
+                {
+                    return new GameView[] { exclusiveView };
+                }
+                else
+                    return ActiveViewsByPriority;
+            }
         }
 
         public IEnumerable<GameView> ActiveViewsByPriority

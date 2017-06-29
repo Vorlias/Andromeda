@@ -115,7 +115,7 @@ namespace VorliasEngine2D.System
 
             States.ActiveState.Update();
 
-            var views = Game.ActiveViewsByPriority;
+            var views = Game.UpdatableViewsByPriority;
             foreach (GameView view in views)
             {
                 view.OnUpdate(this);
