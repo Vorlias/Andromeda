@@ -69,13 +69,9 @@ namespace VorliasEngine2D.Graphics
 
     public static class TextureExtension
     {
-        public static Texture CreateSlicedSubTexture(this Texture texture, SliceRect rect)
+        public static NineSliceTexture CreateSlicedSubTexture(this Texture texture, SliceRect rect)
         {
-            Image image = texture.CopyToImage();
-            NineSliceTexture resultTexture = new NineSliceTexture(image, rect);
-
-
-            return null;
+            return new NineSliceTexture(texture, rect);
         }
     }
 
