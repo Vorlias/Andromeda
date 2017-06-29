@@ -62,8 +62,6 @@ namespace VorliasEngine2D.Entities.Components
                 Transform.Size = new UICoordinates(0, texture.Size.X, 0, texture.Size.Y);
                 textureId = value;
                 RenderOrder = RenderOrder.Interface;
-
-                Console.WriteLine("Set texture: " + value + " @ " + Transform.Size);
             }
         }
 

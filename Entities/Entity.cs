@@ -655,7 +655,6 @@ namespace VorliasEngine2D.Entities
                 //childCopy.SetParent(copy);
                 childCopy.SetParentState(copy.parentState);
                 copy.children.Add(childCopy);
-                Console.WriteLine("Test!");
             }
 
             return copy;
