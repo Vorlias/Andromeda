@@ -15,20 +15,26 @@ namespace VorliasEngine2D.System.Debug
     {
         public static void DebugRender(this Camera camera, RenderTarget target)
         {
-            RectangleShape cameraPositionRect = new RectangleShape();
+            CircleShape cameraPositionRect = new CircleShape();
             cameraPositionRect.FillColor = Color.Magenta;
-            cameraPositionRect.Origin = new Vector2f(-5, -5);
+            cameraPositionRect.Origin = new Vector2f(5, 5);
             cameraPositionRect.Position = camera.WorldPosition;
-            cameraPositionRect.Size = new Vector2f(10, 10);
+            cameraPositionRect.Radius = 5; // new Vector2f(10, 10);
 
-            RectangleShape originPositionRect = new RectangleShape();
+            CircleShape originPositionRect = new CircleShape();
             originPositionRect.FillColor = Color.Cyan;
-            originPositionRect.Origin = new Vector2f(-5, -5);
+            originPositionRect.Origin = new Vector2f(5, 5);
             originPositionRect.Position = camera.WorldZeroPosition;
-            originPositionRect.Size = new Vector2f(10, 10);
+            originPositionRect.Radius = 5; //new Vector2f(10, 10);
 
             target.Draw(cameraPositionRect);
             target.Draw(originPositionRect);
+
+            VertexArray verts = new VertexArray();
+            verts.PrimitiveType = PrimitiveType.LineStrip;
+            verts.Append(new Vertex(camera.WorldPosition, Color.Magenta));
+            verts.Append(new Vertex(camera.WorldZeroPosition, Color.Cyan));
+            target.Draw(verts);
         }
 
         /// <summary>
@@ -49,10 +55,10 @@ namespace VorliasEngine2D.System.Debug
             target.Draw(vert);
         }
 
-        public static void DebugInstanceTree(this IInstanceTree instance, int level = 0, string prefix = " ")
+        public static void DebugInstanceTree(this Internal.IInstanceTree instance, int level = 0, string prefix = " ")
         {
             if (instance is GameView)
-                Console.WriteLine(" ■ GameState");
+                Console.WriteLine(" ■ Parent");
             else if (instance is Entity && level == 0)
             {
                 Console.WriteLine(" ■ " + (instance as Entity).Name);
