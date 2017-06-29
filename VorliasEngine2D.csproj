@@ -58,30 +58,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Components\Camera.cs" />
-    <Compile Include="Entities\Components\ImageButton.cs" />
+    <Compile Include="Entities\Components\World\Camera.cs" />
+    <Compile Include="Entities\Components\UI\UIImageButton.cs" />
     <Compile Include="Entities\Components\Internal\Component.cs" />
     <Compile Include="Entities\Components\Internal\IContainerComponent.cs" />
     <Compile Include="Entities\Components\Internal\IComponentEventListener.cs" />
     <Compile Include="Entities\Components\Internal\IUpdatableComponent.cs" />
     <Compile Include="Entities\Components\Internal\IViewComponent.cs" />
-    <Compile Include="Entities\Components\PolygonCircleCollider.cs" />
+    <Compile Include="Entities\Components\Colliders\PolygonCircleCollider.cs" />
     <Compile Include="Entities\Components\Internal\IPolygonColliderComponent.cs" />
-    <Compile Include="Entities\Components\PolygonCollider.cs" />
-    <Compile Include="Entities\Components\PolygonRectCollider.cs" />
-    <Compile Include="Entities\Components\EntityBehaviour.cs" />
+    <Compile Include="Entities\Components\Colliders\PolygonCollider.cs" />
+    <Compile Include="Entities\Components\Colliders\PolygonRectCollider.cs" />
+    <Compile Include="Entities\Components\Behaviours\EntityBehaviour.cs" />
     <Compile Include="Entities\Components\Internal\ICollisionComponent.cs" />
     <Compile Include="Entities\Components\Internal\IComponent.cs" />
     <Compile Include="Entities\Components\Internal\IRenderableComponent.cs" />
-    <Compile Include="Entities\Components\SpriteRenderer.cs" />
-    <Compile Include="Entities\Components\Transform.cs" />
+    <Compile Include="Entities\Components\World\SpriteRenderer.cs" />
+    <Compile Include="Entities\Components\World\Transform.cs" />
     <Compile Include="Entities\Components\Internal\UIComponent.cs" />
-    <Compile Include="Entities\Components\UITransform.cs" />
+    <Compile Include="Entities\Components\UI\UITransform.cs" />
     <Compile Include="Entities\Components\UI\UIButton.cs" />
-    <Compile Include="Entities\Components\UIImage.cs" />
+    <Compile Include="Entities\Components\UI\UIImage.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Prefab.cs" />
-    <Compile Include="Entities\Components\UserInterface.cs" />
+    <Compile Include="Entities\Components\UI\UserInterface.cs" />
     <Compile Include="Graphics\NineSliceTexture.cs" />
     <Compile Include="Serialization\PerfabSerializer.cs" />
     <Compile Include="Serialization\PersistentPropertyAttribute.cs" />
@@ -104,6 +104,7 @@
     <Compile Include="System\Utility\StringTokenizer.cs" />
     <Compile Include="System\Utility\VectorUtil.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

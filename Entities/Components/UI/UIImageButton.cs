@@ -87,12 +87,6 @@ namespace VorliasEngine2D.Entities.Components
 
                 target.Draw(sprite);
             }
-            else
-            {
-                RectangleShape rect = new RectangleShape(totalSize);
-                rect.Position = Entity.Transform.Position;
-                target.Draw(rect);
-            }
 
             ButtonCollider.DebugRender(target, Color.Red);
         }
