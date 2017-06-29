@@ -1,6 +1,4 @@
 # VorliasEngine2D.NET
-C# Game Engine using SFML.NET 2.4
+This is a work in progress C#/SFML game engine.
 
-This is currently a work in progress.
-
-Coming soon.
+_Note: Do not use for your own work, just yet. It's still being developed._
