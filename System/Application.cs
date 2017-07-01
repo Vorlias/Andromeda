@@ -69,15 +69,14 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// The TextureManager object
+        /// The TextureManager instance
         /// </summary>
-        public TextureManager TextureManager
-        {
-            get
-            {
-                return TextureManager.Instance;
-            }
-        }
+        public TextureManager TextureManager => TextureManager.Instance;
+
+        /// <summary>
+        /// The FontManager instance
+        /// </summary>
+        public FontManager FontManager => FontManager.Instance;
 
         /// <summary>
         /// The framerate of the window
