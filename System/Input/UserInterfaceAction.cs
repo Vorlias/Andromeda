@@ -4,11 +4,6 @@ namespace VorliasEngine2D.System
 {
     public class UserInterfaceAction : UserInputAction
     {
-        public enum Type
-        {
-            MouseEnter,
-            MouseLeave,
-        }
 
         public override InputType InputType => InputType.UserInterface;
 
@@ -17,12 +12,12 @@ namespace VorliasEngine2D.System
             get;
         }
 
-        public Type Action
+        public UIActionType Action
         {
             get;
         }
 
-        public UserInterfaceAction(Type action, UIComponent component)
+        public UserInterfaceAction(UIActionType action, UIComponent component)
         {
             Action = action;
             UIComponent = component;

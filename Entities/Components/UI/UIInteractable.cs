@@ -92,12 +92,12 @@ namespace VorliasEngine2D.Entities.Components.UI
             if (IsMouseOver && !hoverState)
             {
                 hoverState = true;
-                OnMouseEnter?.Invoke(new UserInterfaceAction(UserInterfaceAction.Type.MouseEnter, this));
+                OnMouseEnter?.Invoke(new UserInterfaceAction(UIActionType.MouseEnter, this));
             }
             else if (!IsMouseOver && hoverState)
             {
                 hoverState = false;
-                OnMouseLeave?.Invoke(new UserInterfaceAction(UserInterfaceAction.Type.MouseLeave, this));
+                OnMouseLeave?.Invoke(new UserInterfaceAction(UIActionType.MouseLeave, this));
             }
         }
     }
