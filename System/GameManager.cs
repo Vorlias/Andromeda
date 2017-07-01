@@ -81,10 +81,11 @@ namespace VorliasEngine2D.System
             if (Has(name))
             {
                 if (activeState != null)
-                    activeState.Deactivated();
+                    activeState.OnDeactivated();
 
                 activeState = GetState(name);
                 activeState.Activated();
+                activeState.OnActivated();
             }
         }
 
