@@ -79,6 +79,11 @@ namespace VorliasEngine2D.System
         public FontManager FontManager => FontManager.Instance;
 
         /// <summary>
+        /// The SoundManager instance
+        /// </summary>
+        public SoundManager SoundManager => SoundManager.Instance;
+
+        /// <summary>
         /// The framerate of the window
         /// </summary>
         public float FPS
