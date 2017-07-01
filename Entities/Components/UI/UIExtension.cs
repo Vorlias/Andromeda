@@ -8,6 +8,9 @@ using VorliasEngine2D.System;
 
 namespace VorliasEngine2D.Entities.Components.UI
 {
+    /// <summary>
+    /// Extension class for easy UI addition
+    /// </summary>
     public static class UIExtension
     {
         public static UIImageButton AddImageButton(this Entity parent, string textureId, UICoordinates position = default(UICoordinates), UICoordinates size = default(UICoordinates))
