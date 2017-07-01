@@ -14,9 +14,10 @@ using VorliasEngine2D.Serialization;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    public class UIImageButton : UIButton, ITextureComponent, IComponentEventListener
+    public class UIImageButton : UIInteractable, ITextureComponent, IComponentEventListener
     {
         public event MouseEvent OnButtonPressed;
+        
 
         public override string Name
         {
@@ -84,7 +85,8 @@ namespace VorliasEngine2D.Entities.Components
                 Sprite sprite = new Sprite(texture)
                 {
                     Position = Entity.Transform.Position,
-                    Scale = new Vector2f(totalSize.X / texture.Size.X, totalSize.Y / texture.Size.Y)
+                    Scale = new Vector2f(totalSize.X / texture.Size.X, totalSize.Y / texture.Size.Y),
+                    Color = Color
                 };
 
                 target.Draw(sprite);
@@ -100,11 +102,6 @@ namespace VorliasEngine2D.Entities.Components
         public override void ButtonClick(MouseInputAction inputAction)
         {
             OnButtonPressed?.Invoke(inputAction);
-        }
-
-        public override void Update()
-        {
-            
         }
 
         public override void AfterUpdate()

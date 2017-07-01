@@ -5,15 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
+using VorliasEngine2D.Entities.Components.Internal;
 
 namespace VorliasEngine2D.System
 {
+
     public enum InputType
     {
-        Unknown,
+        Unknown,    
         Mouse,
         Keyboard,
-        Joystick
+        Joystick,
+        MouseMovement,
+        JoystickMovement,
+        UserInterface,
     }
 
     public enum MouseInputType
@@ -135,6 +140,33 @@ namespace VorliasEngine2D.System
             keys = new List<Keyboard.Key>();
             keys.Add(key);
             this.state = state;
+        }
+    }
+
+    public class UserInterfaceAction : UserInputAction
+    {
+        public enum Type
+        {
+            MouseEnter,
+            MouseLeave,
+        }
+
+        public override InputType InputType => InputType.UserInterface;
+
+        public UIComponent UIComponent
+        {
+            get;
+        }
+
+        public Type Action
+        {
+            get;
+        }
+
+        public UserInterfaceAction(Type action, UIComponent component)
+        {
+            Action = action;
+            UIComponent = component;
         }
     }
 

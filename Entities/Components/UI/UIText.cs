@@ -22,12 +22,14 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// The text displayed by this UIText component
         /// </summary>
+        [PersistentProperty("Text", PropertyType = SerializedPropertyType.String)]
         public string Text
         {
             get => text;
             set => text = value;
         }
 
+        [PersistentProperty("FontSize", PropertyType = SerializedPropertyType.UInt32)]
         public uint FontSize
         {
             get => fontSize;
@@ -74,6 +76,14 @@ namespace VorliasEngine2D.Entities.Components
             Entity.AddComponent<UITransform>();
         }
 
+        public override void OnComponentCopy(Entity source, Entity copy)
+        {
+            UIText sourceText = source.GetComponent<UIText>();
+            UIText copyText = copy.AddComponent<UIText>();
+            copyText.Text = sourceText.Text;
+            copyText.FontSize = sourceText.FontSize;
+        }
+
         public override void Draw(RenderTarget target, RenderStates states)
         {
             Text fontText = new Text(Text, Font, FontSize)
@@ -91,6 +101,11 @@ namespace VorliasEngine2D.Entities.Components
         public override void BeforeUpdate()
         {
             
+        }
+
+        public override string ToString()
+        {
+            return "UIText: " + Text;
         }
 
         public override void Update()

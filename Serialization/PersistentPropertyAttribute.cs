@@ -11,6 +11,7 @@ namespace VorliasEngine2D.Serialization
         String,
         Int32,
         Int64,
+        UInt32,
         Float,
         Double,
         Vector2,
@@ -24,7 +25,7 @@ namespace VorliasEngine2D.Serialization
     /// A property that can be serialized
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    internal class PersistentPropertyAttribute : Attribute
+    public class PersistentPropertyAttribute : Attribute
     {
         public SerializedPropertyType PropertyType
         {

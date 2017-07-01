@@ -151,12 +151,13 @@ namespace VorliasEngine2D.System
         }
 
 
-        private void SetFloatAttribute(Type type, object instance, string propertyName, float x)
+        private void SetRawAttribute<T>(Type type, object instance, string propertyName, T x)
         {
             try
             {
                 var property = type.GetProperty(propertyName);
-                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+
+                var attr = property?.GetCustomAttribute<PersistentPropertyAttribute>();
 
                 if (attr != null)
                     property.SetValue(instance, x);
@@ -277,7 +278,21 @@ namespace VorliasEngine2D.System
                             string name = tokenizer.Read();
                             float x = tokenizer.ReadFloat();
 
-                            SetFloatAttribute(componentType, com, name, x);
+                            SetRawAttribute(componentType, com, name, x);
+                        }
+                        else if (type == "int")
+                        {
+                            string name = tokenizer.Read();
+                            int x = tokenizer.ReadInt();
+
+                            SetRawAttribute(componentType, com, name, x);
+                        }
+                        else if (type == "uint")
+                        {
+                            string name = tokenizer.Read();
+                            int x = tokenizer.ReadInt();
+
+                            SetRawAttribute(componentType, com, name, (uint) x);
                         }
                         else if (type == "string")
                         {

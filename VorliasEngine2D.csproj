@@ -80,7 +80,7 @@
     <Compile Include="Entities\Components\World\Transform.cs" />
     <Compile Include="Entities\Components\Internal\UIComponent.cs" />
     <Compile Include="Entities\Components\UI\UITransform.cs" />
-    <Compile Include="Entities\Components\UI\UIButton.cs" />
+    <Compile Include="Entities\Components\UI\UIInteractable.cs" />
     <Compile Include="Entities\Components\UI\UIImage.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Prefab.cs" />

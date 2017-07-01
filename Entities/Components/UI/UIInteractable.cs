@@ -13,10 +13,11 @@ using VorliasEngine2D.System.Debug;
 namespace VorliasEngine2D.Entities.Components.UI
 {
     /// <summary>
-    /// Abstract Button UI class for creating custom buttons
+    /// Abstract UI class for interactive elements, like buttons etc.
     /// </summary>
-    public abstract class UIButton : UIComponent, IComponentEventListener
+    public abstract class UIInteractable : UIComponent, IComponentEventListener
     {
+        public event InterfaceEvent OnMouseEnter, OnMouseLeave;
 
         public override abstract string Name
         {
@@ -82,6 +83,21 @@ namespace VorliasEngine2D.Entities.Components.UI
             else if (mouseAction?.InputState == InputState.Inactive && mouseAction.Button == Mouse.Button.Left)
             {
                 mouseDown = false;
+            }
+        }
+
+        bool hoverState = false;
+        public override void Update()
+        {
+            if (IsMouseOver && !hoverState)
+            {
+                hoverState = true;
+                OnMouseEnter?.Invoke(new UserInterfaceAction(UserInterfaceAction.Type.MouseEnter, this));
+            }
+            else if (!IsMouseOver && hoverState)
+            {
+                hoverState = false;
+                OnMouseLeave?.Invoke(new UserInterfaceAction(UserInterfaceAction.Type.MouseLeave, this));
             }
         }
     }

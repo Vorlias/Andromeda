@@ -532,6 +532,15 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// Spawn an entity as a child of this entity with the specified component
+        /// </summary>
+        /// <returns>The spawned entity</returns>
+        public ComponentType SpawnEntity<ComponentType>() where ComponentType : IComponent, new()
+        {
+            return SpawnEntity().AddComponent<ComponentType>();
+        }
+
+        /// <summary>
         /// Spawn an entity under another entity
         /// </summary>
         /// <param name="parent">The parent entity</param>

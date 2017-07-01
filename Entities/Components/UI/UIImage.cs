@@ -41,7 +41,8 @@ namespace VorliasEngine2D.Entities.Components
             {
                 Sprite sprite = new Sprite(texture)
                 {
-                    Position = Transform.PositionRelative.GlobalAbsolute
+                    Position = Transform.PositionRelative.GlobalAbsolute,
+                    Color = Color
                 };
 
                 target.Draw(sprite);

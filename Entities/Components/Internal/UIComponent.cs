@@ -16,6 +16,7 @@ namespace VorliasEngine2D.Entities.Components.Internal
     {
         public delegate void MouseEvent(MouseInputAction action);
         public delegate void KeyboardEvent(KeyboardInputAction action);
+        public delegate void InterfaceEvent(UserInterfaceAction action);
 
         public UIComponent()
         {
@@ -40,6 +41,16 @@ namespace VorliasEngine2D.Entities.Components.Internal
 
                 return entity.GetComponent<UITransform>();
             }
+        }
+
+        Color color = Color.White;
+        /// <summary>
+        /// The colour of this UIComponent
+        /// </summary>
+        public Color Color
+        {
+            get => color;
+            set => color = value;
         }
 
         /// <summary>
