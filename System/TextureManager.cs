@@ -19,9 +19,10 @@ namespace VorliasEngine2D.System
 
     public class TextureManager : ResourceManager<Texture>
     {
+        static TextureManager textureManager = new TextureManager();
         public static TextureManager Instance
         {
-            get => ManagerInstance as TextureManager;
+            get => textureManager;
         }
 
         public void LoadToId(string id, string file, IntRect area = new IntRect())

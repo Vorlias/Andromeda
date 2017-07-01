@@ -17,16 +17,6 @@ namespace VorliasEngine2D.System.Internal
     {
         Dictionary<string, ResourceType> items;
 
-        protected static ResourceManager<ResourceType> ManagerInstance
-        {
-            get;
-        }
-
-        static ResourceManager()
-        {
-            //ManagerInstance = new ResourceManager<ResourceType>();
-        }
-
         protected ResourceManager()
         {
             items = new Dictionary<string, ResourceType>();

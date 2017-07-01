@@ -10,9 +10,10 @@ namespace VorliasEngine2D.System
 {
     public class FontManager : ResourceManager<Font>
     {
+        static FontManager fontManager = new FontManager();
         public static FontManager Instance
         {
-            get => ManagerInstance as FontManager;
+            get => fontManager;
         }
 
         Font defaultFont;
