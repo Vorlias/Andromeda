@@ -9,7 +9,7 @@ using VorliasEngine2D.System;
 using VorliasEngine2D.Serialization;
 using SFML.System;
 
-namespace VorliasEngine2D.Entities.Components.UI
+namespace VorliasEngine2D.Entities.Components
 {
     public class UIText : UIComponent
     {
@@ -68,10 +68,17 @@ namespace VorliasEngine2D.Entities.Components.UI
             }
         }
 
+        public override void OnComponentInit(Entity entity)
+        {
+            RenderOrder = RenderOrder.Interface + 1; // Bring it to top
+        }
+
         public override void Draw(RenderTarget target, RenderStates states)
         {
-            Text fontText = new Text(Text, Font, FontSize);
-            fontText.Position = Transform.PositionRelative.GlobalAbsolute;
+            Text fontText = new Text(Text, Font, FontSize)
+            {
+                Position = Transform.PositionRelative.GlobalAbsolute
+            };
             target.Draw(fontText);
         }
 
