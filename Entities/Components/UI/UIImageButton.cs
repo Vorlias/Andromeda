@@ -10,6 +10,7 @@ using VorliasEngine2D.Entities.Components.Internal;
 using VorliasEngine2D.System.Debug;
 using SFML.Window;
 using VorliasEngine2D.Entities.Components.UI;
+using VorliasEngine2D.Serialization;
 
 namespace VorliasEngine2D.Entities.Components
 {
@@ -45,6 +46,7 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        [PersistentProperty("TextureId", PropertyType = SerializedPropertyType.String)]
         public string TextureId
         {
             get

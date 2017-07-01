@@ -21,7 +21,7 @@ namespace VorliasEngine2D.System
 
     public class TextureManager : ResourceManager<Texture>
     {
-        Dictionary<string, NineSliceTexture> nineslicedTextures;
+        Dictionary<string, NineSliceTexture> nineslicedTextures = new Dictionary<string, NineSliceTexture>();
 
         static TextureManager textureManager = new TextureManager();
         public static TextureManager Instance
@@ -71,10 +71,12 @@ namespace VorliasEngine2D.System
         /// <param name="slicedId">The id of the NineSliceTexture</param>
         /// <param name="source">The source texture</param>
         /// <param name="rect">The slice rect</param>
-        public void LoadSliced(string slicedId, Texture source, SliceRect rect)
+        /// <returns>The NineSliceTexture</returns>
+        public NineSliceTexture LoadSliced(string slicedId, Texture source, SliceRect rect)
         {
             NineSliceTexture sliced = new NineSliceTexture(source, rect);
             nineslicedTextures.Add(slicedId, sliced);
+            return sliced;
         }
     }
 }
