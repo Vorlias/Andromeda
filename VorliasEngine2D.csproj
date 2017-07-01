@@ -107,7 +107,8 @@
     <Compile Include="System\Input\MouseInputAction.cs" />
     <Compile Include="System\Input\MouseInputType.cs" />
     <Compile Include="System\Resources\SoundManager.cs" />
-    <Compile Include="System\UIDimensions.cs" />
+    <Compile Include="System\UIAxis.cs" />
+    <Compile Include="System\UICoordinates.cs" />
     <Compile Include="System\Input\UserInputAction.cs" />
     <Compile Include="System\StateApplication.cs" />
     <Compile Include="System\GameManager.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="System\Input\UserInputService.cs" />
     <Compile Include="System\Input\UserInterfaceAction.cs" />
     <Compile Include="System\Utility\Extensions.cs" />
+    <Compile Include="System\Utility\ThreadedService.cs" />
     <Compile Include="System\Utility\Polygon.cs" />
     <Compile Include="System\Utility\StringTokenizer.cs" />
     <Compile Include="System\Utility\VectorUtil.cs" />
