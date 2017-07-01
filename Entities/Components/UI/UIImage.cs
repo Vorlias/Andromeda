@@ -58,7 +58,7 @@ namespace VorliasEngine2D.Entities.Components
 
             set
             {
-                texture = TextureManager.Instance.GetTexture(value);
+                texture = TextureManager.Instance.Get(value);
                 Transform.Size = new UICoordinates(0, texture.Size.X, 0, texture.Size.Y);
                 textureId = value;
                 RenderOrder = RenderOrder.Interface;

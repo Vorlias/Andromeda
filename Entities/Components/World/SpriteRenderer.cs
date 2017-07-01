@@ -108,7 +108,7 @@ namespace VorliasEngine2D.Entities.Components
             set
             {
                 textureId = value;
-                texture = TextureManager.Instance.GetTexture(value);
+                texture = TextureManager.Instance.Get(value);
             }
             get
             {
