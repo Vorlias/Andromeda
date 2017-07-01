@@ -92,24 +92,34 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\Debugging\DebugExtension.cs" />
     <Compile Include="System\FontManager.cs" />
+    <Compile Include="System\Input\InputState.cs" />
+    <Compile Include="System\Input\InputType.cs" />
+    <Compile Include="System\Input\UIActionType.cs" />
     <Compile Include="System\Internal\ExclusiveGameViewProperty.cs" />
     <Compile Include="System\Experimental\Experimental.cs" />
     <Compile Include="System\GameState.cs" />
     <Compile Include="System\GameView.cs" />
     <Compile Include="System\Internal\IInstanceTree.cs" />
     <Compile Include="System\Internal\ResourceManager.cs" />
+    <Compile Include="System\Input\JoystickInputAction.cs" />
+    <Compile Include="System\Input\KeyboardInputAction.cs" />
+    <Compile Include="System\Input\MouseInputAction.cs" />
+    <Compile Include="System\Input\MouseInputType.cs" />
     <Compile Include="System\UIDimensions.cs" />
-    <Compile Include="System\UserInputAction.cs" />
+    <Compile Include="System\Input\UserInputAction.cs" />
     <Compile Include="System\StateApplication.cs" />
     <Compile Include="System\GameManager.cs" />
     <Compile Include="System\TextureManager.cs" />
-    <Compile Include="System\UserInputService.cs" />
+    <Compile Include="System\Input\UserInputService.cs" />
+    <Compile Include="System\Input\UserInterfaceAction.cs" />
     <Compile Include="System\Utility\Extensions.cs" />
     <Compile Include="System\Utility\Polygon.cs" />
     <Compile Include="System\Utility\StringTokenizer.cs" />
     <Compile Include="System\Utility\VectorUtil.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Entities\Components\UI\Enums\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
