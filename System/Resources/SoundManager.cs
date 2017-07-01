@@ -28,5 +28,16 @@ namespace VorliasEngine2D.System
         {
             return new Sound(Get(id));
         }
+
+        /// <summary>
+        /// Loads the sound from a file to the specified id
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="file">The sound file</param>
+        public void LoadToId(string id, string file)
+        {
+            SoundBuffer buffer = new SoundBuffer(file);
+            Add(id, buffer);
+        }
     }
 }
