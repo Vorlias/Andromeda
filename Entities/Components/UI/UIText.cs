@@ -71,6 +71,7 @@ namespace VorliasEngine2D.Entities.Components
         public override void OnComponentInit(Entity entity)
         {
             RenderOrder = RenderOrder.Interface + 1; // Bring it to top
+            Entity.AddComponent<UITransform>();
         }
 
         public override void Draw(RenderTarget target, RenderStates states)

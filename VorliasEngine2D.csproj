@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Components\UI\UICoordinateMode.cs" />
+    <Compile Include="Entities\Components\UI\UIExtension.cs" />
     <Compile Include="Entities\Components\UI\UIText.cs" />
     <Compile Include="Entities\Components\World\Camera.cs" />
     <Compile Include="Entities\Components\UI\UIImageButton.cs" />
