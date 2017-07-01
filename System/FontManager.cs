@@ -32,6 +32,27 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// Loads a font from file to the specified id
+        /// </summary>
+        /// <param name="id">The id of the font</param>
+        /// <param name="file">The font file path</param>
+        public void LoadToId(string id, string file)
+        {
+            Add(id, new Font(file));
+        }
+
+        /// <summary>
+        /// Loads a font from file to the specified id, and sets it as the default
+        /// </summary>
+        /// <param name="id">The id of the font</param>
+        /// <param name="file">The font file path</param>
+        public void LoadToIdDefault(string id, string file)
+        {
+            Add(id, new Font(file));
+            SetDefaultFont(id);
+        }
+
+        /// <summary>
         /// Adds the font as the default font to be used
         /// </summary>
         /// <param name="id">The id of the font</param>
