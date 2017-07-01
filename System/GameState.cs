@@ -50,6 +50,21 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// The TextureManager instance
+        /// </summary>
+        protected TextureManager TextureManager => TextureManager.Instance;
+
+        /// <summary>
+        /// The FontManager instance
+        /// </summary>
+        protected FontManager FontManager => FontManager.Instance;
+
+        /// <summary>
+        /// The SoundManager instance
+        /// </summary>
+        protected SoundManager SoundManager => SoundManager.Instance;
+
+        /// <summary>
         /// All the views that can be updated
         /// </summary>
         public IEnumerable<GameView> UpdatableViewsByPriority
