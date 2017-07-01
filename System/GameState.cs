@@ -18,6 +18,7 @@ namespace VorliasEngine2D.System
     {
         HashSet<GameView> views;
         private ExclusiveGameViewProperty exclusiveView;
+        private bool mouseGrabbed = false;
 
         public Music BackgroundMusic
         {
@@ -36,6 +37,24 @@ namespace VorliasEngine2D.System
         public ExclusiveGameViewProperty ExclusiveView
         {
             get => exclusiveView;
+        }
+
+        /// <summary>
+        /// Whether or not the mouse is locked in this GameState
+        /// </summary>
+        public bool MouseGrabbed
+        {
+            set
+            {
+                if(StateManager.ActiveState == this)
+                    Application.Window.SetMouseCursorGrabbed(value);
+
+                mouseGrabbed = value;
+            }
+            get
+            {
+                return mouseGrabbed;
+            }
         }
 
         public StateApplication Application
@@ -218,15 +237,21 @@ namespace VorliasEngine2D.System
         /// </summary>
         public void Activate()
         {
+            Activated();
             StateManager.SetActive(Name);
         }
 
-        public virtual void Deactivated()
+        public virtual void OnDeactivated()
         {
 
         }
 
-        public virtual void Activated()
+        internal void Activated()
+        {
+            Application.Window.SetMouseCursorGrabbed(mouseGrabbed);
+        }
+
+        public virtual void OnActivated()
         {
 
         }
