@@ -20,6 +20,16 @@ namespace VorliasEngine2D.System.Services
             get;
         }
 
+        public static ThreadedService Service
+        {
+            get;
+        }
+
+        public abstract int Frequency
+        {
+            get;
+        }
+
         bool running = false;
 
         /// <summary>
