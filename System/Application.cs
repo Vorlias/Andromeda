@@ -239,19 +239,6 @@ namespace VorliasEngine2D.System
 
         }
 
-        public void RenderMouse()
-        {
-            if (CustomCursor.Visible && CustomCursor.Texture != null)
-            {
-                Vector2i mousePosition = Mouse.GetPosition(window);
-                Sprite mouseSprite = new Sprite(CustomCursor.Texture)
-                {
-                    Position = new Vector2f(mousePosition.X, mousePosition.Y)
-                };
-                window.Draw(mouseSprite);
-            }
-        }
-
         /// <summary>
         /// Runs the application
         /// </summary>
@@ -295,7 +282,7 @@ namespace VorliasEngine2D.System
 
                 Render();
 
-                RenderMouse();
+                window.Draw(CustomCursor);
 
                 window.Display();
             }

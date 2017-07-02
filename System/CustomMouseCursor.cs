@@ -1,4 +1,6 @@
 ﻿using SFML.Graphics;
+using SFML.System;
+using SFML.Window;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace VorliasEngine2D.System
 {
-    public class CustomMouseCursor
+    public class CustomMouseCursor : Drawable
     {
         public RenderWindow Context
         {
@@ -33,6 +35,19 @@ namespace VorliasEngine2D.System
         {
             get;
             set;
+        }
+
+        public void Draw(RenderTarget target, RenderStates states)
+        {
+            if (Texture != null && Visible)
+            {
+                Vector2i mousePosition = Mouse.GetPosition(Context);
+                Sprite mouseSprite = new Sprite(Texture)
+                {
+                    Position = new Vector2f(mousePosition.X, mousePosition.Y)
+                };
+                Context.Draw(mouseSprite);
+            }
         }
     }
 }
