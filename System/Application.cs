@@ -8,6 +8,7 @@ using SFML.System;
 using SFML.Graphics;
 using System.Runtime.InteropServices;
 using VorliasEngine2D.System.Utility;
+using VorliasEngine2D.System.Services;
 
 namespace VorliasEngine2D.System
 {
@@ -41,6 +42,27 @@ namespace VorliasEngine2D.System
         float fps;
         ApplicationSettings settings;
         View gameView, interfaceView;
+        HashSet<ThreadedService> services = new HashSet<ThreadedService>();
+
+        public CustomMouseCursor CustomCursor
+        {
+            get;
+        }
+
+        public Service GetService<Service>() where Service : ThreadedService, new()
+        {
+            var service = services.OfType<Service>();
+            if (service.Count() > 0)
+            {
+                return service.First();
+            }
+            else
+            {
+                Service newSvc = new Service();
+                services.Add(newSvc);
+                return newSvc;
+            }
+        }
 
         public ApplicationSettings Settings
         {
@@ -171,6 +193,8 @@ namespace VorliasEngine2D.System
             this.mode = mode;
             this.title = title;
             this.styles = styles;
+
+            CustomCursor = new CustomMouseCursor();
         }
         
         /// <summary>
@@ -215,7 +239,18 @@ namespace VorliasEngine2D.System
 
         }
 
-
+        public void RenderMouse()
+        {
+            if (CustomCursor.Visible && CustomCursor.Texture != null)
+            {
+                Vector2i mousePosition = Mouse.GetPosition(window);
+                Sprite mouseSprite = new Sprite(CustomCursor.Texture)
+                {
+                    Position = new Vector2f(mousePosition.X, mousePosition.Y)
+                };
+                window.Draw(mouseSprite);
+            }
+        }
 
         /// <summary>
         /// Runs the application
@@ -228,6 +263,9 @@ namespace VorliasEngine2D.System
             window = new RenderWindow(mode, title, styles);
             window.Closed += WindowClosed;
             window.Resized += Window_Resized;
+
+            CustomCursor.Context = window;
+            CustomCursor.Texture = null;
 
             BeforeStart();
             Start();
@@ -257,10 +295,13 @@ namespace VorliasEngine2D.System
 
                 Render();
 
+                RenderMouse();
+
                 window.Display();
             }
 
             End();
+            Environment.Exit(0);
         }
 
        
