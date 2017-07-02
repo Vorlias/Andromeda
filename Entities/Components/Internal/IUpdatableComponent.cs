@@ -17,9 +17,16 @@ namespace VorliasEngine2D.Entities.Components.Internal
         First = 1,
 
         /// <summary>
+        /// Updates when physics does
+        /// </summary>
+        Physics = 5,
+
+        /// <summary>
         /// Updates when the camera does
         /// </summary>
         Camera = 10,
+
+        
 
         /// <summary>
         /// Updates when the interfaces do
@@ -37,7 +44,7 @@ namespace VorliasEngine2D.Entities.Components.Internal
         Last = 1000,
     }
 
-    interface IUpdatableComponent : IComponent
+    public interface IUpdatableComponent : IComponent
     {
         UpdatePriority UpdatePriority
         {
