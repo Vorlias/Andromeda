@@ -55,7 +55,7 @@ namespace VorliasEngine2D.System.Debug
             target.Draw(vert);
         }
 
-        public static void DebugInstanceTree(this Internal.IInstanceTree instance, int level = 0, string prefix = " ")
+        public static void DebugInstanceTree(this Internal.IEntityContainer instance, int level = 0, string prefix = " ")
         {
             if (instance is GameView)
                 Console.WriteLine(" ■ Parent");

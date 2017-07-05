@@ -105,7 +105,7 @@
     <Compile Include="System\Experimental\Experimental.cs" />
     <Compile Include="System\GameState.cs" />
     <Compile Include="System\GameView.cs" />
-    <Compile Include="System\Internal\IInstanceTree.cs" />
+    <Compile Include="System\Internal\IEntityContainer.cs" />
     <Compile Include="System\Internal\ResourceManager.cs" />
     <Compile Include="System\Input\JoystickInputAction.cs" />
     <Compile Include="System\Input\KeyboardInputAction.cs" />

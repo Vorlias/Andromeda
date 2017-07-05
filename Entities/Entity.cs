@@ -18,11 +18,10 @@ namespace VorliasEngine2D.Entities
     /// <summary>
     /// An entity
     /// </summary>
-    public sealed class Entity : IInstanceTree, IDestroyable
+    public sealed class Entity : EntityContainer, IDestroyable
     {
         HashSet<IComponent> components = new HashSet<IComponent>();
         Components.Transform transform;
-        HashSet<Entity> children;
         Entity parentEntity;
         GameView parentState;
         bool prefab = false;
@@ -61,22 +60,6 @@ namespace VorliasEngine2D.Entities
             }
         }
 
-        public List<Entity> Descendants
-        {
-            get
-            {
-                List<Entity> entities = new List<Entity>();
-                entities.AddRange(children);
-
-                foreach (var child in children)
-                {
-                    entities.AddRange(child.Descendants);
-                }
-
-                return entities;
-            }
-        }
-
         /// <summary>
         /// The parent entity of this entity (If applicable)
         /// </summary>
@@ -96,7 +79,7 @@ namespace VorliasEngine2D.Entities
         internal void SetParent(Entity parent)
         {
             parentEntity = parent;
-            parent.children.Add(this);
+            parent.AddEntityAsChild(this);
         }
 
         /// <summary>
@@ -271,7 +254,7 @@ namespace VorliasEngine2D.Entities
                 behaviour.Render();
             }
 
-            foreach (Entity child in children)
+            foreach (Entity child in Children)
             {
                 child.Render(target);
             }
@@ -352,15 +335,7 @@ namespace VorliasEngine2D.Entities
 
         internal void Update()
         {
-            /*var updatableComponents = components.OfType<IUpdatableComponent>();
-            foreach (IUpdatableComponent com in updatableComponents.ToList())
-            {
-                com.BeforeUpdate();
-                com.Update();
-                com.AfterUpdate();
-            }*/
-
-            foreach (Entity child in children)
+            foreach (Entity child in Children)
             {
                 child.Update();
             }
@@ -392,37 +367,6 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
-        /// Gets the child entities of this entity
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use 'Children' instead.")]
-        public Entity[] GetChildren()
-        {
-            return Children;
-        }
-
-        /// <summary>
-        /// The child entities of this entity
-        /// </summary>
-        public Entity[] Children
-        {
-            get
-            {
-                return children.ToArray();
-            }
-        }
-
-        /// <summary>
-        /// Gets the child entities of this entity via a predicate
-        /// </summary>
-        /// <param name="condition">The predicate</param>
-        /// <returns>The children, filtered by the predicate</returns>
-        public Entity[] GetChildren(Func<Entity, bool> predicate)
-        {
-            return children.Where(predicate).ToArray();
-        }
-
-        /// <summary>
         /// Returns the full path of this entity
         /// </summary>
         public string FullName
@@ -442,33 +386,15 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
-        /// Gets the first child entity with the specified name
-        /// </summary>
-        /// <param name="name">The name of the entity to find</param>
-        /// <returns>An entity if it's found, otherwise null</returns>
-        public Entity FindFirstChild(string name)
-        {
-            return children.First(entity => entity.Name == name);
-        }
-
-        /// <summary>
-        /// Add a child entity to this entity
-        /// </summary>
-        /// <param name="child">The entity</param>
-        public void AddEntity(Entity child)
-        {
-            children.Add(child);
-        }
-
-        /// <summary>
         /// Spawn an entity as a child of this entity
         /// </summary>
         /// <returns>The spawned entity</returns>
-        public Entity CreateChild()
+        public override Entity CreateChild()
         {
             Entity entity = new Entity();
             entity.SetParent(this);
-            children.Add(entity);
+            //children.Add(entity);
+            AddEntityAsChild(entity);
             
 
             components.Where(component => component is IContainerComponent).Select(component => component as IContainerComponent).ForEach(component => component.ChildAdded(entity));
@@ -602,13 +528,13 @@ namespace VorliasEngine2D.Entities
                     component.OnComponentCopy(this, copy);
             }
 
-            foreach (Entity child in children)
+            foreach (Entity child in Children)
             {
                 Entity childCopy = child.Clone(copy);
                 childCopy.Name = child.Name;
                 //childCopy.SetParent(copy);
                 childCopy.SetParentState(copy.parentState);
-                copy.children.Add(childCopy);
+                copy.AddEntityAsChild(childCopy);
             }
 
             return copy;
@@ -621,7 +547,7 @@ namespace VorliasEngine2D.Entities
         {
             if (Parent != null)
             {
-                Parent.children.Remove(this);
+                Parent.RemoveEntity(this);
             }
             else if (GameView != null)
             {
@@ -631,7 +557,6 @@ namespace VorliasEngine2D.Entities
 
         private Entity()
         {
-            children = new HashSet<Entity>();
             input = new UserInputManager();
         }
     }

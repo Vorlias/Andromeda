@@ -34,13 +34,12 @@ namespace VorliasEngine2D.System
         }
     }
 
-    public abstract class GameView : IInstanceTree
+    public abstract class GameView : EntityContainer
     {
         bool active = true;
         string id;
         StateGameManager manager;
         GameViewPriority priority;
-        HashSet<Entity> entities;
 
         Camera camera;
         public Camera Camera
@@ -104,20 +103,6 @@ namespace VorliasEngine2D.System
             get => manager.Application.States;
         }
 
-        public Entity[] Descendants
-        {
-            get
-            {
-                List<Entity> entityList = new List<Entity>();
-                entityList.AddRange(Children);
-                foreach (var child in Children)
-                {
-                    entityList.AddRange(child.Descendants);
-                }
-                return entityList.ToArray();
-            }
-        }
-
         /// <summary>
         /// The collision components
         /// </summary>
@@ -177,38 +162,14 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// Returns all the entities with sprites, ordered by the render order
-        /// </summary>
-        [Obsolete("Use 'DrawableEntities' instead.")]
-        internal Entity[] SpriteEntities
-        {
-            get
-            {
-                var sprites = entities.Where(entity => entity.HasComponent<SpriteRenderer>());
-                return sprites.OrderByDescending(entity => entity.SpriteRenderer.RenderOrder).ToArray();
-            }
-        }
-
-        /// <summary>
         /// Entities that have a UIComponent
         /// </summary>
         internal Entity[] UIEntities
         {
             get
             {
-                var entities = this.entities.Where(entity => entity.HasComponent<UIComponent>());
+                var entities = Children.Where(entity => entity.HasComponent<UIComponent>());
                 return entities.ToArray();
-            }
-        }
-
-        /// <summary>
-        /// The entities in this GameState
-        /// </summary>
-        public HashSet<Entity> Entities
-        {
-            get
-            {
-                return entities;
             }
         }
 
@@ -332,7 +293,7 @@ namespace VorliasEngine2D.System
             get
             {
                 List<IUpdatableComponent> components = new List<IUpdatableComponent>();
-                Entities.Select(entity => entity.GetComponentsInDescendants<IUpdatableComponent>()).ForEach(list => components.AddRange(list));
+                Children.Select(entity => entity.GetComponentsInDescendants<IUpdatableComponent>()).ForEach(list => components.AddRange(list));
                 return components.OrderByDescending(component => component.UpdatePriority);
             }
         }
@@ -392,7 +353,6 @@ namespace VorliasEngine2D.System
                 this.manager = manager;
                 this.id = id;
                 inputService = new UserInputManager();
-                entities = new HashSet<Entity>();
                 OnAdded();
             }
             else
@@ -406,60 +366,20 @@ namespace VorliasEngine2D.System
             return "[GameState " + GetType().Name + "@" + GetType().GUID + "]";
         }
 
-        public Entity FindFirstChild(string name)
-        {
-            return entities.First(entity => entity.Name == name);
-        }
-
-        /// <summary>
-        /// The child entities of this GameState
-        /// </summary>
-        public Entity[] Children
-        {
-            get
-            {
-                return entities.ToArray();
-            }
-        }
-
-        internal void RemoveEntity(Entity child)
-        {
-            entities.Remove(child);
-        }
-
-        /// <summary>
-        /// Add an entity to this GameState
-        /// </summary>
-        /// <param name="child">The entity to add</param>
-        public void AddEntity(Entity child)
-        {   
-            child.Init();
-            entities.Add(child);
-            child.StartBehaviours();
-        }
-
         /// <summary>
         /// Spawn an entity under this GameState
         /// </summary>
         /// <returns>The spawned entity</returns>
-        public Entity CreateChild()
+        public override Entity CreateChild()
         {
             Entity entity = Entity.Create(this);
             return entity;
         }
 
-        internal Entity[] AllDescendants
-        {
-            get
-            {
-                return null;
-            }
-        }
-
         internal void InvokeInput(Application application, Mouse.Button input, InputState state)
         {
             Input.InvokeInput(application, input, state);
-            foreach (Entity entity in entities)
+            foreach (Entity entity in Children)
             {
                 entity.Input.InvokeInput(application, input, state);
             }
@@ -473,7 +393,7 @@ namespace VorliasEngine2D.System
         internal void InvokeInput(Application application, Keyboard.Key input, InputState state)
         {
             Input.InvokeInput(application, input, state);
-            foreach (Entity entity in entities)
+            foreach (Entity entity in Children)
             {
                 entity.Input.InvokeInput(application, input, state);
             }
