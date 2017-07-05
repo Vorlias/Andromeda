@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,25 +13,6 @@ using VorliasEngine2D.Entities.Components.Internal;
 
 namespace VorliasEngine2D.System
 {
-    /// <summary>
-    /// The GameState's priority
-    /// </summary>
-    public enum GameViewPriority
-    {
-        First = 0,
-        Background = 10,
-        Normal = 100,
-        Interface = 500,
-        Last = 1000,
-    }
-
-    public class GameViewInitException : Exception
-    {
-        public GameViewInitException() : base("GameView already initialized!")
-        {
-
-        }
-    }
 
     public abstract class GameView : EntityContainer
     {
