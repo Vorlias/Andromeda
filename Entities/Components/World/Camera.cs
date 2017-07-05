@@ -11,11 +11,6 @@ using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    public enum CameraType
-    {
-        World,
-        Interface
-    }
 
     public class Camera : Component, IUpdatableComponent
     {

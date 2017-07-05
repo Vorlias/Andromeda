@@ -9,50 +9,6 @@ using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.System
 {
-    public enum InputBindingBehaviour
-    {
-        Fallthrough,
-        Consume,
-    }
-
-    public enum InputBindingPriority
-    {
-        First = 1,
-        Normal = 50,
-        Character = 100,
-        Last = 1000,
-    }
-
-    /// <summary>
-    /// A combination of keys
-    /// </summary>
-    public struct KeyCombination
-    {
-        public Keyboard.Key[] Keys
-        {
-            get;
-        }
-
-        public bool AllKeysPressed
-        {
-            get
-            {
-                bool isActive = true;
-                foreach (Keyboard.Key key in Keys)
-                {
-                    if (!Keyboard.IsKeyPressed(key))
-                        isActive = false;
-                }
-
-                return isActive;
-            }
-        }
-
-        public KeyCombination(params Keyboard.Key[] keys)
-        {
-            Keys = keys;
-        }
-    }
 
     /// <summary>
     /// The input manager

@@ -62,6 +62,8 @@
     <Compile Include="Entities\Components\Internal\Debugging\IDebugDrawable.cs" />
     <Compile Include="Entities\FindComponentResult.cs" />
     <Compile Include="Entities\IDestroyable.cs" />
+    <Compile Include="System\GameViewInitException.cs" />
+    <Compile Include="System\GameViewPriority.cs" />
     <Compile Include="System\Input\MouseCoordinates.cs" />
     <Compile Include="Entities\Components\UI\UICoordinateMode.cs" />
     <Compile Include="Entities\Components\UI\UIExtension.cs" />

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,13 +10,6 @@ using SFML.System;
 
 namespace VorliasEngine2D.System
 {
-    public class InvalidTextureIdException : Exception
-    {
-        public InvalidTextureIdException(string textureId) : base ("Invalid texture id given: " + textureId)
-        {
-
-        }
-    }
 
     public class TextureManager : ResourceManager<Texture>
     {

@@ -13,19 +13,6 @@ using VorliasEngine2D.Serialization;
 
 namespace VorliasEngine2D.System
 {
-    class EntitySerialization
-    {
-
-    }
-
-    internal class PrefabSyntaxErrorException : Exception
-    {
-        public PrefabSyntaxErrorException(string message) : base ("Syntax Error: " + message)
-        {
-
-        }
-    }
-
     /// <summary>
     /// Experimental Prefab Serialization
     /// Note: This is a huge clusterfuck of code... that works.

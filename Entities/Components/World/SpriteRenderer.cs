@@ -1,6 +1,5 @@
 ﻿using SFML.Graphics;
 using SFML.System;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,41 +7,9 @@ using System.Threading.Tasks;
 using VorliasEngine2D.Entities.Components.Internal;
 using VorliasEngine2D.Serialization;
 using VorliasEngine2D.System;
-using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
 {
-
-
-    public sealed class AnchorPoint
-    {
-        public float X
-        {
-            get;
-            set;
-        }
-
-        public float Y
-        {
-            get;
-            set;
-        }
-
-        public AnchorPoint(float x, float y)
-        {
-            X = Math.Min(Math.Max(0.0f, x), 1.0f);
-            Y = Math.Min(Math.Max(0.0f, y), 1.0f);
-        }
-        
-        internal Vector2f AppliedTo(SpriteRenderer renderer)
-        {
-            Vector2f textureSize = renderer.Texture.Size.ToFloat();
-            textureSize.X *= X;
-            textureSize.Y *= Y;
-
-            return textureSize;
-        }
-    }
 
     public sealed class SpriteRenderer : Component, ITextureComponent
     {

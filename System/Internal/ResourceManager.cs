@@ -6,12 +6,6 @@ using System.Threading.Tasks;
 
 namespace VorliasEngine2D.System.Internal
 {
-    class ResourceNotFoundException : KeyNotFoundException
-    {
-        public ResourceNotFoundException(string typeName, string resourceId) : base("Invalid " + typeName + " resource specified: " + resourceId)
-        {
-        }
-    }
 
     public abstract class ResourceManager<ResourceType>
     {
