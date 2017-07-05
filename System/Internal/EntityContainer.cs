@@ -18,6 +18,9 @@ namespace VorliasEngine2D.System.Internal
         /// </summary>
         public Entity[] Children => children.ToArray();
 
+        /// <summary>
+        /// The descendants of this EntityContainer (Children + Children of Children)
+        /// </summary>
         public List<Entity> Descendants
         {
             get
@@ -34,12 +37,20 @@ namespace VorliasEngine2D.System.Internal
             }
         }
 
-        public void RemoveEntity(Entity child)
+        /// <summary>
+        /// Removes a child entity from this container
+        /// </summary>
+        /// <param name="child"></param>
+        internal void RemoveChild(Entity child)
         {
             children.Remove(child);
         }
 
-        protected void AddEntityAsChild(Entity child)
+        /// <summary>
+        /// Adds a child entity to this container
+        /// </summary>
+        /// <param name="child"></param>
+        protected void AddChild(Entity child)
         {
             children.Add(child);
         }
@@ -53,12 +64,16 @@ namespace VorliasEngine2D.System.Internal
             if (child.Parent == null)
                 child.Init();
             else
-                child.Parent.RemoveEntity(child);
+                child.Parent.RemoveChild(child);
 
-            AddEntityAsChild(child);
+            AddChild(child);
             child.StartBehaviours();
         }
 
+        /// <summary>
+        /// Creates a child entity parented to this container
+        /// </summary>
+        /// <returns>The child entity</returns>
         public abstract Entity CreateChild();
 
         /// <summary>

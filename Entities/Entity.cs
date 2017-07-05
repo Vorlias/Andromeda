@@ -79,7 +79,7 @@ namespace VorliasEngine2D.Entities
         internal void SetParent(Entity parent)
         {
             parentEntity = parent;
-            parent.AddEntityAsChild(this);
+            parent.AddChild(this);
         }
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace VorliasEngine2D.Entities
             Entity entity = new Entity();
             entity.SetParent(this);
             //children.Add(entity);
-            AddEntityAsChild(entity);
+            AddChild(entity);
             
 
             components.Where(component => component is IContainerComponent).Select(component => component as IContainerComponent).ForEach(component => component.ChildAdded(entity));
@@ -534,7 +534,7 @@ namespace VorliasEngine2D.Entities
                 childCopy.Name = child.Name;
                 //childCopy.SetParent(copy);
                 childCopy.SetParentState(copy.parentState);
-                copy.AddEntityAsChild(childCopy);
+                copy.AddChild(childCopy);
             }
 
             return copy;
@@ -547,11 +547,11 @@ namespace VorliasEngine2D.Entities
         {
             if (Parent != null)
             {
-                Parent.RemoveEntity(this);
+                Parent.RemoveChild(this);
             }
             else if (GameView != null)
             {
-                GameView.RemoveEntity(this);
+                GameView.RemoveChild(this);
             }
         }
 
