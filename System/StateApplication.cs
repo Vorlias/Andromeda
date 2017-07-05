@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.Graphics;
+using VorliasEngine2D.System.Internal;
 
 namespace VorliasEngine2D.System
 {
@@ -109,6 +110,11 @@ namespace VorliasEngine2D.System
             RenderEnd();
         }
 
+        protected sealed override void End()
+        {
+            DestructionService.Instance.Terminate();
+        }
+
         protected sealed override void Update()
         {
             UpdateStart();
@@ -140,7 +146,7 @@ namespace VorliasEngine2D.System
             Window.MouseButtonReleased += Window_MouseButtonReleased;
             Window.KeyReleased += Window_KeyReleased;
 
-            
+            DestructionService.Instance.Start();
         }
 
         protected sealed override void AfterStart()

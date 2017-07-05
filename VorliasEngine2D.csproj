@@ -59,11 +59,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
+    <Compile Include="Entities\Components\Internal\ColliderDetection.cs" />
     <Compile Include="Entities\Components\Internal\Debugging\IDebugDrawable.cs" />
+    <Compile Include="Entities\Components\Internal\InvalidComponentPairException.cs" />
+    <Compile Include="Entities\Components\Internal\ITextureComponent.cs" />
+    <Compile Include="Entities\Components\Internal\RenderOrder.cs" />
+    <Compile Include="Entities\Components\Internal\SetEntityInvalidException.cs" />
+    <Compile Include="Entities\Components\Internal\UpdatePriority.cs" />
+    <Compile Include="Entities\Components\World\AnchorPoint.cs" />
+    <Compile Include="Entities\Components\World\CameraType.cs" />
+    <Compile Include="Entities\Components\World\PositionConstraint.cs" />
     <Compile Include="Entities\FindComponentResult.cs" />
     <Compile Include="Entities\IDestroyable.cs" />
+    <Compile Include="Graphics\SliceRect.cs" />
+    <Compile Include="Graphics\TextureExtension.cs" />
+    <Compile Include="Serialization\PrefabSyntaxErrorException.cs" />
+    <Compile Include="Serialization\SerializedPropertyType.cs" />
+    <Compile Include="System\GameCollectionService.cs" />
     <Compile Include="System\GameViewInitException.cs" />
     <Compile Include="System\GameViewPriority.cs" />
+    <Compile Include="System\Input\InputBindingBehaviour.cs" />
+    <Compile Include="System\Input\InputBindingPriority.cs" />
+    <Compile Include="System\Input\KeyCombination.cs" />
     <Compile Include="System\Input\MouseCoordinates.cs" />
     <Compile Include="Entities\Components\UI\UICoordinateMode.cs" />
     <Compile Include="Entities\Components\UI\UIExtension.cs" />
@@ -99,7 +116,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\Debugging\DebugExtension.cs" />
     <Compile Include="System\CustomMouseCursor.cs" />
+    <Compile Include="System\Internal\DestroyableExtension.cs" />
+    <Compile Include="System\Internal\DestructionService.cs" />
     <Compile Include="System\Internal\EntityContainer.cs" />
+    <Compile Include="System\Internal\ResourceNotFoundException.cs" />
     <Compile Include="System\Resources\FontManager.cs" />
     <Compile Include="System\Input\InputState.cs" />
     <Compile Include="System\Input\InputType.cs" />
@@ -114,7 +134,9 @@
     <Compile Include="System\Input\KeyboardInputAction.cs" />
     <Compile Include="System\Input\MouseInputAction.cs" />
     <Compile Include="System\Input\MouseInputType.cs" />
+    <Compile Include="System\Resources\InvalidTextureIdException.cs" />
     <Compile Include="System\Resources\SoundManager.cs" />
+    <Compile Include="System\StateManager.cs" />
     <Compile Include="System\UIAxis.cs" />
     <Compile Include="System\UICoordinates.cs" />
     <Compile Include="System\Input\UserInputAction.cs" />
@@ -124,10 +146,14 @@
     <Compile Include="System\Input\UserInputService.cs" />
     <Compile Include="System\Input\UserInterfaceAction.cs" />
     <Compile Include="System\Utility\Extensions.cs" />
+    <Compile Include="System\Utility\MathUtil.cs" />
+    <Compile Include="System\Utility\NumberRange.cs" />
     <Compile Include="System\Utility\ThreadedService.cs" />
     <Compile Include="System\Utility\Polygon.cs" />
     <Compile Include="System\Utility\StringTokenizer.cs" />
+    <Compile Include="System\Utility\Vectors.cs" />
     <Compile Include="System\Utility\VectorUtil.cs" />
+    <Compile Include="System\ViewManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\Components\UI\Enums\" />
