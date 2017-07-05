@@ -136,7 +136,6 @@ namespace VorliasEngine2D.System
             }
         }
 
-
         /// <summary>
         /// Returns all the drawable entities
         /// </summary>
@@ -147,29 +146,6 @@ namespace VorliasEngine2D.System
                 List<IRenderableComponent> renderable = new List<IRenderableComponent>();
                 Descendants.ForEach(v => renderable.AddRange(v.GetComponents<IRenderableComponent>()));
                 return renderable.OrderBy(e => e.RenderOrder);
-            }
-        }
-
-        /// <summary>
-        /// Returns all the drawable entities
-        /// </summary>
-        internal Entity[] DrawableEntities
-        {
-            get
-            {
-                return Descendants.Where(entity => entity.DrawableComponents.Count() > 0).ToArray();
-            }
-        }
-
-        /// <summary>
-        /// Entities that have a UIComponent
-        /// </summary>
-        internal Entity[] UIEntities
-        {
-            get
-            {
-                var entities = Children.Where(entity => entity.HasComponent<UIComponent>());
-                return entities.ToArray();
             }
         }
 
