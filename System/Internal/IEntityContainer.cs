@@ -10,7 +10,7 @@ namespace VorliasEngine2D.System.Internal
     /// <summary>
     /// Interface for instance containers
     /// </summary>
-    public interface IInstanceTree
+    public interface IEntityContainer
     {
         Entity FindFirstChild(string name);
 
