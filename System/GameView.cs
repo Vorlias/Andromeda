@@ -76,7 +76,7 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// The game's states
+        /// The game's state manager
         /// </summary>
         protected StateManager States
         {
@@ -130,7 +130,7 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// The game state's priority
+        /// The game view's priority
         /// </summary>
         public GameViewPriority Priority
         {
@@ -145,7 +145,7 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// The state's Id assigned by the StateManager
+        /// The view's Id assigned by the ViewManager
         /// </summary>
         public string Id
         {
@@ -156,7 +156,7 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// The active state of the state
+        /// Whether or not this view is active
         /// </summary>
         public bool IsActive
         {
@@ -176,7 +176,7 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// Method called when the state is added to the state manager
+        /// Method called when the view is added to the view manager
         /// </summary>
         public virtual void OnAdded()
         {
@@ -192,7 +192,7 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// Method called when the state is activated
+        /// Method called when the view is activated
         /// </summary>
         public virtual void OnActivated()
         {
@@ -200,7 +200,7 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// Method called when the state is deactivated
+        /// Method called when the view is deactivated
         /// </summary>
         public virtual void OnDeactivated()
         {
@@ -208,7 +208,7 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// Method called when the state is updated
+        /// Method called when the view is updated
         /// </summary>
         /// <param name="application">The application</param>
         public virtual void OnUpdate(Application application)
@@ -217,7 +217,7 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// Method called when the state is rendered
+        /// Method called when the view is rendered
         /// </summary>
         /// <param name="window"></param>
         public virtual void OnRender(RenderWindow window)
@@ -299,9 +299,9 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
-        /// Internal function that sets up the state
+        /// Internal function that sets up the view
         /// </summary>
-        /// <exception cref="GameViewInitException">Will be thrown if the state's already initialized</exception>
+        /// <exception cref="GameViewInitException">Will be thrown if the view's already initialized</exception>
         internal void Added(StateGameManager manager, string id)
         {
             if (this.manager == null)
@@ -319,11 +319,11 @@ namespace VorliasEngine2D.System
 
         public override string ToString()
         {
-            return "[GameState " + GetType().Name + "@" + GetType().GUID + "]";
+            return "[GameView " + GetType().Name + "@" + GetType().GUID + "]";
         }
 
         /// <summary>
-        /// Spawn an entity under this GameState
+        /// Spawn an entity under this GameView
         /// </summary>
         /// <returns>The spawned entity</returns>
         public override Entity CreateChild()
