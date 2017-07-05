@@ -15,6 +15,11 @@ namespace VorliasEngine2D.System.Internal
         }
 
         /// <summary>
+        /// Whether or not ExclusiveView is active.
+        /// </summary>
+        public bool IsActive => view != null;
+
+        /// <summary>
         /// The current exclusive GameView
         /// </summary>
         public GameView Current
