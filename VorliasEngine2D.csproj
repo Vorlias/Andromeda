@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Components\Internal\Debugging\IDebugDrawable.cs" />
     <Compile Include="System\Input\MouseCoordinates.cs" />
     <Compile Include="Entities\Components\UI\UICoordinateMode.cs" />
     <Compile Include="Entities\Components\UI\UIExtension.cs" />

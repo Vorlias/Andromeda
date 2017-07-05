@@ -70,10 +70,15 @@ namespace VorliasEngine2D.Entities
         }
     }
 
+    public interface IDestroyable
+    {
+        void Destroy();
+    }
+
     /// <summary>
     /// An entity
     /// </summary>
-    public sealed class Entity : IInstanceTree
+    public sealed class Entity : IInstanceTree, IDestroyable
     {
         HashSet<IComponent> components = new HashSet<IComponent>();
         Components.Transform transform;
@@ -667,6 +672,21 @@ namespace VorliasEngine2D.Entities
             }
 
             return copy;
+        }
+
+        /// <summary>
+        /// Destroys the object
+        /// </summary>
+        public void Destroy()
+        {
+            if (Parent != null)
+            {
+                Parent.children.Remove(this);
+            }
+            else if (GameView != null)
+            {
+                GameView.RemoveEntity(this);
+            }
         }
 
         private Entity()

@@ -29,6 +29,11 @@ namespace VorliasEngine2D.System
             return new Sound(Get(id));
         }
 
+        public Sound GetSoundCopy(string id)
+        {
+            return new Sound(new SoundBuffer(Get(id)));
+        }
+
         /// <summary>
         /// Loads the sound from a file to the specified id
         /// </summary>

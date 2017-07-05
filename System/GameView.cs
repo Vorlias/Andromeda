@@ -428,6 +428,11 @@ namespace VorliasEngine2D.System
             return entities.ToArray();
         }
 
+        internal void RemoveEntity(Entity child)
+        {
+            entities.Remove(child);
+        }
+
         /// <summary>
         /// Add an entity to this GameState
         /// </summary>

@@ -134,7 +134,7 @@ namespace VorliasEngine2D.Entities.Components
             if (entity.HasComponent<SpriteRenderer>())
             {
                 var spriteRenderer = entity.GetComponent<SpriteRenderer>();
-                var textureSize = spriteRenderer.Texture.Size.ToFloatVector();
+                var textureSize = spriteRenderer.Texture.Size.ToFloat();
                 CreateRectCollider(new Vector2f(textureSize.X, textureSize.Y)); // Create a collider with the size of the sprite (ish)
                 origin = -(textureSize / 2);
             }

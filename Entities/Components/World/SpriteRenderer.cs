@@ -36,7 +36,7 @@ namespace VorliasEngine2D.Entities.Components
         
         internal Vector2f AppliedTo(SpriteRenderer renderer)
         {
-            Vector2f textureSize = renderer.Texture.Size.ToFloatVector();
+            Vector2f textureSize = renderer.Texture.Size.ToFloat();
             textureSize.X *= X;
             textureSize.Y *= Y;
 

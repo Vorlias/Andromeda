@@ -1,29 +1,40 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VorliasEngine2D.System.Utility
 {
 
-    public static class VectorExtension
+    public static class Vectors
     {
         public static FloatRect Combine(this FloatRect lhs, Vector2f target)
         {
             return new FloatRect(new Vector2f(lhs.Left, lhs.Top) + target, new Vector2f(lhs.Width, lhs.Height));
         }
 
-        public static Vector2f ToFloatVector(this Vector2u old)
+        public static Vector2i ToInt(this Vector2f old)
+        {
+            return new Vector2i((int) old.X, (int) old.Y);
+        }
+
+        public static Vector2u ToUInt(this Vector2i old)
+        {
+            return new Vector2u((uint) old.X, (uint) old.Y);
+        }
+
+        public static Vector2f ToFloat(this Vector2u old)
         {
             return new Vector2f(old.X, old.Y);
         }
 
-        public static Vector2f ToFloatVector(this Vector2i old)
+        public static Vector2f ToFloat(this Vector2i old)
         {
             return new Vector2f(old.X, old.Y);
+        }
+
+        public static UICoordinates ToUICoordinates(this Vector2f old)
+        {
+            return new UICoordinates(0, old.X, 0, old.Y);
         }
 
         /// <summary>
@@ -37,9 +48,37 @@ namespace VorliasEngine2D.System.Utility
             return (float)VectorUtil.GetAngle(left, right);
         }
 
+        /// <summary>
+        /// The dot product of two vectors
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static float Dot(this Vector2f left, Vector2f right)
         {
             return (left.X * right.X) + (left.Y * right.Y);
+        }
+
+        /// <summary>
+        /// The length of this vector
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static float GetLength(this Vector2f self)
+        {
+            float length = (float) Math.Sqrt(self.X * self.X + self.Y * self.Y);
+            return length;
+        }
+
+        /// <summary>
+        /// Gets the distance between two vectors, equivalent to (start - end).Length()
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        public static float GetDistance(this Vector2f start, Vector2f end)
+        {
+            return ( end - start ).GetLength();
         }
 
         /// <summary>
@@ -49,7 +88,7 @@ namespace VorliasEngine2D.System.Utility
         /// <returns>The normal of this vector</returns>
         public static Vector2f Normalize(this Vector2f self)
         {
-            float length = (float)Math.Sqrt(self.X * self.X + self.Y * self.Y);
+            float length = self.GetLength();
             return new Vector2f(self.X / length, self.Y / length);
         }
 

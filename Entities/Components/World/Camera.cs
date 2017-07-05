@@ -111,7 +111,7 @@ namespace VorliasEngine2D.Entities.Components
                     view = new View(application.InterfaceView);
 
                 view.Rotation = 0;
-                view.Center = application.Window.Size.ToFloatVector() / 2;
+                view.Center = application.Window.Size.ToFloat() / 2;
             }
             else
             {

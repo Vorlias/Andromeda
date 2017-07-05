@@ -113,7 +113,7 @@ namespace VorliasEngine2D.Entities.Components
                 polygon.Add(first);
             }
 
-            Origin = -(i.Size / 2).ToFloatVector();
+            Origin = -(i.Size / 2).ToFloat();
         }
 
         private Entity entity;

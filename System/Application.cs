@@ -179,6 +179,15 @@ namespace VorliasEngine2D.System
                 window.SetTitle(value);
             }
         }
+        
+        /// <summary>
+        /// The mouse's position, relative to the window.
+        /// </summary>
+        public Vector2i MousePosition
+        {
+            get => Mouse.GetPosition(Window);
+            set => Mouse.SetPosition(value, Window);
+        }
 
         public Styles Styles
         {

@@ -112,7 +112,7 @@ namespace VorliasEngine2D.Entities.Components
             if (entity.HasComponent<SpriteRenderer>())
             {
                 var spriteRenderer = entity.GetComponent<SpriteRenderer>();
-                var textureSize = spriteRenderer.Texture.Size.ToFloatVector();
+                var textureSize = spriteRenderer.Texture.Size.ToFloat();
                 var diagonal = (float)Math.Sqrt(Math.Pow(textureSize.Y, 2) + Math.Pow(textureSize.X, 2));
 
                 CreateCircleCollider(textureSize.X / 2);
