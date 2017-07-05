@@ -50,7 +50,11 @@ namespace VorliasEngine2D.System.Internal
         /// <param name="child">The entity</param>
         public void AddEntity(Entity child)
         {
-            child.Init();
+            if (child.Parent == null)
+                child.Init();
+            else
+                child.Parent.RemoveEntity(child);
+
             AddEntityAsChild(child);
             child.StartBehaviours();
         }
