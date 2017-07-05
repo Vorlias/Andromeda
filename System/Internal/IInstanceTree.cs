@@ -15,6 +15,6 @@ namespace VorliasEngine2D.System.Internal
         Entity FindFirstChild(string name);
         Entity[] GetChildren();
         void AddEntity(Entity child);
-        Entity SpawnEntity();
+        Entity CreateChild();
     }
 }

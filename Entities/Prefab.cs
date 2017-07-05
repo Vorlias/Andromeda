@@ -49,7 +49,7 @@ namespace VorliasEngine2D.Entities
 
         public static Prefab Create()
         {
-            Entity original = Entity.Spawn();
+            Entity original = Entity.Create();
             original.SetIsPrefab(true);
 
             Prefab prefab = new Prefab();

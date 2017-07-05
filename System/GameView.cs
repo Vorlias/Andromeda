@@ -56,7 +56,7 @@ namespace VorliasEngine2D.System
                     }
                     else
                     {
-                        camera = SpawnEntity().AddComponent<Camera>();
+                        camera = CreateChild().AddComponent<Camera>();
                     }
                 }
 
@@ -449,9 +449,9 @@ namespace VorliasEngine2D.System
         /// Spawn an entity under this GameState
         /// </summary>
         /// <returns>The spawned entity</returns>
-        public Entity SpawnEntity()
+        public Entity CreateChild()
         {
-            Entity entity = Entity.Spawn(this);
+            Entity entity = Entity.Create(this);
             return entity;
         }
 

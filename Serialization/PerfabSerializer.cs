@@ -421,7 +421,7 @@ namespace VorliasEngine2D.System
                 else if (key == "entity")
                 {
                     // child entity
-                    ParseEntityChild(Entity.Spawn(instance), tokenizer.Read());
+                    ParseEntityChild(Entity.Create(instance), tokenizer.Read());
                 }
                 else if (key == "@debug")
                 {
@@ -489,7 +489,7 @@ namespace VorliasEngine2D.System
                 {
                     // child entity
                     Console.WriteLine("Create Child");
-                    ParseEntityChild(Entity.Spawn(prefabEntity), tokenizer.Read());
+                    ParseEntityChild(Entity.Create(prefabEntity), tokenizer.Read());
                 }
 
                 if (defaultMode)
@@ -549,7 +549,7 @@ namespace VorliasEngine2D.System
 
         public PrefabSerialization(StreamReader file)
         {
-            prefabEntity = Entity.Spawn();
+            prefabEntity = Entity.Create();
             string line;
 
             while ((line = file.ReadLine()) != null)
@@ -563,7 +563,7 @@ namespace VorliasEngine2D.System
 
         public PrefabSerialization(StringReader reader)
         {
-            prefabEntity = Entity.Spawn();
+            prefabEntity = Entity.Create();
             string line;
 
             while ((line = reader.ReadLine()) != null)

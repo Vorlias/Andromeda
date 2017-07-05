@@ -15,7 +15,7 @@ namespace VorliasEngine2D.Entities.Components.UI
     {
         public static UIImageButton AddImageButton(this Entity parent, string textureId, UICoordinates position = default(UICoordinates), UICoordinates size = default(UICoordinates))
         {
-            Entity entity = parent.SpawnEntity();
+            Entity entity = parent.CreateChild();
             UIImageButton uiImage = entity.AddComponent<UIImageButton>();
             uiImage.TextureId = textureId;
             UITransform transform = entity.GetComponent<UITransform>();
@@ -27,7 +27,7 @@ namespace VorliasEngine2D.Entities.Components.UI
 
         public static UIImage AddImage(this Entity parent, string textureId, UICoordinates position = default(UICoordinates), UICoordinates size = default(UICoordinates))
         {
-            Entity entity = parent.SpawnEntity();
+            Entity entity = parent.CreateChild();
             UIImage uiImage = entity.AddComponent<UIImage>();
             uiImage.TextureId = textureId;
             UITransform transform = entity.GetComponent<UITransform>();
@@ -39,7 +39,7 @@ namespace VorliasEngine2D.Entities.Components.UI
 
         public static UIText AddText(this Entity parent, string text, uint fontSize, UICoordinates position = default(UICoordinates))
         {
-            Entity entity = parent.SpawnEntity();
+            Entity entity = parent.CreateChild();
             UIText uiText = entity.AddComponent<UIText>();
             uiText.Text = text;
             uiText.FontSize = fontSize;

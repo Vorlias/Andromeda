@@ -27,7 +27,7 @@ namespace VorliasEngine2D.Entities.Components
         /// <returns></returns>
         public UIComponentType Add<UIComponentType>() where UIComponentType : UIComponent, new()
         {
-            Entity child = Entity.SpawnEntity();
+            Entity child = Entity.CreateChild();
             return child.AddComponent<UIComponentType>();
         }
 

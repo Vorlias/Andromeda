@@ -464,7 +464,7 @@ namespace VorliasEngine2D.Entities
         /// Spawn an entity as a child of this entity
         /// </summary>
         /// <returns>The spawned entity</returns>
-        public Entity SpawnEntity()
+        public Entity CreateChild()
         {
             Entity entity = new Entity();
             entity.SetParent(this);
@@ -480,9 +480,9 @@ namespace VorliasEngine2D.Entities
         /// Spawn an entity as a child of this entity with the specified component
         /// </summary>
         /// <returns>The spawned entity</returns>
-        public ComponentType SpawnEntity<ComponentType>() where ComponentType : IComponent, new()
+        public ComponentType CreateChild<ComponentType>() where ComponentType : IComponent, new()
         {
-            return SpawnEntity().AddComponent<ComponentType>();
+            return CreateChild().AddComponent<ComponentType>();
         }
 
         /// <summary>
@@ -490,9 +490,9 @@ namespace VorliasEngine2D.Entities
         /// </summary>
         /// <param name="parent">The parent entity</param>
         /// <returns>The spawned entity</returns>
-        public static Entity Spawn(Entity parent)
+        public static Entity Create(Entity parent)
         {
-            Entity entity = Spawn();
+            Entity entity = Create();
             entity.SetParent(parent);
             entity.SetParentState(parent.GameView);
 
@@ -501,7 +501,7 @@ namespace VorliasEngine2D.Entities
             return entity;
         }
 
-        public static Entity Spawn(Components.Transform transform = null)
+        public static Entity Create(Components.Transform transform = null)
         {
             Entity entity = new Entity();
 
@@ -520,9 +520,9 @@ namespace VorliasEngine2D.Entities
         /// </summary>
         /// <param name="state">The state to spawn the entity under</param>
         /// <returns></returns>
-        public static Entity Spawn(GameView state, Components.Transform transform = null)
+        public static Entity Create(GameView state, Components.Transform transform = null)
         {
-            Entity entity = Spawn(transform);
+            Entity entity = Create(transform);
             entity.SetParentState(state);
             state.AddEntity(entity);
             return entity;
