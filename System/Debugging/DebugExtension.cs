@@ -64,7 +64,7 @@ namespace VorliasEngine2D.System.Debug
                 Console.WriteLine(" ■ " + (instance as Entity).Name);
             }
 
-            Entity[] children = instance.GetChildren();
+            Entity[] children = instance.Children;
             foreach (Entity child in children)
             {
                 Console.WriteLine(prefix + "└─■≡ " + child.Name);

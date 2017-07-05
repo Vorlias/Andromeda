@@ -13,7 +13,12 @@ namespace VorliasEngine2D.System.Internal
     public interface IInstanceTree
     {
         Entity FindFirstChild(string name);
-        Entity[] GetChildren();
+
+        Entity[] Children
+        {
+            get;
+        }
+
         void AddEntity(Entity child);
         Entity CreateChild();
     }

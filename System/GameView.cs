@@ -422,12 +422,6 @@ namespace VorliasEngine2D.System
             }
         }
 
-        [Obsolete("Use 'Children' instead.")]
-        public Entity[] GetChildren()
-        {
-            return entities.ToArray();
-        }
-
         internal void RemoveEntity(Entity child)
         {
             entities.Remove(child);
@@ -438,8 +432,7 @@ namespace VorliasEngine2D.System
         /// </summary>
         /// <param name="child">The entity to add</param>
         public void AddEntity(Entity child)
-        {
-            //child.SetInputManager(inputService);
+        {   
             child.Init();
             entities.Add(child);
             child.StartBehaviours();
