@@ -103,8 +103,10 @@ namespace VorliasEngine2D.System
             var views = Game.ActiveViewsByPriority;
             foreach (GameView view in views)
             {
+                Application.Window.SetView(Application.Window.DefaultView);
+                view.OnPreRender(Window);
                 view.RenderEntities(Window);
-                view.OnRender(Window);
+                view.OnPostRender(Window);
             }
 
             States.ActiveState.RenderEnd();
@@ -159,6 +161,8 @@ namespace VorliasEngine2D.System
         private void Window_MouseButtonReleased(object sender, MouseButtonEventArgs e)
         {
             InputService.InvokeInput(this, e.Button, InputState.Inactive);
+            States.ActiveState.Input.InvokeInput(this, e.Button, InputState.Inactive);
+
 
             var states = Game.UpdatableViewsByPriority;
             foreach (GameView state in states)
@@ -170,6 +174,7 @@ namespace VorliasEngine2D.System
         private void Window_MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             InputService.InvokeInput(this, e.Button, InputState.Active);
+            States.ActiveState.Input.InvokeInput(this, e.Button, InputState.Active);
 
             var states = Game.UpdatableViewsByPriority;
             foreach (GameView state in states)
@@ -181,6 +186,8 @@ namespace VorliasEngine2D.System
         private void Window_KeyReleased(object sender, KeyEventArgs e)
         {
             InputService.InvokeInput(this, e.Code, InputState.Inactive);
+            States.ActiveState.Input.InvokeInput(this, e.Code, InputState.Inactive);
+
 
             var states = Game.UpdatableViewsByPriority;
             foreach (GameView state in states)
@@ -192,6 +199,7 @@ namespace VorliasEngine2D.System
         private void Window_KeyPressed(object sender, KeyEventArgs e)
         {
             InputService.InvokeInput(this, e.Code, InputState.Active);
+            States.ActiveState.Input.InvokeInput(this, e.Code, InputState.Active);
 
             var states = Game.UpdatableViewsByPriority;
             foreach (GameView state in states)

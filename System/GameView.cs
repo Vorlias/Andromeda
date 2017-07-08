@@ -10,6 +10,7 @@ using SFML.System;
 using VorliasEngine2D.System.Utility;
 using VorliasEngine2D.System.Internal;
 using VorliasEngine2D.Entities.Components.Internal;
+using System;
 
 namespace VorliasEngine2D.System
 {
@@ -94,6 +95,11 @@ namespace VorliasEngine2D.System
             }
         }
 
+        public virtual void OnPreRender(RenderWindow window)
+        {
+            
+        }
+
         /// <summary>
         /// Entities that have an event thing
         /// </summary>
@@ -162,7 +168,7 @@ namespace VorliasEngine2D.System
         {
             get
             {
-                return active;
+                return active || States.ActiveState.ExclusiveView.Current == this;
             }
             set
             {
@@ -220,7 +226,7 @@ namespace VorliasEngine2D.System
         /// Method called when the view is rendered
         /// </summary>
         /// <param name="window"></param>
-        public virtual void OnRender(RenderWindow window)
+        public virtual void OnPostRender(RenderWindow window)
         {
 
         }

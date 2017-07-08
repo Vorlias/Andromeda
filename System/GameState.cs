@@ -107,7 +107,7 @@ namespace VorliasEngine2D.System
 
         public IEnumerable<GameView> ActiveViewsByPriority
         {
-            get => Views.Where(view => view.IsActive).OrderBy(view => view.Priority);
+            get => Views.Where(view => view.IsActive || ExclusiveView.Current == view).OrderBy(view => view.Priority);
         }
 
         public IEnumerable<GameView> Views
@@ -245,6 +245,7 @@ namespace VorliasEngine2D.System
         {
             exclusiveView = new ExclusiveGameViewProperty(this);
             views = new HashSet<GameView>();
+            Input = new UserInputManager();
             Init();
         }
 
