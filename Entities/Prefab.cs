@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.Entities.Components;
 using VorliasEngine2D.System;
 
 namespace VorliasEngine2D.Entities
@@ -23,7 +24,7 @@ namespace VorliasEngine2D.Entities
         /// Creates a copy of the prefab entity
         /// </summary>
         /// <returns>A copy of the prefab entity</returns>
-        public Entity Clone(GameView parent)
+        public Entity Instantiate(GameView parent)
         {
             Entity child = original.Clone();
             child.SetParentState(parent);
@@ -37,7 +38,7 @@ namespace VorliasEngine2D.Entities
         /// Creates a copy of the prefab entity
         /// </summary>
         /// <returns>A copy of the prefab entity</returns>
-        public Entity Clone(Entity parent)
+        public Entity Instantiate(Entity parent)
         {
             Entity child = original.Clone(parent);
             child.SetParentState(parent.GameView);
@@ -56,6 +57,23 @@ namespace VorliasEngine2D.Entities
             prefab.original = original;
 
             return prefab;
+        }
+
+        /// <summary>
+        /// Creates a prefab with the specified component
+        /// </summary>
+        /// <typeparam name="TComponent">The component</typeparam>
+        /// <returns>A prefab with the specified component</returns>
+        public static Prefab Create<TComponent>() where TComponent : IComponent, new()
+        {
+            Prefab pfb = Create();
+            TComponent tc = pfb.original.AddComponent<TComponent>();
+            return pfb;
+        }
+
+        public TComponent AddComponent<TComponent>() where TComponent : IComponent, new()
+        {
+            return original.AddComponent<TComponent>();
         }
 
         public static Prefab Create(Entity original)

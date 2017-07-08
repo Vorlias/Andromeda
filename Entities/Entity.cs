@@ -119,7 +119,7 @@ namespace VorliasEngine2D.Entities
             }
         }
 
-        [PersistentProperty("Name")]
+        [SerializableProperty("Name")]
         /// <summary>
         /// The name of this entity
         /// </summary>

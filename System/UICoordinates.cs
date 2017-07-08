@@ -13,48 +13,26 @@ namespace VorliasEngine2D.System
     /// A vector that represents a UI coordinate
     /// (scale, offset) for (x, y)
     /// </summary>
-    public struct UICoordinates // TODO: Think of better name
+    public struct UICoordinates
     {
         UIAxis x;
         UIAxis y;
 
-        public UIAxis X
-        {
-            get
-            {
-                return x;
-            }
-        }
+        public UIAxis X => x;
+
+        public UIAxis Y => y;
 
         /// <summary>
         /// Same as X
         /// </summary>
-        public UIAxis Width
-        {
-            get
-            {
-                return x;
-            }
-        }
+        public UIAxis Width => x;
 
         /// <summary>
         /// Same as Y
         /// </summary>
-        public UIAxis Height
-        {
-            get
-            {
-                return y;
-            }
-        }
+        public UIAxis Height => y;
 
-        public UIAxis Y
-        {
-            get
-            {
-                return y;
-            }
-        }
+        
 
         public static UICoordinates operator +(UICoordinates left, UICoordinates right)
         {

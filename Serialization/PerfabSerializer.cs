@@ -56,7 +56,7 @@ namespace VorliasEngine2D.System
             try
             {
                 var property = type.GetProperty(propertyName);
-                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+                var attr = property.GetCustomAttribute<SerializablePropertyAttribute>();
 
                 if (attr != null)
                     property.SetValue(instance, Enum.Parse(property.PropertyType, value));
@@ -78,7 +78,7 @@ namespace VorliasEngine2D.System
             try
             {
                 var property = type.GetProperty(propertyName);
-                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+                var attr = property.GetCustomAttribute<SerializablePropertyAttribute>();
 
                 if (attr != null)
                     property.SetValue(instance, value);
@@ -100,7 +100,7 @@ namespace VorliasEngine2D.System
             try
             {
                 var property = type.GetProperty(propertyName);
-                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+                var attr = property.GetCustomAttribute<SerializablePropertyAttribute>();
 
                 if (attr != null)
                     property.SetValue(instance, new UICoordinates(scaleX, offsetX, scaleY, offsetY));
@@ -124,7 +124,7 @@ namespace VorliasEngine2D.System
             try
             {
                 var property = type.GetProperty(propertyName);
-                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+                var attr = property.GetCustomAttribute<SerializablePropertyAttribute>();
 
                 if (attr != null)
                     property.SetValue(instance, new Vector2f(x, y));
@@ -144,7 +144,7 @@ namespace VorliasEngine2D.System
             {
                 var property = type.GetProperty(propertyName);
 
-                var attr = property?.GetCustomAttribute<PersistentPropertyAttribute>();
+                var attr = property?.GetCustomAttribute<SerializablePropertyAttribute>();
 
                 if (attr != null)
                     property.SetValue(instance, x);
@@ -162,7 +162,7 @@ namespace VorliasEngine2D.System
             try
             {
                 var property = type.GetProperty(propertyName);
-                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+                var attr = property.GetCustomAttribute<SerializablePropertyAttribute>();
 
                 if (attr != null)
                     property.SetValue(instance, newPoly);
@@ -181,7 +181,7 @@ namespace VorliasEngine2D.System
             try
             {
                 var property = type.GetProperty(propertyName);
-                var attr = property.GetCustomAttribute<PersistentPropertyAttribute>();
+                var attr = property.GetCustomAttribute<SerializablePropertyAttribute>();
 
                 if (attr != null)
                     property.SetValue(instance, value);

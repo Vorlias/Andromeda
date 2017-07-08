@@ -66,7 +66,7 @@ namespace VorliasEngine2D.Entities.Components
         Texture texture;
         string textureId;
 
-        [PersistentProperty("TextureId")]
+        [SerializableProperty("TextureId")]
         /// <summary>
         /// The TextureId of the sprite
         /// </summary>
@@ -116,14 +116,6 @@ namespace VorliasEngine2D.Entities.Components
 
             Transform transform = entity.Transform;
             Vector2f position = transform.Position;
-
-
-            if (transform.Axis == Transform.AxisType.World)
-            {
-                // TODO: Position based on world offset to window corner
-                //Vector2f middle = target.GetView().Size / 2;
-                //position = position - middle;
-            }
 
             if (texture == null)
             {

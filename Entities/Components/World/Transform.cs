@@ -33,7 +33,7 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// If the transform is local based (if true, it will be affected by the parent entity's transform)
         /// </summary>
-        [PersistentProperty("IsTransformLocal", PropertyType = SerializedPropertyType.Bool)]
+        [SerializableProperty("IsTransformLocal", PropertyType = SerializedPropertyType.Bool)]
         public bool IsTransformLocal
         {
             get
@@ -101,7 +101,7 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// The local position of this transform
         /// </summary>
-        [PersistentProperty("LocalPosition")]
+        [SerializableProperty("LocalPosition")]
         public Vector2f LocalPosition
         {
             get
@@ -141,7 +141,7 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// Rotation of this transform + the parent transforms (If IsTransformLocal is enabled)
         /// </summary>
-        [PersistentProperty("Rotation")]
+        [SerializableProperty("Rotation")]
         public new float Rotation
         {
             get
@@ -168,7 +168,7 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// The position of this transform offset from parent transforms (If IsTransformLocal is enabled, otherwise this local position)
         /// </summary>
-        [PersistentProperty("Position")]
+        [SerializableProperty("Position")]
         public new Vector2f Position
         {
             get

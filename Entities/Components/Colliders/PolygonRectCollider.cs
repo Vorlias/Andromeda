@@ -19,7 +19,7 @@ namespace VorliasEngine2D.Entities.Components
 
         internal Polygon polygon;
 
-        [PersistentProperty("Polygon", PropertyType = SerializedPropertyType.Polygon)]
+        [SerializableProperty("Polygon", PropertyType = SerializedPropertyType.Polygon)]
         public Polygon Polygon
         {
             get

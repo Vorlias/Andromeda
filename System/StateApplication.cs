@@ -98,7 +98,7 @@ namespace VorliasEngine2D.System
         {
             RenderStart();
 
-            States.ActiveState.Render();
+            States.ActiveState.RenderStart();
 
             var views = Game.ActiveViewsByPriority;
             foreach (GameView view in views)
@@ -106,6 +106,8 @@ namespace VorliasEngine2D.System
                 view.RenderEntities(Window);
                 view.OnRender(Window);
             }
+
+            States.ActiveState.RenderEnd();
 
             RenderEnd();
         }

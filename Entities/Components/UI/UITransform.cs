@@ -38,14 +38,14 @@ namespace VorliasEngine2D.Entities.Components
             set => posMode = value;
         }
 
-        [PersistentProperty("Size", PropertyType = SerializedPropertyType.UICoordinates)]
+        [SerializableProperty("Size", PropertyType = SerializedPropertyType.UICoordinates)]
         public UICoordinates Size
         {
             get;
             set;
         }
 
-        [PersistentProperty("Position", PropertyType = SerializedPropertyType.UICoordinates)]
+        [SerializableProperty("Position", PropertyType = SerializedPropertyType.UICoordinates)]
         public UICoordinates Position
         {
             get;

@@ -49,7 +49,7 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        [PersistentProperty("TextureId", PropertyType = SerializedPropertyType.String)]
+        [SerializableProperty("TextureId", PropertyType = SerializedPropertyType.String)]
         public string TextureId
         {
             get

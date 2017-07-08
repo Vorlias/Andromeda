@@ -99,6 +99,12 @@ namespace VorliasEngine2D.System
             }
         }
 
+        internal void RenderEnd()
+        {
+            // Set the view back to default, so MouseGrabbed works correctly.
+            Application.Window.SetView(Application.Window.DefaultView);
+        }
+
         public IEnumerable<GameView> ActiveViewsByPriority
         {
             get => Views.Where(view => view.IsActive).OrderBy(view => view.Priority);
@@ -125,7 +131,7 @@ namespace VorliasEngine2D.System
 
         }
 
-        public virtual void Render()
+        public virtual void RenderStart()
         {
 
         }

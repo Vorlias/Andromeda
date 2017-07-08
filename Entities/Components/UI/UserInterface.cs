@@ -9,8 +9,7 @@ using VorliasEngine2D.Entities.Components.Internal;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    // TODO: Figure out why it requires IRenderableComponent to render child UIRenderer
-    public class UserInterface : Component, IContainerComponent, IRenderableComponent
+    public class UserInterface : Component, IContainerComponent
     {
         public override bool AllowsMultipleInstances
         {
@@ -41,11 +40,6 @@ namespace VorliasEngine2D.Entities.Components
             entity.AddComponent<UITransform>();
         }
 
-        public void Draw(RenderTarget target, RenderStates states)
-        {
-            
-        }
-
         public override string Name
         {
             get
@@ -67,18 +61,6 @@ namespace VorliasEngine2D.Entities.Components
                 return Name + " - " + count + " UIComponent";
             else
                 return Name + " - " + count +" UIComponents";
-        }
-
-        public RenderOrder RenderOrder
-        {
-            get
-            {
-                return RenderOrder.Foreground;
-            }
-            set
-            {
-
-            }
         }
     }
 }

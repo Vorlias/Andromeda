@@ -4,24 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VorliasEngine2D.Serialization
+namespace VorliasEngine2D.Entities.Components
 {
-
     /// <summary>
-    /// A property that can be serialized
+    /// Makes the property auto copy itself when the object is copied
+    /// (Used for component copying)
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class PersistentPropertyAttribute : Attribute
     {
-        public SerializedPropertyType PropertyType
-        {
-            get;
-            set;
-        }
-
-        public PersistentPropertyAttribute(string propertyName)
-        {
-
-        }
     }
 }

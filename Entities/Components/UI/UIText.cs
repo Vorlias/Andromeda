@@ -22,14 +22,14 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// The text displayed by this UIText component
         /// </summary>
-        [PersistentProperty("Text", PropertyType = SerializedPropertyType.String)]
+        [SerializableProperty("Text", PropertyType = SerializedPropertyType.String)]
         public string Text
         {
             get => text;
             set => text = value;
         }
 
-        [PersistentProperty("FontSize", PropertyType = SerializedPropertyType.UInt32)]
+        [SerializableProperty("FontSize", PropertyType = SerializedPropertyType.UInt32)]
         public uint FontSize
         {
             get => fontSize;
@@ -55,7 +55,7 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        [PersistentProperty("FontId", PropertyType = SerializedPropertyType.String)]
+        [SerializableProperty("FontId", PropertyType = SerializedPropertyType.String)]
         public string FontId
         {
             get => fontId;

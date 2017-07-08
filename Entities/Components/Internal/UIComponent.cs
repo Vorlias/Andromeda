@@ -83,7 +83,7 @@ namespace VorliasEngine2D.Entities.Components.Internal
 
         private RenderOrder renderOrder;
 
-        [PersistentProperty("RenderOrder", PropertyType = SerializedPropertyType.Enum)]
+        [SerializableProperty("RenderOrder", PropertyType = SerializedPropertyType.Enum)]
         public RenderOrder RenderOrder
         {
             get
