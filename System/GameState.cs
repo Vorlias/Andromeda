@@ -279,6 +279,26 @@ namespace VorliasEngine2D.System
 
         }
 
+        public virtual void OnReset()
+        {
+
+        }
+
+        /// <summary>
+        /// Reset the state
+        /// </summary>
+        public void Reset()
+        {
+            if (StateManager.ActiveState == this)
+            {
+                OnDeactivated();
+                OnReset();
+                OnActivated();
+            }
+            else
+                OnReset();
+        }
+
         public virtual void Init()
         {
 
