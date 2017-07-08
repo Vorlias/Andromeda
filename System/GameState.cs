@@ -174,8 +174,9 @@ namespace VorliasEngine2D.System
         /// </summary>
         /// <typeparam name="ViewType">The type of view</typeparam>
         /// <param name="priority">The priority of the view</param>
+        /// <param name="active">Whether or not this view is active</param>
         /// <returns></returns>
-        public ViewType AddView<ViewType>(GameViewPriority priority = GameViewPriority.Normal) where ViewType : GameView, new()
+        public ViewType AddView<ViewType>(GameViewPriority priority = GameViewPriority.Normal, bool active = true) where ViewType : GameView, new()
         {
             ViewType newView = new ViewType();
             newView.Added(StateManager.GameManager, newView.GetType().Name);
@@ -184,14 +185,14 @@ namespace VorliasEngine2D.System
             return newView;
         }
 
-        public ViewType AddInterfaceView<ViewType>(string name = null) where ViewType : GameView, new()
+        public ViewType AddInterfaceView<ViewType>(string name = null, bool active = true) where ViewType : GameView, new()
         {
-            return name != null ? AddView<ViewType>(name, GameViewPriority.Interface) : AddView<ViewType>(GameViewPriority.Interface);
+            return name != null ? AddView<ViewType>(name, GameViewPriority.Interface, active) : AddView<ViewType>(GameViewPriority.Interface, active);
         }
 
-        public ViewType AddBackgroundView<ViewType>(string name = null) where ViewType : GameView, new()
+        public ViewType AddBackgroundView<ViewType>(string name = null, bool active = true) where ViewType : GameView, new()
         {
-            return name != null ? AddView<ViewType>(name, GameViewPriority.Background) : AddView<ViewType>(GameViewPriority.Background);
+            return name != null ? AddView<ViewType>(name, GameViewPriority.Background, active) : AddView<ViewType>(GameViewPriority.Background, active);
         }
 
         /// <summary>
@@ -201,10 +202,11 @@ namespace VorliasEngine2D.System
         /// <param name="viewName">The name of the view</param>
         /// <param name="priority">The view's priority</param>
         /// <returns>The created view</returns>
-        public ViewType AddView<ViewType>(string viewName, GameViewPriority priority = GameViewPriority.Normal) where ViewType : GameView, new()
+        public ViewType AddView<ViewType>(string viewName, GameViewPriority priority = GameViewPriority.Normal, bool active = true) where ViewType : GameView, new()
         {
             ViewType newView = new ViewType();
             newView.Added(StateManager.GameManager, viewName);
+            newView.IsActive = active;
             Add(newView);
 
             return newView;
