@@ -131,7 +131,7 @@ namespace VorliasEngine2D.System
 
         }
 
-        public virtual void RenderStart()
+        public virtual void Render()
         {
 
         }
