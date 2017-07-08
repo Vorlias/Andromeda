@@ -185,11 +185,25 @@ namespace VorliasEngine2D.System
             return newView;
         }
 
+        /// <summary>
+        /// Adds a view with the GameViewPriority as Interface
+        /// </summary>
+        /// <typeparam name="ViewType">The type of the view</typeparam>
+        /// <param name="name">The name of the view</param>
+        /// <param name="active">Whether or not the view is active</param>
+        /// <returns>The view</returns>
         public ViewType AddInterfaceView<ViewType>(string name = null, bool active = true) where ViewType : GameView, new()
         {
             return name != null ? AddView<ViewType>(name, GameViewPriority.Interface, active) : AddView<ViewType>(GameViewPriority.Interface, active);
         }
 
+        /// <summary>
+        /// Adds a view with the GameViewPriority as Background
+        /// </summary>
+        /// <typeparam name="ViewType">The type of the view</typeparam>
+        /// <param name="name">The name of the view</param>
+        /// <param name="active">Whether or not the view is active</param>
+        /// <returns>The view</returns>
         public ViewType AddBackgroundView<ViewType>(string name = null, bool active = true) where ViewType : GameView, new()
         {
             return name != null ? AddView<ViewType>(name, GameViewPriority.Background, active) : AddView<ViewType>(GameViewPriority.Background, active);
