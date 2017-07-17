@@ -90,6 +90,19 @@ namespace VorliasEngine2D.System
             }
         }
 
+        private float time;
+
+        /// <summary>
+        /// The time elapsed since the application started
+        /// </summary>
+        public float ElapsedTime
+        {
+            get
+            {
+                return time;
+            }
+        }
+
         /// <summary>
         /// The TextureManager instance
         /// </summary>
@@ -280,7 +293,7 @@ namespace VorliasEngine2D.System
             {
                 deltaTime = deltaClock.ElapsedTime.AsSeconds();
                 deltaClock.Restart();
-                
+                time += deltaTime;
                 fps = 1.0f / deltaTime;
 
                 window.Clear();
