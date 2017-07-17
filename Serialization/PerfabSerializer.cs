@@ -10,6 +10,7 @@ using VorliasEngine2D.System.Utility;
 using VorliasEngine2D.Entities.Components;
 using SFML.System;
 using VorliasEngine2D.Serialization;
+using VorliasEngine2D.Entities.Components.Internal;
 
 namespace VorliasEngine2D.System
 {
@@ -35,6 +36,55 @@ namespace VorliasEngine2D.System
             EntityChild,
             Component,
             Scripted,
+        }
+
+        /// <summary>
+        /// The assemblies
+        /// </summary>
+        internal Assembly[] Assemblies
+        {
+            get
+            {
+                List<Assembly> assemblies = new List<Assembly>();
+
+                foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    if (!a.FullName.StartsWith("mscorlib")) 
+                        assemblies.Add(a);
+                }
+
+                return assemblies.ToArray();
+            }
+        }
+
+        internal Type[] ValidTypes
+        {
+            get
+            {
+                List<Type> validTypes = new List<Type>();
+                Assemblies.ForEach(Assembly => {
+                    foreach (Type t in Assembly.GetTypes())
+                    {
+                        if (t.IsSubclassOf(typeof(Component)) || t.IsSubclassOf(typeof(UIComponent)) || t.IsSubclassOf(typeof(EntityBehaviour)) )
+                        {
+                            validTypes.Add(t);
+                        }
+                    }
+                });
+
+                return validTypes.ToArray();
+            }
+        }
+
+        internal Type[] GetTypesByName(string typeName)
+        {
+            return ValidTypes.Where(type => type.Name == typeName || type.FullName == typeName || type.Assembly.GetName() + type.Name == typeName).ToArray();
+        }
+
+        internal Type GetTypeByName(string typeName)
+        {
+            var types = GetTypesByName(typeName);
+            return types?[0];
         }
 
         private string[] validPropertyTypes =
@@ -206,7 +256,7 @@ namespace VorliasEngine2D.System
                 }
                 else
                 {
-                    componentType = Type.GetType(ns + componentName, true);
+                    componentType = GetTypeByName(ns + componentName); //Type.GetType(ns + componentName, true);
                 }
 
                 IComponent com;
@@ -330,7 +380,7 @@ namespace VorliasEngine2D.System
             }
             catch (TypeLoadException e)
             {
-                Console.Error.WriteLine("Failed to load component: " + componentName);
+                Console.Error.WriteLine("Failed to load component: `" + componentName + "` under `" + ns + "`");
                 Environment.Exit(0xDEADC0);
             }
         }
@@ -470,7 +520,7 @@ namespace VorliasEngine2D.System
                 else if (key == "scripted")
                 {
                     mode = Mode.Component;
-                    ParseComponent(tokenizer.Read(), prefabEntity, "", Assembly.GetEntryAssembly());
+                    ParseComponent(tokenizer.Read(), prefabEntity, "", null);
                 }
                 else if (key == "entity")
                 {
@@ -499,7 +549,7 @@ namespace VorliasEngine2D.System
 
                 line++;
 
-                
+
                 if (key.StartsWith("#prefab"))
                 {
                     isParsing = true;
@@ -522,7 +572,7 @@ namespace VorliasEngine2D.System
                 else
                 {
                     Console.WriteLine("Unknown: '" + key + "' @line " + line + " have you parsed?");
-                    
+
                 }
 
                 
