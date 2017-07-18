@@ -71,6 +71,14 @@ namespace VorliasEngine2D.System.Internal
         }
 
         /// <summary>
+        /// Clears all children in this entity container
+        /// </summary>
+        internal void ClearAllChildren()
+        {
+            children.Clear();
+        }
+
+        /// <summary>
         /// Creates a child entity parented to this container
         /// </summary>
         /// <returns>The child entity</returns>

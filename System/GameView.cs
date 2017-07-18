@@ -329,6 +329,18 @@ namespace VorliasEngine2D.System
         }
 
         /// <summary>
+        /// Resets the view
+        /// </summary>
+        public void Reset()
+        {
+            // Force clear all the entities in this view
+            ClearAllChildren();
+
+            // Use OnStart to refresh everything.
+            OnStart();
+        }
+
+        /// <summary>
         /// Spawn an entity under this GameView
         /// </summary>
         /// <returns>The spawned entity</returns>
