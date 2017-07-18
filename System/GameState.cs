@@ -293,10 +293,24 @@ namespace VorliasEngine2D.System
             {
                 OnDeactivated();
                 OnReset();
+
+                foreach (var view in Views)
+                {
+                    view.Reset();
+                }
+
                 OnActivated();
             }
             else
+            {
                 OnReset();
+
+                foreach (var view in Views)
+                {
+                    view.Reset();
+                }
+            }
+            
         }
 
         public virtual void Init()
