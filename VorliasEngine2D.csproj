@@ -70,6 +70,7 @@
     <Compile Include="Entities\Components\World\AnchorPoint.cs" />
     <Compile Include="Entities\Components\World\CameraType.cs" />
     <Compile Include="Entities\Components\World\PositionConstraint.cs" />
+    <Compile Include="Entities\Components\World\TextureComponent.cs" />
     <Compile Include="Entities\FindComponentResult.cs" />
     <Compile Include="Entities\IDestroyable.cs" />
     <Compile Include="Graphics\SliceRect.cs" />

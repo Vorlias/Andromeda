@@ -11,25 +11,8 @@ using VorliasEngine2D.System;
 namespace VorliasEngine2D.Entities.Components
 {
 
-    public sealed class SpriteRenderer : Component, ITextureComponent
+    public sealed class SpriteRenderer : TextureComponent
     {
-        private RenderOrder renderOrder = RenderOrder.Normal;
-
-        /// <summary>
-        /// The render order of this sprite
-        /// </summary>
-        public RenderOrder RenderOrder
-        {
-            get
-            {
-                return renderOrder;
-            }
-            set
-            {
-                renderOrder = value;
-            }
-        }
-
         private AnchorPoint renderAnchor = new AnchorPoint(0.5f, 0.5f);
 
         /// <summary>
@@ -63,44 +46,9 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        Texture texture;
-        string textureId;
+        
 
-        [SerializableProperty("TextureId")]
-        /// <summary>
-        /// The TextureId of the sprite
-        /// </summary>
-        public string TextureId
-        {
-            set
-            {
-                textureId = value;
-                texture = TextureManager.Instance.Get(value);
-            }
-            get
-            {
-                if (textureId == null)
-                    return "";
-                else
-                    return textureId;
-            }
-        }
 
-        /// <summary>
-        /// The texture of this sprite
-        /// </summary>
-        public Texture Texture
-        {
-            get
-            {
-                return texture;
-            }
-            set
-            {
-                texture = value;
-                textureId = null;
-            }
-        }
 
         public override bool AllowsMultipleInstances
         {
@@ -110,14 +58,14 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        public void Draw(RenderTarget target, RenderStates states)
+        public override void Draw(RenderTarget target, RenderStates states)
         {
             //target.SetView(StateApplication.Application.WorldView);
 
             Transform transform = entity.Transform;
             Vector2f position = transform.Position;
 
-            if (texture == null)
+            if (Texture == null)
             {
                 RectangleShape rs = new RectangleShape(new Vector2f(100, 100));
                 rs.Origin = new Vector2f( 100 * renderAnchor.X, 100 * renderAnchor.Y);
@@ -126,10 +74,11 @@ namespace VorliasEngine2D.Entities.Components
             }
             else
             {
-                Sprite sprite = new Sprite(texture);
-                sprite.Origin = new Vector2f(texture.Size.X * renderAnchor.X, texture.Size.Y * renderAnchor.Y);
+                Sprite sprite = new Sprite(Texture);
+                sprite.Origin = new Vector2f(Texture.Size.X * renderAnchor.X, Texture.Size.Y * renderAnchor.Y);
                 sprite.Position = transform.Position;
                 sprite.Rotation = transform.Rotation;
+                sprite.Color = Color;
                 target.Draw(sprite);
             }
         }
@@ -139,8 +88,8 @@ namespace VorliasEngine2D.Entities.Components
             SpriteRenderer renderer = copy.AddComponent<SpriteRenderer>();
 
             // Set the texture to be the same
-            if (texture != null)
-                renderer.texture = texture;
+            if (Texture != null)
+                renderer.Texture = Texture;
         }
     }
 }
