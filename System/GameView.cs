@@ -264,6 +264,17 @@ namespace VorliasEngine2D.System
         {
             var updatableComponents = UpdatableComponents;
 
+            foreach (var entity in Children)
+            {
+                if (entity.IsBeingDestroyed)
+                {
+                    if (entity.DestroyTick >= entity.LifeTime)
+                        entity.Destroy();
+                    else
+                        entity.DestroyTick += Application.DeltaTime;
+                }
+            }
+
             updatableComponents.ForEach(com => com.BeforeUpdate());
             updatableComponents.ForEach(com => com.Update());
             updatableComponents.ForEach(com => com.AfterUpdate());

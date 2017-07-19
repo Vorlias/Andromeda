@@ -18,7 +18,7 @@ namespace VorliasEngine2D.Entities
     /// <summary>
     /// An entity
     /// </summary>
-    public sealed class Entity : EntityContainer, IDestroyable
+    public sealed class Entity : EntityContainer
     {
         HashSet<IComponent> components = new HashSet<IComponent>();
         Components.Transform transform;
@@ -538,6 +538,46 @@ namespace VorliasEngine2D.Entities
             }
 
             return copy;
+        }
+
+
+        private bool isDestroying = false;
+        private float lifeTime;
+
+        /// <summary>
+        /// Whether or not this object is being destroyed
+        /// </summary>
+        internal bool IsBeingDestroyed
+        {
+            get => isDestroying;
+        }
+
+        /// <summary>
+        /// The lifetime timer of this object
+        /// </summary>
+        internal float DestroyTick
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The lifetime of this object
+        /// </summary>
+        internal float LifeTime
+        {
+            get => lifeTime;
+        }
+
+        /// <summary>
+        /// Destroys the object after a set amount of seconds
+        /// </summary>
+        /// <param name="seconds">The seconds before the object is destroyed</param>
+        public void Destroy(float seconds)
+        {
+            lifeTime = seconds;
+            DestroyTick = 0;
+            isDestroying = true;
         }
 
         /// <summary>
