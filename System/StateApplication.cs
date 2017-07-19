@@ -116,6 +116,7 @@ namespace VorliasEngine2D.System
 
         protected sealed override void End()
         {
+
         }
 
         protected sealed override void Update()

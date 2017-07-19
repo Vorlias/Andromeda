@@ -264,7 +264,7 @@ namespace VorliasEngine2D.System
         {
             var updatableComponents = UpdatableComponents;
 
-            foreach (var entity in Children)
+            foreach (var entity in Descendants)
             {
                 if (entity.IsBeingDestroyed)
                 {
