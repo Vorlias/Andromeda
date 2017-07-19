@@ -116,7 +116,6 @@ namespace VorliasEngine2D.System
 
         protected sealed override void End()
         {
-            DestructionService.Instance.Terminate();
         }
 
         protected sealed override void Update()
@@ -149,8 +148,6 @@ namespace VorliasEngine2D.System
             Window.MouseButtonPressed += Window_MouseButtonPressed;
             Window.MouseButtonReleased += Window_MouseButtonReleased;
             Window.KeyReleased += Window_KeyReleased;
-
-            DestructionService.Instance.Start();
         }
 
         protected sealed override void AfterStart()
