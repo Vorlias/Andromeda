@@ -585,6 +585,8 @@ namespace VorliasEngine2D.Entities
         /// </summary>
         public void Destroy()
         {
+            Behaviours.ForEach(behaviour => behaviour.OnDestroy());
+
             if (Parent != null)
             {
                 Parent.RemoveChild(this);
