@@ -187,5 +187,10 @@ namespace VorliasEngine2D.Entities.Components
         {
             Render();
         }
+
+        public virtual void OnDestroy()
+        {
+
+        }
     }
 }
