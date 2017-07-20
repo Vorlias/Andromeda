@@ -22,6 +22,21 @@ namespace VorliasEngine2D.System.Internal
         }
 
         /// <summary>
+        /// Get the string id of this instance (if applicable)
+        /// </summary>
+        /// <param name="instance">The instance</param>
+        /// <returns>The id</returns>
+        public string FindId(ResourceType instance)
+        {
+            if (items.ContainsValue(instance))
+            {
+                return items.Where(kv => kv.Value.Equals(instance)).Select(kv => kv.Key).FirstOrDefault();
+            }
+            else
+                return null;
+        }
+
+        /// <summary>
         /// Attempts to fetch the resource with the specified id
         /// </summary>
         /// <param name="id">The id of the resource</param>
