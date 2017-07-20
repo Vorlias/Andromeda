@@ -32,6 +32,8 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        HashSet<ICollisionComponent> ignoreList = new HashSet<ICollisionComponent>();
+
         public bool AllowsMultipleInstances
         {
             get
@@ -112,9 +114,17 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        public void IgnoreCollisionsWith(ICollisionComponent collider)
+        {
+            ignoreList.Add(collider);
+        }
+
         public bool CollidesWith(ICollisionComponent other)
         {
-            return this.CheckCollision(other);
+            if (!ignoreList.Contains(other))
+                return this.CheckCollision(other);
+            else
+                return false;
         }
 
         public void OnComponentCopy(Entity source, Entity copy)
