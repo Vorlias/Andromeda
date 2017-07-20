@@ -170,7 +170,31 @@ namespace VorliasEngine2D.System
             actions.Add(action);
             bindings.Add(action);
         }
-        
+
+        /// <summary>
+        /// Bind an action to a method with the specified inputs
+        /// </summary>
+        /// <param name="value">The enum value of this binding</param>
+        /// <param name="actionMethod">The method that is called when these inputs are invoked</param>
+        /// <param name="inputs">The inputs (Key, MouseButton, etc.)</param>
+        public void BindAction(Enum value, Action<string, UserInputAction> actionMethod, params object[] inputs)
+        {
+            InputBindingAction action = new InputBindingAction(value.ToString(), actionMethod, inputs);
+            actions.Add(action);
+            bindings.Add(action);
+        }
+
+        /// <summary>
+        /// Binds the inputs to an action name
+        /// </summary>
+        /// <param name="value">The enum value of the action</param>
+        /// <param name="inputs">The inputs for this action</param>
+        public void Bind(Enum value, params object[] inputs)
+        {
+            InputBinding binding = new InputBinding(value.ToString(), inputs);
+            bindings.Add(binding);
+        }
+
         /// <summary>
         /// Binds the inputs to an action name
         /// </summary>
@@ -198,6 +222,16 @@ namespace VorliasEngine2D.System
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Returns whether or not the key is down using an enum's name
+        /// </summary>
+        /// <param name="enumValue">The enum value</param>
+        /// <returns></returns>
+        public bool IsActive(Enum enumValue)
+        {
+            return IsActive(enumValue.ToString());
         }
 
         /// <summary>
