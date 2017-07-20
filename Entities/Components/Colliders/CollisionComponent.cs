@@ -47,5 +47,14 @@ namespace VorliasEngine2D.Entities.Components.Colliders
                 collider.IgnoreCollisionsWith(this);
             }
         }
+
+        /// <summary>
+        /// Ignore collisions with the specified entity
+        /// </summary>
+        /// <param name="other">The entity to ignore collisions with</param>
+        public void IgnoreCollisionsWith(Entity other)
+        {
+            other.Collider?.IgnoreCollisionsWith(this);
+        }
     }
 }
