@@ -187,12 +187,12 @@ namespace VorliasEngine2D.System
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public bool IsKeyDown(string name)
+        public bool IsActive(string name)
         {
             var binding = bindings.Find(b => b.ActionName == name);
             if (binding != null)
             {
-                return binding.HasKeyDown();
+                return binding.HasKeyDown() || binding.HasMouseButtonPressed();
             }
             else
             {
