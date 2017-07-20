@@ -264,8 +264,6 @@ namespace VorliasEngine2D.System
 
                 if (com == null)
                     throw new Exception("Tried adding component of  type: " + componentName + " to " + targetEntity.Name);
-                else
-                    Console.WriteLine("Added component of type: " + com.GetType().Name + " to " + targetEntity.Name);
 
                 while (mode == Mode.Component && line < lineCount)
                 {
@@ -524,8 +522,6 @@ namespace VorliasEngine2D.System
                 }
                 else if (key == "entity")
                 {
-                    // child entity
-                    Console.WriteLine("Create Child");
                     ParseEntityChild(Entity.Create(prefabEntity), tokenizer.Read());
                 }
 

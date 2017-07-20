@@ -620,7 +620,6 @@ namespace VorliasEngine2D.Entities
         {
             if (!initialized)
             {
-                Console.WriteLine("Initialize " + FullName);
                 initialized = true;
                 Behaviours.ToArray().ForEach(behaviour => behaviour.Start());
             }
