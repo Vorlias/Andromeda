@@ -40,7 +40,6 @@ namespace VorliasEngine2D.System.Utility
         /// <returns></returns>
         public static Vector2f ToObjectSpace(this Entities.Components.Transform transform, Vector2f other)
         {
-
             return transform.Transform.TransformPoint(other);
         }
 
