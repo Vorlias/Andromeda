@@ -7,6 +7,9 @@ using VorliasEngine2D.Entities.Components.Internal;
 
 namespace VorliasEngine2D.Entities.Components.Colliders
 {
+    /// <summary>
+    /// The base class for collision components
+    /// </summary>
     public abstract class CollisionComponent : Component, ICollisionComponent
     {
         List<ICollisionComponent> ignoreList = new List<ICollisionComponent>();
@@ -14,6 +17,10 @@ namespace VorliasEngine2D.Entities.Components.Colliders
         public override bool AllowsMultipleInstances => false;
 
         bool trigger = false;
+
+        /// <summary>
+        /// Whether or not this collider is a trigger
+        /// </summary>
         public bool IsTrigger
         {
             get => trigger;
@@ -28,9 +35,20 @@ namespace VorliasEngine2D.Entities.Components.Colliders
         public bool CollidesWith(ICollisionComponent other)
         {
             if (ignoreList.Contains(other))
+            {
                 return false;
+            }
             else
-                return this.CheckCollision(other);
+            {
+                if (other is IPolygonColliderComponent && this is IPolygonColliderComponent)
+                {
+                    return ColliderDetection.CheckPolygonCollision(this as IPolygonColliderComponent, other as IPolygonColliderComponent);
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         public override abstract void OnComponentCopy(Entity source, Entity copy);

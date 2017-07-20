@@ -15,23 +15,5 @@
 
             return poly1.Overlaps(poly2);
         }
-
-        /// <summary>
-        /// Checks the collision between two collision components
-        /// </summary>
-        /// <param name="first"></param>
-        /// <param name="second"></param>
-        /// <returns></returns>
-        internal static bool CheckCollision(this ICollisionComponent first, ICollisionComponent second)
-        {
-            if (first is IPolygonColliderComponent && second is IPolygonColliderComponent)
-            {
-                return CheckPolygonCollision(first as IPolygonColliderComponent, second as IPolygonColliderComponent);
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 }
