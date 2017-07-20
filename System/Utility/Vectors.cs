@@ -1,6 +1,7 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
+using VorliasEngine2D.Entities.Components.Internal;
 
 namespace VorliasEngine2D.System.Utility
 {
@@ -29,6 +30,18 @@ namespace VorliasEngine2D.System.Utility
         public static Vector2f ToFloat(this Vector2i old)
         {
             return new Vector2f(old.X, old.Y);
+        }
+
+        /// <summary>
+        /// Transforms the point to the object's space
+        /// </summary>
+        /// <param name="transform">The transform</param>
+        /// <param name="other">The point</param>
+        /// <returns></returns>
+        public static Vector2f ToObjectSpace(this Entities.Components.Transform transform, Vector2f other)
+        {
+
+            return transform.Transform.TransformPoint(other);
         }
 
         public static UICoordinates ToUICoordinates(this Vector2f old)
