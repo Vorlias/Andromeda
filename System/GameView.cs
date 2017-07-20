@@ -173,9 +173,15 @@ namespace VorliasEngine2D.System
             set
             {
                 if (value)
+                {
                     OnActivated();
+                    
+                }
                 else
+                {
                     OnDeactivated();
+                    //Descendants.ForEach(descendant => descendant.Deactivated());
+                }
 
                 active = value;
             }
@@ -312,7 +318,11 @@ namespace VorliasEngine2D.System
             OnStart();
 
             if (active)
+            {
                 OnActivated();
+                
+            }
+                
         }
 
         /// <summary>
@@ -387,6 +397,16 @@ namespace VorliasEngine2D.System
             {
                 com.InputRecieved(new KeyboardInputAction(state, input));
             }
+        }
+
+        internal void Activated()
+        {
+            Descendants.ForEach(descendant => descendant.Activated());
+        }
+
+        internal void Deactivated()
+        {
+            Descendants.ForEach(descendant => descendant.Deactivated());
         }
     }
 }

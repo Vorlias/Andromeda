@@ -356,7 +356,7 @@ namespace VorliasEngine2D.Entities
         internal void StartBehaviours()
         {
             var scriptedComponents = components.OfType<EntityBehaviour>();
-            foreach (EntityBehaviour behaviour in scriptedComponents)
+            foreach (EntityBehaviour behaviour in scriptedComponents.ToArray())
             {
                 behaviour.Start();
             }
@@ -609,6 +609,29 @@ namespace VorliasEngine2D.Entities
         private Entity()
         {
             input = new UserInputManager();
+        }
+
+        bool initialized = false;
+
+        /// <summary>
+        /// Called when the entity is active
+        /// </summary>
+        internal void Activated()
+        {
+            if (!initialized)
+            {
+                Console.WriteLine("Initialize " + FullName);
+                initialized = true;
+                Behaviours.ToArray().ForEach(behaviour => behaviour.Start());
+            }
+        }
+
+        /// <summary>
+        /// Called when the entity is inactive
+        /// </summary>
+        internal void Deactivated()
+        {
+
         }
     }
 }

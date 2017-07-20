@@ -262,6 +262,8 @@ namespace VorliasEngine2D.System
         {
             Activated();
             StateManager.SetActive(Name);
+
+
         }
 
         public virtual void OnDeactivated()
@@ -272,11 +274,17 @@ namespace VorliasEngine2D.System
         internal void Activated()
         {
             Application.Window.SetMouseCursorGrabbed(mouseGrabbed);
+
+            foreach (GameView view in Views)
+            {
+                if (view.IsActive)
+                    view.Activated();
+            }
         }
 
         public virtual void OnActivated()
         {
-
+            
         }
 
         public virtual void OnReset()

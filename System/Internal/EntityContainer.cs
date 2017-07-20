@@ -67,7 +67,6 @@ namespace VorliasEngine2D.System.Internal
                 child.Parent.RemoveChild(child);
 
             AddChild(child);
-            child.StartBehaviours();
         }
 
         /// <summary>
