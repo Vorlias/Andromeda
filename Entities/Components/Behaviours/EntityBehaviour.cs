@@ -25,6 +25,13 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        bool enabled = true;
+        public bool IsEnabled
+        {
+            get => enabled;
+            set => enabled = value;
+        }
+
         /// <summary>
         /// Access the InputManager for this entity
         /// </summary>

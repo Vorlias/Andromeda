@@ -207,7 +207,7 @@ namespace VorliasEngine2D.Entities
         {
             get
             {
-                return components.OfType<EntityBehaviour>();
+                return components.OfType<EntityBehaviour>().Where(component => component.IsEnabled);
             }
         }
 
