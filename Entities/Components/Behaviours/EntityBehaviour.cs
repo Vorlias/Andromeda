@@ -29,7 +29,25 @@ namespace VorliasEngine2D.Entities.Components
         public bool IsEnabled
         {
             get => enabled;
-            set => enabled = value;
+            set
+            {
+                enabled = value;
+
+                if (value)
+                    OnEnabled();
+                else
+                    OnDisabled();
+            }
+        }
+
+        public virtual void OnEnabled()
+        {
+
+        }
+
+        public virtual void OnDisabled()
+        {
+
         }
 
         /// <summary>
