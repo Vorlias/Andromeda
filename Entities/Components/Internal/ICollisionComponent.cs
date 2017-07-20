@@ -9,6 +9,7 @@ namespace VorliasEngine2D.Entities.Components
     public interface ICollisionComponent : IComponent
     {
         bool CollidesWith(ICollisionComponent other);
+        void IgnoreCollisionsWith(ICollisionComponent collider);
 
         /// <summary>
         /// Used for determining if this will prevent movement through the entity

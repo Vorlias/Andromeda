@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
+    <Compile Include="Entities\Components\Colliders\CollisionComponent.cs" />
     <Compile Include="Entities\Components\Internal\ColliderDetection.cs" />
     <Compile Include="Entities\Components\Internal\Debugging\IDebugDrawable.cs" />
     <Compile Include="Entities\Components\Internal\InvalidComponentPairException.cs" />

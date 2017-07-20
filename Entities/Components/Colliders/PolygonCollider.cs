@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.Entities.Components.Colliders;
 using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
@@ -12,15 +13,8 @@ namespace VorliasEngine2D.Entities.Components
     /// <summary>
     /// A collider based on polygon points
     /// </summary>
-    public class PolygonCollider : IPolygonColliderComponent
+    public class PolygonCollider : CollisionComponent, IPolygonColliderComponent
     {
-        public bool AllowsMultipleInstances
-        {
-            get
-            {
-                return false;
-            }
-        }
 
         private Texture collisionTexture;
         private Image collisionImage;
@@ -116,29 +110,7 @@ namespace VorliasEngine2D.Entities.Components
             Origin = -(i.Size / 2).ToFloat();
         }
 
-        private Entity entity;
-        public Entity Entity
-        {
-            get
-            {
-                return entity;
-            }
-        }
-
-        public bool IsTrigger
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string Name
+        public override string Name
         {
             get
             {
@@ -146,23 +118,13 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        public bool CollidesWith(ICollisionComponent other)
-        {
-            return this.CheckCollision(other);
-        }
-
-        public void OnComponentCopy(Entity source, Entity copy)
+        public override void OnComponentCopy(Entity source, Entity copy)
         {
             //throw new NotImplementedException();
         }
 
-        public void ComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
-            if (this.entity == null)
-                this.entity = entity;
-            else
-                throw new SetEntityInvalidException();
-
             SpriteRenderer renderer;
             if (entity.FindComponent(out renderer))
             {

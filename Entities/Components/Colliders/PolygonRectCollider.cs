@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.Entities.Components.Colliders;
 using VorliasEngine2D.Serialization;
 using VorliasEngine2D.System.Utility;
 
@@ -13,10 +14,8 @@ namespace VorliasEngine2D.Entities.Components
     /// <summary>
     /// Rectangle Collider component (Polygon rectangle)
     /// </summary>
-    public class PolygonRectCollider : IPolygonColliderComponent
+    public class PolygonRectCollider : CollisionComponent, IPolygonColliderComponent
     {
-        private Entity entity;
-
         internal Polygon polygon;
 
         [SerializableProperty("Polygon", PropertyType = SerializedPropertyType.Polygon)]
@@ -32,29 +31,11 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        HashSet<ICollisionComponent> ignoreList = new HashSet<ICollisionComponent>();
-
-        public bool AllowsMultipleInstances
+        public override string Name
         {
             get
             {
-                return false;
-            }
-        }
-
-        public Entity Entity
-        {
-            get
-            {
-                return entity;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return "BoxCollider";
+                return "PolygonRectCollider";
             }
         }
 
@@ -66,38 +47,6 @@ namespace VorliasEngine2D.Entities.Components
         {
             // Using polygons because they're easier to work with than IntRect/FloatRect when coming to rotation
             polygon = Polygon.CreateRectangle(size.X, size.Y);
-        }
-
-        /*private FloatRect collisionRect;
-        public FloatRect LocalCollisionRect
-        {
-            get
-            {
-                return collisionRect;
-            }
-            set
-            {
-                collisionRect = value;
-                polygon = Polygon.CreateRectangle(value.Width, value.Height);
-            }
-        }*/
-
-        private bool trigger;
-
-        /// <summary>
-        /// Whether or not this collider is a trigger
-        /// </summary>
-        public bool IsTrigger
-        {
-            get
-            {
-                return trigger;
-            }
-
-            set
-            {
-                trigger = value;
-            }
         }
 
         private Vector2f origin;
@@ -114,32 +63,14 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        public void IgnoreCollisionsWith(ICollisionComponent collider)
-        {
-            ignoreList.Add(collider);
-        }
-
-        public bool CollidesWith(ICollisionComponent other)
-        {
-            if (!ignoreList.Contains(other))
-                return this.CheckCollision(other);
-            else
-                return false;
-        }
-
-        public void OnComponentCopy(Entity source, Entity copy)
+        public override void OnComponentCopy(Entity source, Entity copy)
         {
             var com = copy.AddComponent<PolygonRectCollider>();
             com.polygon = polygon;
         }
 
-        public void ComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
-            if (this.entity == null)
-                this.entity = entity;
-            else
-                throw new SetEntityInvalidException();
-
             // If we have a sprite renderer, we can default to the sprite ;)
             if (entity.HasComponent<SpriteRenderer>())
             {

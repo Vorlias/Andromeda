@@ -5,42 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.System;
 using VorliasEngine2D.System.Utility;
+using VorliasEngine2D.Entities.Components.Colliders;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    public class PolygonCircleCollider : IPolygonColliderComponent
+    public class PolygonCircleCollider : CollisionComponent, IPolygonColliderComponent
     {
-        public bool AllowsMultipleInstances
-        {
-            get
-            {
-                return false;
-            }
-        }
 
-        private Entity entity;
-        public Entity Entity
-        {
-            get
-            {
-                return entity;
-            }
-        }
-
-        public bool IsTrigger
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string Name
+        public override string Name
         {
             get
             {
@@ -71,11 +43,6 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
-        public bool CollidesWith(ICollisionComponent other)
-        {
-            return this.CheckCollision(other);
-        }
-
         internal Vector2f CreatePolygonPoint(int vertex, float radius, float resolution)
         {
             float angle = 360.0f / resolution * vertex;
@@ -95,19 +62,13 @@ namespace VorliasEngine2D.Entities.Components
             this.polygon = polygon;
         }
 
-        public void OnComponentCopy(Entity source, Entity copy)
+        public override void OnComponentCopy(Entity source, Entity copy)
         {
-            
 
         }
 
-        public void ComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
-            if (this.entity == null)
-                this.entity = entity;
-            else
-                throw new SetEntityInvalidException();
-
             // If we have a sprite renderer, we can default to the sprite ;)
             if (entity.HasComponent<SpriteRenderer>())
             {
