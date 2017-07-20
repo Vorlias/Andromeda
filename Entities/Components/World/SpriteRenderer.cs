@@ -30,6 +30,17 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        Vector2f scale = new Vector2f(1, 1);
+
+        /// <summary>
+        /// The scale of this sprite
+        /// </summary>
+        public Vector2f Scale
+        {
+            get => scale;
+            set => scale = value;
+        }
+
         public Vector2f Origin
         {
             get
@@ -77,6 +88,7 @@ namespace VorliasEngine2D.Entities.Components
                 Sprite sprite = new Sprite(Texture);
                 sprite.Origin = new Vector2f(Texture.Size.X * renderAnchor.X, Texture.Size.Y * renderAnchor.Y);
                 sprite.Position = transform.Position;
+                sprite.Scale = scale;
                 sprite.Rotation = transform.Rotation;
                 sprite.Color = Color;
                 target.Draw(sprite);
