@@ -20,6 +20,16 @@ namespace VorliasEngine2D.System
         List<InputBindingAction> actions = new List<InputBindingAction>();
         List<InputBinding> bindings = new List<InputBinding>();
 
+        /// <summary>
+        /// Reset the input manager
+        /// </summary>
+        internal void ClearBindings()
+        {
+            bindings.Clear();
+            actions.Clear();
+            keyBindings.Clear();
+            buttonBindings.Clear();
+        }
 
         public class InputBinding
         {

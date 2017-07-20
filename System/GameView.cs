@@ -356,6 +356,9 @@ namespace VorliasEngine2D.System
         {
             // Force clear all the entities in this view
             ClearAllChildren();
+            
+            // Reset all bound inputs
+            Input.ClearBindings();
 
             // Use OnStart to refresh everything.
             OnStart();
