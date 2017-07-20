@@ -174,7 +174,12 @@ namespace VorliasEngine2D.Entities.Components
         /// <exception cref="SetEntityInvalidException">Called if the user tries to set it</exception>
         public override void OnComponentInit(Entity entity)
         {
-            Init();
+            if (!initialized)
+            {
+                initialized = true;
+                Init();
+            }
+                
         }
 
         public override string Name

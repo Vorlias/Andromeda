@@ -28,6 +28,7 @@ namespace VorliasEngine2D.System
         int lineCount = 0;
         Mode mode;
 
+
         enum Mode
         {
             Main,
@@ -583,6 +584,7 @@ namespace VorliasEngine2D.System
         public PrefabSerialization(StreamReader file)
         {
             prefabEntity = Entity.Create();
+            prefabEntity.IsPrefab = true;
             string line;
 
             while ((line = file.ReadLine()) != null)
@@ -597,6 +599,7 @@ namespace VorliasEngine2D.System
         public PrefabSerialization(StringReader reader)
         {
             prefabEntity = Entity.Create();
+            prefabEntity.IsPrefab = true;
             string line;
 
             while ((line = reader.ReadLine()) != null)

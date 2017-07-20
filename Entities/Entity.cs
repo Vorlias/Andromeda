@@ -115,6 +115,7 @@ namespace VorliasEngine2D.Entities
             {
                 return prefab;
             }
+            internal set => prefab = value;
         }
 
         /// <summary>
@@ -367,12 +368,12 @@ namespace VorliasEngine2D.Entities
         /// </summary>
         internal void Init()
         {
-            var scriptedComponents = components.OfType<EntityBehaviour>();
-            foreach (EntityBehaviour behaviour in scriptedComponents)
-            {
-                if (!behaviour.Initialized)
-                    behaviour.Init();
-            }
+            //var scriptedComponents = components.OfType<EntityBehaviour>();
+            //foreach (EntityBehaviour behaviour in scriptedComponents)
+            //{
+            //    if (!behaviour.Initialized)
+            //        behaviour.Init();
+            //}
         }
 
         /// <summary>
@@ -489,7 +490,10 @@ namespace VorliasEngine2D.Entities
                 if (existing == null)
                 {
                     components.Add(component);
-                    component.ComponentInit(this);
+
+                    if (!IsPrefab)
+                        component.ComponentInit(this);
+
                     created = component;
                     return true;
                 }
