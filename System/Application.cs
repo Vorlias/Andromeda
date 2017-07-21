@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
 using SFML.Graphics;
-using System.Runtime.InteropServices;
 using VorliasEngine2D.System.Utility;
 using VorliasEngine2D.System.Services;
 
@@ -19,11 +18,6 @@ namespace VorliasEngine2D.System
     /// </summary>
     public class Application
     {
-        [DllImport("kernel32.dll")]
-        static extern IntPtr GetConsoleWindow();
-
-        [DllImport("user32.dll")]
-        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         const int SW_HIDE = 0;
         const int SW_SHOW = 5;
@@ -261,52 +255,92 @@ namespace VorliasEngine2D.System
 
         }
 
-        /// <summary>
-        /// Runs the application
-        /// </summary>
-        public void Run()
+        protected void SetupCursor()
         {
+            CustomCursor.Context = window;
+            CustomCursor.Texture = null;
+        }
 
-
-            Clock deltaClock = new Clock();
+        /// <summary>
+        /// Initializes the window
+        /// </summary>
+        protected virtual void InitWindow()
+        {
             window = new RenderWindow(mode, title, styles);
             window.Closed += WindowClosed;
             window.Resized += Window_Resized;
+        }
 
-            CustomCursor.Context = window;
-            CustomCursor.Texture = null;
+        /// <summary>
+        /// Performs the update actions
+        /// </summary>
+        protected virtual void UpdateEvents()
+        {
+            window.DispatchEvents();
+            Update();
+        }
+
+        /// <summary>
+        /// Performs all the delta clock updating actions
+        /// </summary>
+        protected void UpdateDeltaClock()
+        {
+            deltaTime = deltaClock.ElapsedTime.AsSeconds();
+            deltaClock.Restart();
+            time += deltaTime;
+            fps = 1.0f / deltaTime;
+        }
+
+        /// <summary>
+        /// Performs all the initialization actions
+        /// </summary>
+        protected void InitializeApplication()
+        {
+            InitWindow();
+            deltaClock = new Clock();
+
+            SetupCursor();
 
             BeforeStart();
             Start();
             AfterStart();
 
-#if !DEBUG
-            ShowWindow(GetConsoleWindow(), SW_HIDE);
-#endif
-
             View defaultView = window.DefaultView;
-
             gameView = new View(defaultView.Center, defaultView.Size);
             interfaceView = new View(defaultView.Center, defaultView.Size);
+        }
+
+        /// <summary>
+        /// Performs all the rendering actions
+        /// </summary>
+        protected virtual void UpdateRendering()
+        {
+            window.Clear();
+            Render();
+            window.Draw(CustomCursor);
+            window.Display();
+        }
+
+        Clock deltaClock;
+
+        /// <summary>
+        /// Runs the application
+        /// </summary>
+        public virtual void Run()
+        {
+            // Run all the stuff to initialize the window
+            InitializeApplication();
 
             while (window.IsOpen)
             {
-                deltaTime = deltaClock.ElapsedTime.AsSeconds();
-                deltaClock.Restart();
-                time += deltaTime;
-                fps = 1.0f / deltaTime;
+                // Update stuff like the delta time, time elapsed etc.
+                UpdateDeltaClock();
 
-                window.Clear();
+                // Update all the event based stuff
+                UpdateEvents();
 
-                window.DispatchEvents();
-
-                Update();
-
-                Render();
-
-                window.Draw(CustomCursor);
-
-                window.Display();
+                // Update all the rendering based stuff
+                UpdateRendering();
             }
 
             End();
