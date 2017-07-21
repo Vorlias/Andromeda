@@ -326,11 +326,10 @@ namespace VorliasEngine2D.Entities
         {
             T component = new T();
 
-            var elements = components.OfType<T>();
-            var arr = elements.ToArray();
+            var elements = components.ToArray().OfType<T>();
             T existing = component;
 
-            if (arr.Length > 0 && !component.AllowsMultipleInstances)
+            if (elements.Count() > 0 && !component.AllowsMultipleInstances)
             {
                 existing = elements.First();
                 return existing;
