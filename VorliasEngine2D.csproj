@@ -79,6 +79,7 @@
     <Compile Include="Graphics\TextureExtension.cs" />
     <Compile Include="Serialization\PrefabSyntaxErrorException.cs" />
     <Compile Include="Serialization\SerializedPropertyType.cs" />
+    <Compile Include="System\EngineInfo.cs" />
     <Compile Include="System\GameCollectionService.cs" />
     <Compile Include="System\GameViewInitException.cs" />
     <Compile Include="System\GameViewPriority.cs" />
