@@ -18,10 +18,6 @@ namespace VorliasEngine2D.System
     /// </summary>
     public class Application
     {
-
-        const int SW_HIDE = 0;
-        const int SW_SHOW = 5;
-
         public class ApplicationSettings
         {
             public bool RescaleViewOnResize = true;
