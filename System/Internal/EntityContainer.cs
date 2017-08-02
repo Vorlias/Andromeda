@@ -102,5 +102,15 @@ namespace VorliasEngine2D.System.Internal
         {
             return children.Where(child => child.Tags.Contains(tag)).ToArray();
         }
+
+        /// <summary>
+        /// Finds all the descendants with the specified tag
+        /// </summary>
+        /// <param name="tag">The tag</param>
+        /// <returns>The descendants with the specified tag</returns>
+        public Entity[] FindDescendantsWithTag(string tag)
+        {
+            return Descendants.Where(descendant => descendant.Tags.Contains(tag)).ToArray();
+        }
     }
 }
