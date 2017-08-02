@@ -10,10 +10,10 @@
         /// <returns></returns>
         internal static bool CheckPolygonCollision(this IPolygonColliderComponent first, IPolygonColliderComponent second)
         {
-            var poly1 = first.Polygon.Transform(first.Entity.Position, first.Origin, first.Entity.Transform.Rotation); //new Polygon(pThisPoly);
-            var poly2 = second.Polygon.Transform(second.Entity.Position, second.Origin, second.Entity.Transform.Rotation);//new Polygon(pOtherPoly);
+            var poly1 = first.Polygon?.Transform(first.Entity.Position, first.Origin, first.Entity.Transform.Rotation); //new Polygon(pThisPoly);
+            var poly2 = second.Polygon?.Transform(second.Entity.Position, second.Origin, second.Entity.Transform.Rotation);//new Polygon(pOtherPoly);
 
-            return poly1.Overlaps(poly2);
+            return (poly1 != null && poly2 != null) && poly1.Overlaps(poly2);
         }
     }
 }

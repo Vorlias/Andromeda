@@ -47,12 +47,16 @@ namespace VorliasEngine2D.System.Debug
         {
             Entities.Components.Transform transform = collider.Entity.Transform;
 
-            Polygon polygon = collider.Polygon.Transform(transform.Position, collider.Origin, transform.Rotation);
-            VertexArray vert = polygon.ToVertexArray(renderColor);
-   
-            vert.PrimitiveType = PrimitiveType.LineStrip;
+            Polygon polygon = collider.Polygon?.Transform(transform.Position, collider.Origin, transform.Rotation);
 
-            target.Draw(vert);
+            if (polygon != null)
+            { 
+                VertexArray vert = polygon.ToVertexArray(renderColor);
+   
+                vert.PrimitiveType = PrimitiveType.LineStrip;
+
+                target.Draw(vert);
+            }
         }
 
         public static void DebugInstanceTree(this Internal.IEntityContainer instance, int level = 0, string prefix = " ")
