@@ -92,5 +92,15 @@ namespace VorliasEngine2D.System.Internal
         {
             return children.First(entity => entity.Name == name);
         }
+
+        /// <summary>
+        /// Finds all the children with the specified tag
+        /// </summary>
+        /// <param name="tag">The tag</param>
+        /// <returns>The children with the specified tag</returns>
+        public Entity[] FindChildrenWithTag(string tag)
+        {
+            return children.Where(child => child.Tags.Contains(tag)).ToArray();
+        }
     }
 }
