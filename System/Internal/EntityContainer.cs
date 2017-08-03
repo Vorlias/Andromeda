@@ -50,7 +50,7 @@ namespace VorliasEngine2D.System.Internal
         /// Adds a child entity to this container
         /// </summary>
         /// <param name="child"></param>
-        protected void AddChild(Entity child)
+        internal void AddChild(Entity child)
         {
             children.Add(child);
         }
@@ -61,10 +61,23 @@ namespace VorliasEngine2D.System.Internal
         /// <param name="child">The entity</param>
         public void AddEntity(Entity child)
         {
-            if (child.Parent == null)
+            if (child.ParentContainer == null)
                 child.Init();
             else
-                child.Parent.RemoveChild(child);
+                child.ParentContainer.RemoveChild(child);
+
+            if (this is GameView)
+            {
+                var view = this as GameView;
+                child.SetParentView(view);
+                child.SetParent(view);
+            }
+            else if (this is Entity)
+            {
+                var parent = this as Entity;
+                child.SetParentView(parent.GameView);
+                child.SetParent(parent);
+            }
 
             AddChild(child);
         }

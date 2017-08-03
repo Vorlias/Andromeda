@@ -24,7 +24,7 @@ namespace VorliasEngine2D.Entities
         HashSet<IComponent> components = new HashSet<IComponent>();
 
         Components.Transform transform;
-        Entity parentEntity;
+        EntityContainer parentEntity;
         GameView parentState;
         bool prefab = false;
         bool useLocalSpace = true;
@@ -71,9 +71,17 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
-        /// The parent entity of this entity (If applicable)
+        /// The parent entity
         /// </summary>
         public Entity Parent
+        {
+            get => ParentContainer as Entity;
+        }
+
+        /// <summary>
+        /// The parent container of this entity (If applicable)
+        /// </summary>
+        public EntityContainer ParentContainer
         {
             get
             {
@@ -86,7 +94,7 @@ namespace VorliasEngine2D.Entities
             parentState = state;
         }
 
-        internal void SetParent(Entity parent)
+        internal void SetParent<C>(C parent) where C : EntityContainer
         {
             parentEntity = parent;
             parent.AddChild(this);
@@ -599,9 +607,9 @@ namespace VorliasEngine2D.Entities
         {
             Behaviours.ForEach(behaviour => behaviour.OnDestroy());
 
-            if (Parent != null)
+            if (ParentContainer != null)
             {
-                Parent.RemoveChild(this);
+                ParentContainer.RemoveChild(this);
             }
             else if (GameView != null)
             {

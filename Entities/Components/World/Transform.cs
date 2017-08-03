@@ -106,7 +106,7 @@ namespace VorliasEngine2D.Entities.Components
         {
             get
             {
-                if (IsTransformLocal && Entity.Parent != null)
+                if (IsTransformLocal && Entity.ParentContainer != null)
                     return localPosition;
                 else
                 {
@@ -116,7 +116,7 @@ namespace VorliasEngine2D.Entities.Components
             }
             set
             {
-                if (IsTransformLocal && Entity.Parent != null)
+                if (IsTransformLocal && Entity.ParentContainer != null)
                     localPosition = value;
                 else
                     Position = value;
