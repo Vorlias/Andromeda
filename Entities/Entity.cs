@@ -22,6 +22,7 @@ namespace VorliasEngine2D.Entities
     public sealed class Entity : EntityContainer
     {
         HashSet<IComponent> components = new HashSet<IComponent>();
+
         Components.Transform transform;
         Entity parentEntity;
         GameView parentState;
@@ -80,7 +81,7 @@ namespace VorliasEngine2D.Entities
             }
         }
 
-        internal void SetParentState(GameView state)
+        internal void SetParentView(GameView state)
         {
             parentState = state;
         }
@@ -294,7 +295,6 @@ namespace VorliasEngine2D.Entities
         /// <param name="component">The component variable to set</param>
         /// <param name="create">Whether or not to create it if it doesn't exist</param>
         /// <returns>True if the component is found</returns>
-        [Obsolete("Use 'FindComponent<T>()' instead")]
         public bool FindComponent<T>(out T component, bool create = false) where T : IComponent, new()
         {
             if (HasComponent<T>())
@@ -429,7 +429,7 @@ namespace VorliasEngine2D.Entities
         {
             Entity entity = Create();
             entity.SetParent(parent);
-            entity.SetParentState(parent.GameView);
+            entity.SetParentView(parent.GameView);
 
             parent.components.Where(component => component is IContainerComponent).Select(component => component as IContainerComponent).ForEach(component => component.ChildAdded(entity));
 
@@ -458,7 +458,7 @@ namespace VorliasEngine2D.Entities
         public static Entity Create(GameView state, Components.Transform transform = null)
         {
             Entity entity = Create(transform);
-            entity.SetParentState(state);
+            entity.SetParentView(state);
             state.AddEntity(entity);
             return entity;
         }
@@ -520,7 +520,7 @@ namespace VorliasEngine2D.Entities
         internal Entity Clone(Entity parent = null)
         {
             Entity copy = new Entity();
-            copy.SetParentState(GameView);
+            copy.SetParentView(GameView);
             if (parent != null)
                 copy.SetParent(parent);
             
@@ -545,7 +545,7 @@ namespace VorliasEngine2D.Entities
                 Entity childCopy = child.Clone(copy);
                 childCopy.Name = child.Name;
                 //childCopy.SetParent(copy);
-                childCopy.SetParentState(copy.parentState);
+                childCopy.SetParentView(copy.parentState);
                 copy.AddChild(childCopy);
             }
 
