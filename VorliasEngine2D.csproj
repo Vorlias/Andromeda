@@ -59,6 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
+    <Compile Include="System\Utility\KeypointTimeException.cs" />
+    <Compile Include="System\Utility\NumberSequence.cs" />
+    <Compile Include="System\Utility\NumberSequenceKeypoint.cs" />
+    <Compile Include="Entities\Components\ParticleEmitter\Particle.cs" />
+    <Compile Include="Entities\Components\ParticleEmitter\ParticleEmitter.cs" />
     <Compile Include="Entities\Components\Physics\BasicMovement.cs" />
     <Compile Include="Entities\Components\Colliders\CollisionComponent.cs" />
     <Compile Include="Entities\Components\Internal\ColliderDetection.cs" />
