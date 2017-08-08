@@ -64,6 +64,15 @@ namespace VorliasEngine2D.System.Utility
             //return GetAllAtTime(time)[0];
         }
 
+        /// <summary>
+        /// Allows assigning a float value as a number sequence
+        /// </summary>
+        /// <param name="value">The value to assign</param>
+        public static implicit operator NumberSequence(float value)
+        {
+            return new NumberSequence(value);
+        }
+
         public NumberSequence(float value)
         {
             keypoints.Add(new NumberSequenceKeypoint(0.0f, value));

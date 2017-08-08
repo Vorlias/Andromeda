@@ -82,6 +82,15 @@ namespace VorliasEngine2D.System.Utility
         }
 
         /// <summary>
+        /// Allows assigning of float values implicitly to a number range
+        /// </summary>
+        /// <param name="value">The float value</param>
+        public static implicit operator NumberRange(float value)
+        {
+            return new NumberRange(value);
+        }
+
+        /// <summary>
         /// Creates a number range with a minimum and maximum
         /// </summary>
         /// <param name="min">The minimum value</param>
