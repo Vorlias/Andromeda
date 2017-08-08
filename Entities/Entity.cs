@@ -30,17 +30,27 @@ namespace VorliasEngine2D.Entities
         bool useLocalSpace = true;
         UserInputManager input;
         string name = "Entity";
-        List<string> tags = new List<string>();
+        List<object> tags = new List<object>();
 
         /// <summary>
         /// The tags this entity has
         /// </summary>
-        public List<string> Tags
+        public List<object> Tags
         {
             get
             {
                 return tags;
             }
+        }
+
+        /// <summary>
+        /// Returns whether not the entity has the specified tag
+        /// </summary>
+        /// <param name="tag">The tag</param>
+        /// <returns>True if the entity has the specified tag</returns>
+        public bool HasTag(object tag)
+        {
+            return tags.Contains(tag);
         }
 
         /// <summary>

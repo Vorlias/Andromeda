@@ -111,7 +111,7 @@ namespace VorliasEngine2D.System.Internal
         /// </summary>
         /// <param name="tag">The tag</param>
         /// <returns>The children with the specified tag</returns>
-        public Entity[] FindChildrenWithTag(string tag)
+        public Entity[] FindChildrenWithTag(object tag)
         {
             return children.Where(child => child.Tags.Contains(tag)).ToArray();
         }
@@ -121,7 +121,7 @@ namespace VorliasEngine2D.System.Internal
         /// </summary>
         /// <param name="tag">The tag</param>
         /// <returns>The descendants with the specified tag</returns>
-        public Entity[] FindDescendantsWithTag(string tag)
+        public Entity[] FindDescendantsWithTag(object tag)
         {
             return Descendants.Where(descendant => descendant.Tags.Contains(tag)).ToArray();
         }
