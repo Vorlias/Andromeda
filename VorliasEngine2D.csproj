@@ -59,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
+    <Compile Include="Entities\Components\UI\UICheckButtonTextures.cs" />
+    <Compile Include="Entities\Components\UI\UIImageCheckButton.cs" />
+    <Compile Include="Entities\Components\UI\UITexture.cs" />
     <Compile Include="System\Utility\KeypointTimeException.cs" />
     <Compile Include="System\Utility\NumberSequence.cs" />
     <Compile Include="System\Utility\NumberSequenceKeypoint.cs" />
