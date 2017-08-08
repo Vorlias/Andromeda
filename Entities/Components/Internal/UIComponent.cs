@@ -74,7 +74,7 @@ namespace VorliasEngine2D.Entities.Components.Internal
                 PolygonRectCollider rec;
                 if (Entity.FindComponent(out rec))
                 {
-                    return rec.Polygon.Transform(Transform.Position.GlobalAbsolute, new Vector2f(0, 0), 0).ContainsPoint(MousePosition.ToFloat());
+                    return rec.Polygon.Transform(Entity.Transform.Position, Entity.Transform.Origin, Entity.Transform.Rotation).ContainsPoint(MousePosition.ToFloat());
                 }
 
                 return false;
