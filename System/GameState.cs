@@ -185,6 +185,22 @@ namespace VorliasEngine2D.System
             return newView;
         }
 
+        public SingletonViewType AddSingletonView<SingletonViewType>(GameViewPriority priority = GameViewPriority.Normal, bool active = true) where SingletonViewType : GameViewSingleton<SingletonViewType>, new()
+        {
+            SingletonViewType view = GameViewSingleton<SingletonViewType>.Instance;
+
+            // TODO: Fix this shit, add IsInitialized stuffs.
+
+            if (view.Id == null)
+                view.Added(StateManager.GameManager, view.GetType().Name);
+
+            //if (view.manager)
+            //view.Added(StateManager.GameManager, view.GetType().Name);
+            Add(view);
+
+            return view;
+        }
+
         /// <summary>
         /// Adds a view with the GameViewPriority as Interface
         /// </summary>

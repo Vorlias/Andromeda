@@ -22,6 +22,8 @@ namespace VorliasEngine2D.System
         StateGameManager manager;
         GameViewPriority priority;
 
+        public bool IsSingleton => this is IGameViewSingleton;
+
         Camera camera;
         public Camera Camera
         {
