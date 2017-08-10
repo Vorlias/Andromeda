@@ -583,7 +583,7 @@ namespace VorliasEngine2D.System
 
         public PrefabSerialization(StreamReader file)
         {
-            prefabEntity = Entity.Create();
+            prefabEntity = new Entity();
             prefabEntity.IsPrefab = true;
             string line;
 
@@ -598,7 +598,7 @@ namespace VorliasEngine2D.System
 
         public PrefabSerialization(StringReader reader)
         {
-            prefabEntity = Entity.Create();
+            prefabEntity = new Entity();
             prefabEntity.IsPrefab = true;
             string line;
 
