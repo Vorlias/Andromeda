@@ -19,7 +19,7 @@ namespace VorliasEngine2D.Entities
     /// <summary>
     /// An entity
     /// </summary>
-    public sealed class Entity : EntityContainer
+    public class Entity : EntityContainer
     {
         HashSet<IComponent> components = new HashSet<IComponent>();
 
@@ -381,16 +381,19 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// Method called when the entity is spawned
+        /// </summary>
+        public virtual void OnCreate()
+        {
+
+        }
+
+        /// <summary>
         /// Method called when the entity is initialized
         /// </summary>
         internal void Init()
         {
-            //var scriptedComponents = components.OfType<EntityBehaviour>();
-            //foreach (EntityBehaviour behaviour in scriptedComponents)
-            //{
-            //    if (!behaviour.Initialized)
-            //        behaviour.Init();
-            //}
+            
         }
 
         /// <summary>
@@ -418,15 +421,36 @@ namespace VorliasEngine2D.Entities
         /// <returns>The spawned entity</returns>
         public override Entity CreateChild()
         {
-            Entity entity = new Entity();
-            entity.SetParent(this);
-            //children.Add(entity);
-            AddChild(entity);
-            
+            return new Entity(this);
+        }
 
-            components.Where(component => component is IContainerComponent).Select(component => component as IContainerComponent).ForEach(component => component.ChildAdded(entity));
+        /// <summary>
+        /// Creates a blank entity
+        /// </summary>
+        public Entity()
+        {
+            input = new UserInputManager();
+            OnCreate();
+        }
 
-            return entity;
+        /// <summary>
+        /// Creates a new Entity with the specified parent
+        /// </summary>
+        /// <param name="parent">The parent of this entity</param>
+        public Entity(EntityContainer parent) : this()
+        {
+            if (parent is GameView)
+            {
+                SetParentView(parent as GameView);
+                parent.AddEntity(this);
+            }
+            else if (parent is Entity)
+            {
+                var parentEntity = parent as Entity;
+                SetParent(parent);
+                SetParentView(parentEntity.GameView);
+                parentEntity.components.Where(component => component is IContainerComponent).Select(component => component as IContainerComponent).ForEach(component => component.ChildAdded(this));
+            }
         }
 
         /// <summary>
@@ -438,22 +462,7 @@ namespace VorliasEngine2D.Entities
             return CreateChild().AddComponent<ComponentType>();
         }
 
-        /// <summary>
-        /// Spawn an entity under another entity
-        /// </summary>
-        /// <param name="parent">The parent entity</param>
-        /// <returns>The spawned entity</returns>
-        public static Entity Create(Entity parent)
-        {
-            Entity entity = Create();
-            entity.SetParent(parent);
-            entity.SetParentView(parent.GameView);
-
-            parent.components.Where(component => component is IContainerComponent).Select(component => component as IContainerComponent).ForEach(component => component.ChildAdded(entity));
-
-            return entity;
-        }
-
+        [Obsolete("use 'new Entity()' instead.")]
         public static Entity Create(Components.Transform transform = null)
         {
             Entity entity = new Entity();
@@ -473,6 +482,7 @@ namespace VorliasEngine2D.Entities
         /// </summary>
         /// <param name="state">The state to spawn the entity under</param>
         /// <returns></returns>
+        [Obsolete]
         public static Entity Create(GameView state, Components.Transform transform = null)
         {
             Entity entity = Create(transform);
@@ -627,10 +637,7 @@ namespace VorliasEngine2D.Entities
             }
         }
 
-        private Entity()
-        {
-            input = new UserInputManager();
-        }
+
 
         bool initialized = false;
 

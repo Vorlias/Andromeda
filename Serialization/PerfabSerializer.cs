@@ -457,7 +457,7 @@ namespace VorliasEngine2D.System
                 else if (key == "entity")
                 {
                     // child entity
-                    ParseEntityChild(Entity.Create(instance), tokenizer.Read());
+                    ParseEntityChild(new Entity(instance), tokenizer.Read());
                 }
                 else if (key == "@debug")
                 {
@@ -523,7 +523,7 @@ namespace VorliasEngine2D.System
                 }
                 else if (key == "entity")
                 {
-                    ParseEntityChild(Entity.Create(prefabEntity), tokenizer.Read());
+                    ParseEntityChild( new Entity(prefabEntity), tokenizer.Read());
                 }
 
                 if (defaultMode)
