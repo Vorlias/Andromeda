@@ -10,7 +10,9 @@ namespace VorliasEngine2D.Entities.Components.UI
 
     public class UIImageCheckButton : UIInteractable, IComponentEventListener
     {
+        public delegate void CheckStateChange(bool state);
         public event MouseEvent OnCheckboxPressed;
+        public event CheckStateChange OnCheckboxStateChanged;
 
 
         public override string Name
@@ -79,6 +81,7 @@ namespace VorliasEngine2D.Entities.Components.UI
         {
             checkedState = !checkedState;
             OnCheckboxPressed?.Invoke(inputAction);
+            OnCheckboxStateChanged?.Invoke(checkedState);
         }
 
         public override void AfterUpdate()
