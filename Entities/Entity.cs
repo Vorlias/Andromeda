@@ -44,6 +44,24 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// All the ancestors of this entity
+        /// </summary>
+        internal IEnumerable<Entity> Ancestors
+        {
+            get
+            {
+                List<Entity> ancestors = new List<Entity>();
+                if (Parent != null)
+                {
+                    ancestors.Add(Parent);
+                    ancestors.AddRange(Parent.Ancestors);
+                }
+
+                return ancestors.ToArray();
+            }
+        }
+
+        /// <summary>
         /// Returns whether not the entity has the specified tag
         /// </summary>
         /// <param name="tag">The tag</param>
@@ -108,6 +126,7 @@ namespace VorliasEngine2D.Entities
         {
             parentEntity = parent;
             parent.AddChild(this);
+            OnParentChanged(parent);
         }
 
         /// <summary>
@@ -384,6 +403,15 @@ namespace VorliasEngine2D.Entities
         /// Method called when the entity is spawned
         /// </summary>
         public virtual void OnCreate()
+        {
+
+        }
+
+        /// <summary>
+        /// Method called when entity parent is changed
+        /// </summary>
+        /// <param name="newParent"></param>
+        public virtual void OnParentChanged(EntityContainer newParent)
         {
 
         }
