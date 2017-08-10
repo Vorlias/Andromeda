@@ -25,6 +25,16 @@ namespace VorliasEngine2D.Entities
             get => parentInterface;
         }
 
+        public UIEntity(EntityContainer parent) : base(parent)
+        {
+
+        }
+
+        public UIEntity(UserInterface parent) : base(parent.Entity)
+        {
+
+        }
+
         public override void OnCreate()
         {
             // Add a UITransform
