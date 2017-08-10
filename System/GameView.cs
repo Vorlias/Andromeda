@@ -372,7 +372,7 @@ namespace VorliasEngine2D.System
         /// <returns>The spawned entity</returns>
         public override Entity CreateChild()
         {
-            Entity entity = Entity.Create(this);
+            Entity entity = new Entity(this);
             return entity;
         }
 

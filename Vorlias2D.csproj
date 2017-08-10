@@ -62,6 +62,7 @@
     <Compile Include="Entities\Components\UI\UICheckButtonTextures.cs" />
     <Compile Include="Entities\Components\UI\UIImageCheckButton.cs" />
     <Compile Include="Entities\Components\UI\UITexture.cs" />
+    <Compile Include="Entities\UIEntity.cs" />
     <Compile Include="System\GameViewSingleton.cs" />
     <Compile Include="System\Utility\KeypointTimeException.cs" />
     <Compile Include="System\Utility\NumberSequence.cs" />

@@ -490,35 +490,6 @@ namespace VorliasEngine2D.Entities
             return CreateChild().AddComponent<ComponentType>();
         }
 
-        [Obsolete("use 'new Entity()' instead.")]
-        public static Entity Create(Components.Transform transform = null)
-        {
-            Entity entity = new Entity();
-
-            if (transform != null)
-            {
-                entity.Position = transform.Position;
-                entity.Transform.Rotation = transform.Rotation;
-                entity.Transform.Scale = transform.Scale;
-            }
-
-            return entity;
-        }
-
-        /// <summary>
-        /// Spawns the entity under the specified GameState
-        /// </summary>
-        /// <param name="state">The state to spawn the entity under</param>
-        /// <returns></returns>
-        [Obsolete]
-        public static Entity Create(GameView state, Components.Transform transform = null)
-        {
-            Entity entity = Create(transform);
-            entity.SetParentView(state);
-            state.AddEntity(entity);
-            return entity;
-        }
-
         /// <summary>
         /// Tries to find the component of the specified type, otherwise creates it
         /// </summary>
