@@ -80,6 +80,14 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// The GameState that contains this Entity
+        /// </summary>
+        public GameState GameState
+        {
+            get => GameView.ParentState;
+        }
+
+        /// <summary>
         /// The parent view of this entity (If applicable)
         /// </summary>
         public GameView GameView
