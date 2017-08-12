@@ -291,8 +291,13 @@ namespace VorliasEngine2D.System
         {
             Application.Window.SetMouseCursorGrabbed(mouseGrabbed);
 
+
+
             foreach (GameView view in Views)
             {
+                // Set the state to this state for the views
+                view.ParentState = this;
+
                 if (view.IsActive)
                     view.Activated();
             }

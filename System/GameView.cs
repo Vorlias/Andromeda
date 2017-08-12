@@ -86,6 +86,16 @@ namespace VorliasEngine2D.System
             get => manager.Application.States;
         }
 
+
+        /// <summary>
+        /// The state actively using this view
+        /// </summary>
+        public GameState ParentState
+        {
+            get;
+            internal set;
+        }
+
         /// <summary>
         /// The collision components
         /// </summary>
