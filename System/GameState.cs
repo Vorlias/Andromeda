@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VorliasEngine2D.System.Utility;
 using VorliasEngine2D.System.Internal;
+using VorliasEngine2D.Events;
 
 namespace VorliasEngine2D.System
 {
@@ -19,6 +20,12 @@ namespace VorliasEngine2D.System
         HashSet<GameView> views;
         private ExclusiveGameViewProperty exclusiveView;
         private bool mouseGrabbed = false;
+        private ViewEvents viewEventQueue;
+
+        public ViewEvents Events
+        {
+            get => viewEventQueue;
+        }
 
         public Music BackgroundMusic
         {
@@ -262,6 +269,7 @@ namespace VorliasEngine2D.System
             exclusiveView = new ExclusiveGameViewProperty(this);
             views = new HashSet<GameView>();
             Input = new UserInputManager();
+            viewEventQueue = new ViewEvents();
             Init();
         }
 
