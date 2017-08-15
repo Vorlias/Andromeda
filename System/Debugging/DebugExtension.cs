@@ -15,6 +15,7 @@ namespace VorliasEngine2D.System.Debug
     {
         public static void DebugRender(this Camera camera, RenderTarget target)
         {
+#if DEBUG
             CircleShape cameraPositionRect = new CircleShape();
             cameraPositionRect.FillColor = Color.Magenta;
             cameraPositionRect.Origin = new Vector2f(5, 5);
@@ -35,6 +36,7 @@ namespace VorliasEngine2D.System.Debug
             verts.Append(new Vertex(camera.WorldPosition, Color.Magenta));
             verts.Append(new Vertex(camera.WorldZeroPosition, Color.Cyan));
             target.Draw(verts);
+#endif
         }
 
         /// <summary>
@@ -45,6 +47,7 @@ namespace VorliasEngine2D.System.Debug
         /// <param name="renderColor"></param>
         public static void DebugRender(this IPolygonColliderComponent collider, RenderTarget target, Color renderColor)
         {
+#if DEBUG
             Entities.Components.Transform transform = collider.Entity.Transform;
 
             Polygon polygon = collider.Polygon?.Transform(transform.Position, collider.Origin, transform.Rotation);
@@ -57,10 +60,34 @@ namespace VorliasEngine2D.System.Debug
 
                 target.Draw(vert);
             }
+#endif
         }
+
+        public static void DebugRender(this UserInterface intf, RenderTarget target)
+        {
+#if DEBUG
+            var descendants = intf.Entity.Descendants;
+            foreach (var descendant in descendants)
+            {
+                UITransform transform;
+                if (descendant.FindComponent(out transform))
+                {
+                    RectangleShape uiRect = new RectangleShape(transform.Size.GlobalAbsolute);
+                    uiRect.Position = transform.PositionRelative.GlobalAbsolute;
+                    uiRect.FillColor = new Color(255, 255, 255, 50);
+                    uiRect.OutlineColor = new Color(0, 0, 0);
+                    uiRect.OutlineThickness = 1;
+
+                    target.Draw(uiRect);
+                }
+            }
+#endif
+        }
+
 
         public static void DebugInstanceTree(this Internal.IEntityContainer instance, int level = 0, string prefix = " ")
         {
+#if DEBUG
             if (instance is GameView)
                 Console.WriteLine(" ■ Parent: " + instance);
             else if (instance is Entity && level == 0)
@@ -100,6 +127,7 @@ namespace VorliasEngine2D.System.Debug
 
                 child.DebugInstanceTree(level + 1, prefix + "  ");
             }
+#endif
         }
     }
 }
