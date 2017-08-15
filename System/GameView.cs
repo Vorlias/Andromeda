@@ -237,7 +237,7 @@ namespace VorliasEngine2D.System
         /// <param name="application">The application</param>
         public virtual void OnUpdate(Application application)
         {
-
+            ProcessActions(application);
         }
 
         /// <summary>

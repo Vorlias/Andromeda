@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VorliasEngine2D.Entities;
 
@@ -118,6 +119,36 @@ namespace VorliasEngine2D.System.Internal
         public Entity[] FindChildrenWithTag(object tag)
         {
             return children.Where(child => child.Tags.Contains(tag)).ToArray();
+        }
+
+        HashSet<DelayedAction> delayedActions = new HashSet<DelayedAction>();
+
+        /// <summary>
+        /// Delays an action with this container, it will count time based on this container's update (e.g. will pause if container is paused)
+        /// </summary>
+        /// <param name="action">The action to delay</param>
+        /// <param name="time">The amount of time to delay by</param>
+        public void DelayAction(Action action, float time)
+        {
+            delayedActions.Add(new DelayedAction(action, time));
+        }
+
+        /// <summary>
+        /// Process all actions attached to this container
+        /// </summary>
+        /// <param name="application">The application</param>
+        protected void ProcessActions(Application application)
+        {
+            foreach (var action in delayedActions.ToArray())
+            {
+                if (action.ElapsedTime < action.TotalTime)
+                    action.ElapsedTime += application.DeltaTime;
+                else
+                {
+                    action.Action();
+                    delayedActions.Remove(action);
+                }
+            }
         }
 
         /// <summary>
