@@ -103,7 +103,11 @@ namespace VorliasEngine2D.System.Internal
         /// <returns>An entity if it's found, otherwise null</returns>
         public Entity FindFirstChild(string name)
         {
-            return children.First(entity => entity.Name == name);
+            var matches = children.Where(entity => entity.Name == name);
+            if (matches.Count() > 0)
+                return children.First();
+            else
+                return null;
         }
 
         /// <summary>
