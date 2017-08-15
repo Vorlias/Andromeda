@@ -114,7 +114,7 @@ namespace VorliasEngine2D.Entities.Components
         /// </summary>
         public float Angle
         {
-            get => (targetTransform.Position.GetAngle(entity.Transform.Position));
+            get => (targetTransform.Position.GetAngle(entity.Transform.Position)) - 180;
         }
 
         public void Update()
