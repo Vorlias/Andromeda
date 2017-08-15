@@ -8,9 +8,9 @@ namespace VorliasEngine2D.System
 {
     public static class EngineInfo
     {
-        const int DATE = 170809;
+        const int DATE = 170816;
         const int MAJOR = 0;
-        const int MINOR = 249;
+        const int MINOR = 270;
         const int REVISION = 0;
 
         const int FULL = (MAJOR * 10000) + (MINOR * 100) + REVISION;
