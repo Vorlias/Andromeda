@@ -27,7 +27,6 @@ namespace VorliasEngine2D.Events
 
             internal void Invoke(params object[] args)
             {
-                Console.WriteLine("Invoke " + args);
                 OnEvent?.Invoke(args);
             }
         }
