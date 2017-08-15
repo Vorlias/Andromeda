@@ -65,6 +65,7 @@
     <Compile Include="Entities\UIEntity.cs" />
     <Compile Include="Events\ViewEvents.cs" />
     <Compile Include="Graphics\LineShape.cs" />
+    <Compile Include="System\DelayedAction.cs" />
     <Compile Include="System\GameViewSingleton.cs" />
     <Compile Include="System\Utility\KeypointTimeException.cs" />
     <Compile Include="System\Utility\NumberSequence.cs" />

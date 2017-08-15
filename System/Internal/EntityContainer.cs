@@ -124,6 +124,14 @@ namespace VorliasEngine2D.System.Internal
         HashSet<DelayedAction> delayedActions = new HashSet<DelayedAction>();
 
         /// <summary>
+        /// Clears all the delayed actions
+        /// </summary>
+        protected void ClearDelayedActions()
+        {
+            delayedActions.Clear();
+        }
+
+        /// <summary>
         /// Delays an action with this container, it will count time based on this container's update (e.g. will pause if container is paused)
         /// </summary>
         /// <param name="action">The action to delay</param>

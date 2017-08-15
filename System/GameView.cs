@@ -366,6 +366,8 @@ namespace VorliasEngine2D.System
         /// </summary>
         public void Reset()
         {
+            ClearDelayedActions();
+
             // Force clear all the entities in this view
             ClearAllChildren();
             
