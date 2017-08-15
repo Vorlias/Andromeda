@@ -119,7 +119,7 @@ namespace VorliasEngine2D.System
         {
             get
             {
-                return CollidableEntities.Where(e => e.HasComponent<IComponentEventListener>()).Select(e => e.GetComponent<IComponentEventListener>());
+                return CollidableEntities.Where(e => e.HasComponent<IComponentEventListener>() && e.Enabled ).Select(e => e.GetComponent<IComponentEventListener>());
             }
         }
 
@@ -130,7 +130,7 @@ namespace VorliasEngine2D.System
         {
             get
             {
-                return Descendants.Where(entity => entity.HasComponent<ICollisionComponent>()).ToArray();
+                return Descendants.Where(entity => entity.HasComponent<ICollisionComponent>() && entity.Enabled).ToArray();
             }
         }
 
@@ -143,7 +143,7 @@ namespace VorliasEngine2D.System
             {
                 List<IRenderableComponent> renderable = new List<IRenderableComponent>();
                 Descendants.ForEach(v => renderable.AddRange(v.GetComponents<IRenderableComponent>()));
-                return renderable.OrderBy(e => e.RenderOrder);
+                return renderable.Where(r => r.Entity.Enabled).OrderBy(e => e.RenderOrder);
             }
         }
 
@@ -273,7 +273,7 @@ namespace VorliasEngine2D.System
             get
             {
                 List<IUpdatableComponent> components = new List<IUpdatableComponent>();
-                Children.Select(entity => entity.GetComponentsInDescendants<IUpdatableComponent>()).ForEach(list => components.AddRange(list));
+                Children.Where(entity => entity.Enabled).Select(entity => entity.GetComponentsInDescendants<IUpdatableComponent>()).ForEach(list => components.AddRange(list));
                 return components.OrderByDescending(component => component.UpdatePriority);
             }
         }
@@ -282,7 +282,7 @@ namespace VorliasEngine2D.System
         {
             var updatableComponents = UpdatableComponents;
 
-            foreach (var entity in Descendants)
+            foreach (var entity in Descendants.Where(descendant => descendant.Enabled))
             {
                 if (entity.IsBeingDestroyed)
                 {

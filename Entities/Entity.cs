@@ -44,6 +44,14 @@ namespace VorliasEngine2D.Entities
         }
 
         /// <summary>
+        /// Whether or not this entity is enabled
+        /// </summary>
+        public bool Enabled
+        {
+            get;
+            set;
+        }
+
         /// All the ancestors of this entity
         /// </summary>
         internal IEnumerable<Entity> Ancestors
@@ -467,6 +475,7 @@ namespace VorliasEngine2D.Entities
         {
             input = new UserInputManager();
             OnCreate();
+            Enabled = true;
         }
 
         /// <summary>
