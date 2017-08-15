@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VorliasEngine2D.Entities.Components;
+using VorliasEngine2D.System;
 using VorliasEngine2D.System.Internal;
 
 namespace VorliasEngine2D.Entities
@@ -16,6 +17,18 @@ namespace VorliasEngine2D.Entities
         public new UITransform Transform
         {
             get => GetComponent<UITransform>();
+        }
+
+        public new UICoordinates Position
+        {
+            get => Transform.Position;
+            set => Transform.Position = value;
+        }
+
+        public UICoordinates Size
+        {
+            get => Transform.Size;
+            set => Transform.Size = value;
         }
 
         UserInterface parentInterface;
