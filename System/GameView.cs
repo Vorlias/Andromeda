@@ -29,21 +29,30 @@ namespace VorliasEngine2D.System
         {
             get
             {
-                if (camera == null)
-                {
-                    var existing = UpdatableComponents.OfType<Camera>();
-                    if (existing.Count() > 0)
-                    {
-                        camera = existing.First();
-                    }
-                    else
-                    {
-                        camera = CreateChild().AddComponent<Camera>();
-                    }
-                }
-
                 return camera;
             }
+        }
+
+        /// <summary>
+        /// Sets the camera type, will also create a camera if it doesn't exist
+        /// </summary>
+        /// <param name="type">The type of camera</param>
+        public void SetCameraType(CameraType type)
+        {
+            if (camera == null)
+            {
+                var existing = UpdatableComponents.OfType<Camera>();
+                if (existing.Count() > 0)
+                {
+                    camera = existing.First();
+                }
+                else
+                {
+                    camera = CreateChild().AddComponent<Camera>();
+                }
+            }
+
+            camera.CameraType = type;
         }
 
         private UserInputManager inputService;
@@ -302,11 +311,6 @@ namespace VorliasEngine2D.System
 
         internal void RenderEntities(RenderWindow window)
         {
-            //foreach (Entity entity in DrawableEntities)
-            //{
-            //    entity.Render(window);
-            //}
-
             if (camera != null)
             {
                 if (Camera.CameraType == CameraType.Interface)
