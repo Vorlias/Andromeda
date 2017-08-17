@@ -57,24 +57,6 @@ namespace VorliasEngine2D.System
             get => exclusiveView;
         }
 
-        public enum MouseConstraintType
-        {
-            /// <summary>
-            /// The mouse behaves normally
-            /// </summary>
-            Normal,
-
-            /// <summary>
-            /// The mouse is constrained to the window
-            /// </summary>
-            ConstrainedWindow,
-
-            /// <summary>
-            /// The mouse is constrained to the center
-            /// </summary>
-            ConstrainedCenter,
-        }
-
         MouseConstraintType mouseConstraint = MouseConstraintType.Normal;
         public MouseConstraintType MouseConstraint
         {
@@ -93,23 +75,6 @@ namespace VorliasEngine2D.System
                 mouseGrabbed = constrainToWindow;
 
                 mouseConstraint = value;
-            }
-        }
-
-        /// <summary>
-        /// Whether or not the mouse is locked in this GameState
-        /// </summary>
-        [Obsolete("Use '.MouseConstraint = MouseConstraintType.ConstrainedWindow' instead.")]
-        public bool MouseGrabbed
-        {
-            set
-            {
-                MouseConstraint = value ? MouseConstraintType.ConstrainedWindow : MouseConstraintType.Normal;
-            }
-
-            get
-            {
-                return MouseConstraint == MouseConstraintType.ConstrainedWindow;
             }
         }
 
