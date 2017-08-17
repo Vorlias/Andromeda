@@ -10,13 +10,10 @@ using VorliasEngine2D.System;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    [Obsolete("Don't use this class, use SoundManager.GetSound(id) and .Play() on that")]
     public class SoundEffect : Component, IDestroyedListener
     {
         public override bool AllowsMultipleInstances => true;
         public override string Name => "SoundEffect";
-
-        SoundBuffer buffer;
 
         /// <summary>
         /// The sound buffer
