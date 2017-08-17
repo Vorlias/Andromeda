@@ -10,7 +10,8 @@ using VorliasEngine2D.System;
 
 namespace VorliasEngine2D.Entities.Components
 {
-    public class SoundEffect : Component
+    [Obsolete("Don't use this class, use SoundManager.GetSound(id) and .Play() on that")]
+    public class SoundEffect : Component, IDestroyedListener
     {
         public override bool AllowsMultipleInstances => true;
         public override string Name => "SoundEffect";
@@ -20,11 +21,13 @@ namespace VorliasEngine2D.Entities.Components
         /// <summary>
         /// The sound buffer
         /// </summary>
-        public SoundBuffer Buffer
+        /*public SoundBuffer Buffer
         {
             get => buffer;
             set => buffer = value;
-        }
+        }*/
+
+        string bufferId;
 
         /// <summary>
         /// The buffer id
@@ -33,28 +36,12 @@ namespace VorliasEngine2D.Entities.Components
         {
             set
             {
-                buffer = SoundManager.Instance.Get(value);
+                bufferId = value;
             }
 
             get
             {
-                return SoundManager.Instance.FindId(Buffer);
-            }
-        }
-
-        Sound sound;
-
-        /// <summary>
-        /// The sound
-        /// </summary>
-        public Sound Sound
-        {
-            get
-            {
-                if (sound == null || sound.SoundBuffer != Buffer)
-                    sound = new Sound(Buffer);
-
-                return sound;
+                return bufferId;
             }
         }
 
@@ -77,21 +64,32 @@ namespace VorliasEngine2D.Entities.Components
         /// </summary>
         public void Play()
         {
-            Sound.Position = new Vector3f(entity.Transform.Position.X, 0, entity.Transform.Position.Y);
+            //Sound.Position = new Vector3f(entity.Transform.Position.X, 0, entity.Transform.Position.Y);
             //Sound.RelativeToListener = true;
 
             //Listener.Position = new Vector2f(10, 10);
 
             //Sound.Attenuation = 0.1f;
 
-            Sound.MinDistance = MinDistance;
+            //Sound.MinDistance = MinDistance;
 
-            Sound.Play();
+            if (BufferId != null)
+            {
+                var sound = SoundManager.Instance.GetSound(BufferId);
+
+                sound.Play();
+            }
+
         }
 
         public override void OnComponentInit(Entity entity)
         {
             
+        }
+
+        public void OnDestroy()
+        {
+
         }
     }
 }

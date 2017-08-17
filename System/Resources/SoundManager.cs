@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VorliasEngine2D.System.Internal;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.System
 {
@@ -19,6 +20,8 @@ namespace VorliasEngine2D.System
             get => soundManager;
         }
 
+        HashSet<Sound> sounds = new HashSet<Sound>();
+
         /// <summary>
         /// Gets the sound with the specified id
         /// </summary>
@@ -26,7 +29,31 @@ namespace VorliasEngine2D.System
         /// <returns>The sound</returns>
         public Sound GetSound(string id)
         {
-            return new Sound(Get(id));
+            var buffer = Get(id);
+
+            Console.WriteLine("GetSound: " + id);
+
+            if (sounds.Count >= 10)
+                sounds.Where(sound => sound.Status == SoundStatus.Stopped).ForEach(sound => { sound.Dispose(); sounds.Remove(sound); });
+
+            var soundCollection = sounds.Where(sound => sound.SoundBuffer == buffer && sound.Status != SoundStatus.Playing);
+            if (soundCollection.Count() > 0)
+            {
+                Console.WriteLine("InArray: " + soundCollection.Count() + ", Retrieve " + sounds.Count);
+                var next = soundCollection.First();
+                return next;
+            }
+            else
+            {
+                Sound test = new Sound(buffer);
+                sounds.Add(test);
+                Console.WriteLine("InArray: " + soundCollection.Count() + ", Add " + sounds.Count);
+
+                
+                return test;
+            }
+
+            
         }
 
         public Sound GetSoundCopy(string id)
