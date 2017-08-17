@@ -198,7 +198,7 @@ namespace VorliasEngine2D.System
 
         internal void AfterUpdate()
         {
-            if (mouseConstraint == MouseConstraintType.ConstrainedCenter)
+            if (mouseConstraint == MouseConstraintType.ConstrainedCenter && Application.IsFocused)
             { 
                 var window = Application.Window;
                 var size = new Vector2i((int) window.Size.X, (int) window.Size.Y);

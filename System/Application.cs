@@ -54,6 +54,11 @@ namespace VorliasEngine2D.System
             }
         }
 
+        public bool IsFocused
+        {
+            get => Window.HasFocus();
+        }
+
         public ApplicationSettings Settings
         {
             get => settings;
