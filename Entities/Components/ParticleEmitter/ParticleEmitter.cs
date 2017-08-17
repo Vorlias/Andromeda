@@ -23,7 +23,8 @@ namespace VorliasEngine2D.Entities.Components
             speed = new NumberRange(1.0f),
             rotationSpeed = new NumberRange(0.0f);
 
-        NumberSequence size = new NumberSequence(1.0f);
+        NumberSequence size = new NumberSequence(1.0f),
+            transparency = 0.0f;
 
         Vector2f emissionDirection;
 
@@ -73,6 +74,12 @@ namespace VorliasEngine2D.Entities.Components
         {
             get => speed;
             set => speed = value;
+        }
+
+        public NumberSequence Transparency
+        {
+            get => transparency;
+            set => transparency = value;
         }
 
         /// <summary>
@@ -143,6 +150,9 @@ namespace VorliasEngine2D.Entities.Components
                     Scale = new Vector2f(size, size),
                     Position = particle.Position,
                 };
+
+                sprite.Color = new Color(255, 255, 255, (byte)(255.0f * (1.0f - transparency.GetAtTime(particle.ElapsedTime / particle.LifeTime).Value)));
+
                 target.Draw(sprite);
             }
         }
