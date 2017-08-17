@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using VorliasEngine2D.System.Utility;
 using VorliasEngine2D.System.Internal;
 using VorliasEngine2D.Events;
+using SFML.System;
+using SFML.Window;
 
 namespace VorliasEngine2D.System
 {
@@ -25,6 +27,15 @@ namespace VorliasEngine2D.System
         public ViewEvents Events
         {
             get => viewEventQueue;
+        }
+
+        Vector2f mouseDelta = new Vector2f();
+        /// <summary>
+        /// Returns the delta if the mouse constraint is set to center
+        /// </summary>
+        public Vector2f MouseCenterDelta
+        {
+            get => mouseDelta;
         }
 
         public Music BackgroundMusic
@@ -46,21 +57,59 @@ namespace VorliasEngine2D.System
             get => exclusiveView;
         }
 
+        public enum MouseConstraintType
+        {
+            /// <summary>
+            /// The mouse behaves normally
+            /// </summary>
+            Normal,
+
+            /// <summary>
+            /// The mouse is constrained to the window
+            /// </summary>
+            ConstrainedWindow,
+
+            /// <summary>
+            /// The mouse is constrained to the center
+            /// </summary>
+            ConstrainedCenter,
+        }
+
+        MouseConstraintType mouseConstraint = MouseConstraintType.Normal;
+        public MouseConstraintType MouseConstraint
+        {
+            get
+            {
+                return mouseConstraint;
+            }
+            set
+            {
+                bool constrainToWindow = MouseConstraintType.ConstrainedWindow == value;
+
+
+                if (StateManager.ActiveState == this)
+                    Application.Window.SetMouseCursorGrabbed(constrainToWindow);
+
+                mouseGrabbed = constrainToWindow;
+
+                mouseConstraint = value;
+            }
+        }
+
         /// <summary>
         /// Whether or not the mouse is locked in this GameState
         /// </summary>
+        [Obsolete("Use '.MouseConstraint = MouseConstraintType.ConstrainedWindow' instead.")]
         public bool MouseGrabbed
         {
             set
             {
-                if(StateManager.ActiveState == this)
-                    Application.Window.SetMouseCursorGrabbed(value);
-
-                mouseGrabbed = value;
+                MouseConstraint = value ? MouseConstraintType.ConstrainedWindow : MouseConstraintType.Normal;
             }
+
             get
             {
-                return mouseGrabbed;
+                return MouseConstraint == MouseConstraintType.ConstrainedWindow;
             }
         }
 
@@ -131,6 +180,31 @@ namespace VorliasEngine2D.System
         public virtual void InitViews()
         {
 
+        }
+
+        internal void BeforeUpdate()
+        {
+            var window = Application.Window;
+            var size = window.Size.ToFloat();
+            var mousePosition = Mouse.GetPosition(window).ToFloat();
+
+            if (mouseConstraint == MouseConstraintType.ConstrainedCenter)
+            {
+                mouseDelta = mousePosition - (size / 2);
+            }
+            else
+                mouseDelta = new Vector2f();
+        }
+
+        internal void AfterUpdate()
+        {
+            if (mouseConstraint == MouseConstraintType.ConstrainedCenter)
+            { 
+                var window = Application.Window;
+                var size = new Vector2i((int) window.Size.X, (int) window.Size.Y);
+
+                Mouse.SetPosition(size / 2, window);
+            }
         }
 
         public virtual void Update()
