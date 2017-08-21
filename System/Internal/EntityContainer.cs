@@ -106,7 +106,7 @@ namespace VorliasEngine2D.System.Internal
         {
             var matches = children.Where(entity => entity.Name == name);
             if (matches.Count() > 0)
-                return children.First();
+                return matches.First();
             else
                 return null;
         }
