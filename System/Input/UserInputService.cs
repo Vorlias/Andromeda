@@ -33,7 +33,7 @@ namespace VorliasEngine2D.System
 
         public class InputBinding
         {
-            protected object[] inputs;
+            internal object[] inputs;
             protected string actionName;
             //protected InputBindingBehaviour inputBehaviour = InputBindingBehaviour.Fallthrough;
 
@@ -180,6 +180,31 @@ namespace VorliasEngine2D.System
             actions.Add(action);
             bindings.Add(action);
         }
+
+        /// <summary>
+        /// Rebinds an input action
+        /// </summary>
+        /// <param name="name">The name of the input action</param>
+        /// <param name="inputs">The inputs</param>
+        public void Rebind(string name, params object[] inputs)
+        {
+            var matchingBindings = bindings.Where(binding => binding.ActionName == name);
+            foreach (var match in matchingBindings)
+            {
+                match.inputs = inputs;
+            }
+        }
+
+        /// <summary>
+        /// Rebinds an input action
+        /// </summary>
+        /// <param name="value">The input name</param>
+        /// <param name="inputs">The inputs</param>
+        public void Rebind(Enum value, params object[] inputs)
+        {
+            Rebind(value.ToString(), inputs);
+        }
+
 
         /// <summary>
         /// Bind an action to a method with the specified inputs
