@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VorliasEngine2D.System.Internal;
-using VorliasEngine2D.System.Utility;
+using Vorlias2D.System.Internal;
+using Vorlias2D.System.Utility;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
     /// <summary>
     /// Class for managing sounds

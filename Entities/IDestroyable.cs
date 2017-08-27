@@ -1,4 +1,4 @@
-﻿namespace VorliasEngine2D.Entities
+﻿namespace Vorlias2D.Entities
 {
     public interface IDestroyable
     {

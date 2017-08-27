@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
     public abstract class GameCollectionService<ManageableType>
     {

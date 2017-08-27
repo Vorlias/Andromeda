@@ -1,6 +1,6 @@
-﻿using VorliasEngine2D.Entities.Components;
+﻿using Vorlias2D.Entities.Components;
 
-namespace VorliasEngine2D.Entities
+namespace Vorlias2D.Entities
 {
     /// <summary>
     /// The result of FindComponent

@@ -5,15 +5,15 @@ using System.Reflection;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VorliasEngine2D.Entities;
-using VorliasEngine2D.System.Utility;
-using VorliasEngine2D.Entities.Components;
+using Vorlias2D.Entities;
+using Vorlias2D.System.Utility;
+using Vorlias2D.Entities.Components;
 using SFML.System;
-using VorliasEngine2D.Serialization;
-using VorliasEngine2D.Entities.Components.Internal;
-using VorliasEngine2D.System.Types;
+using Vorlias2D.Serialization;
+using Vorlias2D.Entities.Components.Internal;
+using Vorlias2D.System.Types;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
     /// <summary>
     /// Experimental Prefab Serialization

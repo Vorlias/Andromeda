@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
-using VorliasEngine2D.System.Utility;
+using Vorlias2D.System.Utility;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
 
     /// <summary>

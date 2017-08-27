@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VorliasEngine2D.System.SequenceTypes
+namespace Vorlias2D.System.SequenceTypes
 {
     public class KeypointTimeException : Exception
     {

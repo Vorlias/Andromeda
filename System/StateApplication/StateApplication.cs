@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.Graphics;
-using VorliasEngine2D.System.Internal;
+using Vorlias2D.System.Internal;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
     public class StateApplication : Application
     {

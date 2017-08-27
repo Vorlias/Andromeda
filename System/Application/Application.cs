@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
 using SFML.Graphics;
-using VorliasEngine2D.System.Utility;
-using VorliasEngine2D.System.Services;
+using Vorlias2D.System.Utility;
+using Vorlias2D.System.Services;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
 
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VorliasEngine2D.System.Internal
+namespace Vorlias2D.System.Internal
 {
     class ResourceNotFoundException : KeyNotFoundException
     {

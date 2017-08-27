@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VorliasEngine2D.System.Utility
+namespace Vorlias2D.System.Utility
 {
     public class MathUtil
     {

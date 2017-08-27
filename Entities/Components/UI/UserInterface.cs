@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using VorliasEngine2D.Entities.Components;
-using VorliasEngine2D.Entities.Components.Internal;
+using Vorlias2D.Entities.Components;
+using Vorlias2D.Entities.Components.Internal;
 
-namespace VorliasEngine2D.Entities.Components
+namespace Vorlias2D.Entities.Components
 {
     public class UserInterface : Component, IContainerComponent
     {

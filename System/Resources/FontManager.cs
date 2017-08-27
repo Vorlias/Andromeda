@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VorliasEngine2D.System.Internal;
+using Vorlias2D.System.Internal;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
     public class FontManager : ResourceManager<Font>
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VorliasEngine2D.System.SequenceTypes
+namespace Vorlias2D.System.SequenceTypes
 {
     public abstract class Sequence<KeyframeType, ValueType> 
         where KeyframeType : ISequenceKeyframe<ValueType>

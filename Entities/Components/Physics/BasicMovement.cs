@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VorliasEngine2D.Entities.Components.Internal;
-using VorliasEngine2D.System;
-using VorliasEngine2D.System.Utility;
+using Vorlias2D.Entities.Components.Internal;
+using Vorlias2D.System;
+using Vorlias2D.System.Utility;
 
 
-namespace VorliasEngine2D.Entities.Components
+namespace Vorlias2D.Entities.Components
 {
     /// <summary>
     /// A basic entity movement system, doesn't use physics.

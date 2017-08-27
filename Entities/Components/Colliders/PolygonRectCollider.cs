@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VorliasEngine2D.Entities.Components.Colliders;
-using VorliasEngine2D.Serialization;
-using VorliasEngine2D.System.Types;
-using VorliasEngine2D.System.Utility;
+using Vorlias2D.Entities.Components.Colliders;
+using Vorlias2D.Serialization;
+using Vorlias2D.System.Types;
+using Vorlias2D.System.Utility;
 
-namespace VorliasEngine2D.Entities.Components
+namespace Vorlias2D.Entities.Components
 {
     /// <summary>
     /// Rectangle Collider component (Polygon rectangle)

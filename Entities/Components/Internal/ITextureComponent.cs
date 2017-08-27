@@ -1,6 +1,6 @@
 ﻿using SFML.Graphics;
 
-namespace VorliasEngine2D.Entities.Components
+namespace Vorlias2D.Entities.Components
 {
     public interface ITextureComponent : IRenderableComponent
     {

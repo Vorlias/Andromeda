@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace VorliasEngine2D.System.Utility
+namespace Vorlias2D.System.Utility
 {
     public class StringTokenizer
     {

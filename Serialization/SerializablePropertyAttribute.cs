@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VorliasEngine2D.Serialization
+namespace Vorlias2D.Serialization
 {
 
     /// <summary>

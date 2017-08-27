@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using VorliasEngine2D.System;
+using Vorlias2D.System;
 using SFML.System;
-using VorliasEngine2D.Entities.Components.Internal;
-using VorliasEngine2D.System.Debug;
+using Vorlias2D.Entities.Components.Internal;
+using Vorlias2D.System.Debug;
 using SFML.Window;
-using VorliasEngine2D.Entities.Components.UI;
-using VorliasEngine2D.Serialization;
-using VorliasEngine2D.System.Utility;
+using Vorlias2D.Entities.Components.UI;
+using Vorlias2D.Serialization;
+using Vorlias2D.System.Utility;
 
-namespace VorliasEngine2D.Entities.Components
+namespace Vorlias2D.Entities.Components
 {
     public class UIImageButton : UIInteractable, ITextureComponent, IComponentEventListener
     {

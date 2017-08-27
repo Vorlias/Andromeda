@@ -1,6 +1,6 @@
 ﻿using SFML.Window;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
     public class JoystickInputAction : UserInputAction
     {

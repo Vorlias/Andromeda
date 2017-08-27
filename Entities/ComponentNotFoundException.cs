@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VorliasEngine2D.Entities
+namespace Vorlias2D.Entities
 {
     public sealed class ComponentNotFoundException<T> : Exception
     {

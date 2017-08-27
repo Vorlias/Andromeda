@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VorliasEngine2D.Entities.Components.Internal;
-using VorliasEngine2D.System;
-using VorliasEngine2D.System.Debug;
+using Vorlias2D.Entities.Components.Internal;
+using Vorlias2D.System;
+using Vorlias2D.System.Debug;
 
-namespace VorliasEngine2D.Entities.Components.UI
+namespace Vorlias2D.Entities.Components.UI
 {
     /// <summary>
     /// Abstract UI class for interactive elements, like buttons etc.

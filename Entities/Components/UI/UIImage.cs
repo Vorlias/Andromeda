@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using VorliasEngine2D.Entities.Components.Internal;
-using VorliasEngine2D.System;
-using VorliasEngine2D.Serialization;
+using Vorlias2D.Entities.Components.Internal;
+using Vorlias2D.System;
+using Vorlias2D.Serialization;
 
-namespace VorliasEngine2D.Entities.Components
+namespace Vorlias2D.Entities.Components
 {
     /// <summary>
     /// An image in a User Interface

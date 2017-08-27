@@ -1,4 +1,4 @@
-﻿namespace VorliasEngine2D.Graphics
+﻿namespace Vorlias2D.Graphics
 {
     public struct SliceRect
     {

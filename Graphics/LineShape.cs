@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SFML.System;
 using SFML.Graphics;
 
-namespace VorliasEngine2D.Graphics
+namespace Vorlias2D.Graphics
 {
     /// <summary>
     /// A Line shape

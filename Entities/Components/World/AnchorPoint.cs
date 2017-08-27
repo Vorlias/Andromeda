@@ -1,8 +1,8 @@
 ﻿using SFML.System;
 using System;
-using VorliasEngine2D.System.Utility;
+using Vorlias2D.System.Utility;
 
-namespace VorliasEngine2D.Entities.Components
+namespace Vorlias2D.Entities.Components
 {
     public sealed class AnchorPoint
     {

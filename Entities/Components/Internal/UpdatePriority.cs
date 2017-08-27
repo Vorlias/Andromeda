@@ -1,4 +1,4 @@
-﻿namespace VorliasEngine2D.Entities.Components.Internal
+﻿namespace Vorlias2D.Entities.Components.Internal
 {
     /// <summary>
     /// The priority of updates in the game update queue

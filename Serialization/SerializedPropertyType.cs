@@ -1,4 +1,4 @@
-﻿namespace VorliasEngine2D.Serialization
+﻿namespace Vorlias2D.Serialization
 {
     public enum SerializedPropertyType
     {

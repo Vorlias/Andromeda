@@ -1,7 +1,7 @@
 ﻿using SFML.System;
 using System;
 
-namespace VorliasEngine2D.System.Utility
+namespace Vorlias2D.System.Utility
 {
 
     internal class VectorUtil

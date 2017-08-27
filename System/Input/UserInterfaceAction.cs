@@ -1,6 +1,6 @@
-﻿using VorliasEngine2D.Entities.Components.Internal;
+﻿using Vorlias2D.Entities.Components.Internal;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
     public class UserInterfaceAction : UserInputAction
     {

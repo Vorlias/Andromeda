@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using VorliasEngine2D.System.Utility;
+using Vorlias2D.System.Utility;
 
-namespace VorliasEngine2D.Events
+namespace Vorlias2D.Events
 {
     /// <summary>
     /// Handles messaging between views in the same state

@@ -1,4 +1,4 @@
-﻿namespace VorliasEngine2D.Entities.Components.UI
+﻿namespace Vorlias2D.Entities.Components.UI
 {
     public class UICheckButtonTextures
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using VorliasEngine2D.Entities;
+using Vorlias2D.Entities;
 
-namespace VorliasEngine2D.System.Internal
+namespace Vorlias2D.System.Internal
 {
     public abstract class EntityContainer : IEntityContainer
     {

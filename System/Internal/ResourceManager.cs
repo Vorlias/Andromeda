@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VorliasEngine2D.System.Internal
+namespace Vorlias2D.System.Internal
 {
 
     public abstract class ResourceManager<ResourceType>

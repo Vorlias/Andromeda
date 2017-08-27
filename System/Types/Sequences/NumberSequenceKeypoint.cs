@@ -1,6 +1,6 @@
-﻿using VorliasEngine2D.System.Utility;
+﻿using Vorlias2D.System.Utility;
 
-namespace VorliasEngine2D.System.SequenceTypes
+namespace Vorlias2D.System.SequenceTypes
 {
 
     /// <summary>

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VorliasEngine2D.Entities.Components.Internal
+namespace Vorlias2D.Entities.Components.Internal
 {
     public interface IDebugDrawable
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
     public interface IGameViewSingleton
     {

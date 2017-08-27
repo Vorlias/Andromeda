@@ -1,7 +1,7 @@
 ﻿using System;
 using SFML.Graphics;
 
-namespace VorliasEngine2D.System.SequenceTypes
+namespace Vorlias2D.System.SequenceTypes
 {
     public struct ColorSequenceKeypoint : ISequenceKeyframe<Color>
     {

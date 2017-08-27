@@ -1,11 +1,11 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using VorliasEngine2D.Entities.Components.Internal;
-using VorliasEngine2D.Serialization;
-using VorliasEngine2D.System;
+using Vorlias2D.Entities.Components.Internal;
+using Vorlias2D.Serialization;
+using Vorlias2D.System;
 
-namespace VorliasEngine2D.Entities.Components.UI
+namespace Vorlias2D.Entities.Components.UI
 {
 
     public class UIImageCheckButton : UIInteractable, IComponentEventListener

@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
-using VorliasEngine2D.System;
+using Vorlias2D.System;
 using SFML.Window;
-using VorliasEngine2D.System.Utility;
-using VorliasEngine2D.Serialization;
+using Vorlias2D.System.Utility;
+using Vorlias2D.Serialization;
 
-namespace VorliasEngine2D.Entities.Components.Internal
+namespace Vorlias2D.Entities.Components.Internal
 {
     public abstract class UIComponent : Component, IRenderableComponent, IUpdatableComponent
     {

@@ -1,7 +1,7 @@
 ﻿using SFML.System;
-using VorliasEngine2D.System.Types;
+using Vorlias2D.System.Types;
 
-namespace VorliasEngine2D.Entities.Components
+namespace Vorlias2D.Entities.Components
 {
 
     public interface IPolygonColliderComponent : ICollisionComponent

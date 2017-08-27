@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VorliasEngine2D.Entities.Components
+namespace Vorlias2D.Entities.Components
 {
     /// <summary>
     /// Exception thrown if two components 'clash'

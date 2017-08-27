@@ -1,7 +1,7 @@
 ﻿using SFML.Graphics;
-using VorliasEngine2D.System;
+using Vorlias2D.System;
 
-namespace VorliasEngine2D.Entities.Components.UI
+namespace Vorlias2D.Entities.Components.UI
 {
     /// <summary>
     /// Information about a texture

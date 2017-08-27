@@ -1,12 +1,12 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using VorliasEngine2D.Entities;
-using VorliasEngine2D.Entities.Components;
-using VorliasEngine2D.System.Types;
-using VorliasEngine2D.System.Utility;
+using Vorlias2D.Entities;
+using Vorlias2D.Entities.Components;
+using Vorlias2D.System.Types;
+using Vorlias2D.System.Utility;
 
-namespace VorliasEngine2D.System.Debug
+namespace Vorlias2D.System.Debug
 {
     public static class DebugExtension
     {

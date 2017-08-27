@@ -1,11 +1,11 @@
 ﻿using SFML.System;
 using SFML.Window;
-using VorliasEngine2D.System;
-using VorliasEngine2D.System.Utility;
+using Vorlias2D.System;
+using Vorlias2D.System.Utility;
 using SFML.Graphics;
-using VorliasEngine2D.Entities.Components;
+using Vorlias2D.Entities.Components;
 
-namespace VorliasEngine2D.System
+namespace Vorlias2D.System
 {
     /// <summary>
     /// The coordinates of the mouse
