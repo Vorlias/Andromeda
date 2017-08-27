@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace VorliasEngine2D.System.Utility
+namespace VorliasEngine2D.System.SequenceTypes
 {
     /// <summary>
     /// A sequence of numbers
