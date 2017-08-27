@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.System.SequenceTypes
 { 
@@ -12,20 +13,11 @@ namespace VorliasEngine2D.System.SequenceTypes
     /// </summary>
     public class ColorSequence : Sequence<ColorSequenceKeypoint, Color>
     {
-        Color ColorLerp(Color first, Color second, float alpha)
-        {
-            return new Color(
-                (byte)(second.R + (second.R - first.R) * (alpha - 1)),
-                (byte)(second.G + (second.G - first.G) * (alpha - 1)),
-                (byte)(second.B + (second.B - first.B) * (alpha - 1)),
-                (byte)(second.A + (second.A - first.A) * (alpha - 1))
-            );
-        }
 
         protected override ColorSequenceKeypoint GetAtTime(float time, ColorSequenceKeypoint first, ColorSequenceKeypoint last)
         {
             float change = (time - first.Time) / (last.Time - first.Time);
-            return new ColorSequenceKeypoint(0.0f, ColorLerp(first.Value, last.Value, change));
+            return new ColorSequenceKeypoint(0.0f, first.Value.Lerp(last.Value, change));
         }
 
 
