@@ -1,4 +1,5 @@
-﻿using SFML.System;
+﻿using SFML.Graphics;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace VorliasEngine2D.System.Utility
 {
     public static class Extensions
     {
+  
+
         /// <summary>
         /// Performs an action for each value in the Enumerable object
         /// </summary>
@@ -19,7 +22,7 @@ namespace VorliasEngine2D.System.Utility
         /// <param name="action">The action that gets performed</param>
         public static void ForEach<T>(this IEnumerable<T> self, Action<T> action)
         {
-            foreach (var value in self)
+            foreach (var value in self.ToArray())
             {
                 action.Invoke(value);
             }

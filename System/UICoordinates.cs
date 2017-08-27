@@ -52,7 +52,15 @@ namespace VorliasEngine2D.System
             );
         }
 
+        public static implicit operator UICoordinates(Vector2f vector)
+        {
+            return new UICoordinates(0, vector.X, 0, vector.Y);
+        }
 
+        public static implicit operator Vector2f(UICoordinates coordinates)
+        {
+            return coordinates.GlobalAbsolute;
+        }
 
         public static UICoordinates operator *(UICoordinates left, Vector2f right)
         {

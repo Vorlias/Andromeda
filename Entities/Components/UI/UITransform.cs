@@ -11,6 +11,50 @@ using VorliasEngine2D.System;
 namespace VorliasEngine2D.Entities.Components
 {
 
+    [Flags]
+    public enum UIPositionAlign
+    {
+        /// <summary>
+        /// Centers to the left of the screen
+        /// </summary>
+        Left = 1,
+
+        /// <summary>
+        /// Centers to the top of the screen
+        /// </summary>
+        Top = 2,
+
+        /// <summary>
+        /// Centers to the center of the screen on X
+        /// </summary>
+        LeftCenter = 4,
+
+        /// <summary>
+        /// Centers to the center of the screen on Y
+        /// </summary>
+        TopCenter = 8,
+
+        /// <summary>
+        /// Centers to the right of the screen
+        /// </summary>
+        Right = 16,
+
+        /// <summary>
+        /// Centers to the bottom of the screen
+        /// </summary>
+        Bottom = 32,
+
+        /// <summary>
+        /// Centers to the size X
+        /// </summary>
+        CenterWidth = 64,
+
+        /// <summary>
+        /// Centers to the size Y
+        /// </summary>
+        CenterHeight = 128,
+    }
+
     /// <summary>
     /// User Interface Transform Component - Overrides the default Transform.
     /// </summary>
@@ -50,6 +94,60 @@ namespace VorliasEngine2D.Entities.Components
         {
             get;
             set;
+        }
+        
+        /// <summary>
+        /// Set the position based on alignment rules
+        /// </summary>
+        /// <param name="anchor">The alignment rules</param>
+        /// <param name="offset">The UICoordinate offset</param>
+        public void SetAlignmentPosition(UIPositionAlign anchor, UICoordinates offset)
+        {
+            var offsetAbsolute = offset.GlobalAbsolute;
+            var offsetX = offsetAbsolute.X;
+            var offsetY = offsetAbsolute.Y;
+            float scaleX = 0;
+            float scaleY = 0;
+
+            if ((anchor & UIPositionAlign.Left) != 0)
+            {
+                scaleX = 0f;
+            }
+            else if ((anchor & UIPositionAlign.LeftCenter) != 0)
+            {
+                scaleX = 0.5f;
+            }
+            else if ((anchor & UIPositionAlign.Right) != 0)
+            {
+                scaleX = 1.0f;
+            }
+            
+            if ((anchor & UIPositionAlign.Top) != 0)
+            {
+                scaleY = 0f;
+            }
+            else if ((anchor & UIPositionAlign.TopCenter) != 0)
+            {
+                scaleY = 0.5f;
+            }
+            else if ((anchor & UIPositionAlign.Bottom) != 0)
+            {
+                scaleY = 1.0f;
+            }
+
+            var absoluteSize = Size.GlobalAbsolute;
+
+            if ((anchor & UIPositionAlign.CenterWidth) != 0)
+            {
+                offsetX = offsetX - (absoluteSize.X / 2);
+            }
+
+            if ((anchor & UIPositionAlign.CenterHeight) != 0)
+            {
+                offsetY = offsetY - (absoluteSize.Y / 2);
+            }
+            
+            Position = new UICoordinates(scaleX, offsetX, scaleY, offsetY);
         }
 
         internal UICoordinates RelativeToSize(UICoordinates size, UICoordinates position)

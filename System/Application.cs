@@ -49,6 +49,7 @@ namespace VorliasEngine2D.System
             else
             {
                 Service newSvc = new Service();
+                newSvc.Start();
                 services.Add(newSvc);
                 return newSvc;
             }
@@ -72,6 +73,14 @@ namespace VorliasEngine2D.System
         internal View InterfaceView
         {
             get => interfaceView;
+        }
+
+        public void TakeScreenshot(string filename)
+        {
+            Texture texture = new Texture(window.Size.X, window.Size.Y);
+            texture.Update(window);
+
+            texture.CopyToImage().SaveToFile(filename);
         }
 
         /// <summary>

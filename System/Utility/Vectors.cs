@@ -32,6 +32,22 @@ namespace VorliasEngine2D.System.Utility
             return new Vector2f(old.X, old.Y);
         }
 
+        static Random random = new Random();
+
+        /// <summary>
+        /// Generates 
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static Vector2f Random(Vector2f min, Vector2f max)
+        {
+            NumberRange xRange = new NumberRange(min.X, max.X);
+            NumberRange yRange = new NumberRange(min.Y, max.Y);
+
+            return new Vector2f(xRange.Random, yRange.Random);
+        }
+
         /// <summary>
         /// Transforms the point to the object's space
         /// </summary>
@@ -118,6 +134,11 @@ namespace VorliasEngine2D.System.Utility
         internal static Vector2f Clamp(this Vector2f value, Vector2f min, Vector2f max)
         {
             return new Vector2f(Math.Min(max.X, Math.Max(min.X, value.X)), Math.Min(max.Y, Math.Max(min.Y, value.Y)));
+        }
+
+        public static float Clamp(this float value, float min, float max)
+        {
+            return new NumberRange(min, max).Clamped(value);
         }
     }
 }

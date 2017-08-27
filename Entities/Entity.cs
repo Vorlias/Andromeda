@@ -52,6 +52,16 @@ namespace VorliasEngine2D.Entities
             set;
         }
 
+        /// <summary>
+        /// Whether or not this entity is visible
+        /// </summary>
+        public bool Visible
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// All the ancestors of this entity
         /// </summary>
         internal IEnumerable<Entity> Ancestors
@@ -641,6 +651,7 @@ namespace VorliasEngine2D.Entities
         /// </summary>
         public void Destroy()
         {
+            Components.OfType<IDestroyedListener>().ForEach(listener => listener.OnDestroy());
             Behaviours.ForEach(behaviour => behaviour.OnDestroy());
 
             if (ParentContainer != null)
@@ -651,6 +662,8 @@ namespace VorliasEngine2D.Entities
             {
                 GameView.RemoveChild(this);
             }
+
+            //components.Clear();
         }
 
 

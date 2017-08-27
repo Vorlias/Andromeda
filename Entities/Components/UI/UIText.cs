@@ -113,6 +113,8 @@ namespace VorliasEngine2D.Entities.Components
             Text fontText = new Text(Text, Font, FontSize);
             var bounds = fontText.GetLocalBounds();
             size = new Vector2f(bounds.Width, bounds.Height);
+
+            Transform.Size = size;
         }
     }
 }

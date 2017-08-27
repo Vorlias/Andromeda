@@ -173,6 +173,15 @@ namespace VorliasEngine2D.Entities.Components
             }
         }
 
+        public static ParticleEmitter Spawn(Vector2f position)
+        {
+            Entity explosionEntity = new Entity();
+            explosionEntity.Name = "ParticleEmitter";
+            explosionEntity.Position = position;
+            ParticleEmitter emitter = explosionEntity.AddComponent<ParticleEmitter>();
+            return emitter;
+        }
+
         public void Update()
         {
             foreach (var particle in particles.ToArray())

@@ -28,7 +28,7 @@ namespace VorliasEngine2D.Entities
         {
             Entity child = original.Clone();
             child.SetParentView(parent);
-            child.Name = original.Name + " (Instance)";
+            child.Name = original.Name;
             parent.AddEntity(child);
 
             return child;
@@ -42,7 +42,7 @@ namespace VorliasEngine2D.Entities
         {
             Entity child = original.Clone(parent);
             child.SetParentView(parent.GameView);
-            child.Name = original.Name + " (Instance)";
+            child.Name = original.Name;
             parent.AddEntity(child);
 
             return child;

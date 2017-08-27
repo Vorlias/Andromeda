@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
+    <Compile Include="Entities\Components\Internal\IDestroyedListener.cs" />
     <Compile Include="Entities\Components\UI\UICheckButtonTextures.cs" />
     <Compile Include="Entities\Components\UI\UIImageCheckButton.cs" />
     <Compile Include="Entities\Components\UI\UITexture.cs" />
@@ -67,6 +68,10 @@
     <Compile Include="Graphics\LineShape.cs" />
     <Compile Include="System\DelayedAction.cs" />
     <Compile Include="System\GameViewSingleton.cs" />
+    <Compile Include="System\MouseConstraintType.cs" />
+    <Compile Include="System\Utility\ColorSequence.cs" />
+    <Compile Include="System\Utility\ColorSequenceKeypoint.cs" />
+    <Compile Include="System\Utility\ISequenceKeyframe.cs" />
     <Compile Include="System\Utility\KeypointTimeException.cs" />
     <Compile Include="System\Utility\NumberSequence.cs" />
     <Compile Include="System\Utility\NumberSequenceKeypoint.cs" />
@@ -165,12 +170,15 @@
     <Compile Include="System\Utility\Extensions.cs" />
     <Compile Include="System\Utility\MathUtil.cs" />
     <Compile Include="System\Utility\NumberRange.cs" />
+    <Compile Include="System\Utility\Sequence.cs" />
     <Compile Include="System\Utility\ThreadedService.cs" />
     <Compile Include="System\Utility\Polygon.cs" />
     <Compile Include="System\Utility\StringTokenizer.cs" />
     <Compile Include="System\Utility\Vectors.cs" />
     <Compile Include="System\Utility\VectorUtil.cs" />
     <Compile Include="System\ViewManager.cs" />
+    <Compile Include="System\WeightedRandom.cs" />
+    <Compile Include="System\WeightedRandomType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\Components\UI\Enums\" />

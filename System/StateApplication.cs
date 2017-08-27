@@ -118,6 +118,8 @@ namespace VorliasEngine2D.System
         {
             UpdateStart();
 
+            States.ActiveState.BeforeUpdate();
+
             States.ActiveState.Update();
 
             var views = Game.UpdatableViewsByPriority;
@@ -128,6 +130,8 @@ namespace VorliasEngine2D.System
             }
 
             UpdateEnd();
+
+            States.ActiveState.AfterUpdate();
         }
 
         public StateApplication(VideoMode mode, string title, Styles styles = Styles.Default) : base(mode, title, styles)

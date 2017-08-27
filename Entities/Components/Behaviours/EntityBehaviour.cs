@@ -118,6 +118,14 @@ namespace VorliasEngine2D.Entities.Components
         }
 
         /// <summary>
+        /// The UI Transform associated with the entity
+        /// </summary>
+        public UITransform UITransform
+        {
+            get => entity.GetComponent<UITransform>();
+        }
+
+        /// <summary>
         /// Called when the component is initialized
         /// </summary>
         public virtual void Init()

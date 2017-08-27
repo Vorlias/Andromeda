@@ -11,6 +11,7 @@ using VorliasEngine2D.System.Debug;
 using SFML.Window;
 using VorliasEngine2D.Entities.Components.UI;
 using VorliasEngine2D.Serialization;
+using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
 {
@@ -106,7 +107,7 @@ namespace VorliasEngine2D.Entities.Components
 
         public override void AfterUpdate()
         {
-            
+
         }
 
         public override void BeforeUpdate()
