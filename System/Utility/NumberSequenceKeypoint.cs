@@ -6,7 +6,7 @@ namespace VorliasEngine2D.System.Utility
     /// <summary>
     /// A number sequence keypoint
     /// </summary>
-    public struct NumberSequenceKeypoint
+    public struct NumberSequenceKeypoint : ISequenceKeyframe<float>
     {
         public float Time
         {
