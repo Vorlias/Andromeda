@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VorliasEngine2D.Entities.Components.Colliders;
+using VorliasEngine2D.System.Types;
 using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components

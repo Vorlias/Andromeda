@@ -3,6 +3,7 @@ using SFML.System;
 using System.Collections.Generic;
 using VorliasEngine2D.Entities.Components.Internal;
 using VorliasEngine2D.System.SequenceTypes;
+using VorliasEngine2D.System.Types;
 using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components

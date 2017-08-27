@@ -11,6 +11,7 @@ using VorliasEngine2D.Entities.Components;
 using SFML.System;
 using VorliasEngine2D.Serialization;
 using VorliasEngine2D.Entities.Components.Internal;
+using VorliasEngine2D.System.Types;
 
 namespace VorliasEngine2D.System
 {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SFML.System;
 using VorliasEngine2D.System.Utility;
 using VorliasEngine2D.Entities.Components.Colliders;
+using VorliasEngine2D.System.Types;
 
 namespace VorliasEngine2D.Entities.Components
 {

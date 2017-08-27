@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VorliasEngine2D.System.Utility
+namespace VorliasEngine2D.System.Types
 {
     /// <summary>
     /// A number range

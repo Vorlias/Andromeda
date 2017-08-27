@@ -1,10 +1,5 @@
 ﻿using SFML.System;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VorliasEngine2D.System.Utility;
+using VorliasEngine2D.System.Types;
 
 namespace VorliasEngine2D.Entities.Components
 {
