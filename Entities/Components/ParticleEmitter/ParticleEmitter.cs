@@ -26,6 +26,8 @@ namespace VorliasEngine2D.Entities.Components
         NumberSequence size = new NumberSequence(1.0f),
             transparency = 0.0f;
 
+        ColorSequence color = new Color(255, 255, 255);
+
         Vector2f emissionDirection;
 
         float spawnRate = 1.0f;
@@ -83,6 +85,15 @@ namespace VorliasEngine2D.Entities.Components
         }
 
         /// <summary>
+        /// The colour of the particles
+        /// </summary>
+        public new ColorSequence Color
+        {
+            get => color;
+            set => color = value;
+        }
+
+        /// <summary>
         /// The size of the particles
         /// </summary>
         public NumberSequence Size
@@ -108,6 +119,7 @@ namespace VorliasEngine2D.Entities.Components
             get => enabled;
             set => enabled = value;
         }
+
 
         /// <summary>
         /// The particles (internally)
@@ -141,7 +153,9 @@ namespace VorliasEngine2D.Entities.Components
         {
             foreach (var particle in particles.ToArray())
             {
-                var size = particle.Size.GetAtTime(particle.ElapsedTime / particle.LifeTime).Value;
+                var currentTime = particle.ElapsedTime / particle.LifeTime;
+
+                var size = particle.Size.GetAtTime(currentTime).Value;
 
                 Sprite sprite = new Sprite(Texture)
                 {
@@ -151,7 +165,9 @@ namespace VorliasEngine2D.Entities.Components
                     Position = particle.Position,
                 };
 
-                sprite.Color = new Color(255, 255, 255, (byte)(255.0f * (1.0f - transparency.GetAtTime(particle.ElapsedTime / particle.LifeTime).Value)));
+                Color current = color.GetAtTime(currentTime).Value;
+
+                sprite.Color = new Color(current.R, current.G, current.B, (byte)(255.0f * (1.0f - transparency.GetAtTime(currentTime).Value)));
 
                 target.Draw(sprite);
             }
