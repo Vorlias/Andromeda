@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vorlias2D.Entities.Components.Internal;
-using Vorlias2D.Serialization;
-using Vorlias2D.System;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.Serialization;
+using Andromeda2D.System;
 
-namespace Vorlias2D.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
 
     [Flags]

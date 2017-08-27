@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
-using Vorlias2D.System;
+using Andromeda2D.System;
 using SFML.Window;
-using Vorlias2D.System.Utility;
-using Vorlias2D.Serialization;
+using Andromeda2D.System.Utility;
+using Andromeda2D.Serialization;
 
-namespace Vorlias2D.Entities.Components.Internal
+namespace Andromeda2D.Entities.Components.Internal
 {
     public abstract class UIComponent : Component, IRenderableComponent, IUpdatableComponent
     {

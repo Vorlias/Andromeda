@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
 using SFML.Graphics;
-using Vorlias2D.System.Utility;
-using Vorlias2D.System.Services;
+using Andromeda2D.System.Utility;
+using Andromeda2D.System.Services;
 
-namespace Vorlias2D.System
+namespace Andromeda2D.System
 {
 
 

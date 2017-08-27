@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vorlias2D.System;
+using Andromeda2D.System;
 
-namespace Vorlias2D.Entities.Components.Internal
+namespace Andromeda2D.Entities.Components.Internal
 {
     public interface IComponentEventListener : IComponent
     {

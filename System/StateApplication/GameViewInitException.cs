@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vorlias2D.System
+namespace Andromeda2D.System
 {
     public class GameViewInitException : Exception
     {

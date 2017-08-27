@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Vorlias2D.System.Internal
+namespace Andromeda2D.System.Internal
 {
     public class ExclusiveGameViewProperty
     {

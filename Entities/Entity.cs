@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vorlias2D.Entities.Components;
-using Vorlias2D.Entities.Components.Colliders;
-using Vorlias2D.Entities.Components.Internal;
-using Vorlias2D.Serialization;
-using Vorlias2D.System;
-using Vorlias2D.System.Internal;
-using Vorlias2D.System.Utility;
+using Andromeda2D.Entities.Components;
+using Andromeda2D.Entities.Components.Colliders;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.Serialization;
+using Andromeda2D.System;
+using Andromeda2D.System.Internal;
+using Andromeda2D.System.Utility;
 
-namespace Vorlias2D.Entities
+namespace Andromeda2D.Entities
 {
 
     /// <summary>

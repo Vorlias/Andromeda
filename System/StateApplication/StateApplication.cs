@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.Graphics;
-using Vorlias2D.System.Internal;
+using Andromeda2D.System.Internal;
 
-namespace Vorlias2D.System
+namespace Andromeda2D.System
 {
     public class StateApplication : Application
     {

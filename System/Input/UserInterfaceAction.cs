@@ -1,6 +1,6 @@
-﻿using Vorlias2D.Entities.Components.Internal;
+﻿using Andromeda2D.Entities.Components.Internal;
 
-namespace Vorlias2D.System
+namespace Andromeda2D.System
 {
     public class UserInterfaceAction : UserInputAction
     {

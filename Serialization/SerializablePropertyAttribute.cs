@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vorlias2D.Serialization
+namespace Andromeda2D.Serialization
 {
 
     /// <summary>

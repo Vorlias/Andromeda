@@ -1,4 +1,4 @@
-﻿namespace Vorlias2D.Entities.Components.Internal
+﻿namespace Andromeda2D.Entities.Components.Internal
 {
     /// <summary>
     /// The priority of updates in the game update queue

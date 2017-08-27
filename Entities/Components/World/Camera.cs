@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Vorlias2D.Entities.Components.Internal;
+using Andromeda2D.Entities.Components.Internal;
 using SFML.System;
-using Vorlias2D.System;
-using Vorlias2D.System.Utility;
+using Andromeda2D.System;
+using Andromeda2D.System.Utility;
 
-namespace Vorlias2D.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
 
     public class Camera : Component, IUpdatableComponent

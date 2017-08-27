@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Vorlias2D.System
+namespace Andromeda2D.System
 {
     public class StateManager : GameCollectionService<GameState>
     {

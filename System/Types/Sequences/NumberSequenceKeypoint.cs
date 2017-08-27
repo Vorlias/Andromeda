@@ -1,6 +1,6 @@
-﻿using Vorlias2D.System.Utility;
+﻿using Andromeda2D.System.Utility;
 
-namespace Vorlias2D.System.SequenceTypes
+namespace Andromeda2D.System.SequenceTypes
 {
 
     /// <summary>

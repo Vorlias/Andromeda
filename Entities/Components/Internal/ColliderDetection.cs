@@ -1,4 +1,4 @@
-﻿namespace Vorlias2D.Entities.Components
+﻿namespace Andromeda2D.Entities.Components
 {
     internal static class ColliderDetection
     {

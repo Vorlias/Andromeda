@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Vorlias2D.Entities.Components;
-using Vorlias2D.Entities.Components.Internal;
+using Andromeda2D.Entities.Components;
+using Andromeda2D.Entities.Components.Internal;
 
-namespace Vorlias2D.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     public class UserInterface : Component, IContainerComponent
     {

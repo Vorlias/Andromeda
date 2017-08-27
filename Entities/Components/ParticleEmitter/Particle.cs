@@ -1,9 +1,9 @@
 ﻿using SFML.System;
-using Vorlias2D.System;
-using Vorlias2D.System.SequenceTypes;
-using Vorlias2D.System.Utility;
+using Andromeda2D.System;
+using Andromeda2D.System.SequenceTypes;
+using Andromeda2D.System.Utility;
 
-namespace Vorlias2D.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     /// <summary>
     /// Represents a single particle

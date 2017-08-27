@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vorlias2D.System.SequenceTypes
+namespace Andromeda2D.System.SequenceTypes
 {
     public interface ISequenceKeyframe<SequenceKeyframeValueType>
     {

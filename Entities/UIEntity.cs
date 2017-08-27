@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vorlias2D.Entities.Components;
-using Vorlias2D.System;
-using Vorlias2D.System.Internal;
+using Andromeda2D.Entities.Components;
+using Andromeda2D.System;
+using Andromeda2D.System.Internal;
 
-namespace Vorlias2D.Entities
+namespace Andromeda2D.Entities
 {
     public class UIEntity : Entity
     {

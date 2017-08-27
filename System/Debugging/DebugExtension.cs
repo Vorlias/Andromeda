@@ -1,12 +1,12 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using Vorlias2D.Entities;
-using Vorlias2D.Entities.Components;
-using Vorlias2D.System.Types;
-using Vorlias2D.System.Utility;
+using Andromeda2D.Entities;
+using Andromeda2D.Entities.Components;
+using Andromeda2D.System.Types;
+using Andromeda2D.System.Utility;
 
-namespace Vorlias2D.System.Debug
+namespace Andromeda2D.System.Debug
 {
     public static class DebugExtension
     {

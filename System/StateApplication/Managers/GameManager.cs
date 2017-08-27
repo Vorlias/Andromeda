@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Vorlias2D.System.Utility;
+using Andromeda2D.System.Utility;
 
-namespace Vorlias2D.System
+namespace Andromeda2D.System
 {
 
     public class StateGameManager

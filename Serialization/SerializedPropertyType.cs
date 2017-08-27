@@ -1,4 +1,4 @@
-﻿namespace Vorlias2D.Serialization
+﻿namespace Andromeda2D.Serialization
 {
     public enum SerializedPropertyType
     {

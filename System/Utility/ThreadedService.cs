@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Vorlias2D.System.Services
+namespace Andromeda2D.System.Services
 {
     /// <summary>
     /// A service that runs on a separate thread

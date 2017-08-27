@@ -1,8 +1,8 @@
 ﻿using SFML.System;
 using System;
-using Vorlias2D.System.Utility;
+using Andromeda2D.System.Utility;
 
-namespace Vorlias2D.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     public sealed class AnchorPoint
     {

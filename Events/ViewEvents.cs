@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Vorlias2D.System.Utility;
+using Andromeda2D.System.Utility;
 
-namespace Vorlias2D.Events
+namespace Andromeda2D.Events
 {
     /// <summary>
     /// Handles messaging between views in the same state

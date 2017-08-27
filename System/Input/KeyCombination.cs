@@ -1,6 +1,6 @@
 ﻿using SFML.Window;
 
-namespace Vorlias2D.System
+namespace Andromeda2D.System
 {
     /// <summary>
     /// A combination of keys

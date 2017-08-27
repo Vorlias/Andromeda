@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vorlias2D.Entities.Components.Internal
+namespace Andromeda2D.Entities.Components.Internal
 {
     interface IDestroyedListener
     {

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.System;
-using Vorlias2D.System.Utility;
-using Vorlias2D.Entities.Components.Colliders;
-using Vorlias2D.System.Types;
+using Andromeda2D.System.Utility;
+using Andromeda2D.Entities.Components.Colliders;
+using Andromeda2D.System.Types;
 
-namespace Vorlias2D.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     public class PolygonCircleCollider : CollisionComponent, IPolygonColliderComponent
     {

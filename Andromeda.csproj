@@ -7,8 +7,8 @@
     <ProjectGuid>{6DBC821E-99E4-4735-8222-F5F3601E04CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VorliasEngine2D</RootNamespace>
-    <AssemblyName>Vorlias2D</AssemblyName>
+    <RootNamespace>Andromeda</RootNamespace>
+    <AssemblyName>Andromeda</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

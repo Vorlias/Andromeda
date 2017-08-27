@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vorlias2D.Entities.Components;
-using Vorlias2D.System;
+using Andromeda2D.Entities.Components;
+using Andromeda2D.System;
 
-namespace Vorlias2D.Entities.Components.UI
+namespace Andromeda2D.Entities.Components.UI
 {
     /// <summary>
     /// Extension class for easy UI addition

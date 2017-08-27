@@ -1,6 +1,6 @@
-﻿using Vorlias2D.Entities.Components;
+﻿using Andromeda2D.Entities.Components;
 
-namespace Vorlias2D.Entities
+namespace Andromeda2D.Entities
 {
     /// <summary>
     /// The result of FindComponent

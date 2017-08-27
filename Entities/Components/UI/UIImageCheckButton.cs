@@ -1,11 +1,11 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using Vorlias2D.Entities.Components.Internal;
-using Vorlias2D.Serialization;
-using Vorlias2D.System;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.Serialization;
+using Andromeda2D.System;
 
-namespace Vorlias2D.Entities.Components.UI
+namespace Andromeda2D.Entities.Components.UI
 {
 
     public class UIImageCheckButton : UIInteractable, IComponentEventListener

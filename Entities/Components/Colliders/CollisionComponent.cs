@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vorlias2D.Entities.Components.Internal;
+using Andromeda2D.Entities.Components.Internal;
 
-namespace Vorlias2D.Entities.Components.Colliders
+namespace Andromeda2D.Entities.Components.Colliders
 {
     /// <summary>
     /// The base class for collision components
