@@ -69,12 +69,12 @@
     <Compile Include="System\DelayedAction.cs" />
     <Compile Include="System\GameViewSingleton.cs" />
     <Compile Include="System\MouseConstraintType.cs" />
-    <Compile Include="System\Utility\ColorSequence.cs" />
-    <Compile Include="System\Utility\ColorSequenceKeypoint.cs" />
-    <Compile Include="System\Utility\ISequenceKeyframe.cs" />
-    <Compile Include="System\Utility\KeypointTimeException.cs" />
-    <Compile Include="System\Utility\NumberSequence.cs" />
-    <Compile Include="System\Utility\NumberSequenceKeypoint.cs" />
+    <Compile Include="System\Sequences\ColorSequence.cs" />
+    <Compile Include="System\Sequences\ColorSequenceKeypoint.cs" />
+    <Compile Include="System\Sequences\ISequenceKeyframe.cs" />
+    <Compile Include="System\Sequences\KeypointTimeException.cs" />
+    <Compile Include="System\Sequences\NumberSequence.cs" />
+    <Compile Include="System\Sequences\NumberSequenceKeypoint.cs" />
     <Compile Include="Entities\Components\ParticleEmitter\Particle.cs" />
     <Compile Include="Entities\Components\ParticleEmitter\ParticleEmitter.cs" />
     <Compile Include="Entities\Components\Physics\BasicMovement.cs" />
@@ -170,7 +170,7 @@
     <Compile Include="System\Utility\Extensions.cs" />
     <Compile Include="System\Utility\MathUtil.cs" />
     <Compile Include="System\Utility\NumberRange.cs" />
-    <Compile Include="System\Utility\Sequence.cs" />
+    <Compile Include="System\Sequences\Sequence.cs" />
     <Compile Include="System\Utility\ThreadedService.cs" />
     <Compile Include="System\Utility\Polygon.cs" />
     <Compile Include="System\Utility\StringTokenizer.cs" />

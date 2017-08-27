@@ -1,5 +1,6 @@
 ﻿using SFML.System;
 using VorliasEngine2D.System;
+using VorliasEngine2D.System.SequenceTypes;
 using VorliasEngine2D.System.Utility;
 
 namespace VorliasEngine2D.Entities.Components
