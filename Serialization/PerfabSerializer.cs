@@ -21,7 +21,7 @@ namespace Andromeda2D.System
     /// </summary>
     public class PrefabSerialization
     {
-        const string COMPONENT_NAMESPACE = "VorliasEngine2D.Entities.Components";
+        const string COMPONENT_NAMESPACE = "Andromeda2D.Entities.Components";
 
         List<string> lines = new List<string>();
         Entity prefabEntity;
@@ -86,7 +86,10 @@ namespace Andromeda2D.System
         internal Type GetTypeByName(string typeName)
         {
             var types = GetTypesByName(typeName);
-            return types?[0];
+            if (types.Count() == 0)
+                throw new InvalidCastException(typeName);
+            else
+                return types?[0];
         }
 
         private string[] validPropertyTypes =
