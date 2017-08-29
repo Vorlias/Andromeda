@@ -29,7 +29,25 @@ namespace Andromeda2D.Entities.Components
             speedModifier = 0.0f,
             minTrackingDistance = 0.0f;
 
+        bool localMovement = true;
+
+        /// <summary>
+        /// If movement is using a direction, will determine if movement is via local space (rotated to entity)
+        /// </summary>
+        public bool IsMovementLocal
+        {
+            get => localMovement;
+            set => localMovement = value;
+        }
+
+        public Vector2f MovementDelta
+        {
+            get => movementDelta;
+            set => Move(value);
+        }
+
         Transform targetTransform;
+        Vector2f movementDelta;
 
         public UpdatePriority UpdatePriority => UpdatePriority.Physics;
 
@@ -47,6 +65,12 @@ namespace Andromeda2D.Entities.Components
         {
             targetTransform = entity.Transform;
             minTrackingDistance = distance;
+        }
+
+        public void Move(Vector2f direction)
+        {
+            movementDelta = direction;
+            targetTransform = null;
         }
 
         public void AfterUpdate()
@@ -130,10 +154,16 @@ namespace Andromeda2D.Entities.Components
                 speedModifier -= dampRate;
             }
 
+            var realMovementDelta = (IsMovementLocal ? movementDelta.Rotate(entity.Transform.Rotation) : movementDelta) * deltaTime;
+
             // Update entity position
             if (targetTransform != null && TargetDistance > minTrackingDistance)
             {
-                Entity.Transform.Position += (targetTransform.Position - Entity.Transform.Position).Normalize() * (speedModifier * deltaTime);
+                Entity.Transform.Position += realMovementDelta + (targetTransform.Position - Entity.Transform.Position).Normalize() * (speedModifier * deltaTime);
+            }
+            else if (movementDelta != default(Vector2f))
+            {
+                Entity.Transform.Position += realMovementDelta;
             }
             
         }
