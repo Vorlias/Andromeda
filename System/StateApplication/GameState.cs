@@ -309,7 +309,7 @@ namespace Andromeda2D.System
             views = new HashSet<GameView>();
             Input = new UserInputManager();
             viewEventQueue = new ViewEvents();
-            Init();
+            
         }
 
         internal static GameState Create()
@@ -399,7 +399,7 @@ namespace Andromeda2D.System
         /// </summary>
         internal void Start()
         {
-            
+            Init();
             InitViews();
             views.ForEach(view => view.Start());
         }
