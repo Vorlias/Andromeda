@@ -174,12 +174,12 @@ namespace Andromeda2D.Entities.Components
 
             var globalBounds = fontText.GetLocalBounds();
 
-            RectangleShape rs = new RectangleShape(new Vector2f(globalBounds.Width, globalBounds.Height));
+            /*RectangleShape rs = new RectangleShape(new Vector2f(globalBounds.Width, globalBounds.Height));
             rs.FillColor = Color.Transparent;
             rs.Position = fontText.Position;
             rs.OutlineColor = Color.Cyan;
             rs.OutlineThickness = 1;
-            target.Draw(rs);
+            target.Draw(rs);*/
         }
 
         public override void AfterUpdate()
