@@ -84,11 +84,7 @@ namespace Andromeda2D.Entities.Components
             float y = 0;
             var textSize = text.GetLocalBounds();
             var uiSize = Transform.Size.GlobalAbsolute;
-            var yOffset = UseYPositionFix ? textSize.Height / 4.0f : 0;
-
-            //var width = text.FindCharacterPos((uint)text.DisplayedString.Length - 1).X - text.FindCharacterPos(0).X;
-            var height = text.FindCharacterPos((uint)text.DisplayedString.Length - 1).Y - text.FindCharacterPos(0).Y;
-            //var textSize = new FloatRect(0, 0, width, height);
+            var height = UseYPositionFix ? text.CharacterSize + 5 : textSize.Height;
 
             var uiCenter = uiSize / 2.0f;
 
@@ -98,9 +94,9 @@ namespace Andromeda2D.Entities.Components
                 x = uiSize.X - textSize.Width;
 
             if (TextYAlignment == TextYAlignment.Center)
-                y = uiCenter.Y - textSize.Height / 2.0f - yOffset;
+                y = uiCenter.Y - height / 2.0f;
             else if (TextYAlignment == TextYAlignment.Bottom)
-                y = uiSize.Y - textSize.Height - yOffset;
+                y = uiSize.Y - height;
 
             return pos + new Vector2f(x, y);
         }
