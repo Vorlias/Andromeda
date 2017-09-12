@@ -59,6 +59,11 @@ namespace Andromeda2D.System
                 activeState = GetState(name);
                 activeState.Activated();
                 activeState.OnActivated();
+
+                foreach (var view in activeState.Views)
+                {
+                    view.ParentState = activeState;
+                }
             }
         }
 

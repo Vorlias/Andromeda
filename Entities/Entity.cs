@@ -21,6 +21,8 @@ namespace Andromeda2D.Entities
     /// </summary>
     public class Entity : EntityContainer
     {
+
+        #region Internal
         HashSet<IComponent> components = new HashSet<IComponent>();
 
         Components.Transform transform;
@@ -32,6 +34,9 @@ namespace Andromeda2D.Entities
         string name = "Entity";
         List<object> tags = new List<object>();
 
+        #endregion
+
+        #region Properties
         /// <summary>
         /// The tags this entity has
         /// </summary>
@@ -80,16 +85,6 @@ namespace Andromeda2D.Entities
         }
 
         /// <summary>
-        /// Returns whether not the entity has the specified tag
-        /// </summary>
-        /// <param name="tag">The tag</param>
-        /// <returns>True if the entity has the specified tag</returns>
-        public bool HasTag(object tag)
-        {
-            return tags.Contains(tag);
-        }
-
-        /// <summary>
         /// The collision component of this entity
         /// </summary>
         public CollisionComponent Collider
@@ -124,6 +119,7 @@ namespace Andromeda2D.Entities
             }
         }
 
+
         /// <summary>
         /// The parent entity
         /// </summary>
@@ -141,18 +137,6 @@ namespace Andromeda2D.Entities
             {
                 return parentEntity;
             }
-        }
-
-        internal void SetParentView(GameView state)
-        {
-            parentState = state;
-        }
-
-        internal void SetParent<C>(C parent) where C : EntityContainer
-        {
-            parentEntity = parent;
-            parent.AddChild(this);
-            OnParentChanged(parent);
         }
 
         /// <summary>
@@ -209,11 +193,6 @@ namespace Andromeda2D.Entities
             }
         }
 
-        internal void SetIsPrefab(bool value)
-        {
-            prefab = value;
-        }
-
         /// <summary>
         /// The position of this entity (alias of Transform.Position)
         /// </summary>
@@ -240,7 +219,7 @@ namespace Andromeda2D.Entities
                 {
                     transform = AddComponent<Components.Transform>();
                 }
-                   
+
 
                 return transform;
             }
@@ -275,6 +254,80 @@ namespace Andromeda2D.Entities
                 return components.OfType<EntityBehaviour>().Where(component => component.IsEnabled);
             }
         }
+
+        /// <summary>
+        /// Returns the full path of this entity
+        /// </summary>
+        public string FullName
+        {
+            get
+            {
+                if (Parent != null)
+                    return Parent.FullName + "[\"" + Name + "\"]";
+                else
+                    return Name;
+            }
+        }
+
+        /// <summary>
+        /// Whether or not this object is being destroyed
+        /// </summary>
+        internal bool IsBeingDestroyed
+        {
+            get => isDestroying;
+        }
+
+        /// <summary>
+        /// The lifetime timer of this object
+        /// </summary>
+        internal float DestroyTick
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The lifetime of this object
+        /// </summary>
+        internal float LifeTime
+        {
+            get => lifeTime;
+        }
+        #endregion
+
+
+
+        /// <summary>
+        /// Returns whether not the entity has the specified tag
+        /// </summary>
+        /// <param name="tag">The tag</param>
+        /// <returns>True if the entity has the specified tag</returns>
+        public bool HasTag(object tag)
+        {
+            return tags.Contains(tag);
+        }
+
+    
+        internal void SetParentView(GameView state)
+        {
+            parentState = state;
+        }
+
+        internal void SetParent<C>(C parent) where C : EntityContainer
+        {
+            parentEntity = parent;
+            parent.AddChild(this);
+            OnParentChanged(parent);
+        }
+
+
+
+        internal void SetIsPrefab(bool value)
+        {
+            prefab = value;
+        }
+
+
 
         public bool HasComponent<T>() where T : IComponent
         {
@@ -450,19 +503,7 @@ namespace Andromeda2D.Entities
             
         }
 
-        /// <summary>
-        /// Returns the full path of this entity
-        /// </summary>
-        public string FullName
-        {
-            get
-            {
-                if (Parent != null)
-                    return Parent.FullName + "[\"" + Name + "\"]";
-                else
-                    return Name;
-            }
-        }
+
 
         public override string ToString()
         {
@@ -610,30 +651,7 @@ namespace Andromeda2D.Entities
         private bool isDestroying = false;
         private float lifeTime;
 
-        /// <summary>
-        /// Whether or not this object is being destroyed
-        /// </summary>
-        internal bool IsBeingDestroyed
-        {
-            get => isDestroying;
-        }
 
-        /// <summary>
-        /// The lifetime timer of this object
-        /// </summary>
-        internal float DestroyTick
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// The lifetime of this object
-        /// </summary>
-        internal float LifeTime
-        {
-            get => lifeTime;
-        }
 
         /// <summary>
         /// Destroys the object after a set amount of seconds

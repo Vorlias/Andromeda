@@ -98,7 +98,7 @@ namespace Andromeda2D.System
         {
             RenderStart();
 
-            States.ActiveState.Render();
+            
 
             var views = Game.ActiveViewsByPriority;
             foreach (GameView view in views)
@@ -108,6 +108,8 @@ namespace Andromeda2D.System
                 view.RenderEntities(Window);
                 view.OnPostRender(Window);
             }
+
+            States.ActiveState.Render();
 
             States.ActiveState.RenderEnd();
 
@@ -148,6 +150,21 @@ namespace Andromeda2D.System
             Window.MouseButtonPressed += Window_MouseButtonPressed;
             Window.MouseButtonReleased += Window_MouseButtonReleased;
             Window.KeyReleased += Window_KeyReleased;
+            Window.TextEntered += Window_TextEntered;
+        }
+
+        private void Window_TextEntered(object sender, TextEventArgs e)
+        {
+            InputService.InvokeTextEntered(this, e.Unicode);
+            States.ActiveState.Input.InvokeTextEntered(this, e.Unicode);
+
+
+            var states = Game.UpdatableViewsByPriority;
+            foreach (GameView state in states)
+            {
+                state.Input.InvokeTextEntered(this, e.Unicode);
+                //state.InvokeInput(this, e.Button, InputState.Inactive);
+            }
         }
 
         protected sealed override void AfterStart()

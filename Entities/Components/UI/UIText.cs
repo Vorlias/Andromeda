@@ -161,14 +161,21 @@ namespace Andromeda2D.Entities.Components
 
         }
 
+        public float Width
+        {
+            get;
+            protected set;
+        }
+
         public override void Draw(RenderTarget target, RenderStates states)
         {
             Text fontText = new Text(Text, Font, FontSize);
             fontText.FillColor = Color;
+            Width = fontText.GetLocalBounds().Width;
             fontText.Position = GetPositionOfText(fontText);
             target.Draw(fontText);
 
-            var globalBounds = fontText.GetLocalBounds();
+            
 
             /*RectangleShape rs = new RectangleShape(new Vector2f(globalBounds.Width, globalBounds.Height));
             rs.FillColor = Color.Transparent;

@@ -48,9 +48,13 @@ namespace Andromeda2D.System
                     textInputString = value.Value;
                     textInputFocused = true;
                     textInput = value;
+                    textInput.Focused = true;
                 }
                 else
                 {
+                    if (textInput != null)
+                        textInput.Focused = false;
+
                     textInputFocused = false;
                     textInput = null;
                 }
@@ -131,6 +135,8 @@ namespace Andromeda2D.System
             ASCII,
             Erase,
             Tab,
+            Return,
+            Done,
         }
 
         CharacterType GetCharacterType(char character)
@@ -140,6 +146,9 @@ namespace Andromeda2D.System
             char delete = (char)127;
             char backspace = (char)8;
             char tab = (char)9;
+            char esc = (char)27;
+            char enter = (char)13;
+           
 
             if ( character >= start && character <= end)
             {
@@ -157,6 +166,14 @@ namespace Andromeda2D.System
             {
                 return CharacterType.Tab;
             }
+            else if (character == enter)
+            {
+                return CharacterType.Return;
+            }
+            else if (character == esc)
+            {
+                return CharacterType.Done;
+            }
             else
             {
                 return CharacterType.Unknown;
@@ -165,7 +182,7 @@ namespace Andromeda2D.System
 
         internal void InvokeTextEntered(StateApplication stateApplication, string unicode)
         {
-            if (HasTextInputFocus)
+            if (FocusedTextInput != null)
             { 
                 char code = char.Parse(unicode);
                 switch (GetCharacterType(code))
@@ -180,11 +197,29 @@ namespace Andromeda2D.System
                     case CharacterType.Tab:
                         textInputString += '\t';
                         break;
+                    case CharacterType.Return:
+                        if (textInput.IsMultiline)
+                        {
+                            textInputString += '\n';
+                        }
+                        else
+                        {
+                            textInput.Focused = false;
+                            textInput = null;
+                            textInputFocused = false;
+                        }
+                        break;
+                    case CharacterType.Done:
+                        textInput.Focused = false;
+                        textInput = null;
+                        textInputFocused = false;
+                        break;
                 }
 
                 if (textInput != null)
                     textInput.Value = textInputString;
 
+                Console.WriteLine(textInputString);
             }
         }
 

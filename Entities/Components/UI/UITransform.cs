@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Andromeda2D.Entities.Components.Internal;
 using Andromeda2D.Serialization;
 using Andromeda2D.System;
+using Andromeda2D.Linq;
 
 namespace Andromeda2D.Entities.Components
 {
@@ -70,6 +71,18 @@ namespace Andromeda2D.Entities.Components
         {
             get => sizeMode;
             set => sizeMode = value;
+        }
+
+        /// <summary>
+        /// The UserInterface this transform is attached to
+        /// </summary>
+        public UserInterface UserInterface
+        {
+            get
+            {
+                entity.Ancestors.FirstComponent(out UserInterface ui);
+                return ui;
+            }
         }
 
         UICoordinateMode posMode = UICoordinateMode.ParentXY;

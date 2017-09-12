@@ -72,6 +72,7 @@
     <Compile Include="System\Input\ITextInput.cs" />
     <Compile Include="System\Input\UserInputManager.InputBinding.cs" />
     <Compile Include="System\Input\UserInputManager.InputBindingAction.cs" />
+    <Compile Include="System\Linq\EntityCollectionLinq.cs" />
     <Compile Include="System\StateApplication\GameViewSingleton.cs" />
     <Compile Include="System\MouseConstraintType.cs" />
     <Compile Include="System\Types\Sequences\ColorSequence.cs" />

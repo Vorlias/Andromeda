@@ -30,6 +30,7 @@ namespace Andromeda2D.System
         Styles styles;
         float deltaTime;
         float fps;
+        IntPtr context;
         ApplicationSettings settings;
         View gameView, interfaceView;
         HashSet<ThreadedService> services = new HashSet<ThreadedService>();
@@ -214,6 +215,13 @@ namespace Andromeda2D.System
             }
         }
 
+        public Application(IntPtr handle)
+        {
+            context = handle;
+
+            CustomCursor = new CustomMouseCursor();
+        }
+
         public Application(VideoMode mode, string title, Styles styles = Styles.Default)
         {
             this.mode = mode;
@@ -276,9 +284,20 @@ namespace Andromeda2D.System
         /// </summary>
         protected virtual void InitWindow()
         {
-            window = new RenderWindow(mode, title, styles);
-            window.Closed += WindowClosed;
-            window.Resized += Window_Resized;
+            if (context != default(IntPtr))
+            {
+                window = new RenderWindow(context);
+                window.Closed += WindowClosed;
+                window.Resized += Window_Resized;
+            }
+            else
+            {
+                window = new RenderWindow(mode, title, styles);
+                window.Closed += WindowClosed;
+                window.Resized += Window_Resized;
+            }
+
+
         }
 
         /// <summary>

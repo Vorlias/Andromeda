@@ -63,12 +63,21 @@ namespace Andromeda2D.Entities.Components
         public void CreateFromPolygon(Polygon polygon)
         {
             this.polygon = polygon;
+
+            Origin = -(new Vector2f(polygon.Width, polygon.Height) / 2);
+
+            var first = polygon.FirstOrDefault();
+            if (first != null)
+            {
+                polygon.Add(first);
+            }
         }
 
         /// <summary>
         /// Creates a polygon collider from a Polypoint Map Image
         /// </summary>
         /// <param name="target">The target texture</param>
+        [Obsolete("Use 'CreateFromPolygon' from a polygon map instead.", true)]
         public void CreateFromPolyMap(Texture target)
         {
             Image i = target.CopyToImage();

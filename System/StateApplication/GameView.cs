@@ -56,7 +56,7 @@ namespace Andromeda2D.System
         }
 
         private UserInputManager inputService;
-        protected UserInputManager Input
+        public UserInputManager Input
         {
             get
             {
@@ -373,7 +373,7 @@ namespace Andromeda2D.System
             ClearDelayedActions();
 
             // Force clear all the entities in this view
-            ClearAllChildren();
+            DestroyAllChildren();
             
             // Reset all bound inputs
             Input.ClearBindings();

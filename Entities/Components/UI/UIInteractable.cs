@@ -1,14 +1,9 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Andromeda2D.Entities.Components.Internal;
 using Andromeda2D.System;
-using Andromeda2D.System.Debug;
+using Andromeda2D.Linq;
 
 namespace Andromeda2D.Entities.Components.UI
 {
@@ -18,6 +13,18 @@ namespace Andromeda2D.Entities.Components.UI
     public abstract class UIInteractable : UIComponent, IComponentEventListener
     {
         public event InterfaceEvent OnMouseEnter, OnMouseLeave;
+
+        /// <summary>
+        /// The UserInterface this transform is attached to
+        /// </summary>
+        public UserInterface UserInterface
+        {
+            get
+            {
+                entity.Ancestors.FirstComponent(out UserInterface ui);
+                return ui;
+            }
+        }
 
         public override abstract string Name
         {
@@ -68,6 +75,15 @@ namespace Andromeda2D.Entities.Components.UI
         /// <param name="inputAction">The mouse input action</param>
         public abstract void ButtonClick(MouseInputAction inputAction);
 
+        /// <summary>
+        /// Called when the mouse is clicked outside the button
+        /// </summary>
+        /// <param name="inputAction">The mouse input action</param>
+        public virtual void ButtonClickOutside(MouseInputAction inputAction)
+        {
+
+        }
+
         public void InputRecieved(UserInputAction inputAction)
         {
             var mouseAction = inputAction.Mouse;
@@ -78,6 +94,10 @@ namespace Andromeda2D.Entities.Components.UI
                 {
                     mouseDown = true;
                     ButtonClick(mouseAction);
+                }
+                else if (!IsMouseDown)
+                {
+                    ButtonClickOutside(mouseAction);
                 }
             }
             else if (mouseAction?.InputState == InputState.Inactive && mouseAction.Button == Mouse.Button.Left)

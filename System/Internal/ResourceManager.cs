@@ -78,7 +78,10 @@ namespace Andromeda2D.System.Internal
         /// <param name="resource">The resource</param>
         public virtual void Add(string id, ResourceType resource)
         {
-            items.Add(id, resource);
+            if (!items.ContainsKey(id))
+                items.Add(id, resource);
+            else
+                Console.Error.WriteLine("Item '" + id + "' already exists!");
         }
     }
 }

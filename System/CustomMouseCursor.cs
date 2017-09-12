@@ -14,7 +14,7 @@ namespace Andromeda2D.System
         public RenderWindow Context
         {
             get;
-            internal set;
+            set;
         }
 
         Texture mouseTexture;
