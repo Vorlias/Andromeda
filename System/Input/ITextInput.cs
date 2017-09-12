@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Andromeda2D.System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,17 +13,22 @@ namespace Andromeda.System.Input
     public interface ITextInput
     {
         /// <summary>
-        /// Get the current text of the input
+        /// The text value of this TextInput
         /// </summary>
-        /// <returns>The current text of the input</returns>
-        string GetText();
+        string Text
+        {
+            get;
+            set;
+        }
 
         /// <summary>
-        /// Sets the text of the input
+        /// The manager (if it is using this object)
         /// </summary>
-        /// <param name="text">The current text of the input</param>
-        void SetText(string text);
-
+        UserInputManager Manager
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Whether or not the TextInput supports multiline
