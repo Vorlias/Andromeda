@@ -32,6 +32,17 @@ namespace Andromeda2D.Entities.Components
         private string text = "";
         private uint fontSize = 10U;
         private Vector2f size = new Vector2f(0, 0);
+        private bool posFix = true;
+
+        /// <summary>
+        /// HACK: Fixes the Y position for most fonts.
+        /// THopefully I figure out the actual problem with this.
+        /// </summary>
+        public bool UseYPositionFix
+        {
+            get => posFix;
+            set => posFix = value;
+        }
 
         /// <summary>
         /// The text displayed by this UIText component
@@ -44,7 +55,7 @@ namespace Andromeda2D.Entities.Components
         }
 
         SizeMode sizeMode = SizeMode.CenterTextToSize;
-        [Obsolete]
+        [Obsolete("No longer functional", true)]
         public SizeMode TextSizeMode
         {
             get => sizeMode;
@@ -67,23 +78,31 @@ namespace Andromeda2D.Entities.Components
 
         protected Vector2f GetPositionOfText(Text text)
         {
+            var pos = Transform.PositionRelative.GlobalAbsolute;
+
             float x = 0;
             float y = 0;
             var textSize = text.GetLocalBounds();
             var uiSize = Transform.Size.GlobalAbsolute;
-            var uiCenter = uiSize / 2;
+            var yOffset = UseYPositionFix ? textSize.Height / 4.0f : 0;
+
+            //var width = text.FindCharacterPos((uint)text.DisplayedString.Length - 1).X - text.FindCharacterPos(0).X;
+            var height = text.FindCharacterPos((uint)text.DisplayedString.Length - 1).Y - text.FindCharacterPos(0).Y;
+            //var textSize = new FloatRect(0, 0, width, height);
+
+            var uiCenter = uiSize / 2.0f;
 
             if (TextXAlignment == TextXAlignment.Center)
-                x = uiCenter.X - textSize.Width / 2;
+                x = uiCenter.X - textSize.Width / 2.0f;
             else if (TextXAlignment == TextXAlignment.Right)
                 x = uiSize.X - textSize.Width;
 
             if (TextYAlignment == TextYAlignment.Center)
-                y = uiCenter.Y - textSize.Height / 2;
+                y = uiCenter.Y - textSize.Height / 2.0f - yOffset;
             else if (TextYAlignment == TextYAlignment.Bottom)
-                y = uiSize.Y - textSize.Height;
+                y = uiSize.Y - textSize.Height - yOffset;
 
-            return new Vector2f(x, y);
+            return pos + new Vector2f(x, y);
         }
 
         [SerializableProperty("FontSize", PropertyType = SerializedPropertyType.UInt32)]
@@ -141,23 +160,26 @@ namespace Andromeda2D.Entities.Components
             copyText.FontSize = sourceText.FontSize;
         }
 
+        public override void Update()
+        {
+
+        }
+
         public override void Draw(RenderTarget target, RenderStates states)
         {
-            if (TextSizeMode == SizeMode.SizeToText)
-            {
-                Text fontText = new Text(Text, Font, FontSize)
-                {
-                    Position = Transform.PositionRelative.GlobalAbsolute
-                };
-                target.Draw(fontText);
-            }
-            else
-            {
-                Text fontText = new Text(Text, Font, FontSize);
-                var bounds = fontText.GetLocalBounds();
-                fontText.Position = Transform.PositionRelative.GlobalAbsolute + GetPositionOfText(fontText);
-                target.Draw(fontText);
-            }
+            Text fontText = new Text(Text, Font, FontSize);
+            fontText.FillColor = Color;
+            fontText.Position = GetPositionOfText(fontText);
+            target.Draw(fontText);
+
+            var globalBounds = fontText.GetLocalBounds();
+
+            RectangleShape rs = new RectangleShape(new Vector2f(globalBounds.Width, globalBounds.Height));
+            rs.FillColor = Color.Transparent;
+            rs.Position = fontText.Position;
+            rs.OutlineColor = Color.Cyan;
+            rs.OutlineThickness = 1;
+            target.Draw(rs);
         }
 
         public override void AfterUpdate()
@@ -175,16 +197,5 @@ namespace Andromeda2D.Entities.Components
             return "UIText: " + Text;
         }
 
-        public override void Update()
-        {
-            if (TextSizeMode == SizeMode.SizeToText)
-            {
-                Text fontText = new Text(Text, Font, FontSize);
-                var bounds = fontText.GetLocalBounds();
-                size = new Vector2f(bounds.Width, bounds.Height);
-
-                Transform.Size = size;
-            }
-        }
     }
 }
