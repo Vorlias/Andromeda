@@ -71,13 +71,10 @@ namespace Andromeda2D.Entities.Components.Internal
         {
             get
             {
-                PolygonRectCollider rec;
-                if (Entity.FindComponent(out rec))
-                {
-                    return rec.Polygon.Transform(Entity.Transform.Position, Entity.Transform.Origin, Entity.Transform.Rotation).ContainsPoint(MousePosition.ToFloat());
-                }
+                FloatRect mouseRect = new FloatRect(MousePosition.ToFloat(), new Vector2f(2, 2));
+                FloatRect uiRect = new FloatRect(Transform.Position, Transform.Size);
 
-                return false;
+                return mouseRect.Intersects(uiRect);
             }
         }
 
