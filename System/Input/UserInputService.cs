@@ -32,7 +32,7 @@ namespace Andromeda2D.System
 
         public string TextInputValue
         {
-            get => textInput?.Text;
+            get => textInput?.Value;
         }
 
         public ITextInput FocusedTextInput
@@ -45,7 +45,7 @@ namespace Andromeda2D.System
             {
                 if (value != null)
                 {
-                    textInputString = value.Text;
+                    textInputString = value.Value;
                     textInputFocused = true;
                     textInput = value;
                 }
@@ -183,7 +183,7 @@ namespace Andromeda2D.System
                 }
 
                 if (textInput != null)
-                    textInput.Text = textInputString;
+                    textInput.Value = textInputString;
 
             }
         }

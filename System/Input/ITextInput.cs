@@ -15,7 +15,13 @@ namespace Andromeda.System.Input
         /// <summary>
         /// The text value of this TextInput
         /// </summary>
-        string Text
+        string Value
+        {
+            get;
+            set;
+        }
+
+        bool Focused
         {
             get;
             set;
