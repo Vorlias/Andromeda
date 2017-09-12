@@ -142,7 +142,7 @@ namespace Andromeda2D.System
             internal set;
         }
 
-        public virtual void InitViews()
+        public virtual void InitializeViews()
         {
 
         }
@@ -389,7 +389,7 @@ namespace Andromeda2D.System
             
         }
 
-        public virtual void Init()
+        public virtual void Initialize()
         {
 
         }
@@ -399,8 +399,8 @@ namespace Andromeda2D.System
         /// </summary>
         internal void Start()
         {
-            Init();
-            InitViews();
+            Initialize();
+            InitializeViews();
             views.ForEach(view => view.Start());
         }
     }
