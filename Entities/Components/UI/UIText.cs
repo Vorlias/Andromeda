@@ -11,8 +11,22 @@ using SFML.System;
 
 namespace Andromeda2D.Entities.Components
 {
-    public class UIText : UIComponent
+    public partial class UIText : UIComponent
     {
+        public enum SizeMode
+        {
+            /// <summary>
+            /// The size of this UI component is scaled to the text (Legacy behaviour)
+            /// </summary>
+            [Obsolete]
+            SizeToText,
+
+            /// <summary>
+            /// The text is centered to the size of the component
+            /// </summary>
+            CenterTextToSize,
+        }
+
         private Font font;
         private string fontId;
         private string text = "";
@@ -27,6 +41,46 @@ namespace Andromeda2D.Entities.Components
         {
             get => text;
             set => text = value;
+        }
+
+        SizeMode sizeMode = SizeMode.CenterTextToSize;
+        public SizeMode TextSizeMode
+        {
+            get => sizeMode;
+            set => sizeMode = value;
+        }
+
+        TextXAlignment xAlignment = TextXAlignment.Center;
+        public TextXAlignment TextXAlignment
+        {
+            get => xAlignment;
+            set => xAlignment = value;
+        }
+
+        TextYAlignment yAlignment = TextYAlignment.Center;
+        public TextYAlignment TextYAlignment
+        {
+            get => yAlignment;
+            set => yAlignment = value;
+        }
+
+        protected Vector2f GetPositionOfText(Text text)
+        {
+            float x = 0;
+            float y = 0;
+            var textSize = text.GetLocalBounds();
+
+            if (TextXAlignment == TextXAlignment.Center)
+                x = textSize.Width / 2;
+            else if (TextXAlignment == TextXAlignment.Right)
+                x = textSize.Width;
+
+            if (TextYAlignment == TextYAlignment.Center)
+                y = textSize.Height / 2;
+            else if (TextYAlignment == TextYAlignment.Bottom)
+                y = textSize.Height;
+
+            return new Vector2f(x, y);
         }
 
         [SerializableProperty("FontSize", PropertyType = SerializedPropertyType.UInt32)]
@@ -86,11 +140,21 @@ namespace Andromeda2D.Entities.Components
 
         public override void Draw(RenderTarget target, RenderStates states)
         {
-            Text fontText = new Text(Text, Font, FontSize)
+            if (TextSizeMode == SizeMode.SizeToText)
             {
-                Position = Transform.PositionRelative.GlobalAbsolute
-            };
-            target.Draw(fontText);
+                Text fontText = new Text(Text, Font, FontSize)
+                {
+                    Position = Transform.PositionRelative.GlobalAbsolute
+                };
+                target.Draw(fontText);
+            }
+            else
+            {
+                Text fontText = new Text(Text, Font, FontSize);
+                var bounds = fontText.GetLocalBounds();
+                fontText.Position = Transform.PositionRelative.GlobalAbsolute - GetPositionOfText(fontText);
+                target.Draw(fontText);
+            }
         }
 
         public override void AfterUpdate()
@@ -110,11 +174,14 @@ namespace Andromeda2D.Entities.Components
 
         public override void Update()
         {
-            Text fontText = new Text(Text, Font, FontSize);
-            var bounds = fontText.GetLocalBounds();
-            size = new Vector2f(bounds.Width, bounds.Height);
+            if (TextSizeMode == SizeMode.SizeToText)
+            {
+                Text fontText = new Text(Text, Font, FontSize);
+                var bounds = fontText.GetLocalBounds();
+                size = new Vector2f(bounds.Width, bounds.Height);
 
-            Transform.Size = size;
+                Transform.Size = size;
+            }
         }
     }
 }

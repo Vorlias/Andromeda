@@ -60,6 +60,8 @@
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
     <Compile Include="Entities\Components\Internal\IDestroyedListener.cs" />
+    <Compile Include="Entities\Components\UI\TextXAlignment.cs" />
+    <Compile Include="Entities\Components\UI\TextYAlignment.cs" />
     <Compile Include="Entities\Components\UI\UICheckButtonTextures.cs" />
     <Compile Include="Entities\Components\UI\UIImageCheckButton.cs" />
     <Compile Include="Entities\Components\UI\UITexture.cs" />
