@@ -86,7 +86,7 @@ namespace Andromeda2D.System.Internal
         /// <summary>
         /// Clears all children in this entity container
         /// </summary>
-        internal void ClearAllChildren()
+        public void DestroyAllChildren()
         {
             children.Clear();
         }
