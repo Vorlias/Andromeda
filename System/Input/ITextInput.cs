@@ -11,6 +11,25 @@ namespace Andromeda.System.Input
     /// </summary>
     public interface ITextInput
     {
-        
+        /// <summary>
+        /// Get the current text of the input
+        /// </summary>
+        /// <returns>The current text of the input</returns>
+        string GetText();
+
+        /// <summary>
+        /// Sets the text of the input
+        /// </summary>
+        /// <param name="text">The current text of the input</param>
+        void SetText(string text);
+
+
+        /// <summary>
+        /// Whether or not the TextInput supports multiline
+        /// </summary>
+        bool IsMultiline
+        {
+            get;
+        }
     }
 }

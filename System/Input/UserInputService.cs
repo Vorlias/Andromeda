@@ -23,10 +23,16 @@ namespace Andromeda2D.System
 
         ITextInput textInput;
         bool textInputFocused = false;
+        string textInputString = "";
 
         public bool HasTextInputFocus
         {
             get => textInputFocused;
+        }
+
+        public string TextInputValue
+        {
+            get => textInput?.GetText();
         }
 
         public ITextInput FocusedTextInput
@@ -39,6 +45,7 @@ namespace Andromeda2D.System
             {
                 if (value != null)
                 {
+                    textInputString = value.GetText();
                     textInputFocused = true;
                     textInput = value;
                 }
@@ -116,6 +123,69 @@ namespace Andromeda2D.System
             InputBindingAction action = new InputBindingAction(value.ToString(), actionMethod, inputs);
             actions.Add(action);
             bindings.Add(action);
+        }
+
+        enum CharacterType
+        {
+            Unknown,
+            ASCII,
+            Erase,
+            Tab,
+        }
+
+        CharacterType GetCharacterType(char character)
+        {
+            char start = (char) 32; // space
+            char end = (char)126; // tilde
+            char delete = (char)127;
+            char backspace = (char)8;
+            char tab = (char)9;
+
+            if ( character >= start && character <= end)
+            {
+                return CharacterType.ASCII;
+            }
+            else if (character == delete)
+            {
+                return CharacterType.Erase;
+            }
+            else if (character == backspace)
+            {
+                return CharacterType.Erase;
+            }
+            else if (character == tab)
+            {
+                return CharacterType.Tab;
+            }
+            else
+            {
+                return CharacterType.Unknown;
+            }
+        }
+
+        internal void InvokeTextEntered(StateApplication stateApplication, string unicode)
+        {
+            if (HasTextInputFocus)
+            { 
+                char code = char.Parse(unicode);
+                switch (GetCharacterType(code))
+                {
+                    case CharacterType.ASCII:
+                        textInputString += code;
+                        break;
+                    case CharacterType.Erase:
+                        if (textInputString.Length > 0)
+                            textInputString = textInputString.Remove(textInputString.Length - 1);
+                        break;
+                    case CharacterType.Tab:
+                        textInputString += '\t';
+                        break;
+                }
+
+                if (textInput != null)
+                    textInput.SetText(textInputString);
+
+            }
         }
 
         /// <summary>
@@ -204,31 +274,34 @@ namespace Andromeda2D.System
         /// <param name="state">The state of the key</param>
         public void InvokeInput(Application application, Keyboard.Key input, InputState state)
         {
-            foreach (InputBindingAction action in ActionsByPriority)
+            if (!HasTextInputFocus)
             {
-                foreach (KeyCombination combo in action.KeyCombinations)
+                foreach (InputBindingAction action in ActionsByPriority)
                 {
-                    if (combo.AllKeysPressed)
+                    foreach (KeyCombination combo in action.KeyCombinations)
                     {
-                        var keyInputAction = new KeyboardInputAction(state, combo.Keys);
-                        action.Action.Invoke(action.ActionName, keyInputAction);
+                        if (combo.AllKeysPressed)
+                        {
+                            var keyInputAction = new KeyboardInputAction(state, combo.Keys);
+                            action.Action.Invoke(action.ActionName, keyInputAction);
+                        }
                     }
+
+                    foreach (Keyboard.Key key in action.KeyCodes)
+                        if (key == input)
+                        {
+                            var keyInputAction = new KeyboardInputAction(state, key);
+                            action.Action.Invoke(action.ActionName, keyInputAction);
+                        }
+
+
+                    foreach (string stringKey in action.Strings)
+                        if (stringKey == input.ToString())
+                        {
+                            var keyInputAction = new KeyboardInputAction(state, input);
+                            action.Action.Invoke(action.ActionName, keyInputAction);
+                        }
                 }
-
-                foreach (Keyboard.Key key in action.KeyCodes)
-                    if (key == input)
-                    {
-                        var keyInputAction = new KeyboardInputAction(state, key);
-                        action.Action.Invoke(action.ActionName, keyInputAction);
-                    }
-
-
-                foreach (string stringKey in action.Strings)
-                    if (stringKey == input.ToString())
-                    {
-                        var keyInputAction = new KeyboardInputAction(state, input);
-                        action.Action.Invoke(action.ActionName, keyInputAction);
-                    }
             }
         }
     }
