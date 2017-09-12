@@ -69,16 +69,18 @@ namespace Andromeda2D.Entities.Components
             float x = 0;
             float y = 0;
             var textSize = text.GetLocalBounds();
+            var uiSize = Transform.Size.GlobalAbsolute;
+            var uiCenter = uiSize / 2;
 
             if (TextXAlignment == TextXAlignment.Center)
-                x = textSize.Width / 2;
+                x = uiCenter.X - textSize.Width / 2;
             else if (TextXAlignment == TextXAlignment.Right)
-                x = textSize.Width;
+                x = uiSize.X - textSize.Width;
 
             if (TextYAlignment == TextYAlignment.Center)
-                y = textSize.Height / 2;
+                y = uiCenter.Y - textSize.Height / 2;
             else if (TextYAlignment == TextYAlignment.Bottom)
-                y = textSize.Height;
+                y = uiSize.Y - textSize.Height;
 
             return new Vector2f(x, y);
         }
@@ -152,7 +154,7 @@ namespace Andromeda2D.Entities.Components
             {
                 Text fontText = new Text(Text, Font, FontSize);
                 var bounds = fontText.GetLocalBounds();
-                fontText.Position = Transform.PositionRelative.GlobalAbsolute - GetPositionOfText(fontText);
+                fontText.Position = Transform.PositionRelative.GlobalAbsolute + GetPositionOfText(fontText);
                 target.Draw(fontText);
             }
         }
