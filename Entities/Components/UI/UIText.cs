@@ -44,6 +44,7 @@ namespace Andromeda2D.Entities.Components
         }
 
         SizeMode sizeMode = SizeMode.CenterTextToSize;
+        [Obsolete]
         public SizeMode TextSizeMode
         {
             get => sizeMode;
