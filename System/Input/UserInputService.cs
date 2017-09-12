@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
 using Andromeda2D.System.Utility;
+using Andromeda.System.Input;
 
 namespace Andromeda2D.System
 {
@@ -13,12 +14,42 @@ namespace Andromeda2D.System
     /// <summary>
     /// The input manager
     /// </summary>
-    public class UserInputManager
+    public partial class UserInputManager
     {
         Dictionary<string, Mouse.Button> buttonBindings = new Dictionary<string, Mouse.Button>();
         Dictionary<string, Keyboard.Key> keyBindings = new Dictionary<string, Keyboard.Key>();
         List<InputBindingAction> actions = new List<InputBindingAction>();
         List<InputBinding> bindings = new List<InputBinding>();
+
+        ITextInput textInput;
+        bool textInputFocused = false;
+
+        public bool HasTextInputFocus
+        {
+            get => textInputFocused;
+        }
+
+        public ITextInput FocusedTextInput
+        {
+            get
+            {
+                return textInput;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    textInputFocused = true;
+                    textInput = value;
+                }
+                else
+                {
+                    textInputFocused = false;
+                    textInput = null;
+                }
+                    
+            }
+        }
 
         /// <summary>
         /// Reset the input manager
@@ -30,138 +61,6 @@ namespace Andromeda2D.System
             keyBindings.Clear();
             buttonBindings.Clear();
         }
-
-        public class InputBinding
-        {
-            internal object[] inputs;
-            protected string actionName;
-            //protected InputBindingBehaviour inputBehaviour = InputBindingBehaviour.Fallthrough;
-
-            /// <summary>
-            /// The name of the action
-            /// </summary>
-            public string ActionName
-            {
-                get
-                {
-                    return actionName;
-                }
-            }
-
-            /// <summary>
-            /// The mouse buttons that are used in this action
-            /// </summary>
-            public Mouse.Button[] MouseButtons
-            {
-                get
-                {
-                    return inputs.OfType<Mouse.Button>().ToArray();
-                }
-            }
-
-            /// <summary>
-            /// The named inputs that are used in this action
-            /// </summary>
-            public string[] Strings
-            {
-                get
-                {
-                    return inputs.OfType<string>().ToArray();
-                }
-            }
-
-            /// <summary>
-            /// The keys that are used in this action
-            /// </summary>
-            public Keyboard.Key[] KeyCodes
-            {
-                get
-                {
-                    return inputs.OfType<Keyboard.Key>().ToArray();
-                }
-            }
-
-            /// <summary>
-            /// The keyboard combinations associated with this action
-            /// </summary>
-            public IEnumerable<KeyCombination> KeyCombinations
-            {
-                get => inputs.OfType<KeyCombination>();
-            }
-
-            /// <summary>
-            /// Method used to check if any of the mouse buttons are down
-            /// </summary>
-            /// <returns>True if one of the mouse buttons are down</returns>
-            public bool HasMouseButtonPressed()
-            {
-                foreach (Mouse.Button key in MouseButtons)
-                    if (Mouse.IsButtonPressed(key))
-                        return true;
-
-                return false;
-            }
-
-            /// <summary>
-            /// Method used to check if any of the keys are down
-            /// </summary>
-            /// <returns>True if one of the keys are pressed</returns>
-            public bool HasKeyDown()
-            {
-                foreach (Keyboard.Key key in KeyCodes)
-                    if (Keyboard.IsKeyPressed(key))
-                        return true;
-
-                return false;
-            }
-
-            public InputBinding(string actionName, object[] inputs)
-            {
-                this.actionName = actionName;
-                this.inputs = inputs;
-            }
-        }
-
-        public class InputBindingAction : InputBinding
-        {
-            Action<string, UserInputAction> action;
-            InputBindingPriority priority = InputBindingPriority.Normal;
-
-            /// <summary>
-            /// The binding priority
-            /// </summary>
-            public InputBindingPriority BindingPriority
-            {
-                get
-                {
-                    return priority;
-                }
-            }
-
-            /// <summary>
-            /// The function that is called
-            /// </summary>
-            public Action<string, UserInputAction> Action
-            {
-                get
-                {
-                    return action;
-                }
-            }
-
-            /// <summary>
-            /// Creates a new input action
-            /// </summary>
-            /// <param name="name">The name of the action</param>
-            /// <param name="action">The action that is taken</param>
-            /// <param name="inputs">The inputs that invoke this action</param>
-            internal InputBindingAction(string name, Action<string, UserInputAction> action, object[] inputs, InputBindingPriority priority = InputBindingPriority.Normal) : base(name, inputs)
-            {
-                this.action = action;
-                this.priority = priority;
-            }
-        }
-
 
         internal IOrderedEnumerable<InputBindingAction> ActionsByPriority
         {
