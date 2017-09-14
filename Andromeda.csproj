@@ -77,6 +77,8 @@
     <Compile Include="System\Linq\EntityCollectionLinq.cs" />
     <Compile Include="System\StateApplication\GameViewSingleton.cs" />
     <Compile Include="System\MouseConstraintType.cs" />
+    <Compile Include="System\StateApplication\InterfaceView.cs" />
+    <Compile Include="System\StateApplication\InterfaceViewSingleton.cs" />
     <Compile Include="System\Types\Sequences\ColorSequence.cs" />
     <Compile Include="System\Types\Sequences\ColorSequenceKeypoint.cs" />
     <Compile Include="System\Types\Sequences\ISequenceKeyframe.cs" />
