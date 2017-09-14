@@ -156,14 +156,18 @@ namespace Andromeda2D.System
         private void Window_TextEntered(object sender, TextEventArgs e)
         {
             InputService.InvokeTextEntered(this, e.Unicode);
-            States.ActiveState.Input.InvokeTextEntered(this, e.Unicode);
 
+            var activeStateInput = States.ActiveState.Input;
+            activeStateInput.InvokeTextEntered(this, e.Unicode);
 
-            var states = Game.UpdatableViewsByPriority;
-            foreach (GameView state in states)
-            {
-                state.Input.InvokeTextEntered(this, e.Unicode);
-                //state.InvokeInput(this, e.Button, InputState.Inactive);
+            if (!activeStateInput.HasTextInputFocus)
+            { 
+                var states = Game.UpdatableViewsByPriority;
+                foreach (GameView state in states)
+                {
+                    state.Input.InvokeTextEntered(this, e.Unicode);
+                    //state.InvokeInput(this, e.Button, InputState.Inactive);
+                }
             }
         }
 
@@ -213,12 +217,17 @@ namespace Andromeda2D.System
         private void Window_KeyPressed(object sender, KeyEventArgs e)
         {
             InputService.InvokeInput(this, e.Code, InputState.Active);
-            States.ActiveState.Input.InvokeInput(this, e.Code, InputState.Active);
 
-            var states = Game.UpdatableViewsByPriority;
-            foreach (GameView state in states)
+            var activeStateInput = States.ActiveState.Input;
+            activeStateInput.InvokeInput(this, e.Code, InputState.Active);
+
+            if (!activeStateInput.HasTextInputFocus)
             {
-                state.InvokeInput(this, e.Code, InputState.Active);
+                var states = Game.UpdatableViewsByPriority;
+                foreach (GameView state in states)
+                {
+                    state.InvokeInput(this, e.Code, InputState.Active);
+                }
             }
         }
     }
