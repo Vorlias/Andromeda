@@ -349,6 +349,19 @@ namespace Andromeda2D.Entities
             return components.OfType<T>();
         }
 
+        public List<T> GetComponentsInChildren<T>() where T : IComponent
+        {
+            List<T> components = new List<T>();
+            Entity[] descendants = Children;
+
+            foreach (var child in descendants)
+            {
+                components.Add(child.GetComponent<T>());
+            }
+
+            return components;
+        }
+
         /// <summary>
         /// Gets the components of the specified type in descendants
         /// </summary>
