@@ -1,5 +1,4 @@
 ﻿using SFML.System;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,75 +10,6 @@ using Andromeda2D.Linq;
 
 namespace Andromeda2D.Entities.Components
 {
-
-    [Flags]
-    public enum UIPositionAlign
-    {
-        /// <summary>
-        /// Centers to the left of the screen
-        /// </summary>
-        Left = 1,
-
-        /// <summary>
-        /// Centers to the top of the screen
-        /// </summary>
-        Top = 2,
-
-        /// <summary>
-        /// Centers to the center of the screen on X
-        /// </summary>
-        LeftCenter = 4,
-
-        /// <summary>
-        /// Centers to the center of the screen on Y
-        /// </summary>
-        TopCenter = 8,
-
-        /// <summary>
-        /// Centers to the right of the screen
-        /// </summary>
-        Right = 16,
-
-        /// <summary>
-        /// Centers to the bottom of the screen
-        /// </summary>
-        Bottom = 32,
-
-        /// <summary>
-        /// Centers to the size X
-        /// </summary>
-        CenterWidth = 64,
-
-        /// <summary>
-        /// Centers to the size Y
-        /// </summary>
-        CenterHeight = 128,
-
-        /// <summary>
-        /// Changes the Y point to the end Y
-        /// </summary>
-        InverseHeight = 256,
-
-        /// <summary>
-        /// Changes the X point to the end X
-        /// </summary>
-        InverseWidth = 512,
-
-
-    }
-
-    public enum UIPositionAnchor
-    {
-        Center = UIPositionAlign.CenterWidth | UIPositionAlign.CenterHeight | UIPositionAlign.TopCenter | UIPositionAlign.LeftCenter,
-        TopLeft = UIPositionAlign.Top | UIPositionAlign.Left,
-        TopCenter = UIPositionAlign.CenterWidth | UIPositionAlign.Top | UIPositionAlign.LeftCenter,
-        TopRight = UIPositionAlign.InverseWidth | UIPositionAlign.Top | UIPositionAlign.Right,
-        BottomLeft = UIPositionAlign.Bottom | UIPositionAlign.Left | UIPositionAlign.InverseHeight,
-        BottomCenter = UIPositionAlign.CenterWidth | UIPositionAlign.Bottom | UIPositionAlign.LeftCenter | UIPositionAlign.InverseHeight,
-        BottomRight = UIPositionAlign.Bottom | UIPositionAlign.Right | UIPositionAlign.InverseWidth | UIPositionAlign.InverseHeight,
-    }
-
-
     /// <summary>
     /// User Interface Transform Component - Overrides the default Transform.
     /// </summary>

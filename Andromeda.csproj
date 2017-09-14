@@ -64,6 +64,8 @@
     <Compile Include="Entities\Components\UI\TextYAlignment.cs" />
     <Compile Include="Entities\Components\UI\UICheckButtonTextures.cs" />
     <Compile Include="Entities\Components\UI\UIImageCheckButton.cs" />
+    <Compile Include="Entities\Components\UI\UIPositionAlign.cs" />
+    <Compile Include="Entities\Components\UI\UIPositionAnchor.cs" />
     <Compile Include="Entities\Components\UI\UITexture.cs" />
     <Compile Include="Entities\UIEntity.cs" />
     <Compile Include="Events\ViewEvents.cs" />
