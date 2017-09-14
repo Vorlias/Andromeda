@@ -45,6 +45,12 @@ namespace Andromeda2D.System
             set;
         }
 
+        public bool IsTempState
+        {
+            get;
+            internal set;
+        }
+
         public UserInputManager Input
         {
             get;

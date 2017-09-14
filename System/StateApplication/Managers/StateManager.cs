@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Andromeda2D.System
@@ -72,17 +73,19 @@ namespace Andromeda2D.System
         /// </summary>
         /// <param name="name">The name of the state</param>
         /// <returns>The state</returns>
+        [Obsolete("Game states should be predefined")]
         public GameState CreateState(string name)
         {
             GameState newState = GameState.Create();
             newState.SetManager(this);
             newState.SetName(name);
             collection.Add(name, newState);
+            newState.IsTempState = false;
             return newState;
         }
 
         /// <summary>
-        /// Creates a State of the specified type
+        /// Creates a persistent state of the specified type
         /// </summary>
         /// <typeparam name="StateType">The state type</typeparam>
         /// <param name="name">The name of the state</param>
@@ -93,6 +96,36 @@ namespace Andromeda2D.System
             newState.SetManager(this);
             newState.SetName(name);
             collection.Add(name, newState);
+            newState.IsTempState = false;
+            return newState;
+        }
+
+        const string TEMP_STATE_ID = "TEMP";
+
+        /// <summary>
+        /// Loads a state to the temporary state id
+        /// </summary>
+        /// <typeparam name="StateType">The state type</typeparam>
+        /// <returns>The state</returns>
+        public StateType LoadTempState<StateType>() where StateType : GameState, new()
+        {
+            // Check and remove any old states using {TEMP_STATE_ID}
+            if (collection.ContainsKey(TEMP_STATE_ID))
+            {
+                var state = collection[TEMP_STATE_ID];
+                if (state == activeState)
+                {
+                    activeState = Default;
+                    collection.Remove(TEMP_STATE_ID);
+                }
+            }
+
+            StateType newState = new StateType();
+            newState.SetManager(this);
+            newState.SetName(TEMP_STATE_ID);
+            collection.Add(TEMP_STATE_ID, newState);
+            newState.IsTempState = true;
+            newState.Activate();
             return newState;
         }
 
@@ -101,6 +134,7 @@ namespace Andromeda2D.System
             GameState defaultState = GameState.Create();
             defaultState.SetManager(this);
             defaultState.SetName("Default");
+            defaultState.IsTempState = false;
             collection.Add("Default", defaultState);
             activeState = defaultState;
         }
