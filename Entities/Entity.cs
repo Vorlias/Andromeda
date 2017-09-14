@@ -359,8 +359,6 @@ namespace Andromeda2D.Entities
             List<T> components = new List<T>();
             Entity[] descendants = Children;
 
-            components.AddRange(GetComponents<T>());
-
             foreach (var child in descendants)
             {
                 components.AddRange(child.GetComponentsInDescendants<T>());
