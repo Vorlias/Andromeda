@@ -32,6 +32,21 @@ namespace Andromeda2D.Entities.Components.Internal
             }
         }
 
+        public Vector2f AbsoluteSize => Transform.Size.GlobalAbsolute;
+        public Vector2f AbsolutePosition => Transform.LocalPosition.GlobalAbsolute;
+
+        public UICoordinates Position
+        {
+            get => Transform.LocalPosition;
+            set => Transform.LocalPosition = value;
+        }
+
+        public UICoordinates Size
+        {
+            get => Transform.Size;
+            set => Transform.Size = value;
+        }
+
         public UITransform Transform
         {
             get
