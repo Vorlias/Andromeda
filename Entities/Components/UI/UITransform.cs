@@ -54,7 +54,31 @@ namespace Andromeda2D.Entities.Components
         /// Centers to the size Y
         /// </summary>
         CenterHeight = 128,
+
+        /// <summary>
+        /// Changes the Y point to the end Y
+        /// </summary>
+        InverseHeight = 256,
+
+        /// <summary>
+        /// Changes the X point to the end X
+        /// </summary>
+        InverseWidth = 512,
+
+
     }
+
+    public enum UIPositionAnchor
+    {
+        Center = UIPositionAlign.CenterWidth | UIPositionAlign.CenterHeight | UIPositionAlign.TopCenter | UIPositionAlign.LeftCenter,
+        TopLeft = UIPositionAlign.Top | UIPositionAlign.Left,
+        TopCenter = UIPositionAlign.CenterWidth | UIPositionAlign.Top | UIPositionAlign.LeftCenter,
+        TopRight = UIPositionAlign.InverseWidth | UIPositionAlign.Top | UIPositionAlign.Right,
+        BottomLeft = UIPositionAlign.Bottom | UIPositionAlign.Left | UIPositionAlign.InverseHeight,
+        BottomCenter = UIPositionAlign.CenterWidth | UIPositionAlign.Bottom | UIPositionAlign.LeftCenter | UIPositionAlign.InverseHeight,
+        BottomRight = UIPositionAlign.Bottom | UIPositionAlign.Right | UIPositionAlign.InverseWidth | UIPositionAlign.InverseHeight,
+    }
+
 
     /// <summary>
     /// User Interface Transform Component - Overrides the default Transform.
@@ -108,6 +132,16 @@ namespace Andromeda2D.Entities.Components
             get;
             set;
         }
+
+        /// <summary>
+        /// Sets the position based on alignment anchor rules
+        /// </summary>
+        /// <param name="anchor">The alignment anchor</param>
+        /// <param name="offset">The offset from the anchor</param>
+        public void SetAlignmentAnchor(UIPositionAnchor anchor, UICoordinates offset)
+        {
+            SetAlignmentPosition((UIPositionAlign)anchor, offset);
+        }
         
         /// <summary>
         /// Set the position based on alignment rules
@@ -159,7 +193,17 @@ namespace Andromeda2D.Entities.Components
             {
                 offsetY = offsetY - (absoluteSize.Y / 2);
             }
-            
+
+            if ((anchor & UIPositionAlign.InverseHeight) != 0)
+            {
+                offsetY = offsetY - absoluteSize.Y;
+            }
+
+            if ((anchor & UIPositionAlign.InverseWidth) != 0)
+            {
+                offsetX = offsetX - absoluteSize.X;
+            }
+
             LocalPosition = new UICoordinates(scaleX, offsetX, scaleY, offsetY);
         }
 
