@@ -356,7 +356,8 @@ namespace Andromeda2D.Entities
 
             foreach (var child in descendants)
             {
-                components.Add(child.GetComponent<T>());
+                if (child.HasComponent<T>())
+                    components.Add(child.GetComponent<T>());
             }
 
             return components;
