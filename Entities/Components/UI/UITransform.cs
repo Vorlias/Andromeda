@@ -103,7 +103,7 @@ namespace Andromeda2D.Entities.Components
         }
 
         [SerializableProperty("Position", PropertyType = SerializedPropertyType.UICoordinates)]
-        public UICoordinates Position
+        public UICoordinates LocalPosition
         {
             get;
             set;
@@ -160,7 +160,7 @@ namespace Andromeda2D.Entities.Components
                 offsetY = offsetY - (absoluteSize.Y / 2);
             }
             
-            Position = new UICoordinates(scaleX, offsetX, scaleY, offsetY);
+            LocalPosition = new UICoordinates(scaleX, offsetX, scaleY, offsetY);
         }
 
         internal UICoordinates RelativeToSize(UICoordinates size, UICoordinates position)
@@ -174,20 +174,20 @@ namespace Andromeda2D.Entities.Components
         /// <summary>
         /// The position relative to the parent
         /// </summary>
-        internal UICoordinates PositionRelative
+        public UICoordinates GlobalPosition
         {
             get
             {
                 var parentTransform = Entity?.Parent?.GetComponent<UITransform>();
                 if (parentTransform != null && posMode == UICoordinateMode.ParentXY)
                 {
-                    var rel = RelativeToSize(parentTransform.Size, Position);
-                    var result = parentTransform.PositionRelative + rel; //Position + parentTransform.PositionRelative;
+                    var rel = RelativeToSize(parentTransform.Size, LocalPosition);
+                    var result = parentTransform.GlobalPosition + rel; //Position + parentTransform.PositionRelative;
                     return result;
                 }
                 else
                 {
-                    return Position;
+                    return LocalPosition;
                 }
             }
         }
@@ -222,7 +222,7 @@ namespace Andromeda2D.Entities.Components
         public void Update()
         {
             // We want to update the transform to reflect this ;)
-            Entity.Transform.Position = PositionRelative.GlobalAbsolute;
+            Entity.Transform.Position = GlobalPosition.GlobalAbsolute;
             Entity.Transform.Origin = new Vector2f(0, 0);
         }
 
@@ -230,7 +230,7 @@ namespace Andromeda2D.Entities.Components
         {
            // Create the transform if it doesn't exist.
            entity.FindComponent(out transform, true);
-           Position = new UICoordinates(0, 0, 0, 0);
+           LocalPosition = new UICoordinates(0, 0, 0, 0);
            Size = new UICoordinates(0, 0, 0, 0);
         }
 
@@ -247,13 +247,13 @@ namespace Andromeda2D.Entities.Components
         public override void OnComponentCopy(Entity source, Entity copy)
         {
             var copyTransform = copy.AddComponent<UITransform>();
-            copyTransform.Position = Position;
+            copyTransform.LocalPosition = LocalPosition;
             copyTransform.Size = Size;
         }
 
         public override string ToString()
         {
-            return Name + " - Position: " + Position + ", Size: " + Size;
+            return Name + " - Position: " + LocalPosition + ", Size: " + Size;
         }
 
         public override string Name

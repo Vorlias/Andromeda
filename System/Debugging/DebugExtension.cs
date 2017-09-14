@@ -150,7 +150,7 @@ namespace Andromeda2D.System.Debug
                 if (descendant.FindComponent(out transform))
                 {
                     RectangleShape uiRect = new RectangleShape(transform.Size.GlobalAbsolute);
-                    uiRect.Position = transform.PositionRelative.GlobalAbsolute;
+                    uiRect.Position = transform.GlobalPosition.GlobalAbsolute;
                     uiRect.FillColor = new Color(255, 255, 255, 50);
                     uiRect.OutlineColor = new Color(0, 0, 0);
                     uiRect.OutlineThickness = 1;

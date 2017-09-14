@@ -41,7 +41,7 @@ namespace Andromeda2D.Entities.Components
             {
                 Sprite sprite = new Sprite(texture)
                 {
-                    Position = Transform.PositionRelative.GlobalAbsolute,
+                    Position = Transform.GlobalPosition.GlobalAbsolute,
                     Color = Color
                 };
 

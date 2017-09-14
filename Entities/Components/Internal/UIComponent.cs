@@ -72,7 +72,7 @@ namespace Andromeda2D.Entities.Components.Internal
             get
             {
                 FloatRect mouseRect = new FloatRect(MousePosition.ToFloat(), new Vector2f(2, 2));
-                FloatRect uiRect = new FloatRect(Transform.Position, Transform.Size);
+                FloatRect uiRect = new FloatRect(Transform.LocalPosition, Transform.Size);
 
                 return mouseRect.Intersects(uiRect);
             }

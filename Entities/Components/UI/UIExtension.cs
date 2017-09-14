@@ -19,7 +19,7 @@ namespace Andromeda2D.Entities.Components.UI
             UIImageButton uiImage = entity.AddComponent<UIImageButton>();
             uiImage.TextureId = textureId;
             UITransform transform = entity.GetComponent<UITransform>();
-            transform.Position = position;
+            transform.LocalPosition = position;
             transform.Size = size;
 
             return uiImage;
@@ -31,7 +31,7 @@ namespace Andromeda2D.Entities.Components.UI
             UIImage uiImage = entity.AddComponent<UIImage>();
             uiImage.TextureId = textureId;
             UITransform transform = entity.GetComponent<UITransform>();
-            transform.Position = position;
+            transform.LocalPosition = position;
             transform.Size = size;
 
             return uiImage;
@@ -43,7 +43,7 @@ namespace Andromeda2D.Entities.Components.UI
             UIText uiText = entity.AddComponent<UIText>();
             uiText.Text = text;
             uiText.FontSize = fontSize;
-            entity.GetComponent<UITransform>().Position = position;
+            entity.GetComponent<UITransform>().LocalPosition = position;
             return uiText;
         }
     }

@@ -21,8 +21,8 @@ namespace Andromeda2D.Entities
 
         public new UICoordinates Position
         {
-            get => Transform.Position;
-            set => Transform.Position = value;
+            get => Transform.LocalPosition;
+            set => Transform.LocalPosition = value;
         }
 
         public UICoordinates Size
