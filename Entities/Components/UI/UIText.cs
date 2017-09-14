@@ -76,9 +76,16 @@ namespace Andromeda2D.Entities.Components
             set => yAlignment = value;
         }
 
+        Vector2f textPadding;
+        public Vector2f Padding
+        {
+            get => textPadding;
+            set => textPadding = value;
+        }
+
         protected Vector2f GetPositionOfText(Text text)
         {
-            var pos = Transform.PositionRelative.GlobalAbsolute;
+            var pos = Transform.GlobalPosition.GlobalAbsolute;
 
             float x = 0;
             float y = 0;
@@ -98,7 +105,7 @@ namespace Andromeda2D.Entities.Components
             else if (TextYAlignment == TextYAlignment.Bottom)
                 y = uiSize.Y - height;
 
-            return pos + new Vector2f(x, y);
+            return pos + new Vector2f(x, y) + Padding;
         }
 
         [SerializableProperty("FontSize", PropertyType = SerializedPropertyType.UInt32)]
@@ -174,15 +181,6 @@ namespace Andromeda2D.Entities.Components
             Width = fontText.GetLocalBounds().Width;
             fontText.Position = GetPositionOfText(fontText);
             target.Draw(fontText);
-
-            
-
-            /*RectangleShape rs = new RectangleShape(new Vector2f(globalBounds.Width, globalBounds.Height));
-            rs.FillColor = Color.Transparent;
-            rs.Position = fontText.Position;
-            rs.OutlineColor = Color.Cyan;
-            rs.OutlineThickness = 1;
-            target.Draw(rs);*/
         }
 
         public override void AfterUpdate()
