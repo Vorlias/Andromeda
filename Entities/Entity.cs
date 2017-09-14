@@ -367,14 +367,17 @@ namespace Andromeda2D.Entities
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public List<T> GetComponentsInDescendants<T>() where T: IComponent
+        public List<T> GetComponentsInDescendants<T>(bool includeParent = false) where T: IComponent
         {
             List<T> components = new List<T>();
             Entity[] descendants = Children;
 
+            if (includeParent)
+                components.AddRange(GetComponents<T>());
+
             foreach (var child in descendants)
             {
-                components.AddRange(child.GetComponentsInDescendants<T>());
+                components.AddRange(child.GetComponentsInDescendants<T>(true));
             }
 
             return components;

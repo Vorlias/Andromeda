@@ -282,7 +282,7 @@ namespace Andromeda2D.System
             get
             {
                 List<IUpdatableComponent> components = new List<IUpdatableComponent>();
-                Children.Where(entity => entity.Enabled).Select(entity => entity.GetComponentsInDescendants<IUpdatableComponent>()).ForEach(list => components.AddRange(list));
+                Children.Where(entity => entity.Enabled).Select(entity => entity.GetComponentsInDescendants<IUpdatableComponent>(true)).ForEach(list => components.AddRange(list));
                 return components.OrderByDescending(component => component.UpdatePriority);
             }
         }
