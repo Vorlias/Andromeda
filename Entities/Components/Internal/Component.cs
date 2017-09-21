@@ -10,9 +10,9 @@ namespace Andromeda2D.Entities.Components.Internal
     {
         protected Entity entity;
 
-        public abstract bool AllowsMultipleInstances
+        public virtual bool AllowsMultipleInstances
         {
-            get;
+            get => true;
         }
 
         public Entity Entity
