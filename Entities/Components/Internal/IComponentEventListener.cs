@@ -7,7 +7,7 @@ using Andromeda2D.System;
 
 namespace Andromeda2D.Entities.Components.Internal
 {
-    public interface IComponentEventListener : IComponent
+    public interface IEventListenerComponent : IComponent
     {
         /// <summary>
         /// Called when the input event is triggered

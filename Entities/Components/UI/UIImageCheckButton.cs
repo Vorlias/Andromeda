@@ -8,7 +8,7 @@ using Andromeda2D.System;
 namespace Andromeda2D.Entities.Components.UI
 {
 
-    public class UIImageCheckButton : UIInteractable, IComponentEventListener
+    public class UIImageCheckButton : UIInteractable, IEventListenerComponent
     {
         public delegate void CheckStateChange(bool state);
         public event MouseEvent OnCheckboxPressed;

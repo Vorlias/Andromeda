@@ -11,7 +11,7 @@ namespace Andromeda2D.Entities.Components.UI
     /// <summary>
     /// Abstract UI class for interactive elements, like buttons etc.
     /// </summary>
-    public abstract class UIInteractable : UIComponent, IComponentEventListener
+    public abstract class UIInteractable : UIComponent, IEventListenerComponent
     {
         public event InterfaceEvent OnMouseEnter, OnMouseLeave;
 

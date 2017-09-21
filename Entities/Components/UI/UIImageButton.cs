@@ -15,7 +15,7 @@ using Andromeda2D.System.Utility;
 
 namespace Andromeda2D.Entities.Components
 {
-    public class UIImageButton : UIInteractable, ITextureComponent, IComponentEventListener
+    public class UIImageButton : UIInteractable, ITextureComponent, IEventListenerComponent
     {
         public event MouseEvent OnButtonPressed;
         
