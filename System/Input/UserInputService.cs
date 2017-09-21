@@ -218,8 +218,6 @@ namespace Andromeda2D.System
 
                 if (textInput != null)
                     textInput.Value = textInputString;
-
-                Console.WriteLine(textInputString);
             }
         }
 
