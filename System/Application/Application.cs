@@ -268,6 +268,11 @@ namespace Andromeda2D.System
 
         }
 
+        protected virtual void InitializeStates()
+        {
+
+        }
+
         protected virtual void AfterStart()
         {
 
@@ -332,6 +337,7 @@ namespace Andromeda2D.System
 
             BeforeStart();
             Start();
+            InitializeStates();
             AfterStart();
 
             View defaultView = window.DefaultView;
