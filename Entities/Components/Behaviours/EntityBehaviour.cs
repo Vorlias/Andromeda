@@ -9,10 +9,7 @@ using SFML.Graphics;
 
 namespace Andromeda2D.Entities.Components
 {
-
-    /// <summary>
-    /// Base class for custom scripted components
-    /// </summary>
+    [Obsolete("Inherit 'Component' instead, see docs about Components")]
     public class EntityBehaviour : Component, IUpdatableComponent, IRenderableComponent
     {
         private bool initialized = false;
