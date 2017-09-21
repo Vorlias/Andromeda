@@ -4,6 +4,7 @@ using SFML.Window;
 using Andromeda2D.Entities.Components.Internal;
 using Andromeda2D.System;
 using Andromeda2D.Linq;
+using System;
 
 namespace Andromeda2D.Entities.Components.UI
 {
@@ -47,6 +48,7 @@ namespace Andromeda2D.Entities.Components.UI
         /// <summary>
         /// Used to determine collision between button and mouse (For hover detection)
         /// </summary>
+        [Obsolete]
         public PolygonRectCollider ButtonCollider
         {
             get
