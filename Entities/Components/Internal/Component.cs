@@ -23,9 +23,9 @@ namespace Andromeda2D.Entities.Components.Internal
             }
         }
 
-        public abstract string Name
+        public virtual string Name
         {
-            get;
+            get => GetType().Name;
         }
 
         public virtual void OnComponentCopy(Entity source, Entity copy)
