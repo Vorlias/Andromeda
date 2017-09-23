@@ -32,7 +32,7 @@ namespace Andromeda2D.Entities.Components.UI
             uiImage.TextureId = textureId;
             UITransform transform = entity.GetComponent<UITransform>();
             transform.LocalPosition = position;
-            transform.Size = size;
+            //transform.Size = size;
 
             return uiImage;
         }

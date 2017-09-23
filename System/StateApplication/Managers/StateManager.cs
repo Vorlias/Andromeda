@@ -69,22 +69,6 @@ namespace Andromeda2D.System
         }
 
         /// <summary>
-        /// Creates a new generic state
-        /// </summary>
-        /// <param name="name">The name of the state</param>
-        /// <returns>The state</returns>
-        [Obsolete("Game states should be predefined")]
-        public GameState CreateState(string name)
-        {
-            GameState newState = GameState.Create();
-            newState.SetManager(this);
-            newState.SetName(name);
-            collection.Add(name, newState);
-            newState.IsTempState = false;
-            return newState;
-        }
-
-        /// <summary>
         /// Creates a persistent state of the specified type
         /// </summary>
         /// <typeparam name="StateType">The state type</typeparam>
@@ -130,7 +114,7 @@ namespace Andromeda2D.System
 
         public StateManager(StateGameManager parent) : base(parent)
         {
-            GameState defaultState = GameState.Create();
+            PersistentGameState defaultState = new PersistentGameState();
             defaultState.SetManager(this);
             defaultState.SetName("Default");
             defaultState.IsTempState = false;

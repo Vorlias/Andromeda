@@ -9,7 +9,7 @@ namespace Andromeda2D.System.Internal
         /// <summary>
         /// The State associated with this ExclusiveGameViewProperty
         /// </summary>
-        public GameState State
+        public IGameState State
         {
             get;
         }
@@ -42,7 +42,7 @@ namespace Andromeda2D.System.Internal
             view = null;
         }
 
-        internal ExclusiveGameViewProperty(GameState state)
+        internal ExclusiveGameViewProperty(IGameState state)
         {
             State = state;
             view = null;
