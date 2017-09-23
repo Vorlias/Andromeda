@@ -1,6 +1,6 @@
 ﻿using Andromeda2D.System;
 
-namespace Andromeda.System.StateApplication
+namespace Andromeda.System
 {
     public class GameViewConfig
     {

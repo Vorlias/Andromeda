@@ -35,16 +35,6 @@ namespace Andromeda2D.System
             }
         }
 
-        public T As<T>() where T : EntityGameView
-        {
-            return this as T;
-        }
-
-        public T ParentStateAs<T>() where T : GameState
-        {
-            return ParentState as T;
-        }
-
         /// <summary>
         /// Sets the camera type, will also create a camera if it doesn't exist
         /// </summary>

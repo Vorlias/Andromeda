@@ -8,7 +8,7 @@ using Andromeda2D.Events;
 using Andromeda2D.System.Internal;
 using Andromeda2D.System.Utility;
 
-namespace Andromeda.System.StateApplication
+namespace Andromeda.System
 {
     /// <summary>
     /// A game state that only holds views while it's running
