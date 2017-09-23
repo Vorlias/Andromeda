@@ -115,8 +115,7 @@ namespace Andromeda2D.System
                 var state = collection[TEMP_STATE_ID];
                 if (state == activeState)
                 {
-                    activeState = Default;
-                    collection.Remove(TEMP_STATE_ID);
+                    collection.Remove(state.Name);
                 }
             }
 
