@@ -172,11 +172,6 @@ namespace Andromeda2D.System
             Game.Start();
         }
 
-        public IEnumerable<EntityGameView> EntityGameViewsByPriority
-        {
-            get => Game.UpdatableViewsByPriority.OfType<EntityGameView>();
-        }
-
         private void Window_MouseButtonReleased(object sender, MouseButtonEventArgs e)
         {
             InputService.InvokeInput(this, e.Button, InputState.Inactive);
