@@ -345,7 +345,7 @@ namespace Andromeda2D.System
         /// Internal function that sets up the view
         /// </summary>
         /// <exception cref="GameViewInitException">Will be thrown if the view's already initialized</exception>
-        internal void Added(StateGameManager manager, string id)
+        public void Added(StateGameManager manager, string id)
         {
             if (this.manager == null)
             {

@@ -26,7 +26,7 @@ namespace Andromeda.System
         /// <param name="viewName">The name of the view</param>
         /// <param name="priority">The view's priority</param>
         /// <returns>The created view</returns>
-        public ViewType AddTempView<ViewType>(GameViewConfig config) where ViewType : EntityGameView, new()
+        public ViewType AddTempView<ViewType>(GameViewConfig config) where ViewType : IGameView, new()
         {
             ViewType newView = new ViewType();
             newView.Added(StateManager.GameManager, config.Name);

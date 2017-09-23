@@ -21,5 +21,7 @@ namespace Andromeda2D.System
 
         void ProcessInput(Application application, Mouse.Button button, InputState state);
         void ProcessInput(Application application, Keyboard.Key key, InputState state);
+
+        void Added(StateGameManager manager, string id);
     }
 }

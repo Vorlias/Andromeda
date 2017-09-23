@@ -20,6 +20,24 @@ namespace Andromeda.System
         StateGameManager manager;
         GameViewPriority priority;
 
+        /// <summary>
+        /// Internal function that sets up the view
+        /// </summary>
+        /// <exception cref="GameViewInitException">Will be thrown if the view's already initialized</exception>
+        public void Added(StateGameManager manager, string id)
+        {
+            if (this.manager == null)
+            {
+                this.manager = manager;
+                this.id = id;
+                inputService = new UserInputManager();
+            }
+            else
+            {
+                throw new GameViewInitException();
+            }
+        }
+
         private UserInputManager inputService;
         public UserInputManager Input
         {

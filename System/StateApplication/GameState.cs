@@ -227,7 +227,7 @@ namespace Andromeda2D.System
             //return views.Count() > 0 ? views.First() : null;
         }
 
-        internal void Add(EntityGameView view)
+        internal void Add(IGameView view)
         {
             views.Add(view);
         }
