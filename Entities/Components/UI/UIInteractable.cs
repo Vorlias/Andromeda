@@ -89,7 +89,7 @@ namespace Andromeda2D.Entities.Components.UI
         public void InputRecieved(UserInputAction inputAction)
         {
             var mouseAction = inputAction.Mouse;
-            if (mouseAction?.InputState == InputState.Active && mouseAction?.Button == Mouse.Button.Left)
+            if (mouseAction?.InputState == InputState.Active && mouseAction?.Button == Mouse.Button.Left && Visible)
             {
                 // if left click
                 if (IsMouseOver && !IsMouseDown)
@@ -111,12 +111,12 @@ namespace Andromeda2D.Entities.Components.UI
         bool hoverState = false;
         public override void Update()
         {
-            if (IsMouseOver && !hoverState)
+            if (IsMouseOver && !hoverState && Visible)
             {
                 hoverState = true;
                 OnMouseEnter?.Invoke(new UserInterfaceAction(UIActionType.MouseEnter, this));
             }
-            else if (!IsMouseOver && hoverState)
+            else if (!IsMouseOver && hoverState && Visible)
             {
                 hoverState = false;
                 OnMouseLeave?.Invoke(new UserInterfaceAction(UIActionType.MouseLeave, this));

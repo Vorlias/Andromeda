@@ -32,15 +32,13 @@ namespace Andromeda2D.Entities.Components.Internal
             }
         }
 
-        bool visible = true;
-
         /// <summary>
         /// Whether or not this component is visible
         /// </summary>
         public bool Visible
         {
-            get => visible;
-            set => visible = value;
+            get => Entity.Visible;
+            set => Entity.Visible = value;
         }
 
         public Vector2f AbsoluteSize => Transform.Size.GlobalAbsolute;

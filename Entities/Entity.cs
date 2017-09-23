@@ -30,6 +30,7 @@ namespace Andromeda2D.Entities
         EntityGameView parentState;
         bool prefab = false;
         bool useLocalSpace = true;
+        bool visible = true;
         UserInputManager input;
         string name = "Entity";
         List<object> tags = new List<object>();
@@ -62,8 +63,8 @@ namespace Andromeda2D.Entities
         /// </summary>
         public bool Visible
         {
-            get;
-            set;
+            get => Parent != null ? Parent.Visible : visible;
+            set => visible = value;
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace Andromeda2D.Entities
         {
             get
             {
-                return components.OfType<IRenderableComponent>().OrderByDescending(component => component.RenderOrder);
+                return components.OfType<IRenderableComponent>().Where(com => com.Entity.Visible).OrderByDescending(component => component.RenderOrder);
             }
         }
 

@@ -154,7 +154,7 @@ namespace Andromeda2D.System
             {
                 List<IRenderableComponent> renderable = new List<IRenderableComponent>();
                 Descendants.ForEach(v => renderable.AddRange(v.GetComponents<IRenderableComponent>()));
-                return renderable.Where(r => r.Entity.Enabled).OrderBy(e => e.RenderOrder);
+                return renderable.Where(r => r.Entity.Enabled && r.Entity.Visible).OrderBy(e => e.RenderOrder);
             }
         }
 
