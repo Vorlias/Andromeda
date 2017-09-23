@@ -65,7 +65,7 @@ namespace Andromeda2D.System.Debug
                         }
                     }
 
-                    if (child.FindComponent(out UIText text))
+                    /*if (child.FindComponent(out UIText text))
                     {
                         RectangleShape rs = new RectangleShape(text.Transform.Size);
                         rs.Position = text.Transform.Position;
@@ -73,7 +73,7 @@ namespace Andromeda2D.System.Debug
                         rs.OutlineColor = Color.Cyan;
                         rs.OutlineThickness = 1;
                         target.Draw(rs);
-                    }
+                    }*/
 
                     VertexArray transformLeft = new VertexArray(PrimitiveType.LineStrip);
                     transformLeft.Append(new Vertex(pos, Color.Red));
