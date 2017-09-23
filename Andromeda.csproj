@@ -75,10 +75,13 @@
     <Compile Include="System\Input\UserInputManager.InputBinding.cs" />
     <Compile Include="System\Input\UserInputManager.InputBindingAction.cs" />
     <Compile Include="System\Linq\EntityCollectionLinq.cs" />
+    <Compile Include="System\StateApplication\GameState.cs" />
     <Compile Include="System\StateApplication\GameViewSingleton.cs" />
     <Compile Include="System\MouseConstraintType.cs" />
+    <Compile Include="System\StateApplication\IGameState.cs" />
     <Compile Include="System\StateApplication\InterfaceView.cs" />
     <Compile Include="System\StateApplication\InterfaceViewSingleton.cs" />
+    <Compile Include="System\StateApplication\LightGameState.cs" />
     <Compile Include="System\Types\Sequences\ColorSequence.cs" />
     <Compile Include="System\Types\Sequences\ColorSequenceKeypoint.cs" />
     <Compile Include="System\Types\Sequences\ISequenceKeyframe.cs" />
@@ -157,7 +160,7 @@
     <Compile Include="System\Input\InputType.cs" />
     <Compile Include="System\Input\UIActionType.cs" />
     <Compile Include="System\Internal\ExclusiveGameViewProperty.cs" />
-    <Compile Include="System\StateApplication\GameState.cs" />
+    <Compile Include="System\StateApplication\PersistentGameState.cs" />
     <Compile Include="System\StateApplication\GameView.cs" />
     <Compile Include="System\Internal\IEntityContainer.cs" />
     <Compile Include="System\Internal\ResourceManager.cs" />
