@@ -319,6 +319,11 @@ namespace Andromeda2D.System
 
         }
 
+        internal void ClearAllViews()
+        {
+            views.Clear();
+        }
+
         /// <summary>
         /// Starts the views
         /// </summary>

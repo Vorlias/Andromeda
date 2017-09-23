@@ -6,71 +6,36 @@ using System.Text;
 using System.Threading.Tasks;
 using Andromeda2D.Events;
 using Andromeda2D.System.Internal;
+using Andromeda2D.System.Utility;
 
 namespace Andromeda.System.StateApplication
 {
-    public class LightGameState : IGameState
+    /// <summary>
+    /// A game state that only holds views while it's running
+    /// </summary>
+    public abstract class LightGameState : GameState
     {
+        protected abstract void InitializeViews();
+        protected abstract void OnLightDeactivated();
+        protected abstract void OnLightActivated();
 
-
-        public IEnumerable<GameView> ActiveViewsByPriority => throw new NotImplementedException();
-
-        public Andromeda2D.System.StateApplication Application => throw new NotImplementedException();
-
-        public ViewEvents Events => throw new NotImplementedException();
-
-        public bool HasStarted => throw new NotImplementedException();
-
-        public UserInputManager Input => throw new NotImplementedException();
-
-        public bool IsTempState => throw new NotImplementedException();
-
-        public string Name => throw new NotImplementedException();
-
-        public StateManager StateManager => throw new NotImplementedException();
-
-        public IEnumerable<GameView> UpdatableViewsByPriority => throw new NotImplementedException();
-
-        public IEnumerable<GameView> Views => throw new NotImplementedException();
-
-        public void Activate()
+        public sealed override void OnActivated()
         {
-            throw new NotImplementedException();
+            InitializeViews();
+            Views.ForEach(view => view.Start());
+            OnLightActivated();
         }
 
-        public GameView FindFirstView(string name)
+        public sealed override void OnDeactivated()
         {
-            throw new NotImplementedException();
+            OnLightDeactivated();
+            ClearAllViews();
         }
 
-        public ViewType FindFirstView<ViewType>() where ViewType : GameView
+        internal override void Start()
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<GameView> GetViewsByName(string viewName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<ViewType> GetViewsByType<ViewType>() where ViewType : GameView
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Initialize()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Render()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update()
-        {
-            throw new NotImplementedException();
+            Initialize();
+            //Views.ForEach(view => view.Start());
         }
     }
 }
