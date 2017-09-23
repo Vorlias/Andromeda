@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Andromeda2D.Entities.Components;
 using SFML.Graphics;
+using SFML.Window;
 
 namespace Andromeda.System
 {
@@ -68,6 +69,16 @@ namespace Andromeda.System
 
         public abstract void OnRender(RenderWindow renderWindow);
         public abstract void OnUpdate(StateApplication application);
+
+        public void ProcessInput(Application application, Mouse.Button button, InputState state)
+        {
+            Input.InvokeInput(application, button, state);
+        }
+
+        public void ProcessInput(Application application, Keyboard.Key key, InputState state)
+        {
+            Input.InvokeInput(application, key, state);
+        }
 
         public void Render(RenderWindow window)
         {

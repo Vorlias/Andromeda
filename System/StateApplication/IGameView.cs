@@ -1,5 +1,6 @@
 ﻿using Andromeda2D.Entities.Components;
 using SFML.Graphics;
+using SFML.Window;
 
 namespace Andromeda2D.System
 {
@@ -17,5 +18,8 @@ namespace Andromeda2D.System
         void Start();
 
         void SetParentState(IGameState state);
+
+        void ProcessInput(Application application, Mouse.Button button, InputState state);
+        void ProcessInput(Application application, Keyboard.Key key, InputState state);
     }
 }

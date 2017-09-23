@@ -392,34 +392,6 @@ namespace Andromeda2D.System
             return entity;
         }
 
-        internal void InvokeInput(Application application, Mouse.Button input, InputState state)
-        {
-            Input.InvokeInput(application, input, state);
-            foreach (Entity entity in Children)
-            {
-                entity.Input.InvokeInput(application, input, state);
-            }
-
-            foreach (IEventListenerComponent com in EventComponents)
-            {
-                com.InputRecieved(new MouseInputAction(input, state, Mouse.GetPosition(Application.Window)));
-            }
-        }
-
-        internal void InvokeInput(Application application, Keyboard.Key input, InputState state)
-        {
-            Input.InvokeInput(application, input, state);
-            foreach (Entity entity in Children)
-            {
-                entity.Input.InvokeInput(application, input, state);
-            }
-
-            foreach (IEventListenerComponent com in EventComponents)
-            {
-                com.InputRecieved(new KeyboardInputAction(state, input));
-            }
-        }
-
         internal void Activated()
         {
             Descendants.ForEach(descendant => descendant.Activated());
@@ -446,6 +418,34 @@ namespace Andromeda2D.System
         public void SetParentState(IGameState state)
         {
             ParentState = state;
+        }
+
+        public void ProcessInput(Application application, Mouse.Button button, InputState state)
+        {
+            Input.InvokeInput(application, button, state);
+            foreach (Entity entity in Children)
+            {
+                entity.Input.InvokeInput(application, button, state);
+            }
+
+            foreach (IEventListenerComponent com in EventComponents)
+            {
+                com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+            }
+        }
+
+        public void ProcessInput(Application application, Keyboard.Key key, InputState state)
+        {
+            Input.InvokeInput(application, key, state);
+            foreach (Entity entity in Children)
+            {
+                entity.Input.InvokeInput(application, key, state);
+            }
+
+            foreach (IEventListenerComponent com in EventComponents)
+            {
+                com.InputRecieved(new KeyboardInputAction(state, key));
+            }
         }
     }
 }

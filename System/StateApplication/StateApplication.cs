@@ -160,10 +160,9 @@ namespace Andromeda2D.System
             if (!activeStateInput.HasTextInputFocus)
             { 
                 var states = Game.UpdatableViewsByPriority;
-                foreach (EntityGameView state in states)
+                foreach (IGameView state in states)
                 {
                     state.Input.InvokeTextEntered(this, e.Unicode);
-                    //state.InvokeInput(this, e.Button, InputState.Inactive);
                 }
             }
         }
@@ -173,6 +172,11 @@ namespace Andromeda2D.System
             Game.Start();
         }
 
+        public IEnumerable<EntityGameView> EntityGameViewsByPriority
+        {
+            get => Game.UpdatableViewsByPriority.OfType<EntityGameView>();
+        }
+
         private void Window_MouseButtonReleased(object sender, MouseButtonEventArgs e)
         {
             InputService.InvokeInput(this, e.Button, InputState.Inactive);
@@ -180,9 +184,9 @@ namespace Andromeda2D.System
 
 
             var states = Game.UpdatableViewsByPriority;
-            foreach (EntityGameView state in states)
+            foreach (IGameView state in states)
             {
-                state.InvokeInput(this, e.Button, InputState.Inactive);
+                state.ProcessInput(this, e.Button, InputState.Inactive);
             }
         }
 
@@ -192,9 +196,9 @@ namespace Andromeda2D.System
             States.ActiveState.Input.InvokeInput(this, e.Button, InputState.Active);
 
             var states = Game.UpdatableViewsByPriority;
-            foreach (EntityGameView state in states)
+            foreach (IGameView state in states)
             {
-                state.InvokeInput(this, e.Button, InputState.Active);
+                state.ProcessInput(this, e.Button, InputState.Active);
             }
         }
 
@@ -205,9 +209,9 @@ namespace Andromeda2D.System
 
 
             var states = Game.UpdatableViewsByPriority;
-            foreach (EntityGameView state in states)
+            foreach (IGameView state in states)
             {
-                state.InvokeInput(this, e.Code, InputState.Inactive);
+                state.ProcessInput(this, e.Code, InputState.Inactive);
             }
         }
 
@@ -221,9 +225,9 @@ namespace Andromeda2D.System
             if (!activeStateInput.HasTextInputFocus)
             {
                 var states = Game.UpdatableViewsByPriority;
-                foreach (EntityGameView state in states)
+                foreach (IGameView state in states)
                 {
-                    state.InvokeInput(this, e.Code, InputState.Active);
+                    state.ProcessInput(this, e.Code, InputState.Active);
                 }
             }
         }
