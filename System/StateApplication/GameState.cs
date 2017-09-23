@@ -10,6 +10,9 @@ using SFML.Window;
 
 namespace Andromeda2D.System
 {
+    /// <summary>
+    /// The base game state class
+    /// </summary>
     public abstract class GameState : IGameState
     {
         HashSet<GameView> views;

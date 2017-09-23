@@ -19,6 +19,23 @@ namespace Andromeda.System.StateApplication
         protected abstract void OnLightDeactivated();
         protected abstract void OnLightActivated();
 
+        /// <summary>
+        /// Adds a new view to this GameState
+        /// </summary>
+        /// <typeparam name="ViewType">The type of view</typeparam>
+        /// <param name="viewName">The name of the view</param>
+        /// <param name="priority">The view's priority</param>
+        /// <returns>The created view</returns>
+        public ViewType AddTempView<ViewType>(GameViewConfig config) where ViewType : GameView, new()
+        {
+            ViewType newView = new ViewType();
+            newView.Added(StateManager.GameManager, config.Name);
+            newView.IsActive = config.Active;
+            Add(newView);
+
+            return newView;
+        }
+
         public sealed override void OnActivated()
         {
             InitializeViews();
