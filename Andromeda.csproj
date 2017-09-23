@@ -76,6 +76,7 @@
     <Compile Include="System\Input\UserInputManager.InputBindingAction.cs" />
     <Compile Include="System\Linq\EntityCollectionLinq.cs" />
     <Compile Include="System\StateApplication\GameState.cs" />
+    <Compile Include="System\StateApplication\GameViewConfig.cs" />
     <Compile Include="System\StateApplication\GameViewSingleton.cs" />
     <Compile Include="System\MouseConstraintType.cs" />
     <Compile Include="System\StateApplication\IGameState.cs" />

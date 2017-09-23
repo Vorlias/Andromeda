@@ -13,9 +13,13 @@ namespace Andromeda.System.StateApplication
             Name = name;
         }
 
-        void Test()
+        /// <summary>
+        /// Create a default GameViewConfig using just the name
+        /// </summary>
+        /// <param name="name">The name</param>
+        public static implicit operator GameViewConfig(string name)
         {
-            new GameViewConfig("Test") {  };
+            return new GameViewConfig(name);
         }
     }
 }
