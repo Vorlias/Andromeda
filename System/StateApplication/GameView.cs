@@ -15,7 +15,7 @@ using System;
 namespace Andromeda2D.System
 {
 
-    public abstract class GameView : EntityContainer
+    public abstract class GameView : EntityContainer, IGameView
     {
         bool active = true;
         string id;
@@ -109,7 +109,7 @@ namespace Andromeda2D.System
         /// <summary>
         /// The state actively using this view
         /// </summary>
-        public GameState ParentState
+        public IGameState ParentState
         {
             get;
             internal set;
@@ -339,16 +339,14 @@ namespace Andromeda2D.System
             }
         }
 
-        internal void Start()
+        public void Start()
         {
             OnStart();
 
             if (active)
             {
                 OnActivated();
-                
             }
-                
         }
 
         /// <summary>
@@ -438,6 +436,24 @@ namespace Andromeda2D.System
         internal void Deactivated()
         {
             Descendants.ForEach(descendant => descendant.Deactivated());
+        }
+
+        public void Update(StateApplication application)
+        {
+            OnUpdate(application);
+            UpdateEntities();
+        }
+
+        public void Render(RenderWindow window)
+        {
+            OnPreRender(window);
+            RenderEntities(window);
+            OnPostRender(window);
+        }
+
+        public void SetParentState(IGameState state)
+        {
+            ParentState = state;
         }
     }
 }

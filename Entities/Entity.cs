@@ -95,7 +95,7 @@ namespace Andromeda2D.Entities
         /// <summary>
         /// The GameState that contains this Entity
         /// </summary>
-        public GameState GameState
+        public IGameState GameState
         {
             get => GameView.ParentState;
         }

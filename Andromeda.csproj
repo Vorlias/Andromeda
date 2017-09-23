@@ -80,6 +80,7 @@
     <Compile Include="System\StateApplication\GameViewSingleton.cs" />
     <Compile Include="System\MouseConstraintType.cs" />
     <Compile Include="System\StateApplication\IGameState.cs" />
+    <Compile Include="System\StateApplication\IGameView.cs" />
     <Compile Include="System\StateApplication\InterfaceView.cs" />
     <Compile Include="System\StateApplication\InterfaceViewSingleton.cs" />
     <Compile Include="System\StateApplication\LightGameState.cs" />

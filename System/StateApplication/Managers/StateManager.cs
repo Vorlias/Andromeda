@@ -63,7 +63,8 @@ namespace Andromeda2D.System
 
                 foreach (var view in activeState.Views)
                 {
-                    view.ParentState = activeState;
+                    if (view is GameView)
+                        view.SetParentState(activeState);
                 }
             }
         }

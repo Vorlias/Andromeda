@@ -15,7 +15,7 @@ namespace Andromeda2D.System
     /// </summary>
     public abstract class GameState : IGameState
     {
-        HashSet<GameView> views;
+        HashSet<IGameView> views;
         private ExclusiveGameViewProperty exclusiveView;
         private bool mouseGrabbed = false;
         private ViewEvents viewEventQueue;
@@ -117,13 +117,13 @@ namespace Andromeda2D.System
         /// <summary>
         /// All the views that can be updated
         /// </summary>
-        public IEnumerable<GameView> UpdatableViewsByPriority
+        public IEnumerable<IGameView> UpdatableViewsByPriority
         {
             get
             {
                 if (ExclusiveView.Current != null)
                 {
-                    return new GameView[] { ExclusiveView.Current };
+                    return new IGameView[] { ExclusiveView.Current };
                 }
                 else
                     return ActiveViewsByPriority;
@@ -136,12 +136,12 @@ namespace Andromeda2D.System
             Application.Window.SetView(Application.Window.DefaultView);
         }
 
-        public IEnumerable<GameView> ActiveViewsByPriority
+        public IEnumerable<IGameView> ActiveViewsByPriority
         {
             get => Views.Where(view => view.IsActive || ExclusiveView.Current == view).OrderBy(view => view.Priority);
         }
 
-        public IEnumerable<GameView> Views
+        public IEnumerable<IGameView> Views
         {
             get => views;
         }
@@ -187,12 +187,12 @@ namespace Andromeda2D.System
 
         }
 
-        public IEnumerable<GameView> GetViewsByName(string viewName)
+        public IEnumerable<IGameView> GetViewsByName(string viewName)
         {
             return views.Where(view => view.Id == viewName);
         }
 
-        public IEnumerable<ViewType> GetViewsByType<ViewType>() where ViewType : GameView
+        public IEnumerable<ViewType> GetViewsByType<ViewType>() where ViewType : IGameView
         {
             return views.OfType<ViewType>();
         }
@@ -202,7 +202,7 @@ namespace Andromeda2D.System
         /// </summary>
         /// <param name="name">The name of the view</param>
         /// <returns>The view, if it exsits.</returns>
-        public GameView FindFirstView(string name)
+        public IGameView FindFirstView(string name)
         {
             var views = GetViewsByName(name);
             return views.Count() > 0 ? views.First() : null;
@@ -217,7 +217,14 @@ namespace Andromeda2D.System
         public ViewType FindFirstView<ViewType>() where ViewType : GameView
         {
             var views = GetViewsByType<ViewType>();
-            return views.Count() > 0 ? views.First() : null;
+            if (views.Count() > 0)
+            {
+                return views.First();
+            }
+            else
+                return null;
+
+            //return views.Count() > 0 ? views.First() : null;
         }
 
         internal void Add(GameView view)
@@ -238,7 +245,7 @@ namespace Andromeda2D.System
         protected GameState()
         {
             exclusiveView = new ExclusiveGameViewProperty(this);
-            views = new HashSet<GameView>();
+            views = new HashSet<IGameView>();
             Input = new UserInputManager();
             viewEventQueue = new ViewEvents();
         }

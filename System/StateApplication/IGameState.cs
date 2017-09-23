@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Andromeda2D.Events;
+using SFML.System;
 
 namespace Andromeda2D.System
 {
@@ -8,7 +9,7 @@ namespace Andromeda2D.System
     /// </summary>
     public interface IGameState
     {
-        IEnumerable<GameView> ActiveViewsByPriority { get; }
+        IEnumerable<IGameView> ActiveViewsByPriority { get; }
         StateApplication Application { get; }
         ViewEvents Events { get; }
         bool HasStarted { get; }
@@ -16,14 +17,16 @@ namespace Andromeda2D.System
         bool IsTempState { get; }
         string Name { get; }
         StateManager StateManager { get; }
-        IEnumerable<GameView> UpdatableViewsByPriority { get; }
-        IEnumerable<GameView> Views { get; }
+        IEnumerable<IGameView> UpdatableViewsByPriority { get; }
+        IEnumerable<IGameView> Views { get; }
+
+        Vector2f MouseCenterDelta { get; }
+        MouseConstraintType MouseConstraint { get; set; }
 
         void Activate();
-        GameView FindFirstView(string name);
-        ViewType FindFirstView<ViewType>() where ViewType : GameView;
-        IEnumerable<GameView> GetViewsByName(string viewName);
-        IEnumerable<ViewType> GetViewsByType<ViewType>() where ViewType : GameView;
+        IGameView FindFirstView(string name);
+        IEnumerable<IGameView> GetViewsByName(string viewName);
+        IEnumerable<ViewType> GetViewsByType<ViewType>() where ViewType : IGameView;
         void Initialize();
         void Render();
         void Update();

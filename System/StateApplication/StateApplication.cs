@@ -101,12 +101,10 @@ namespace Andromeda2D.System
             
 
             var views = Game.ActiveViewsByPriority;
-            foreach (GameView view in views)
+            foreach (IGameView view in views)
             {
                 Application.Window.SetView(Application.Window.DefaultView);
-                view.OnPreRender(Window);
-                view.RenderEntities(Window);
-                view.OnPostRender(Window);
+                view.Render(Window);
             }
 
             States.ActiveState.Render();
@@ -125,10 +123,9 @@ namespace Andromeda2D.System
             States.ActiveState.Update();
 
             var views = Game.UpdatableViewsByPriority;
-            foreach (GameView view in views)
+            foreach (IGameView view in views)
             {
-                view.OnUpdate(this);
-                view.UpdateEntities();
+                view.Update(this);
             }
 
             UpdateEnd();

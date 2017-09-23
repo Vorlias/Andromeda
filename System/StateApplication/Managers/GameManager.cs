@@ -9,7 +9,7 @@ namespace Andromeda2D.System
 
     public class StateGameManager
     {
-        Dictionary<string, GameView> states;
+        Dictionary<string, IGameView> states;
         StateApplication application;
 
         public StateApplication Application
@@ -22,13 +22,13 @@ namespace Andromeda2D.System
 
         public StateGameManager(StateApplication application)
         {
-            states = new Dictionary<string, GameView>();
+            states = new Dictionary<string, IGameView>();
             this.application = application;
             States = new StateManager(this);
             Views = new ViewManager(this, States);
         }
 
-        internal IEnumerable<GameView> UpdatableViewsByPriority
+        internal IEnumerable<IGameView> UpdatableViewsByPriority
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Andromeda2D.System
         /// <summary>
         /// Get the active GameStates by order of priority
         /// </summary>
-        internal IEnumerable<GameView> ActiveViewsByPriority
+        internal IEnumerable<IGameView> ActiveViewsByPriority
         {
             get
             {
