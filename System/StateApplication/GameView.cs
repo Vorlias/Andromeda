@@ -33,6 +33,16 @@ namespace Andromeda2D.System
             }
         }
 
+        public T As<T>() where T : GameView
+        {
+            return this as T;
+        }
+
+        public T ParentStateAs<T>() where T : GameState
+        {
+            return ParentState as T;
+        }
+
         /// <summary>
         /// Sets the camera type, will also create a camera if it doesn't exist
         /// </summary>
@@ -124,11 +134,11 @@ namespace Andromeda2D.System
         /// <summary>
         /// Entities that have an event thing
         /// </summary>
-        protected IEnumerable<IComponentEventListener> EventComponents
+        protected IEnumerable<IEventListenerComponent> EventComponents
         {
             get
             {
-                return CollidableEntities.Where(e => e.HasComponent<IComponentEventListener>() && e.Enabled ).Select(e => e.GetComponent<IComponentEventListener>());
+                return CollidableEntities.Where(e => e.HasComponent<IEventListenerComponent>() && e.Enabled ).Select(e => e.GetComponent<IEventListenerComponent>());
             }
         }
 
@@ -400,7 +410,7 @@ namespace Andromeda2D.System
                 entity.Input.InvokeInput(application, input, state);
             }
 
-            foreach (IComponentEventListener com in EventComponents)
+            foreach (IEventListenerComponent com in EventComponents)
             {
                 com.InputRecieved(new MouseInputAction(input, state, Mouse.GetPosition(Application.Window)));
             }
@@ -414,7 +424,7 @@ namespace Andromeda2D.System
                 entity.Input.InvokeInput(application, input, state);
             }
 
-            foreach (IComponentEventListener com in EventComponents)
+            foreach (IEventListenerComponent com in EventComponents)
             {
                 com.InputRecieved(new KeyboardInputAction(state, input));
             }

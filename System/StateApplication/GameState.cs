@@ -10,6 +10,7 @@ using Andromeda2D.System.Internal;
 using Andromeda2D.Events;
 using SFML.System;
 using SFML.Window;
+using Andromeda.System.StateApplication;
 
 namespace Andromeda2D.System
 {
@@ -23,6 +24,13 @@ namespace Andromeda2D.System
         private ExclusiveGameViewProperty exclusiveView;
         private bool mouseGrabbed = false;
         private ViewEvents viewEventQueue;
+
+
+        bool started;
+        public bool HasStarted
+        {
+            get => started;
+        }
 
         public ViewEvents Events
         {
@@ -65,6 +73,7 @@ namespace Andromeda2D.System
         }
 
         MouseConstraintType mouseConstraint = MouseConstraintType.Normal;
+
         public MouseConstraintType MouseConstraint
         {
             get
@@ -171,9 +180,9 @@ namespace Andromeda2D.System
         internal void AfterUpdate()
         {
             if (mouseConstraint == MouseConstraintType.ConstrainedCenter && Application.IsFocused)
-            { 
+            {
                 var window = Application.Window;
-                var size = new Vector2i((int) window.Size.X, (int) window.Size.Y);
+                var size = new Vector2i((int)window.Size.X, (int)window.Size.Y);
 
                 Mouse.SetPosition(size / 2, window);
             }
@@ -232,6 +241,7 @@ namespace Andromeda2D.System
         public ViewType AddView<ViewType>(GameViewPriority priority = GameViewPriority.Normal, bool active = true) where ViewType : GameView, new()
         {
             ViewType newView = new ViewType();
+            newView.ParentState = this;
             newView.Added(StateManager.GameManager, newView.GetType().Name);
             Add(newView);
 
@@ -316,7 +326,7 @@ namespace Andromeda2D.System
             views = new HashSet<GameView>();
             Input = new UserInputManager();
             viewEventQueue = new ViewEvents();
-            
+
         }
 
         internal static GameState Create()
@@ -333,7 +343,11 @@ namespace Andromeda2D.System
             Activated();
             StateManager.SetActive(Name);
 
-
+            if (!HasStarted)
+            {
+                Start();
+                started = true;
+            }
         }
 
         public virtual void OnDeactivated()
@@ -359,7 +373,7 @@ namespace Andromeda2D.System
 
         public virtual void OnActivated()
         {
-            
+
         }
 
         public virtual void OnReset()
@@ -393,7 +407,7 @@ namespace Andromeda2D.System
                     view.Reset();
                 }
             }
-            
+
         }
 
         public virtual void Initialize()
