@@ -63,8 +63,7 @@ namespace Andromeda2D.System
 
                 foreach (var view in activeState.Views)
                 {
-                    if (view is EntityGameView)
-                        view.SetParentState(activeState);
+                    view.SetParentState(activeState);
                 }
             }
         }
@@ -98,10 +97,7 @@ namespace Andromeda2D.System
             if (collection.ContainsKey(TEMP_STATE_ID))
             {
                 var state = collection[TEMP_STATE_ID];
-                if (state == activeState)
-                {
-                    collection.Remove(state.Name);
-                }
+                collection.Remove(state.Name);
             }
 
             StateType newState = new StateType();
