@@ -14,8 +14,10 @@ using System;
 
 namespace Andromeda2D.System
 {
-
-    public abstract class GameView : EntityContainer, IGameView
+    /// <summary>
+    /// A GameView which uses entities
+    /// </summary>
+    public abstract class EntityGameView : EntityContainer, IGameView
     {
         bool active = true;
         string id;
@@ -33,7 +35,7 @@ namespace Andromeda2D.System
             }
         }
 
-        public T As<T>() where T : GameView
+        public T As<T>() where T : EntityGameView
         {
             return this as T;
         }

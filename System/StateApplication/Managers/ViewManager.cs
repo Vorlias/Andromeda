@@ -1,6 +1,6 @@
 ﻿namespace Andromeda2D.System
 {
-    public class ViewManager : GameCollectionService<GameView>
+    public class ViewManager : GameCollectionService<EntityGameView>
     {
         public StateManager States
         {

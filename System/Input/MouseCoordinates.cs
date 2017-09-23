@@ -12,7 +12,7 @@ namespace Andromeda2D.System
     /// </summary>
     public struct MouseCoordinates
     {
-        public GameView View
+        public EntityGameView View
         {
             get;
         }
@@ -33,7 +33,7 @@ namespace Andromeda2D.System
             get;
         }
 
-        internal MouseCoordinates(Application application, GameView view)
+        internal MouseCoordinates(Application application, EntityGameView view)
         {
             Vector2i mousePosition = Mouse.GetPosition(application.Window);
             View = view;

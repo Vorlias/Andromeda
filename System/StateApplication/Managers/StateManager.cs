@@ -63,7 +63,7 @@ namespace Andromeda2D.System
 
                 foreach (var view in activeState.Views)
                 {
-                    if (view is GameView)
+                    if (view is EntityGameView)
                         view.SetParentState(activeState);
                 }
             }
@@ -123,7 +123,7 @@ namespace Andromeda2D.System
             activeState = defaultState;
         }
 
-        public ViewType AddView<ViewType>(GameState state, string name, GameViewPriority priority = GameViewPriority.Normal) where ViewType : GameView, new()
+        public ViewType AddView<ViewType>(GameState state, string name, GameViewPriority priority = GameViewPriority.Normal) where ViewType : EntityGameView, new()
         {
             ViewType v = new ViewType();
             v.Added(GameManager, name);

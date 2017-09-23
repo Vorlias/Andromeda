@@ -160,7 +160,7 @@ namespace Andromeda2D.System
             if (!activeStateInput.HasTextInputFocus)
             { 
                 var states = Game.UpdatableViewsByPriority;
-                foreach (GameView state in states)
+                foreach (EntityGameView state in states)
                 {
                     state.Input.InvokeTextEntered(this, e.Unicode);
                     //state.InvokeInput(this, e.Button, InputState.Inactive);
@@ -180,7 +180,7 @@ namespace Andromeda2D.System
 
 
             var states = Game.UpdatableViewsByPriority;
-            foreach (GameView state in states)
+            foreach (EntityGameView state in states)
             {
                 state.InvokeInput(this, e.Button, InputState.Inactive);
             }
@@ -192,7 +192,7 @@ namespace Andromeda2D.System
             States.ActiveState.Input.InvokeInput(this, e.Button, InputState.Active);
 
             var states = Game.UpdatableViewsByPriority;
-            foreach (GameView state in states)
+            foreach (EntityGameView state in states)
             {
                 state.InvokeInput(this, e.Button, InputState.Active);
             }
@@ -205,7 +205,7 @@ namespace Andromeda2D.System
 
 
             var states = Game.UpdatableViewsByPriority;
-            foreach (GameView state in states)
+            foreach (EntityGameView state in states)
             {
                 state.InvokeInput(this, e.Code, InputState.Inactive);
             }
@@ -221,7 +221,7 @@ namespace Andromeda2D.System
             if (!activeStateInput.HasTextInputFocus)
             {
                 var states = Game.UpdatableViewsByPriority;
-                foreach (GameView state in states)
+                foreach (EntityGameView state in states)
                 {
                     state.InvokeInput(this, e.Code, InputState.Active);
                 }

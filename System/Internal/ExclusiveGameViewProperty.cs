@@ -4,7 +4,7 @@ namespace Andromeda2D.System.Internal
 {
     public class ExclusiveGameViewProperty
     {
-        private GameView view;
+        private EntityGameView view;
 
         /// <summary>
         /// The State associated with this ExclusiveGameViewProperty
@@ -22,7 +22,7 @@ namespace Andromeda2D.System.Internal
         /// <summary>
         /// The current exclusive GameView
         /// </summary>
-        public GameView Current
+        public EntityGameView Current
         {
             get => view;
             set

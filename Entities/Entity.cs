@@ -27,7 +27,7 @@ namespace Andromeda2D.Entities
 
         Components.Transform transform;
         EntityContainer parentEntity;
-        GameView parentState;
+        EntityGameView parentState;
         bool prefab = false;
         bool useLocalSpace = true;
         UserInputManager input;
@@ -103,7 +103,7 @@ namespace Andromeda2D.Entities
         /// <summary>
         /// The parent view of this entity (If applicable)
         /// </summary>
-        public GameView GameView
+        public EntityGameView GameView
         {
             get
             {
@@ -308,7 +308,7 @@ namespace Andromeda2D.Entities
         }
 
     
-        internal void SetParentView(GameView state)
+        internal void SetParentView(EntityGameView state)
         {
             parentState = state;
         }
@@ -550,9 +550,9 @@ namespace Andromeda2D.Entities
         /// <param name="parent">The parent of this entity</param>
         public Entity(EntityContainer parent) : this()
         {
-            if (parent is GameView)
+            if (parent is EntityGameView)
             {
-                SetParentView(parent as GameView);
+                SetParentView(parent as EntityGameView);
                 parent.AddEntity(this);
             }
             else if (parent is Entity)

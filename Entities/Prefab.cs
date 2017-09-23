@@ -24,7 +24,7 @@ namespace Andromeda2D.Entities
         /// Creates a copy of the prefab entity
         /// </summary>
         /// <returns>A copy of the prefab entity</returns>
-        public Entity Instantiate(GameView parent)
+        public Entity Instantiate(EntityGameView parent)
         {
             Entity child = original.Clone();
             child.SetParentView(parent);

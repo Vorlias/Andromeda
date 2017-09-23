@@ -12,7 +12,7 @@ namespace Andromeda.System
     /// <summary>
     /// A GameView which has a UserInterface entity by default
     /// </summary>
-    public abstract class InterfaceView : GameView
+    public abstract class InterfaceView : EntityGameView
     {
         UserInterface ui;
         public UserInterface UI

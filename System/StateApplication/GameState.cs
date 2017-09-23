@@ -214,7 +214,7 @@ namespace Andromeda2D.System
         /// </summary>
         /// <typeparam name="ViewType">The type of the view</typeparam>
         /// <returns>The view, if it exists.</returns>
-        public ViewType FindFirstView<ViewType>() where ViewType : GameView
+        public ViewType FindFirstView<ViewType>() where ViewType : EntityGameView
         {
             var views = GetViewsByType<ViewType>();
             if (views.Count() > 0)
@@ -227,7 +227,7 @@ namespace Andromeda2D.System
             //return views.Count() > 0 ? views.First() : null;
         }
 
-        internal void Add(GameView view)
+        internal void Add(EntityGameView view)
         {
             views.Add(view);
         }
@@ -275,7 +275,7 @@ namespace Andromeda2D.System
         {
             Application.Window.SetMouseCursorGrabbed(mouseGrabbed);
 
-            foreach (GameView view in Views)
+            foreach (EntityGameView view in Views)
             {
                 // Set the state to this state for the views
                 view.ParentState = this;

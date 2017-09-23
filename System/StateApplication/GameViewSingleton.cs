@@ -14,7 +14,7 @@ namespace Andromeda2D.System
     /// <summary>
     /// A game view that has only one instance of itself
     /// </summary>
-    public abstract class GameViewSingleton<GameViewClass> : GameView, IGameViewSingleton where GameViewClass : GameView, new()
+    public abstract class GameViewSingleton<GameViewClass> : EntityGameView, IGameViewSingleton where GameViewClass : EntityGameView, new()
     {
         static GameViewClass singleton;
 

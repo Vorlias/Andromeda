@@ -67,9 +67,9 @@ namespace Andromeda2D.System.Internal
             else
                 child.ParentContainer.RemoveChild(child);
 
-            if (this is GameView)
+            if (this is EntityGameView)
             {
-                var view = this as GameView;
+                var view = this as EntityGameView;
                 child.SetParentView(view);
                 child.SetParent(view);
             }

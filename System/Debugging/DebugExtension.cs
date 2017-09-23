@@ -21,7 +21,7 @@ namespace Andromeda2D.System.Debug
 
     public static class DebugExtension
     {
-        public static void DebugRender(this GameView view, RenderTarget target)
+        public static void DebugRender(this EntityGameView view, RenderTarget target)
         {
 #if DEBUG
             if (DebugRenderer.DebugRenderingEnabled)
@@ -165,7 +165,7 @@ namespace Andromeda2D.System.Debug
         public static void DebugInstanceTree(this Internal.IEntityContainer instance, int level = 0, string prefix = " ")
         {
 #if DEBUG
-            if (instance is GameView)
+            if (instance is EntityGameView)
                 Console.WriteLine(" ■ Parent: " + instance);
             else if (instance is Entity && level == 0)
             {
