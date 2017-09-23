@@ -20,7 +20,7 @@ namespace Andromeda.System.StateApplication
         protected abstract void OnLightActivated();
 
         /// <summary>
-        /// Adds a new view to this GameState
+        /// Adds a new view to this GameState, which will be temporary until the GameState is unloaded
         /// </summary>
         /// <typeparam name="ViewType">The type of view</typeparam>
         /// <param name="viewName">The name of the view</param>
