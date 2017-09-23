@@ -15,7 +15,7 @@ namespace Andromeda2D.System
 {
 
     /// <summary>
-    /// A game state
+    /// A game state in which the views aren't cleared when the state is changed
     /// </summary>
     public class PersistentGameState : GameState
     { 
@@ -50,8 +50,6 @@ namespace Andromeda2D.System
             if (view.Id == null)
                 view.Added(StateManager.GameManager, view.GetType().Name);
 
-            //if (view.manager)
-            //view.Added(StateManager.GameManager, view.GetType().Name);
             Add(view);
 
             return view;
