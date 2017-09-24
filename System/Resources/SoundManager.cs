@@ -24,6 +24,45 @@ namespace Andromeda2D.System
         Dictionary<string, Music> music = new Dictionary<string, Music>();
         Music playingMusic;
 
+        int _musicVolume = 10,
+            _soundVolume = 20;
+
+        /// <summary>
+        /// The volume of music (from 0 - 100)
+        /// </summary>
+        public int MusicVolume
+        {
+            get
+            {
+                return _musicVolume;
+            }
+            set
+            {
+                _musicVolume = (value > 100 ? 100 : (value < 0 ? 0 : value));
+                if (playingMusic != null)
+                    playingMusic.Volume = _musicVolume;
+            }
+        }
+
+        /// <summary>
+        /// The volume of sound effects (from 0 - 100)
+        /// </summary>
+        public int SoundVolume
+        {
+            get
+            {
+                return _soundVolume;
+            }
+            set
+            {
+                _soundVolume = (value > 100 ? 100 : (value < 0 ? 0 : value));
+                foreach (var sound in sounds)
+                {
+                    sound.Volume = _soundVolume;
+                }
+            }
+        }
+
         public void StopBackgroundMusic()
         {
             if (playingMusic != null)
@@ -39,6 +78,7 @@ namespace Andromeda2D.System
                     playingMusic.Stop();
 
                 playingMusic = music;
+                playingMusic.Volume = _musicVolume;
                 playingMusic.Loop = looped;
                 playingMusic.Play();
             }
@@ -75,6 +115,7 @@ namespace Andromeda2D.System
             else
             {
                 Sound test = new Sound(buffer);
+                test.Volume = _soundVolume;
                 sounds.Add(test);
                 return test;
             }
