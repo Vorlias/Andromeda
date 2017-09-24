@@ -31,15 +31,12 @@ namespace Andromeda2D.System
         {
             var buffer = Get(id);
 
-            Console.WriteLine("GetSound: " + id);
-
             if (sounds.Count >= 10)
                 sounds.Where(sound => sound.Status == SoundStatus.Stopped).ForEach(sound => { sound.Dispose(); sounds.Remove(sound); });
 
             var soundCollection = sounds.Where(sound => sound.SoundBuffer == buffer && sound.Status != SoundStatus.Playing);
             if (soundCollection.Count() > 0)
             {
-                Console.WriteLine("InArray: " + soundCollection.Count() + ", Retrieve " + sounds.Count);
                 var next = soundCollection.First();
                 return next;
             }
@@ -47,13 +44,8 @@ namespace Andromeda2D.System
             {
                 Sound test = new Sound(buffer);
                 sounds.Add(test);
-                Console.WriteLine("InArray: " + soundCollection.Count() + ", Add " + sounds.Count);
-
-                
                 return test;
             }
-
-            
         }
 
         /// <summary>
