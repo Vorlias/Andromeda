@@ -21,6 +21,38 @@ namespace Andromeda2D.System
         }
 
         HashSet<Sound> sounds = new HashSet<Sound>();
+        Dictionary<string, Music> music = new Dictionary<string, Music>();
+        Music playingMusic;
+
+        public void StopBackgroundMusic()
+        {
+            if (playingMusic != null)
+                playingMusic.Stop();
+        }
+
+        public void PlayBackgroundMusic(string file, bool looped = true)
+        {
+            Music music = GetMusic(file);
+            if (playingMusic != music)
+            {
+                if (playingMusic != null && playingMusic.Status != SoundStatus.Stopped)
+                    playingMusic.Stop();
+
+                playingMusic = music;
+                playingMusic.Loop = looped;
+                playingMusic.Play();
+            }
+        }
+
+        Music GetMusic(string file)
+        {
+            if (!music.ContainsKey(file))
+            {
+                music[file] = new Music(file);
+            }
+
+            return music[file];
+        }
 
         /// <summary>
         /// Gets the sound with the specified id
@@ -46,6 +78,15 @@ namespace Andromeda2D.System
                 sounds.Add(test);
                 return test;
             }
+        }
+
+        /// <summary>
+        /// Shorthand of SoundManager.Instance.GetSound(id).Play();
+        /// </summary>
+        /// <param name="id">The id of the sound</param>
+        public static void Play(string id)
+        {
+            Instance.GetSound(id)?.Play();
         }
 
         /// <summary>

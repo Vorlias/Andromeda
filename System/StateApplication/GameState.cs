@@ -40,13 +40,6 @@ namespace Andromeda2D.System
             get => mouseDelta;
         }
 
-        [Obsolete]
-        public Music BackgroundMusic
-        {
-            get;
-            set;
-        }
-
         public bool IsTempState
         {
             get;
