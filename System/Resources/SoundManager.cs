@@ -56,11 +56,6 @@ namespace Andromeda2D.System
             
         }
 
-        public Sound GetSoundCopy(string id)
-        {
-            return new Sound(new SoundBuffer(Get(id)));
-        }
-
         /// <summary>
         /// Loads the sound from a file to the specified id
         /// </summary>
