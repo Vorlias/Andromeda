@@ -56,7 +56,7 @@ namespace Andromeda2D.Entities.Components
         }
 
         ScaledResolution _res = new ScaledResolution();
-        public ScaledResolution ScaledResolution
+        public ScaledResolution GameResolution
         {
             get => _res;
         }
@@ -132,12 +132,12 @@ namespace Andromeda2D.Entities.Components
                 if (view == null)
                     view = new View(application.WorldView);
 
-                if (ScaledResolution.Enabled)
+                if (GameResolution.Enabled)
                 {
                     view.Size = new Vector2f(
-                        ((windowSize.X / ScaledResolution.Resolution.X) * ScaledResolution.Resolution.X), 
-                        ((windowSize.Y / ScaledResolution.Resolution.Y) * ScaledResolution.Resolution.Y)
-                    ) * (ScaledResolution.Resolution.Y / windowSize.Y); //ScaledResolution.Resolution / 2.0f;
+                        windowSize.X,
+                        windowSize.Y
+                    ) * (GameResolution.Resolution.X / windowSize.X); //ScaledResolution.Resolution / 2.0f;
                 }
 
                 view.Center = WorldPosition;
@@ -152,7 +152,7 @@ namespace Andromeda2D.Entities.Components
             var window = StateApplication.Application.Window;
             var windowSize = window.Size.ToFloat();
 
-            if (ScaledResolution.Enabled)
+            if (GameResolution.Enabled)
             {
                 var relativeSize = new Vector2f(view.Size.X * 2 / windowSize.X, view.Size.Y * 2 / windowSize.Y);
                 return new Vector2f(screenPoint.X * relativeSize.X, screenPoint.Y * relativeSize.Y);
