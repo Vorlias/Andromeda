@@ -26,9 +26,14 @@ namespace Andromeda2D.System
             }
             set
             {
-                Context.SetMouseCursorVisible(value == null);
                 mouseTexture = value;
+                UpdateVisibility();
             }
+        }
+
+        internal void UpdateVisibility()
+        {
+            Context.SetMouseCursorVisible(Texture == null);
         }
 
         public bool Visible

@@ -11,8 +11,6 @@ using Andromeda2D.System.Services;
 
 namespace Andromeda2D.System
 {
-
-
     /// <summary>
     /// An application
     /// </summary>
@@ -28,6 +26,7 @@ namespace Andromeda2D.System
         VideoMode mode;
         string title;
         Styles styles;
+        bool fullscreen;
         float deltaTime;
         float fps;
         IntPtr context;
@@ -54,6 +53,11 @@ namespace Andromeda2D.System
                 services.Add(newSvc);
                 return newSvc;
             }
+        }
+
+        public bool IsFullscreen
+        {
+            get => fullscreen;
         }
 
         public bool IsFocused
@@ -222,6 +226,45 @@ namespace Andromeda2D.System
             CustomCursor = new CustomMouseCursor();
         }
 
+        /// <summary>
+        /// Recreates the window (Used for changing to Fullscreen)
+        /// </summary>
+        /// <param name="mode">The resolution</param>
+        /// <param name="windowStyle">The WindowStyle</param>
+        public void RecreateWindow(VideoMode mode, WindowStyle windowStyle)
+        {
+            RecreateWindow(mode, (Styles)windowStyle);
+        }
+
+        /// <summary>
+        /// Recreates the window (Used for changing to Fullscreen)
+        /// </summary>
+        /// <param name="mode">The resolution</param>
+        /// <param name="styles">The window styles</param>
+        public void RecreateWindow(VideoMode mode, Styles styles)
+        {
+            this.mode = mode;
+            this.styles = styles;
+            RenderWindow oldWindow = window;
+
+            
+
+            InitWindow();
+            window.SetView(oldWindow.DefaultView);
+
+            oldWindow.Close();
+            CustomCursor.Context = window;
+            CustomCursor.UpdateVisibility();
+            ResizeViews();
+
+            // Will register events
+            BeforeStart();
+        }
+
+        public Application(VideoMode mode, string title, WindowStyle wndStyle = WindowStyle.Resizable) : this(mode, title, (Styles) wndStyle)
+        {
+        }
+
         public Application(VideoMode mode, string title, Styles styles = Styles.Default)
         {
             this.mode = mode;
@@ -383,6 +426,11 @@ namespace Andromeda2D.System
         }
 
        
+        protected void ResizeViews()
+        {
+            gameView = new View(new FloatRect(0, 0, window.Size.X, window.Size.Y));
+            interfaceView = new View(new FloatRect(0, 0, window.Size.X, window.Size.Y));
+        }
 
         private void Window_Resized(object sender, SizeEventArgs e)
         {
