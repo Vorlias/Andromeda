@@ -70,6 +70,7 @@
     <Compile Include="Entities\UIEntity.cs" />
     <Compile Include="Events\ViewEvents.cs" />
     <Compile Include="Graphics\LineShape.cs" />
+    <Compile Include="System\Application\WindowStyle.cs" />
     <Compile Include="System\DelayedAction.cs" />
     <Compile Include="System\Input\ITextInput.cs" />
     <Compile Include="System\Input\UserInputManager.InputBinding.cs" />
