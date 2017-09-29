@@ -90,7 +90,7 @@ namespace Andromeda2D.Entities.Components
             float x = 0;
             float y = 0;
             var textSize = text.GetLocalBounds();
-            var uiSize = Transform.Size.GlobalAbsolute;
+            var uiSize = Transform.GlobalSize.GlobalAbsolute;
             var height = UseYPositionFix ? text.CharacterSize + 5 : textSize.Height;
 
             var uiCenter = uiSize / 2.0f;

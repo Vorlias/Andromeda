@@ -42,9 +42,9 @@ namespace Andromeda2D.Entities.Components
             set
             {
                 texture = value;
-                Transform.Size = new UICoordinates(0, texture.Size.X, 0, texture.Size.Y);
+                Transform.LocalSize = new UICoordinates(0, texture.Size.X, 0, texture.Size.Y);
                 RenderOrder = RenderOrder.Interface;
-                ButtonCollider.CreateRectCollider(Transform.Size.GlobalAbsolute);
+                ButtonCollider.CreateRectCollider(Transform.LocalSize.GlobalAbsolute);
             }
         }
 
@@ -59,10 +59,10 @@ namespace Andromeda2D.Entities.Components
             set
             {
                 texture = TextureManager.Instance.Get(value);
-                Transform.Size = new UICoordinates(0, texture.Size.X, 0, texture.Size.Y);
+                Transform.LocalSize = new UICoordinates(0, texture.Size.X, 0, texture.Size.Y);
                 textureId = value;
                 RenderOrder = RenderOrder.Interface;
-                ButtonCollider.CreateRectCollider(Transform.Size.GlobalAbsolute);
+                ButtonCollider.CreateRectCollider(Transform.LocalSize.GlobalAbsolute);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Andromeda2D.Entities.Components
 
         public override void Draw(RenderTarget target, RenderStates states)
         {
-            UICoordinates size = Transform.Size;
+            UICoordinates size = Transform.LocalSize;
             Vector2f totalSize = size.Absolute(target);
 
             if (texture != null)
