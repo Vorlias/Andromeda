@@ -69,7 +69,7 @@ namespace Andromeda2D.Entities.Components
         /// </summary>
         /// <param name="anchor">The alignment anchor</param>
         /// <param name="offset">The offset from the anchor</param>
-        public void SetAlignmentAnchor(UIPositionAnchor anchor, UICoordinates offset)
+        public void SetAlignmentAnchor(UIPositionAnchor anchor, UICoordinates offset = default(UICoordinates))
         {
             SetAlignmentPosition((UIPositionAlign)anchor, offset);
         }
@@ -79,7 +79,7 @@ namespace Andromeda2D.Entities.Components
         /// </summary>
         /// <param name="anchor">The alignment rules</param>
         /// <param name="offset">The UICoordinate offset</param>
-        public void SetAlignmentPosition(UIPositionAlign anchor, UICoordinates offset, bool relativeToParent = false)
+        public void SetAlignmentPosition(UIPositionAlign anchor, UICoordinates offset = default(UICoordinates), bool relativeToParent = false)
         {
             var offsetAbsolute =  relativeToParent ? RelativeToParentSize(offset).GlobalAbsolute : offset.GlobalAbsolute;
             var offsetX = offsetAbsolute.X;
