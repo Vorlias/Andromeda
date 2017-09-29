@@ -5,6 +5,7 @@ using Andromeda2D.Entities.Components.Internal;
 using Andromeda2D.System;
 using Andromeda2D.Linq;
 using System;
+using Andromeda2D.System.Utility;
 
 namespace Andromeda2D.Entities.Components.UI
 {
@@ -75,7 +76,7 @@ namespace Andromeda2D.Entities.Components.UI
         /// Called when the mouse is clicked on the button
         /// </summary>
         /// <param name="inputAction">The mouse input action</param>
-        public abstract void ButtonClick(MouseInputAction inputAction);
+        public abstract void ButtonClick(MouseInputAction inputAction, Vector2f mouseRelativePosition);
 
         /// <summary>
         /// Called when the mouse is clicked outside the button
@@ -84,6 +85,13 @@ namespace Andromeda2D.Entities.Components.UI
         public virtual void ButtonClickOutside(MouseInputAction inputAction)
         {
 
+        }
+
+        Vector2f GetMouseRelativePosition()
+        {
+            Vector2i globalMousePosition = StateApplication.Application.MousePosition;
+
+            return globalMousePosition.ToFloat() - Transform.GlobalPosition.GlobalAbsolute;
         }
 
         public void InputRecieved(UserInputAction inputAction)
@@ -95,7 +103,7 @@ namespace Andromeda2D.Entities.Components.UI
                 if (IsMouseOver && !IsMouseDown)
                 {
                     mouseDown = true;
-                    ButtonClick(mouseAction);
+                    ButtonClick(mouseAction, GetMouseRelativePosition());
                 }
                 else if (!IsMouseDown)
                 {
