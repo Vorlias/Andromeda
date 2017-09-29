@@ -87,11 +87,19 @@ namespace Andromeda2D.Entities.Components.UI
 
         }
 
-        Vector2f GetMouseRelativePosition()
+        public virtual void ButtonReleased(MouseInputAction inputAction)
         {
-            Vector2i globalMousePosition = StateApplication.Application.MousePosition;
 
-            return globalMousePosition.ToFloat() - Transform.GlobalPosition.GlobalAbsolute;
+        }
+
+        protected Vector2f MouseRelativePosition
+        {
+            get
+            {
+                Vector2i globalMousePosition = StateApplication.Application.MousePosition;
+
+                return globalMousePosition.ToFloat() - Transform.GlobalPosition.GlobalAbsolute;
+            }
         }
 
         public void InputRecieved(UserInputAction inputAction)
@@ -103,7 +111,7 @@ namespace Andromeda2D.Entities.Components.UI
                 if (IsMouseOver && !IsMouseDown)
                 {
                     mouseDown = true;
-                    ButtonClick(mouseAction, GetMouseRelativePosition());
+                    ButtonClick(mouseAction, MouseRelativePosition);
                 }
                 else if (!IsMouseDown)
                 {
@@ -112,7 +120,11 @@ namespace Andromeda2D.Entities.Components.UI
             }
             else if (mouseAction?.InputState == InputState.Inactive && mouseAction.Button == Mouse.Button.Left)
             {
+                if (mouseDown)
+                    ButtonReleased(mouseAction);
+
                 mouseDown = false;
+                
             }
         }
 

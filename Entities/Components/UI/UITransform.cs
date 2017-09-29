@@ -7,6 +7,7 @@ using Andromeda2D.Entities.Components.Internal;
 using Andromeda2D.Serialization;
 using Andromeda2D.System;
 using Andromeda2D.Linq;
+using System;
 
 namespace Andromeda2D.Entities.Components
 {
@@ -78,9 +79,9 @@ namespace Andromeda2D.Entities.Components
         /// </summary>
         /// <param name="anchor">The alignment rules</param>
         /// <param name="offset">The UICoordinate offset</param>
-        public void SetAlignmentPosition(UIPositionAlign anchor, UICoordinates offset)
+        public void SetAlignmentPosition(UIPositionAlign anchor, UICoordinates offset, bool relativeToParent = false)
         {
-            var offsetAbsolute = offset.GlobalAbsolute;
+            var offsetAbsolute =  relativeToParent ? RelativeToParentSize(offset).GlobalAbsolute : offset.GlobalAbsolute;
             var offsetX = offsetAbsolute.X;
             var offsetY = offsetAbsolute.Y;
             float scaleX = 0;
@@ -112,7 +113,7 @@ namespace Andromeda2D.Entities.Components
                 scaleY = 1.0f;
             }
 
-            var absoluteSize = LocalSize.GlobalAbsolute;
+            var absoluteSize = GlobalSize.GlobalAbsolute;
 
             if ((anchor & UIPositionAlign.CenterWidth) != 0)
             {
@@ -134,6 +135,7 @@ namespace Andromeda2D.Entities.Components
                 offsetX = offsetX - absoluteSize.X;
             }
 
+            Console.WriteLine(LocalPosition);
             LocalPosition = new UICoordinates(scaleX, offsetX, scaleY, offsetY);
         }
 
@@ -143,6 +145,19 @@ namespace Andromeda2D.Entities.Components
                 new UIAxis(0, ( position.X.Scale * size.GlobalAbsolute.X ) + position.X.Offset),
                 new UIAxis(0, ( position.Y.Scale * size.GlobalAbsolute.Y ) + position.Y.Offset)
             );
+        }
+
+        private UICoordinates RelativeToParentSize(UICoordinates position)
+        {
+            var parentTransform = Entity?.Parent?.GetComponent<UITransform>();
+            if (parentTransform != null && posMode == UICoordinateMode.ParentXY)
+            {
+                return RelativeToSize(parentTransform.LocalSize, position);
+            }
+            else
+            {
+                return LocalSize;
+            }
         }
 
         /// <summary>
