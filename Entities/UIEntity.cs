@@ -27,8 +27,8 @@ namespace Andromeda2D.Entities
 
         public UICoordinates Size
         {
-            get => Transform.Size;
-            set => Transform.Size = value;
+            get => Transform.LocalSize;
+            set => Transform.LocalSize = value;
         }
 
         UserInterface parentInterface;

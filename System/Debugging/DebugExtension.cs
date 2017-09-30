@@ -41,7 +41,7 @@ namespace Andromeda2D.System.Debug
                     UITransform uiTransform;
                     if (child.FindComponent(out uiTransform))
                     {
-                        RectangleShape rs = new RectangleShape(uiTransform.Size);
+                        RectangleShape rs = new RectangleShape(uiTransform.GlobalSize);
                         rs.Position = pos;
                         rs.FillColor = Color.Transparent;
                         rs.OutlineColor = new Color(255, 255, 0, 100);
@@ -149,7 +149,7 @@ namespace Andromeda2D.System.Debug
                 UITransform transform;
                 if (descendant.FindComponent(out transform))
                 {
-                    RectangleShape uiRect = new RectangleShape(transform.Size.GlobalAbsolute);
+                    RectangleShape uiRect = new RectangleShape(transform.LocalSize.GlobalAbsolute);
                     uiRect.Position = transform.GlobalPosition.GlobalAbsolute;
                     uiRect.FillColor = new Color(255, 255, 255, 50);
                     uiRect.OutlineColor = new Color(0, 0, 0);

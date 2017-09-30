@@ -19,6 +19,10 @@
             Scale = scale;
             Offset = offset;
         }
+        public static UIAxis operator -(UIAxis left, UIAxis right)
+        {
+            return new UIAxis(left.Scale - right.Scale, left.Offset - right.Offset);
+        }
 
         public static UIAxis operator +(UIAxis left, UIAxis right)
         {
@@ -28,6 +32,11 @@
         public static UIAxis operator +(UIAxis left, float right)
         {
             return new UIAxis(left.Scale, left.Offset + right);
+        }
+
+        public static UIAxis operator /(UIAxis left, float right)
+        {
+            return new UIAxis(left.Scale / right, left.Offset / right);
         }
 
 

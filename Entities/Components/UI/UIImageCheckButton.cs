@@ -48,7 +48,7 @@ namespace Andromeda2D.Entities.Components.UI
 
         public override void Draw(RenderTarget target, RenderStates states)
         {
-            UICoordinates size = Transform.Size;
+            UICoordinates size = Transform.LocalSize;
             Vector2f totalSize = size.Absolute(target);
 
             if (Textures.Unchecked != null)
@@ -77,7 +77,7 @@ namespace Andromeda2D.Entities.Components.UI
             //rectCollider.CreateRectCollider(new Vector2f(100, 20));
         }
 
-        public override void ButtonClick(MouseInputAction inputAction)
+        public override void ButtonClick(MouseInputAction inputAction, Vector2f mouseRelativePosition)
         {
             checkedState = !checkedState;
             OnCheckboxPressed?.Invoke(inputAction);

@@ -41,7 +41,7 @@ namespace Andromeda2D.Entities.Components.Internal
             set => Entity.Visible = value;
         }
 
-        public Vector2f AbsoluteSize => Transform.Size.GlobalAbsolute;
+        public Vector2f AbsoluteSize => Transform.LocalSize.GlobalAbsolute;
         public Vector2f AbsolutePosition => Transform.LocalPosition.GlobalAbsolute;
 
         public UICoordinates Position
@@ -52,8 +52,8 @@ namespace Andromeda2D.Entities.Components.Internal
 
         public UICoordinates Size
         {
-            get => Transform.Size;
-            set => Transform.Size = value;
+            get => Transform.LocalSize;
+            set => Transform.LocalSize = value;
         }
 
         public UITransform Transform
@@ -96,7 +96,7 @@ namespace Andromeda2D.Entities.Components.Internal
             get
             {
                 FloatRect mouseRect = new FloatRect(MousePosition.ToFloat(), new Vector2f(2, 2));
-                FloatRect uiRect = new FloatRect(Transform.GlobalPosition, Transform.Size);
+                FloatRect uiRect = new FloatRect(Transform.GlobalPosition, Transform.LocalSize);
 
                 return mouseRect.Intersects(uiRect);
             }

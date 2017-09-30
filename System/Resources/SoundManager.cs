@@ -24,8 +24,29 @@ namespace Andromeda2D.System
         Dictionary<string, Music> music = new Dictionary<string, Music>();
         Music playingMusic;
 
+        bool _musicEnabled = true,
+            _soundEnabled = true;
+
         int _musicVolume = 10,
             _soundVolume = 20;
+
+        /// <summary>
+        /// Whether or not music is enabled
+        /// </summary>
+        public bool MusicEnabled
+        {
+            get => _musicEnabled;
+            set
+            {
+                if (playingMusic != null)
+                    if (value)
+                        playingMusic.Play();
+                    else
+                        playingMusic.Stop();
+
+                _musicEnabled = value;
+            }
+        }
 
         /// <summary>
         /// The volume of music (from 0 - 100)
@@ -41,6 +62,22 @@ namespace Andromeda2D.System
                 _musicVolume = (value > 100 ? 100 : (value < 0 ? 0 : value));
                 if (playingMusic != null)
                     playingMusic.Volume = _musicVolume;
+            }
+        }
+
+        /// <summary>
+        /// Whether or not sounds are enabled
+        /// </summary>
+        public bool SoundEnabled
+        {
+            get => _soundEnabled;
+            set
+            {
+                _soundEnabled = value;
+                foreach (var sound in sounds)
+                {
+                    sound.Volume = value ? SoundVolume : 0;
+                }
             }
         }
 
@@ -80,7 +117,9 @@ namespace Andromeda2D.System
                 playingMusic = music;
                 playingMusic.Volume = _musicVolume;
                 playingMusic.Loop = looped;
-                playingMusic.Play();
+
+                if (MusicEnabled)
+                    playingMusic.Play();
             }
         }
 
@@ -115,7 +154,7 @@ namespace Andromeda2D.System
             else
             {
                 Sound test = new Sound(buffer);
-                test.Volume = _soundVolume;
+                test.Volume = SoundEnabled ? _soundVolume : 0;
                 sounds.Add(test);
                 return test;
             }

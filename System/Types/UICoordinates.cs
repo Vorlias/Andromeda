@@ -39,6 +39,11 @@ namespace Andromeda2D.System
             return new UICoordinates(left.X + right.X, left.Y + right.Y);
         }
 
+        public static UICoordinates operator -(UICoordinates left, UICoordinates right)
+        {
+            return new UICoordinates(left.X - right.X, left.Y - right.Y);
+        }
+
         public static UICoordinates operator +(UICoordinates left, Vector2f right)
         {
             return new UICoordinates(left.X + right.X, left.Y + right.Y);

@@ -7,6 +7,7 @@ using Andromeda2D.Entities.Components.Internal;
 using Andromeda2D.Serialization;
 using Andromeda2D.System;
 using Andromeda2D.Linq;
+using System;
 
 namespace Andromeda2D.Entities.Components
 {
@@ -50,7 +51,7 @@ namespace Andromeda2D.Entities.Components
         }
 
         [SerializableProperty("Size", PropertyType = SerializedPropertyType.UICoordinates)]
-        public UICoordinates Size
+        public UICoordinates LocalSize
         {
             get;
             set;
@@ -68,7 +69,7 @@ namespace Andromeda2D.Entities.Components
         /// </summary>
         /// <param name="anchor">The alignment anchor</param>
         /// <param name="offset">The offset from the anchor</param>
-        public void SetAlignmentAnchor(UIPositionAnchor anchor, UICoordinates offset)
+        public void SetAlignmentAnchor(UIPositionAnchor anchor, UICoordinates offset = default(UICoordinates))
         {
             SetAlignmentPosition((UIPositionAlign)anchor, offset);
         }
@@ -78,9 +79,9 @@ namespace Andromeda2D.Entities.Components
         /// </summary>
         /// <param name="anchor">The alignment rules</param>
         /// <param name="offset">The UICoordinate offset</param>
-        public void SetAlignmentPosition(UIPositionAlign anchor, UICoordinates offset)
+        public void SetAlignmentPosition(UIPositionAlign anchor, UICoordinates offset = default(UICoordinates), bool relativeToParent = false)
         {
-            var offsetAbsolute = offset.GlobalAbsolute;
+            var offsetAbsolute =  relativeToParent ? RelativeToParentSize(offset).GlobalAbsolute : offset.GlobalAbsolute;
             var offsetX = offsetAbsolute.X;
             var offsetY = offsetAbsolute.Y;
             float scaleX = 0;
@@ -112,7 +113,7 @@ namespace Andromeda2D.Entities.Components
                 scaleY = 1.0f;
             }
 
-            var absoluteSize = Size.GlobalAbsolute;
+            var absoluteSize = GlobalSize.GlobalAbsolute;
 
             if ((anchor & UIPositionAlign.CenterWidth) != 0)
             {
@@ -134,6 +135,7 @@ namespace Andromeda2D.Entities.Components
                 offsetX = offsetX - absoluteSize.X;
             }
 
+            Console.WriteLine(LocalPosition);
             LocalPosition = new UICoordinates(scaleX, offsetX, scaleY, offsetY);
         }
 
@@ -143,6 +145,38 @@ namespace Andromeda2D.Entities.Components
                 new UIAxis(0, ( position.X.Scale * size.GlobalAbsolute.X ) + position.X.Offset),
                 new UIAxis(0, ( position.Y.Scale * size.GlobalAbsolute.Y ) + position.Y.Offset)
             );
+        }
+
+        private UICoordinates RelativeToParentSize(UICoordinates position)
+        {
+            var parentTransform = Entity?.Parent?.GetComponent<UITransform>();
+            if (parentTransform != null && posMode == UICoordinateMode.ParentXY)
+            {
+                return RelativeToSize(parentTransform.LocalSize, position);
+            }
+            else
+            {
+                return LocalSize;
+            }
+        }
+
+        /// <summary>
+        /// The size relative to the parent
+        /// </summary>
+        public UICoordinates GlobalSize
+        {
+            get
+            {
+                var parentTransform = Entity?.Parent?.GetComponent<UITransform>();
+                if (parentTransform != null && posMode == UICoordinateMode.ParentXY)
+                {
+                    return RelativeToSize(parentTransform.LocalSize, LocalSize);
+                }
+                else
+                {
+                    return LocalSize;
+                }
+            }
         }
 
         /// <summary>
@@ -155,7 +189,7 @@ namespace Andromeda2D.Entities.Components
                 var parentTransform = Entity?.Parent?.GetComponent<UITransform>();
                 if (parentTransform != null && posMode == UICoordinateMode.ParentXY)
                 {
-                    var rel = RelativeToSize(parentTransform.Size, LocalPosition);
+                    var rel = RelativeToSize(parentTransform.LocalSize, LocalPosition);
                     var result = parentTransform.GlobalPosition + rel; //Position + parentTransform.PositionRelative;
                     return result;
                 }
@@ -176,11 +210,11 @@ namespace Andromeda2D.Entities.Components
                 var parentTransform = Entity?.Parent.GetComponent<UITransform>();
                 if (parentTransform != null && sizeMode == UICoordinateMode.ParentXY)
                 {
-                    return Size * parentTransform.SizeRelative.GlobalAbsolute;
+                    return LocalSize * parentTransform.SizeRelative.GlobalAbsolute;
                 }
                 else
                 {
-                    return Size;
+                    return LocalSize;
                 }
             }
         }
@@ -205,7 +239,7 @@ namespace Andromeda2D.Entities.Components
            // Create the transform if it doesn't exist.
            entity.FindComponent(out transform, true);
            LocalPosition = new UICoordinates(0, 0, 0, 0);
-           Size = new UICoordinates(0, 0, 0, 0);
+           LocalSize = new UICoordinates(0, 0, 0, 0);
         }
 
         public void AfterUpdate()
@@ -222,12 +256,12 @@ namespace Andromeda2D.Entities.Components
         {
             var copyTransform = copy.AddComponent<UITransform>();
             copyTransform.LocalPosition = LocalPosition;
-            copyTransform.Size = Size;
+            copyTransform.LocalSize = LocalSize;
         }
 
         public override string ToString()
         {
-            return Name + " - Position: " + LocalPosition + ", Size: " + Size;
+            return Name + " - Position: " + LocalPosition + ", Size: " + LocalSize;
         }
 
         public override string Name
