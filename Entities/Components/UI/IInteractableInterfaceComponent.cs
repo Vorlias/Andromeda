@@ -4,7 +4,7 @@ using SFML.System;
 
 namespace Andromeda2D.Entities.Components.UI
 {
-    interface IInteractableInterfaceComponent : IEventListenerComponent
+    interface IInteractableInterfaceComponent
     {
         /// <summary>
         /// Whether or not the component should prevent fall through of mouse input
@@ -23,5 +23,11 @@ namespace Andromeda2D.Entities.Components.UI
 
         void MouseButtonClicked(MouseInputAction inputAction, bool inside);
         void MouseButtonReleased(MouseInputAction inputAction);
+
+        /// <summary>
+        /// Called when the input event is triggered
+        /// </summary>
+        /// <param name="inputAction">The input action</param>
+        void InputRecieved(UserInputAction inputAction);
     }
 }

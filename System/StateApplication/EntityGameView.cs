@@ -461,6 +461,19 @@ namespace Andromeda2D.System
                 else
                     com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
             }
+
+            foreach (IInterfaceComponent com in InterfaceComponents)
+            {
+                if (com is IInteractableInterfaceComponent i)
+                {
+                    if (!isPreventingFallthrough || i.IsIgnoringFallthroughState)
+                        i.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+
+                    if (i.HasFallthroughPriority)
+                        isPreventingFallthrough = true;
+
+                }
+            }
         }
 
         public void ProcessInput(Application application, Keyboard.Key key, InputState state)

@@ -23,5 +23,6 @@ namespace Andromeda2D.Entities.Components.Internal
         void Update();
         void AfterUpdate();
         void BeforeUpdate();
+
     }
 }
