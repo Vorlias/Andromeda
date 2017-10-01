@@ -438,8 +438,6 @@ namespace Andromeda2D.System
             ParentState = state;
         }
 
-        IInteractableInterfaceComponent inputFallthroughFocus = null;
-
         public void ProcessInput(Application application, Mouse.Button button, InputState state)
         {
             Input.InvokeInput(application, button, state);
