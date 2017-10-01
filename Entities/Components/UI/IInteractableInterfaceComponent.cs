@@ -9,8 +9,7 @@ namespace Andromeda2D.Entities.Components.UI
         bool PreventsFallthrough { get; }
         bool IsPreventingFallthrough { get; }
 
-        void MouseButtonClicked(MouseInputAction inputAction);
-        void MouseButtonClickedOutside(MouseInputAction inputAction);
+        void MouseButtonClicked(MouseInputAction inputAction, bool inside);
         void MouseButtonReleased(MouseInputAction inputAction);
     }
 }
