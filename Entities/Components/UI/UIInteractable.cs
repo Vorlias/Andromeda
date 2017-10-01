@@ -83,7 +83,17 @@ namespace Andromeda2D.Entities.Components.UI
 
         private void HandleMouseButtonClick(MouseInputAction inputAction, bool inside)
         {
+            if (PreventsFallthrough)
+                _isFallThrough = inside;
+
             MouseButtonClicked(inputAction, inside);
+        }
+
+        private void HandleMouseButtonRelease(MouseInputAction inputAction)
+        {
+
+
+            MouseButtonReleased(inputAction);
         }
 
         public abstract void MouseButtonClicked(MouseInputAction inputAction, bool inside);
@@ -122,7 +132,7 @@ namespace Andromeda2D.Entities.Components.UI
             else if (mouseAction?.InputState == InputState.Inactive && mouseAction.Button == Mouse.Button.Left)
             {
                 if (mouseDown)
-                    MouseButtonReleased(mouseAction);
+                    HandleMouseButtonRelease(mouseAction);
 
                 mouseDown = false;
                 
@@ -136,9 +146,15 @@ namespace Andromeda2D.Entities.Components.UI
             {
                 hoverState = true;
                 OnMouseEnter?.Invoke(new UserInterfaceAction(UIActionType.MouseEnter, this));
+
+                if (PreventsFallthrough)
+                    _isFallThrough = true;
             }
             else if (!IsMouseOver && hoverState && Visible)
             {
+                if (PreventsFallthrough && IsPreventingFallthrough)
+                    _isFallThrough = false;
+
                 hoverState = false;
                 OnMouseLeave?.Invoke(new UserInterfaceAction(UIActionType.MouseLeave, this));
             }

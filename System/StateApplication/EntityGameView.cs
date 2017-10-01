@@ -11,6 +11,7 @@ using Andromeda2D.System.Utility;
 using Andromeda2D.System.Internal;
 using Andromeda2D.Entities.Components.Internal;
 using System;
+using Andromeda2D.Entities.Components.UI;
 
 namespace Andromeda2D.System
 {
@@ -320,10 +321,7 @@ namespace Andromeda2D.System
 
 
             updatableComponents.ForEach(com => com.Update());
-            foreach (var com in interfaceComponents)
-            {
-                com.Update();
-            }
+            InterfaceComponents.ForEach(com => com.Update());
 
             updatableComponents.ForEach(com => com.AfterUpdate());
             interfaceComponents.ForEach(com => com.AfterUpdate());
@@ -440,6 +438,8 @@ namespace Andromeda2D.System
             ParentState = state;
         }
 
+        IInteractableInterfaceComponent inputFallthroughFocus = null;
+
         public void ProcessInput(Application application, Mouse.Button button, InputState state)
         {
             Input.InvokeInput(application, button, state);
@@ -448,9 +448,21 @@ namespace Andromeda2D.System
                 entity.Input.InvokeInput(application, button, state);
             }
 
+            bool isPreventingFallthrough = false;
             foreach (IEventListenerComponent com in EventComponents)
             {
-                com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+                if (com is IInteractableInterfaceComponent interactable)
+                {
+                    if (interactable.PreventsFallthrough && !isPreventingFallthrough)
+                    {
+                        isPreventingFallthrough = true;
+                        com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+                    }
+                    else if (!interactable.PreventsFallthrough)
+                        com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+                }
+                else
+                    com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
             }
         }
 
