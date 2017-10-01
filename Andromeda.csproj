@@ -88,6 +88,8 @@
     <Compile Include="System\StateApplication\InterfaceView.cs" />
     <Compile Include="System\StateApplication\InterfaceViewSingleton.cs" />
     <Compile Include="System\StateApplication\LightGameState.cs" />
+    <Compile Include="System\Types\IntNumberRange.cs" />
+    <Compile Include="System\Types\INumberRange.cs" />
     <Compile Include="System\Types\Sequences\ColorSequence.cs" />
     <Compile Include="System\Types\Sequences\ColorSequenceKeypoint.cs" />
     <Compile Include="System\Types\Sequences\ISequenceKeyframe.cs" />

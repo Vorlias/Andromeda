@@ -28,6 +28,27 @@ namespace Andromeda2D.System.Types
         }
 
         /// <summary>
+        /// The range this NumberRange covers 
+        /// </summary>
+        public int Range => Max - Min;
+
+        /// <summary>
+        /// Gets the percentage of this value
+        /// </summary>
+        /// <param name="value">The value</param>
+        /// <returns></returns>
+        public float GetPercentage(float value)
+        {
+            float min = Min;
+            float max = Max;
+            float intervalMinMax = max - min;
+            float intervalValue = value - min;
+            
+
+            return intervalValue / intervalMinMax;
+        }
+
+        /// <summary>
         /// The minimum value
         /// </summary>
         public int Min { get; set; }
