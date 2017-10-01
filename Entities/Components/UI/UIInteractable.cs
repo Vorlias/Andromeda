@@ -92,7 +92,8 @@ namespace Andromeda2D.Entities.Components.UI
 
         private void HandleMouseButtonRelease(MouseInputAction inputAction)
         {
-
+            if (ShouldPreventFallthrough)
+                _isFallThrough = false;
 
             MouseButtonReleased(inputAction);
         }
