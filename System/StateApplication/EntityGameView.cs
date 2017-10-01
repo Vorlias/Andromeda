@@ -121,7 +121,7 @@ namespace Andromeda2D.System
 
         public virtual void OnPreRender(RenderWindow window)
         {
-            
+
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Andromeda2D.System
         {
             get
             {
-                return CollidableEntities.Where(e => e.HasComponent<IEventListenerComponent>() && e.Enabled ).Select(e => e.GetComponent<IEventListenerComponent>());
+                return CollidableEntities.Where(e => e.HasComponent<IEventListenerComponent>() && e.Enabled).Select(e => e.GetComponent<IEventListenerComponent>());
             }
         }
 
@@ -199,7 +199,7 @@ namespace Andromeda2D.System
                 if (value)
                 {
                     OnActivated();
-                    
+
                 }
                 else
                 {
@@ -392,7 +392,7 @@ namespace Andromeda2D.System
 
             // Force clear all the entities in this view
             DestroyAllChildren();
-            
+
             // Reset all bound inputs
             Input.ClearBindings();
 
@@ -451,15 +451,14 @@ namespace Andromeda2D.System
             bool isPreventingFallthrough = false;
             foreach (IEventListenerComponent com in EventComponents)
             {
-                if (com is IInteractableInterfaceComponent interactable)
+                if (com is IInteractableInterfaceComponent i)
                 {
-                    if (interactable.PreventsFallthrough && !isPreventingFallthrough)
-                    {
+                    if (!isPreventingFallthrough)
+                        com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+
+                    if (i.IsPreventingFallthrough)
                         isPreventingFallthrough = true;
-                        com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
-                    }
-                    else if (!interactable.PreventsFallthrough)
-                        com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+
                 }
                 else
                     com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
