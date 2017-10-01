@@ -9,14 +9,30 @@ using Andromeda2D.System;
 using SFML.Window;
 using Andromeda2D.System.Utility;
 using Andromeda2D.Serialization;
+using Andromeda2D.System.Types;
 
 namespace Andromeda2D.Entities.Components.Internal
 {
-    public abstract class UIComponent : Component, IRenderableComponent, IUpdatableComponent
+
+    public abstract class UIComponent : Component, IInterfaceComponent
     {
         public delegate void MouseEvent(MouseInputAction action);
         public delegate void KeyboardEvent(KeyboardInputAction action);
         public delegate void InterfaceEvent(UserInterfaceAction action);
+
+        static IntNumberRange zIndexRange = new IntNumberRange(0, 100);
+        public static IntNumberRange ZIndexRange
+        {
+            get => zIndexRange;
+        }
+
+        int _zIndex = 0;
+
+        public int ZIndex
+        {
+            get => _zIndex;
+            set => _zIndex = zIndexRange.Clamped(value);
+        }
 
         public UIComponent()
         {
@@ -134,7 +150,7 @@ namespace Andromeda2D.Entities.Components.Internal
             }
         }
 
-        public UpdatePriority UpdatePriority => UpdatePriority.Interface;
+        
 
         public virtual void Draw(RenderTarget target, RenderStates states)
         {

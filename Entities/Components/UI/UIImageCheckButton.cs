@@ -77,7 +77,7 @@ namespace Andromeda2D.Entities.Components.UI
             //rectCollider.CreateRectCollider(new Vector2f(100, 20));
         }
 
-        public override void ButtonClick(MouseInputAction inputAction, Vector2f mouseRelativePosition)
+        public override void MouseButtonClicked(MouseInputAction inputAction, Vector2f mouseRelativePosition)
         {
             checkedState = !checkedState;
             OnCheckboxPressed?.Invoke(inputAction);

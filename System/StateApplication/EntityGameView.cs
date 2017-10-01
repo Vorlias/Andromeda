@@ -289,9 +289,20 @@ namespace Andromeda2D.System
             }
         }
 
+        internal IEnumerable<IInterfaceComponent> InterfaceComponents
+        {
+            get
+            {
+                List<IInterfaceComponent> components = new List<IInterfaceComponent>();
+                Children.Where(entity => entity.Enabled).Select(entity => entity.GetComponentsInDescendants<IInterfaceComponent>(true)).ForEach(list => components.AddRange(list));
+                return components.OrderByDescending(component => component.ZIndex);
+            }
+        }
+
         internal void UpdateEntities()
         {
             var updatableComponents = UpdatableComponents;
+            var interfaceComponents = InterfaceComponents;
 
             foreach (var entity in Descendants.Where(descendant => descendant.Enabled))
             {
@@ -305,8 +316,17 @@ namespace Andromeda2D.System
             }
 
             updatableComponents.ForEach(com => com.BeforeUpdate());
+            interfaceComponents.ForEach(com => com.BeforeUpdate());
+
+
             updatableComponents.ForEach(com => com.Update());
+            foreach (var com in interfaceComponents)
+            {
+                com.Update();
+            }
+
             updatableComponents.ForEach(com => com.AfterUpdate());
+            interfaceComponents.ForEach(com => com.AfterUpdate());
 
             UpdateCollisions();
         }

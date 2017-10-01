@@ -100,7 +100,7 @@ namespace Andromeda2D.Entities.Components
             rectCollider.CreateRectCollider(new Vector2f(100, 20));
         }
 
-        public override void ButtonClick(MouseInputAction inputAction, Vector2f mouseRelativePosition)
+        public override void MouseButtonClicked(MouseInputAction inputAction, Vector2f mouseRelativePosition)
         {
             OnButtonPressed?.Invoke(inputAction);
         }

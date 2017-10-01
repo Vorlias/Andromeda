@@ -9,12 +9,21 @@ using Andromeda2D.System.Utility;
 
 namespace Andromeda2D.Entities.Components.UI
 {
+
     /// <summary>
     /// Abstract UI class for interactive elements, like buttons etc.
     /// </summary>
-    public abstract class UIInteractable : UIComponent, IEventListenerComponent
+    public abstract class UIInteractable : UIComponent, IInteractableInterfaceComponent
     {
         public event InterfaceEvent OnMouseEnter, OnMouseLeave;
+
+        public virtual bool PreventsFallthrough => true;
+
+        bool _isFallThrough = false;
+        public bool IsPreventingFallthrough
+        {
+            get => _isFallThrough;
+        }
 
         /// <summary>
         /// The UserInterface this transform is attached to
@@ -76,18 +85,18 @@ namespace Andromeda2D.Entities.Components.UI
         /// Called when the mouse is clicked on the button
         /// </summary>
         /// <param name="inputAction">The mouse input action</param>
-        public abstract void ButtonClick(MouseInputAction inputAction, Vector2f mouseRelativePosition);
+        public abstract void MouseButtonClicked(MouseInputAction inputAction, Vector2f mouseRelativePosition);
 
         /// <summary>
         /// Called when the mouse is clicked outside the button
         /// </summary>
         /// <param name="inputAction">The mouse input action</param>
-        public virtual void ButtonClickOutside(MouseInputAction inputAction)
+        public virtual void MouseButtonClickedOutside(MouseInputAction inputAction)
         {
-
+            
         }
 
-        public virtual void ButtonReleased(MouseInputAction inputAction)
+        public virtual void MouseButtonReleased(MouseInputAction inputAction)
         {
 
         }
@@ -111,17 +120,17 @@ namespace Andromeda2D.Entities.Components.UI
                 if (IsMouseOver && !IsMouseDown)
                 {
                     mouseDown = true;
-                    ButtonClick(mouseAction, MouseRelativePosition);
+                    MouseButtonClicked(mouseAction, MouseRelativePosition);
                 }
                 else if (!IsMouseDown)
                 {
-                    ButtonClickOutside(mouseAction);
+                    MouseButtonClickedOutside(mouseAction);
                 }
             }
             else if (mouseAction?.InputState == InputState.Inactive && mouseAction.Button == Mouse.Button.Left)
             {
                 if (mouseDown)
-                    ButtonReleased(mouseAction);
+                    MouseButtonReleased(mouseAction);
 
                 mouseDown = false;
                 
