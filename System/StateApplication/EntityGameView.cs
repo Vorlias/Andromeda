@@ -451,10 +451,10 @@ namespace Andromeda2D.System
             {
                 if (com is IInteractableInterfaceComponent i)
                 {
-                    if (!isPreventingFallthrough)
+                    if (!isPreventingFallthrough || i.IsIgnoringFallthroughState)
                         com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
 
-                    if (i.IsPreventingFallthrough)
+                    if (i.HasFallthroughPriority)
                         isPreventingFallthrough = true;
 
                 }

@@ -17,10 +17,11 @@ namespace Andromeda2D.Entities.Components.UI
     {
         public event InterfaceEvent OnMouseEnter, OnMouseLeave;
 
-        public virtual bool PreventsFallthrough => true;
+        public virtual bool ShouldPreventFallthrough => true;
+        public virtual bool IsIgnoringFallthroughState => false;
 
         bool _isFallThrough = false;
-        public bool IsPreventingFallthrough
+        public bool HasFallthroughPriority
         {
             get => _isFallThrough;
         }
@@ -83,7 +84,7 @@ namespace Andromeda2D.Entities.Components.UI
 
         private void HandleMouseButtonClick(MouseInputAction inputAction, bool inside)
         {
-            if (PreventsFallthrough)
+            if (ShouldPreventFallthrough)
                 _isFallThrough = inside;
 
             MouseButtonClicked(inputAction, inside);
@@ -147,12 +148,12 @@ namespace Andromeda2D.Entities.Components.UI
                 hoverState = true;
                 OnMouseEnter?.Invoke(new UserInterfaceAction(UIActionType.MouseEnter, this));
 
-                if (PreventsFallthrough)
+                if (ShouldPreventFallthrough)
                     _isFallThrough = true;
             }
             else if (!IsMouseOver && hoverState && Visible)
             {
-                if (PreventsFallthrough && IsPreventingFallthrough)
+                if (ShouldPreventFallthrough && HasFallthroughPriority)
                     _isFallThrough = false;
 
                 hoverState = false;
