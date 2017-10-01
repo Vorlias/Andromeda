@@ -20,7 +20,10 @@ namespace Andromeda2D.Entities.Components.Internal
         public delegate void KeyboardEvent(KeyboardInputAction action);
         public delegate void InterfaceEvent(UserInterfaceAction action);
 
-        static IntNumberRange zIndexRange = new IntNumberRange(0, 100);
+        public const int ZINDEX_MAX = 1000;
+        public const int ZINDEX_MIN = 0;
+
+        static IntNumberRange zIndexRange = new IntNumberRange(ZINDEX_MIN, ZINDEX_MAX);
         public static IntNumberRange ZIndexRange
         {
             get => zIndexRange;
@@ -28,6 +31,9 @@ namespace Andromeda2D.Entities.Components.Internal
 
         int _zIndex = 0;
 
+        /// <summary>
+        /// The ZIndex of this UIComponent
+        /// </summary>
         public int ZIndex
         {
             get => _zIndex;
