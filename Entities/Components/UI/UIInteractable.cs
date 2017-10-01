@@ -81,16 +81,33 @@ namespace Andromeda2D.Entities.Components.UI
 
         public abstract override void Draw(RenderTarget target, RenderStates states);
 
+        private void HandleMouseButtonClick(MouseInputAction inputAction, bool inside)
+        {
+            if (inside)
+                MouseButtonClicked(inputAction);
+            else
+                MouseButtonClickedOutside(inputAction);
+
+            MouseButtonClicked(inputAction, inside);
+        }
+
+        public abstract void MouseButtonClicked(MouseInputAction inputAction, bool inside);
+
         /// <summary>
         /// Called when the mouse is clicked on the button
         /// </summary>
         /// <param name="inputAction">The mouse input action</param>
-        public abstract void MouseButtonClicked(MouseInputAction inputAction, Vector2f mouseRelativePosition);
+        [Obsolete("Use 'MouseButtonClicked(MouseInputAction, bool)")]
+        public virtual void MouseButtonClicked(MouseInputAction inputAction)
+        {
+
+        }
 
         /// <summary>
         /// Called when the mouse is clicked outside the button
         /// </summary>
         /// <param name="inputAction">The mouse input action</param>
+        [Obsolete("Use 'MouseButtonClicked(MouseInputAction, bool)")]
         public virtual void MouseButtonClickedOutside(MouseInputAction inputAction)
         {
             
@@ -120,11 +137,11 @@ namespace Andromeda2D.Entities.Components.UI
                 if (IsMouseOver && !IsMouseDown)
                 {
                     mouseDown = true;
-                    MouseButtonClicked(mouseAction, MouseRelativePosition);
+                    HandleMouseButtonClick(mouseAction, true);
                 }
                 else if (!IsMouseDown)
                 {
-                    MouseButtonClickedOutside(mouseAction);
+                    HandleMouseButtonClick(mouseAction, false);
                 }
             }
             else if (mouseAction?.InputState == InputState.Inactive && mouseAction.Button == Mouse.Button.Left)

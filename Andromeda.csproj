@@ -61,6 +61,7 @@
     <Compile Include="Entities\ComponentNotFoundException.cs" />
     <Compile Include="Entities\Components\Internal\IDestroyedListener.cs" />
     <Compile Include="Entities\Components\Internal\IInterfaceComponent.cs" />
+    <Compile Include="Entities\Components\UI\IInteractableInterfaceComponent.cs" />
     <Compile Include="Entities\Components\UI\TextXAlignment.cs" />
     <Compile Include="Entities\Components\UI\TextYAlignment.cs" />
     <Compile Include="Entities\Components\UI\UICheckButtonTextures.cs" />

@@ -73,15 +73,7 @@ namespace Andromeda2D.Entities.Components.UI
 
         public override void OnButtonInit(Entity entity)
         {
-            //var rectCollider = Entity.AddComponent<PolygonRectCollider>();
-            //rectCollider.CreateRectCollider(new Vector2f(100, 20));
-        }
 
-        public override void MouseButtonClicked(MouseInputAction inputAction, Vector2f mouseRelativePosition)
-        {
-            checkedState = !checkedState;
-            OnCheckboxPressed?.Invoke(inputAction);
-            OnCheckboxStateChanged?.Invoke(checkedState);
         }
 
         public override void AfterUpdate()
@@ -91,16 +83,17 @@ namespace Andromeda2D.Entities.Components.UI
 
         public override void BeforeUpdate()
         {
-            /*Texture texture = Textures.Unchecked;
 
-            if (texture != null && ButtonCollider.Polygon == null)
+        }
+
+        public override void MouseButtonClicked(MouseInputAction inputAction, bool inside)
+        {
+            if (inside)
             {
-                
-                ButtonCollider.CreateRectCollider(new Vector2f(texture.Size.X, texture.Size.Y));
-               
+                checkedState = !checkedState;
+                OnCheckboxPressed?.Invoke(inputAction);
+                OnCheckboxStateChanged?.Invoke(checkedState);
             }
-
-            Transform.Size = new Vector2f(texture.Size.X, texture.Size.Y);*/
         }
     }
 }
