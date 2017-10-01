@@ -13,7 +13,6 @@ using Andromeda2D.System.Types;
 
 namespace Andromeda2D.Entities.Components.Internal
 {
-
     public abstract class UIComponent : Component, IInterfaceComponent
     {
         public delegate void MouseEvent(MouseInputAction action);
@@ -36,7 +35,16 @@ namespace Andromeda2D.Entities.Components.Internal
         /// </summary>
         public int ZIndex
         {
-            get => _zIndex;
+            get
+            {
+                if (Entity.Parent != null && Entity.Parent.HasComponent<IInterfaceComponent>())
+                {
+                    var interfaceComponent = Entity.Parent.GetComponent<IInterfaceComponent>();
+                    return interfaceComponent.ZIndex + _zIndex;
+                }
+                else
+                    return _zIndex;
+            }
             set => _zIndex = zIndexRange.Clamped(value);
         }
 

@@ -7,7 +7,7 @@ namespace Andromeda2D.Entities.Components.Internal
     /// <summary>
     /// A component that is used by a UserInterface
     /// </summary>
-    interface IInterfaceComponent : IRenderableComponent
+    interface IInterfaceComponent : IRenderableComponent, IComponent
     {
         int ZIndex { get; set; }
         bool Visible { get; set; }
