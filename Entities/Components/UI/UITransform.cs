@@ -135,7 +135,6 @@ namespace Andromeda2D.Entities.Components
                 offsetX = offsetX - absoluteSize.X;
             }
 
-            Console.WriteLine(LocalPosition);
             LocalPosition = new UICoordinates(scaleX, offsetX, scaleY, offsetY);
         }
 
