@@ -11,7 +11,7 @@ namespace Andromeda.Colliders
     /// <summary>
     /// A collider that works with the Star Map editor for Andromeda
     /// </summary>
-    public class StarMapCollider
+    public class StarMapColliderInfo
     {
         public Vector2u Size
         {
@@ -23,7 +23,7 @@ namespace Andromeda.Colliders
             get;
         }
 
-        public StarMapCollider(Polygon polygon, Vector2u size)
+        public StarMapColliderInfo(Polygon polygon, Vector2u size)
         {
             Size = size;
             Polygon = polygon;
