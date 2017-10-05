@@ -38,11 +38,6 @@ namespace Andromeda2D.Entities.Components.UI
             }
         }
 
-        public override abstract string Name
-        {
-            get;
-        }
-
         private bool mouseDown = false;
 
         /// <summary>
