@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Andromeda2D.Entities.Components.Colliders;
 using Andromeda2D.System.Types;
 using Andromeda2D.System.Utility;
+using Andromeda.Colliders;
 
 namespace Andromeda2D.Entities.Components
 {
@@ -65,6 +66,22 @@ namespace Andromeda2D.Entities.Components
             this.polygon = polygon;
 
             Origin = -(new Vector2f(polygon.Width, polygon.Height) / 2);
+
+            var first = polygon.FirstOrDefault();
+            if (first != null)
+            {
+                polygon.Add(first);
+            }
+        }
+
+        /// <summary>
+        /// Creates a collider from the StarMapColliderInfo
+        /// </summary>
+        /// <param name="starMapColliderInfo"></param>
+        public void CreateFromCollider(StarMapColliderInfo starMapColliderInfo)
+        {
+            polygon = starMapColliderInfo.Polygon;
+            Origin = -(starMapColliderInfo.Size.ToFloat());
 
             var first = polygon.FirstOrDefault();
             if (first != null)
