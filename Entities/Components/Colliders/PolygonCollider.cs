@@ -81,7 +81,7 @@ namespace Andromeda2D.Entities.Components
         public void CreateFromCollider(StarMapColliderInfo starMapColliderInfo)
         {
             polygon = starMapColliderInfo.Polygon;
-            Origin = -(starMapColliderInfo.Size.ToFloat());
+            Origin = -(starMapColliderInfo.Size.ToFloat() / 2);
 
             var first = polygon.FirstOrDefault();
             if (first != null)
