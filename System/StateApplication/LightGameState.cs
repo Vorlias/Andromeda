@@ -36,6 +36,16 @@ namespace Andromeda.System
             return newView;
         }
 
+        /// <summary>
+        /// Adds a new view to this GameState, which will be temporary until the GameState is unloaded
+        /// </summary>
+        /// <typeparam name="ViewType">The type of view</typeparam>
+        /// <returns>The created view</returns>
+        public ViewType AddTempView<ViewType>() where ViewType : IGameView, new()
+        {
+            return AddTempView<ViewType>(typeof(ViewType).Name);
+        }
+
         public sealed override void OnActivated()
         {
             InitializeViews();

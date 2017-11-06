@@ -2,6 +2,9 @@
 
 namespace Andromeda2D.Events
 {
+    /// <summary>
+    /// An event with no arguments
+    /// </summary>
     public struct AndromedaEvent
     {
         public event Action Event;
@@ -15,6 +18,10 @@ namespace Andromeda2D.Events
         }
     }
 
+    /// <summary>
+    /// An event with a single argument
+    /// </summary>
+    /// <typeparam name="T">The type of the first argument</typeparam>
     public struct AndromedaEvent<T>
     {
         public event Action<T> Event;
