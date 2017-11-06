@@ -26,12 +26,6 @@ namespace Andromeda2D.System
             get => started;
         }
 
-        [Obsolete("Use Action<T,...> on GameStates instead.")]
-        public ViewEvents Events
-        {
-            get => viewEventQueue;
-        }
-
         Vector2f mouseDelta = new Vector2f();
         /// <summary>
         /// Returns the delta if the mouse constraint is set to center
