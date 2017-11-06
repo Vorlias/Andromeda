@@ -18,7 +18,6 @@ namespace Andromeda2D.System
         HashSet<IGameView> views;
         private ExclusiveGameViewProperty exclusiveView;
         private bool mouseGrabbed = false;
-        private ViewEvents viewEventQueue;
 
         bool started;
         public bool HasStarted
@@ -235,7 +234,6 @@ namespace Andromeda2D.System
             exclusiveView = new ExclusiveGameViewProperty(this);
             views = new HashSet<IGameView>();
             Input = new UserInputManager();
-            viewEventQueue = new ViewEvents();
         }
 
 
