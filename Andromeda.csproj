@@ -70,6 +70,7 @@
     <Compile Include="Entities\Components\UI\UIPositionAnchor.cs" />
     <Compile Include="Entities\Components\UI\UITexture.cs" />
     <Compile Include="Entities\UIEntity.cs" />
+    <Compile Include="Events\AndromedaEvent.cs" />
     <Compile Include="Events\ViewEvents.cs" />
     <Compile Include="Graphics\LineShape.cs" />
     <Compile Include="System\Application\WindowStyle.cs" />
