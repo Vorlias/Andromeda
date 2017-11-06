@@ -179,7 +179,6 @@
     <Compile Include="System\Resources\InvalidTextureIdException.cs" />
     <Compile Include="System\Resources\SoundManager.cs" />
     <Compile Include="System\StateApplication\Managers\StateManager.cs" />
-    <Compile Include="System\Types\StarMapCollider.cs" />
     <Compile Include="System\Types\StarMapColliderInfo.cs" />
     <Compile Include="System\Types\UIAxis.cs" />
     <Compile Include="System\Types\UICoordinates.cs" />
