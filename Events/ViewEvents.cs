@@ -5,6 +5,7 @@ using Andromeda2D.System.Utility;
 
 namespace Andromeda2D.Events
 {
+
     /// <summary>
     /// Handles messaging between views in the same state
     /// </summary>
@@ -38,20 +39,17 @@ namespace Andromeda2D.Events
 
         Dictionary<string, EventListener> listeners = new Dictionary<string, EventListener>();
 
-        public EventListener this[string messageId]
+        public EventListener this[Enum messageId]
         {
             get
             {
-                return GetListener(messageId);
+                return GetListener(messageId.ToString());
             }
         }
 
-        /// <summary>
-        /// Registers the event queue
-        /// </summary>
-        /// <param name="messageId">The id of the messages</param>
-        public EventListener AddEvent(string messageId)
+        public EventListener AddEvent(Enum identifier)
         {
+            string messageId = identifier.ToString();
             if (!listeners.ContainsKey(messageId))
             {
                 EventListener newListener = new EventListener(messageId);
@@ -62,6 +60,22 @@ namespace Andromeda2D.Events
             {
                 return listeners[messageId];
             }
+        }
+
+        /// <summary>
+        /// Registers multiple event queues
+        /// </summary>
+        /// <param name="identifiers">The id of the messages</param>
+        /// <returns></returns>
+        public EventListener[] AddEvents(params Enum[] identifiers)
+        {
+            List<EventListener> listeners = new List<EventListener>();
+            foreach (var messageId in identifiers)
+            {
+                listeners.Add(AddEvent(messageId));
+            }
+
+            return listeners.ToArray();
         }
 
         /// <summary>
