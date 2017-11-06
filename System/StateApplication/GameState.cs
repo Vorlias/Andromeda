@@ -26,6 +26,7 @@ namespace Andromeda2D.System
             get => started;
         }
 
+        [Obsolete("Use Action<T,...> on GameStates instead.")]
         public ViewEvents Events
         {
             get => viewEventQueue;
