@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using Andromeda2D.Entities;
+using Andromeda2D.Entities.Components;
 
 namespace Andromeda2D.System.Internal
 {
+    public delegate void EntityAddedEvent(Entity entity);
+    public delegate void EntityRemovedEvent(Entity entity);
+
     public abstract class EntityContainer : IEntityContainer
     {
         HashSet<Entity> children;
+
+        public event EntityAddedEvent EntityAdded;
+        public event EntityRemovedEvent EntityRemoved;
 
         public EntityContainer()
         {
@@ -45,6 +52,7 @@ namespace Andromeda2D.System.Internal
         internal void RemoveChild(Entity child)
         {
             children.Remove(child);
+            EntityRemoved?.Invoke(child);
         }
 
         /// <summary>
@@ -54,6 +62,7 @@ namespace Andromeda2D.System.Internal
         internal void AddChild(Entity child)
         {
             children.Add(child);
+            EntityAdded?.Invoke(child);
         }
 
         /// <summary>

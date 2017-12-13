@@ -16,6 +16,8 @@ using Andromeda2D.System.Utility;
 namespace Andromeda2D.Entities
 {
 
+    public delegate void EntityComponentAddedEvent(IComponent component);
+
     /// <summary>
     /// An entity
     /// </summary>
@@ -296,7 +298,7 @@ namespace Andromeda2D.Entities
         }
         #endregion
 
-
+        public event EntityComponentAddedEvent ComponentAdded;
 
         /// <summary>
         /// Returns whether not the entity has the specified tag
@@ -470,6 +472,7 @@ namespace Andromeda2D.Entities
             {
                 component.ComponentInit(this);
                 components.Add(component);
+                ComponentAdded?.Invoke(component);
                 return component;
             }
         }
