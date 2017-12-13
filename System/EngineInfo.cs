@@ -8,9 +8,9 @@ namespace Andromeda2D.System
 {
     public static class EngineInfo
     {
-        const int DATE = 170925;
+        const int DATE = 171214;
         const int MAJOR = 0;
-        const int MINOR = 360;
+        const int MINOR = 400;
         const int REVISION = 0;
 
         const int FULL = (MAJOR * 10000) + (MINOR * 100) + REVISION;
