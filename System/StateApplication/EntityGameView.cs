@@ -27,6 +27,21 @@ namespace Andromeda2D.System
 
         public bool IsSingleton => this is IGameViewSingleton;
 
+        public virtual void OnCreation()
+        {
+
+        }
+
+        public MouseCoordinates MousePosition
+        {
+            get => new MouseCoordinates(Application, this);
+        }
+
+        public EntityGameView()
+        {
+            OnCreation();
+        }
+
         Camera camera;
         public Camera Camera
         {
