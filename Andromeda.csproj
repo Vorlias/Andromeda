@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
+    <Compile Include="Entities\Components\Behaviours\Controller.cs" />
+    <Compile Include="Entities\Components\Behaviours\IModel.cs" />
     <Compile Include="Entities\Components\Internal\IDestroyedListener.cs" />
     <Compile Include="Entities\Components\Internal\IInterfaceComponent.cs" />
     <Compile Include="Entities\Components\UI\IInteractableInterfaceComponent.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Events\AndromedaEvent.cs" />
     <Compile Include="Graphics\LineShape.cs" />
     <Compile Include="System\Application\WindowStyle.cs" />
+    <Compile Include="System\Debug.cs" />
     <Compile Include="System\DelayedAction.cs" />
     <Compile Include="System\Input\ITextInput.cs" />
     <Compile Include="System\Input\UserInputManager.InputBinding.cs" />
