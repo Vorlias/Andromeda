@@ -13,9 +13,9 @@ namespace Andromeda.Entities.Components
     /// <summary>
     /// A controller for a model
     /// </summary>
-    /// <typeparam name="TController">The model type</typeparam>
-    public abstract class Controller<TController> : Component 
-        where  TController : IModel
+    /// <typeparam name="TModel">The model type</typeparam>
+    public abstract class Controller<TModel> : Component 
+        where  TModel : IModel
     {
         Entity _entity;
 
@@ -23,17 +23,17 @@ namespace Andromeda.Entities.Components
         /// Sets the model of the controller
         /// </summary>
         /// <param name="model">The model to set to this controller</param>
-        protected void SetControllerModel(TController model)
+        protected void SetControllerModel(TModel model)
         {
             this._model = model;
         }
 
-        private TController _model;
+        private TModel _model;
 
         /// <summary>
         /// The model of this controller
         /// </summary>
-        public TController Model
+        public TModel Model
         {
             get => _model;
         }
