@@ -352,40 +352,6 @@ namespace Andromeda2D.Entities
             return components.OfType<T>();
         }
 
-        public List<T> GetComponentsInChildren<T>() where T : IComponent
-        {
-            List<T> components = new List<T>();
-            Entity[] descendants = Children;
-
-            foreach (var child in descendants)
-            {
-                if (child.HasComponent<T>())
-                    components.Add(child.GetComponent<T>());
-            }
-
-            return components;
-        }
-
-        /// <summary>
-        /// Gets the components of the specified type in descendants
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public List<T> GetComponentsInDescendants<T>(bool includeParent = false) where T: IComponent
-        {
-            List<T> components = new List<T>();
-            Entity[] descendants = Children;
-
-            if (includeParent)
-                components.AddRange(GetComponents<T>());
-
-            foreach (var child in descendants)
-            {
-                components.AddRange(child.GetComponentsInDescendants<T>(true));
-            }
-
-            return components;
-        }
 
         /// <summary>
         /// Renders the entity and children of the entity
@@ -519,10 +485,8 @@ namespace Andromeda2D.Entities
         /// </summary>
         internal void Init()
         {
-            
+
         }
-
-
 
         public override string ToString()
         {
@@ -536,6 +500,27 @@ namespace Andromeda2D.Entities
         public override Entity CreateChild()
         {
             return new Entity(this);
+        }
+
+        /// <summary>
+        /// Gets the components of the specified type in descendants
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public List<T> GetComponentsInDescendants<T>(bool includeParent = false) where T : IComponent
+        {
+            List<T> components = new List<T>();
+            Entity[] descendants = Children;
+
+            if (includeParent)
+                components.AddRange(GetComponents<T>());
+
+            foreach (var child in descendants)
+            {
+                components.AddRange(child.GetComponentsInDescendants<T>(true));
+            }
+
+            return components;
         }
 
         /// <summary>
