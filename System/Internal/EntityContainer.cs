@@ -120,6 +120,20 @@ namespace Andromeda2D.System.Internal
                 return null;
         }
 
+        public List<T> GetComponentsInChildren<T>() where T : IComponent
+        {
+            List<T> components = new List<T>();
+            Entity[] descendants = Children;
+
+            foreach (var child in descendants)
+            {
+                if (child.HasComponent<T>())
+                    components.Add(child.GetComponent<T>());
+            }
+
+            return components;
+        }
+
         /// <summary>
         /// Finds all the children with the specified tag
         /// </summary>
