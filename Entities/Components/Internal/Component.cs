@@ -10,12 +10,6 @@ namespace Andromeda2D.Entities.Components.Internal
     {
         protected Entity entity;
 
-        [Obsolete("Replace with 'DisallowMultiple' if AllowMultiple = false", true)]
-        internal virtual bool AllowsMultipleInstances
-        {
-            get => true;
-        }
-
         public Entity Entity
         {
             get
