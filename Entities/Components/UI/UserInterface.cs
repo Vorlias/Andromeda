@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 using SFML.Graphics;
 using Andromeda2D.Entities.Components;
 using Andromeda2D.Entities.Components.Internal;
+using Andromeda.System;
 
 namespace Andromeda2D.Entities.Components
 {
+    [DisallowMultiple]
     public class UserInterface : Component, IContainerComponent
     {
-        public override bool AllowsMultipleInstances
-        {
-            get
-            {
-                return false;
-            }
-        }
-
         /// <summary>
         /// Adds a UIComponent of the specified type to this UserInterface
         /// </summary>

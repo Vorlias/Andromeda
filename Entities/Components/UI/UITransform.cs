@@ -8,12 +8,14 @@ using Andromeda2D.Serialization;
 using Andromeda2D.System;
 using Andromeda2D.Linq;
 using System;
+using Andromeda.System;
 
 namespace Andromeda2D.Entities.Components
 {
     /// <summary>
     /// User Interface Transform Component - Overrides the default Transform.
     /// </summary>
+    [DisallowMultiple]
     public sealed class UITransform : Component, IUpdatableComponent
     {
         private Transform transform;
@@ -215,14 +217,6 @@ namespace Andromeda2D.Entities.Components
                 {
                     return LocalSize;
                 }
-            }
-        }
-
-        public override bool AllowsMultipleInstances
-        {
-            get
-            {
-                return false;
             }
         }
 

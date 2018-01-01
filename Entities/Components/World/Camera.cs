@@ -8,6 +8,7 @@ using Andromeda2D.Entities.Components.Internal;
 using SFML.System;
 using Andromeda2D.System;
 using Andromeda2D.System.Utility;
+using Andromeda.System;
 
 namespace Andromeda2D.Entities.Components
 {
@@ -26,10 +27,9 @@ namespace Andromeda2D.Entities.Components
         }
     }
 
+    [DisallowMultiple]
     public class Camera : Component, IUpdatableComponent
     {
-        public override bool AllowsMultipleInstances => false;
-
         View view;
         public View View
         {

@@ -187,14 +187,6 @@ namespace Andromeda2D.Entities.Components
                 
         }
 
-        public override bool AllowsMultipleInstances
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         public virtual UpdatePriority UpdatePriority => UpdatePriority.Normal;
 
 

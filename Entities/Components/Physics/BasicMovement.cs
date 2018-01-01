@@ -7,20 +7,19 @@ using System.Threading.Tasks;
 using Andromeda2D.Entities.Components.Internal;
 using Andromeda2D.System;
 using Andromeda2D.System.Utility;
-
+using Andromeda.System;
 
 namespace Andromeda2D.Entities.Components
 {
     /// <summary>
     /// A basic entity movement system, doesn't use physics.
     /// </summary>
+    [DisallowMultiple]
     public class BasicMovement : Component, IUpdatableComponent
     {
         /* 
          * Note: This is pretty simple for what it is.
          */
-
-        public override bool AllowsMultipleInstances => false;
 
         float dampRate = 1.0f,
             accelerateRate = 1.0f,

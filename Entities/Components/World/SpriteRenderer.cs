@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using Andromeda2D.Entities.Components.Internal;
 using Andromeda2D.Serialization;
 using Andromeda2D.System;
+using Andromeda.System;
 
 namespace Andromeda2D.Entities.Components
 {
-
+    [DisallowMultiple]
     public sealed class SpriteRenderer : TextureComponent
     {
         private AnchorPoint renderAnchor = new AnchorPoint(0.5f, 0.5f);
@@ -46,14 +47,6 @@ namespace Andromeda2D.Entities.Components
             get
             {
                 return renderAnchor.AppliedTo(this);
-            }
-        }
-
-        public override bool AllowsMultipleInstances
-        {
-            get
-            {
-                return false;
             }
         }
 

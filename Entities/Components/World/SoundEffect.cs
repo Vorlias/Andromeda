@@ -12,16 +12,6 @@ namespace Andromeda2D.Entities.Components
 {
     public class SoundEffect : Component, IDestroyedListener
     {
-        public override bool AllowsMultipleInstances => true;
-        /// <summary>
-        /// The sound buffer
-        /// </summary>
-        /*public SoundBuffer Buffer
-        {
-            get => buffer;
-            set => buffer = value;
-        }*/
-
         string bufferId;
 
         /// <summary>

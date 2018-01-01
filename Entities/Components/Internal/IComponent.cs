@@ -46,15 +46,6 @@ namespace Andromeda2D.Entities.Components
         }
 
         /// <summary>
-        /// Whether or not the component
-        /// </summary>
-        [Obsolete("Use 'DisallowMultiple'")]
-        bool AllowsMultipleInstances
-        {
-            get;
-        }
-
-        /// <summary>
         /// Called when the component is added to an entity
         /// </summary>
         /// <param name="entity">The entity it is added to</param>

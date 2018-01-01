@@ -437,8 +437,6 @@ namespace Andromeda2D.Entities
             var allowMultiple = component.GetType().GetCustomAttributes(typeof(DisallowMultipleAttribute), false);
             if (allowMultiple.Count() > 0)
                 isMultipleAllowed = false;
-            else if (!component.AllowsMultipleInstances)
-                isMultipleAllowed = false;
 
             var elements = components.ToArray().OfType<T>();
             T existing = component;
@@ -587,8 +585,9 @@ namespace Andromeda2D.Entities
             // This is a bit of a messy function, mainly for the cloning... :3
 
             IComponent component = (IComponent)Activator.CreateInstance(type);
+            var disallowMultiple = type.GetCustomAttributes(typeof(DisallowMultipleAttribute), false).Count() > 0;
 
-            if (component.AllowsMultipleInstances)
+            if (!disallowMultiple)
             {
                 created = component;
                 component.ComponentInit(this);

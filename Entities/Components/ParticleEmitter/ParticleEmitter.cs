@@ -14,8 +14,6 @@ namespace Andromeda2D.Entities.Components
     /// </summary>
     public class ParticleEmitter : TextureComponent, IUpdatableComponent
     {
-        public override bool AllowsMultipleInstances => true;
-
         public UpdatePriority UpdatePriority => UpdatePriority.Normal;
 
         NumberRange rotation = new NumberRange(0.0f),

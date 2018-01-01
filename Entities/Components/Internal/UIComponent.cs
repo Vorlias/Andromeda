@@ -14,7 +14,7 @@ using Andromeda.System;
 
 namespace Andromeda2D.Entities.Components.Internal
 {
-    [RequireComponents(typeof(UITransform))]
+    [RequireComponents(typeof(UITransform)), DisallowMultiple]
     public abstract class UIComponent : Component, IInterfaceComponent
     {
         public delegate void MouseEvent(MouseInputAction action);
@@ -147,14 +147,6 @@ namespace Andromeda2D.Entities.Components.Internal
             set
             {
                 renderOrder = value;
-            }
-        }
-
-        public override bool AllowsMultipleInstances
-        {
-            get
-            {
-                return false;
             }
         }
 
