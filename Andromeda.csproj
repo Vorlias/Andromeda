@@ -75,6 +75,8 @@
     <Compile Include="Events\AndromedaEvent.cs" />
     <Compile Include="Graphics\LineShape.cs" />
     <Compile Include="System\Application\WindowStyle.cs" />
+    <Compile Include="System\Attributes\DisallowMultipleAttribute.cs" />
+    <Compile Include="System\Attributes\RequireComponentsAttribute.cs" />
     <Compile Include="System\Debug.cs" />
     <Compile Include="System\DelayedAction.cs" />
     <Compile Include="System\Input\ICastable.cs" />
