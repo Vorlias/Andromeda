@@ -38,7 +38,7 @@ namespace Andromeda.Entities.Components
             get => _model;
         }
 
-        public abstract void InitModel();
+        protected abstract void InitModel();
 
         public override void OnComponentInit(Entity entity)
         {
