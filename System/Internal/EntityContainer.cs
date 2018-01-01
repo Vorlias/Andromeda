@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Andromeda2D.Entities;
 using Andromeda2D.Entities.Components;
+using Andromeda2D.Entities.Components.Internal;
 
 namespace Andromeda2D.System.Internal
 {
@@ -63,6 +64,19 @@ namespace Andromeda2D.System.Internal
         {
             children.Add(child);
             EntityAdded?.Invoke(child);
+        }
+
+        /// <summary>
+        /// Add an entity that has the specified component in it
+        /// </summary>
+        /// <typeparam name="TComponent">The component</typeparam>
+        /// <returns></returns>
+        public TComponent Add<TComponent>() where  TComponent : IComponent, new()
+        {
+            Entity entity = new Entity();
+            TComponent com = entity.AddComponent<TComponent>();
+            entity.SetParent(this);
+            return com;
         }
 
         /// <summary>
