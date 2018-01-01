@@ -28,7 +28,12 @@ namespace Andromeda2D.Entities.Components.Internal
 
         }
 
-        public void ComponentInit(Entity entity)
+        void IComponent.ComponentInit(Entity entity)
+        {
+            this.ComponentInit(entity);
+        }
+
+        private void ComponentInit(Entity entity)
         {
             if (this.entity == null)
                 this.entity = entity;
