@@ -285,8 +285,7 @@ namespace Andromeda2D.System
                 {
                     if (collider.CollidesWith(collider2))
                     {
-                        collider.Entity.Behaviours.ForEach(behaviour => behaviour.Collision(collider2.Entity));
-                        collider2.Entity.Behaviours.ForEach(behaviour => behaviour.Collision(collider.Entity));
+                        
                     }
                 }
             }

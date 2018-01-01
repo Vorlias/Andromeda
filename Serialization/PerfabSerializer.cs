@@ -67,7 +67,7 @@ namespace Andromeda2D.System
                 Assemblies.ForEach(Assembly => {
                     foreach (Type t in Assembly.GetTypes())
                     {
-                        if (t.IsSubclassOf(typeof(Component)) || t.IsSubclassOf(typeof(UIComponent)) || t.IsSubclassOf(typeof(EntityBehaviour)) )
+                        if (t.IsSubclassOf(typeof(Component)) || t.IsSubclassOf(typeof(UIComponent)) )
                         {
                             validTypes.Add(t);
                         }

@@ -249,17 +249,6 @@ namespace Andromeda2D.Entities
         }
 
         /// <summary>
-        /// The behaviours attached to this entity
-        /// </summary>
-        internal IEnumerable<EntityBehaviour> Behaviours
-        {
-            get
-            {
-                return components.OfType<EntityBehaviour>().Where(component => component.IsEnabled);
-            }
-        }
-
-        /// <summary>
         /// Returns the full path of this entity
         /// </summary>
         public string FullName
@@ -360,12 +349,6 @@ namespace Andromeda2D.Entities
         /// <param name="window"></param>
         internal void Render(RenderTarget target)
         {
-            var scriptedComponents = components.OfType<EntityBehaviour>();
-            foreach (EntityBehaviour behaviour in scriptedComponents)
-            {
-                behaviour.Render();
-            }
-
             foreach (Entity child in Children)
             {
                 child.Render(target);
@@ -468,11 +451,7 @@ namespace Andromeda2D.Entities
         /// </summary>
         internal void StartBehaviours()
         {
-            var scriptedComponents = components.OfType<EntityBehaviour>();
-            foreach (EntityBehaviour behaviour in scriptedComponents.ToArray())
-            {
-                behaviour.Start();
-            }
+
         }
 
         /// <summary>
@@ -677,7 +656,6 @@ namespace Andromeda2D.Entities
         public void Destroy()
         {
             Components.OfType<IDestroyedListener>().ForEach(listener => listener.OnDestroy());
-            Behaviours.ForEach(behaviour => behaviour.OnDestroy());
 
             if (ParentContainer != null)
             {
@@ -703,7 +681,6 @@ namespace Andromeda2D.Entities
             if (!initialized)
             {
                 initialized = true;
-                Behaviours.ToArray().ForEach(behaviour => behaviour.Start());
             }
         }
 
