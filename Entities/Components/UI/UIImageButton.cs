@@ -18,16 +18,6 @@ namespace Andromeda2D.Entities.Components
     public class UIImageButton : UIInteractable, ITextureComponent, IEventListenerComponent
     {
         public event MouseEvent OnButtonPressed;
-        
-
-        public override string Name
-        {
-            get
-            {
-                return "ImageButton";
-            }
-        }
-
 
         private Texture texture;
         private string textureId;

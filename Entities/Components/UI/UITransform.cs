@@ -260,15 +260,7 @@ namespace Andromeda2D.Entities.Components
 
         public override string ToString()
         {
-            return Name + " - Position: " + LocalPosition + ", Size: " + LocalSize;
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return "UITransform";
-            }
+            return  "UITransform - Position: " + LocalPosition + ", Size: " + LocalSize;
         }
 
         public UpdatePriority UpdatePriority => UpdatePriority.Interface;

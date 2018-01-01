@@ -187,14 +187,6 @@ namespace Andromeda2D.Entities.Components
                 
         }
 
-        public override string Name
-        {
-            get
-            {
-                return "EntityBehaviour";
-            }
-        }
-
         public override bool AllowsMultipleInstances
         {
             get

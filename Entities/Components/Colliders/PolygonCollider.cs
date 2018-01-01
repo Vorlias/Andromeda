@@ -137,14 +137,6 @@ namespace Andromeda2D.Entities.Components
             Origin = -(i.Size / 2).ToFloat();
         }
 
-        public override string Name
-        {
-            get
-            {
-                return "PolygonCollider";
-            }
-        }
-
         public override void OnComponentCopy(Entity source, Entity copy)
         {
             //throw new NotImplementedException();

@@ -7,7 +7,7 @@ namespace Andromeda2D.Entities.Components
     /// </summary>
     public class InvalidComponentPairException : Exception
     {
-        public InvalidComponentPairException(IComponent a, IComponent b) : base ("Cannot have a " + a.Name + " component with a " + b.Name + " component!")
+        public InvalidComponentPairException(IComponent a, IComponent b) : base ("Cannot have a " + a.GetType().Name + " component with a " + b.GetType().Name + " component!")
         {
 
         }

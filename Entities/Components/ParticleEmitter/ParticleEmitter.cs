@@ -16,8 +16,6 @@ namespace Andromeda2D.Entities.Components
     {
         public override bool AllowsMultipleInstances => true;
 
-        public override string Name => "ParticleEmitter";
-
         public UpdatePriority UpdatePriority => UpdatePriority.Normal;
 
         NumberRange rotation = new NumberRange(0.0f),

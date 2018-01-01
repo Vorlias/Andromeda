@@ -23,11 +23,6 @@ namespace Andromeda2D.Entities.Components.Internal
             }
         }
 
-        public virtual string Name
-        {
-            get => GetType().Name;
-        }
-
         public virtual void OnComponentCopy(Entity source, Entity copy)
         {
 

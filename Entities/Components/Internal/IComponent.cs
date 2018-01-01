@@ -52,11 +52,6 @@ namespace Andromeda2D.Entities.Components
             get;
         }
 
-        string Name
-        {
-            get;
-        }
-
         /// <summary>
         /// Called when the component is added to an entity
         /// </summary>

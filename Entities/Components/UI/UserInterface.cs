@@ -40,14 +40,6 @@ namespace Andromeda2D.Entities.Components
             entity.AddComponent<UITransform>();
         }
 
-        public override string Name
-        {
-            get
-            {
-                return "UserInterface";
-            }
-        }
-
         public override void OnComponentCopy(Entity source, Entity copy)
         {
             var ui = copy.AddComponent<UserInterface>();
@@ -58,9 +50,9 @@ namespace Andromeda2D.Entities.Components
             int count = Entity.GetComponentsInDescendants<UIComponent>().Count;
 
             if (count == 1)
-                return Name + " - " + count + " UIComponent";
+                return "UserInterface - " + count + " UIComponent";
             else
-                return Name + " - " + count +" UIComponents";
+                return "UserInterface - " + count +" UIComponents";
         }
     }
 }

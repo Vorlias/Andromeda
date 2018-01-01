@@ -14,15 +14,6 @@ namespace Andromeda2D.Entities.Components.UI
         public event MouseEvent OnCheckboxPressed;
         public event CheckStateChange OnCheckboxStateChanged;
 
-
-        public override string Name
-        {
-            get
-            {
-                return "ImageButton";
-            }
-        }
-
         bool checkedState = false;
 
         /// <summary>

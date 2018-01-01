@@ -15,8 +15,6 @@ namespace Andromeda2D.Entities.Components
     /// </summary>
     public class UIImage : UIComponent, ITextureComponent
     {
-        public override string Name => "UIImage";
-
         private Texture texture;
         private string textureId;
 

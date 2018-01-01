@@ -11,9 +11,6 @@ using Andromeda2D.System.Utility;
 
 namespace Andromeda2D.Entities.Components
 {
-
-
-
     public sealed class Transform : Transformable, IComponent
     {
         public enum AxisType

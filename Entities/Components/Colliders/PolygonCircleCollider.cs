@@ -12,15 +12,6 @@ namespace Andromeda2D.Entities.Components
 {
     public class PolygonCircleCollider : CollisionComponent, IPolygonColliderComponent
     {
-
-        public override string Name
-        {
-            get
-            {
-                return "CircleCollider";
-            }
-        }
-
         private Vector2f origin;
         public Vector2f Origin
         {

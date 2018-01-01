@@ -156,16 +156,6 @@ namespace Andromeda2D.Entities.Components.Internal
             }
         }
 
-        public override string Name
-        {
-            get
-            {
-                return "UIRenderer";
-            }
-        }
-
-        
-
         public virtual void Draw(RenderTarget target, RenderStates states)
         {
         }

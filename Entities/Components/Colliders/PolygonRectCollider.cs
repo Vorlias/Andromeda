@@ -32,14 +32,6 @@ namespace Andromeda2D.Entities.Components
             }
         }
 
-        public override string Name
-        {
-            get
-            {
-                return "PolygonRectCollider";
-            }
-        }
-
         /// <summary>
         /// Creates a collider with the specified size
         /// </summary>

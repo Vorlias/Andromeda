@@ -21,7 +21,6 @@ namespace Andromeda2D.Entities.Components
          */
 
         public override bool AllowsMultipleInstances => false;
-        public override string Name => "BasicMovement";
 
         float dampRate = 1.0f,
             accelerateRate = 1.0f,

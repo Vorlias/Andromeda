@@ -469,7 +469,7 @@ namespace Andromeda2D.System
 
                     foreach (var component in instance.Components)
                     {
-                        Console.WriteLine("\t###\tCOMPONENT " + component.Name);
+                        Console.WriteLine("\t###\tCOMPONENT " + component.GetType().Name);
                     }
                 }
             }
