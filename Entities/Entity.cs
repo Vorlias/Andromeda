@@ -639,17 +639,7 @@ namespace Andromeda2D.Entities
 
             foreach (IComponent component in components)
             {
-                if (component is EntityBehaviour)
-                {
-                   
-                    IComponent componentCopy;
-                    if (copy.FindOrCreateComponent(component.GetType(), out componentCopy))
-                    {
-                        //componentCopy.ComponentInit(copy);
-                    }
-                }
-                else
-                    component.OnComponentCopy(this, copy);
+                component.OnComponentCopy(this, copy);
             }
 
             foreach (Entity child in Children)
