@@ -12,6 +12,7 @@ using Andromeda2D.Serialization;
 using Andromeda2D.System;
 using Andromeda2D.System.Internal;
 using Andromeda2D.System.Utility;
+using Andromeda.System;
 
 namespace Andromeda2D.Entities
 {
@@ -425,6 +426,12 @@ namespace Andromeda2D.Entities
         public T AddComponent<T>() where T : IComponent, new()
         {
             T component = new T();
+
+            var attrs = component.GetType().GetCustomAttributes(typeof(RequireComponentsAttribute), true);
+            foreach (RequireComponentsAttribute attr in attrs)
+            {
+                attr.AddRequiredComponents(this);
+            }
 
             var elements = components.ToArray().OfType<T>();
             T existing = component;

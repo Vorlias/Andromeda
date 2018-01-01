@@ -10,9 +10,11 @@ using SFML.Window;
 using Andromeda2D.System.Utility;
 using Andromeda2D.Serialization;
 using Andromeda2D.System.Types;
+using Andromeda.System;
 
 namespace Andromeda2D.Entities.Components.Internal
 {
+    [RequireComponents(typeof(UITransform))]
     public abstract class UIComponent : Component, IInterfaceComponent
     {
         public delegate void MouseEvent(MouseInputAction action);
