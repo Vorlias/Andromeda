@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,7 @@ namespace Andromeda2D.Entities.Components
         /// <summary>
         /// Whether or not the component
         /// </summary>
+        [Obsolete("Use 'DisallowMultiple'")]
         bool AllowsMultipleInstances
         {
             get;

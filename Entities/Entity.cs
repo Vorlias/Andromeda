@@ -426,6 +426,7 @@ namespace Andromeda2D.Entities
         public T AddComponent<T>() where T : IComponent, new()
         {
             T component = new T();
+            bool isMultipleAllowed = true;
 
             var attrs = component.GetType().GetCustomAttributes(typeof(RequireComponentsAttribute), true);
             foreach (RequireComponentsAttribute attr in attrs)
@@ -433,10 +434,16 @@ namespace Andromeda2D.Entities
                 attr.AddRequiredComponents(this);
             }
 
+            var allowMultiple = component.GetType().GetCustomAttributes(typeof(DisallowMultipleAttribute), false);
+            if (allowMultiple.Count() > 0)
+                isMultipleAllowed = false;
+            else if (!component.AllowsMultipleInstances)
+                isMultipleAllowed = false;
+
             var elements = components.ToArray().OfType<T>();
             T existing = component;
 
-            if (elements.Count() > 0 && !component.AllowsMultipleInstances)
+            if (elements.Count() > 0 && !isMultipleAllowed)
             {
                 existing = elements.First();
                 return existing;
