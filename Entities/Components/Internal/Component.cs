@@ -23,7 +23,7 @@ namespace Andromeda2D.Entities.Components.Internal
 
         }
 
-        public virtual void OnComponentInit(Entity entity)
+        protected virtual void OnComponentInit(Entity entity)
         {
 
         }

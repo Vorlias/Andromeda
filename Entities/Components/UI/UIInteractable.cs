@@ -67,7 +67,7 @@ namespace Andromeda2D.Entities.Components.UI
 
         public abstract void OnButtonInit(Entity entity);
 
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
             var rectCollider = Entity.AddComponent<PolygonRectCollider>();
             rectCollider.CreateRectCollider(new Vector2f(100, 20));

@@ -227,7 +227,7 @@ namespace Andromeda2D.Entities.Components
             Entity.Transform.Origin = new Vector2f(0, 0);
         }
 
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
            // Create the transform if it doesn't exist.
            entity.FindComponent(out transform, true);

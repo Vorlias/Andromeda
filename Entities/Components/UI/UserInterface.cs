@@ -24,7 +24,7 @@ namespace Andromeda2D.Entities.Components
             return child.AddComponent<UIComponentType>();
         }
 
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
             entity.Name = "UserInterface";
         }

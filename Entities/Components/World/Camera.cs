@@ -87,7 +87,7 @@ namespace Andromeda2D.Entities.Components
             set => throw new NotImplementedException();
         }
 
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
             StateApplication app = StateApplication.Application;
 

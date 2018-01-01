@@ -67,7 +67,7 @@ namespace Andromeda2D.Entities.Components
 
         }
 
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
             
         }

@@ -177,7 +177,7 @@ namespace Andromeda2D.Entities.Components
         /// </summary>
         /// <param name="entity">The entity it is added to</param>
         /// <exception cref="SetEntityInvalidException">Called if the user tries to set it</exception>
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
             if (!initialized)
             {

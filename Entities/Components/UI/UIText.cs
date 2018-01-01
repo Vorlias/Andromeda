@@ -149,7 +149,7 @@ namespace Andromeda2D.Entities.Components
             }
         }
 
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
             RenderOrder = RenderOrder.Interface + 1; // Bring it to top
             Entity.AddComponent<UITransform>();

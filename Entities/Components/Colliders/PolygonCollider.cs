@@ -142,7 +142,7 @@ namespace Andromeda2D.Entities.Components
             //throw new NotImplementedException();
         }
 
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
             SpriteRenderer renderer;
             if (entity.FindComponent(out renderer))
