@@ -1,4 +1,4 @@
-﻿namespace Andromeda2D.System
+﻿namespace Andromeda.System
 {
     /// <summary>
     /// Helper interface for casting a value to another derived value

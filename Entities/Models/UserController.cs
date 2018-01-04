@@ -1,6 +1,6 @@
-﻿using Andromeda2D.Entities;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.System;
+﻿using Andromeda.Entities;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System;
 
 namespace Andromeda.Entities.Models
 {

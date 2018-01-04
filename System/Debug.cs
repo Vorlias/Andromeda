@@ -1,7 +1,7 @@
-﻿using Andromeda2D.Entities;
-using Andromeda2D.Entities.Components;
-using Andromeda2D.System;
-using Andromeda2D.System.Internal;
+﻿using Andromeda.Entities;
+using Andromeda.Entities.Components;
+using Andromeda.System;
+using Andromeda.System.Internal;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;

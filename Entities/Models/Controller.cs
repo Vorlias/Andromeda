@@ -1,7 +1,7 @@
-﻿using Andromeda2D.Entities;
-using Andromeda2D.Entities.Components;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.System;
+﻿using Andromeda.Entities;
+using Andromeda.Entities.Components;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Andromeda2D.Entities.Components;
-using Andromeda2D.Entities.Components.Internal;
+using Andromeda.Entities.Components;
+using Andromeda.Entities.Components.Internal;
 using Andromeda.System;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     [DisallowMultiple]
     public class UserInterface : Component, IContainerComponent

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Andromeda2D.System.Utility
+namespace Andromeda.System.Utility
 {
     public class MathUtil
     {

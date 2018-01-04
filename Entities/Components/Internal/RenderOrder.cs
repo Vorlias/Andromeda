@@ -1,4 +1,4 @@
-﻿namespace Andromeda2D.Entities.Components
+﻿namespace Andromeda.Entities.Components
 {
     public enum RenderOrder
     {

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.System;
-using Andromeda2D.Serialization;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System;
+using Andromeda.Serialization;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     /// <summary>
     /// An image in a User Interface

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.Entities.Components;
-using Andromeda2D.System;
+using Andromeda.Entities.Components;
+using Andromeda.System;
 
-namespace Andromeda2D.Entities
+namespace Andromeda.Entities
 {
     /// <summary>
     /// A class that handles preset entities

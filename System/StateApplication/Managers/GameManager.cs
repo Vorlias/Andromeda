@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.System.Utility;
+using Andromeda.System.Utility;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
 
     public class StateGameManager

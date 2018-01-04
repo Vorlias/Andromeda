@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     public abstract class UserInputAction : ICastable<UserInputAction>
     {

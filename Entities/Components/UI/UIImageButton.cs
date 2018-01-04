@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Andromeda2D.System;
+using Andromeda.System;
 using SFML.System;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.System.Debug;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System.Debug;
 using SFML.Window;
-using Andromeda2D.Entities.Components.UI;
-using Andromeda2D.Serialization;
-using Andromeda2D.System.Utility;
+using Andromeda.Entities.Components.UI;
+using Andromeda.Serialization;
+using Andromeda.System.Utility;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     public class UIImageButton : UIInteractable, ITextureComponent, IEventListenerComponent
     {

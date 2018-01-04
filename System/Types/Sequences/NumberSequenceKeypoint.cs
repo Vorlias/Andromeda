@@ -1,6 +1,6 @@
-﻿using Andromeda2D.System.Utility;
+﻿using Andromeda.System.Utility;
 
-namespace Andromeda2D.System.SequenceTypes
+namespace Andromeda.System.SequenceTypes
 {
 
     /// <summary>

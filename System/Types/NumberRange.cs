@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Andromeda2D.System.Types
+namespace Andromeda.System.Types
 {
     /// <summary>
     /// A number range

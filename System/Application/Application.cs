@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
 using SFML.Graphics;
-using Andromeda2D.System.Utility;
-using Andromeda2D.System.Services;
+using Andromeda.System.Utility;
+using Andromeda.System.Services;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     /// <summary>
     /// An application

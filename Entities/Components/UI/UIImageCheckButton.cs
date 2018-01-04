@@ -1,11 +1,11 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.Serialization;
-using Andromeda2D.System;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.Serialization;
+using Andromeda.System;
 
-namespace Andromeda2D.Entities.Components.UI
+namespace Andromeda.Entities.Components.UI
 {
 
     public class UIImageCheckButton : UIInteractable, IEventListenerComponent

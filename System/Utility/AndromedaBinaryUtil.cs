@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda2D.System.Utility
+namespace Andromeda.System.Utility
 {
     public static class AndromedaBinaryUtil
     {

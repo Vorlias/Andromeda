@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.System;
-using Andromeda2D.System.Utility;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System;
+using Andromeda.System.Utility;
 using Andromeda.System;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     /// <summary>
     /// A basic entity movement system, doesn't use physics.

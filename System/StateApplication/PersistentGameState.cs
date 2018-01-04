@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.System.Utility;
-using Andromeda2D.System.Internal;
-using Andromeda2D.Events;
+using Andromeda.System.Utility;
+using Andromeda.System.Internal;
+using Andromeda.Events;
 using SFML.System;
 using SFML.Window;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
 
     /// <summary>

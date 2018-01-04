@@ -1,5 +1,5 @@
-﻿using Andromeda2D.Entities;
-using Andromeda2D.Entities.Components.Internal;
+﻿using Andromeda.Entities;
+using Andromeda.Entities.Components.Internal;
 using System;
 using System.Linq;
 using System.Text;

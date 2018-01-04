@@ -5,15 +5,15 @@ using System.Reflection;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.Entities;
-using Andromeda2D.System.Utility;
-using Andromeda2D.Entities.Components;
+using Andromeda.Entities;
+using Andromeda.System.Utility;
+using Andromeda.Entities.Components;
 using SFML.System;
-using Andromeda2D.Serialization;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.System.Types;
+using Andromeda.Serialization;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System.Types;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     /// <summary>
     /// Experimental Prefab Serialization

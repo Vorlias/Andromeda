@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
-using Andromeda2D.System.Utility;
+using Andromeda.System.Utility;
 using Andromeda.System.Input;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
 
     /// <summary>

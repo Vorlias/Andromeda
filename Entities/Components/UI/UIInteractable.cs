@@ -1,13 +1,13 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.System;
-using Andromeda2D.Linq;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System;
+using Andromeda.Linq;
 using System;
-using Andromeda2D.System.Utility;
+using Andromeda.System.Utility;
 
-namespace Andromeda2D.Entities.Components.UI
+namespace Andromeda.Entities.Components.UI
 {
 
     /// <summary>

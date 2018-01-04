@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.Entities.Components.Colliders;
-using Andromeda2D.System.Types;
-using Andromeda2D.System.Utility;
+using Andromeda.Entities.Components.Colliders;
+using Andromeda.System.Types;
+using Andromeda.System.Utility;
 using Andromeda.Colliders;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     /// <summary>
     /// A collider based on polygon points

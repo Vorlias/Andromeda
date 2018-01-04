@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     public class StateManager : GameCollectionService<GameState>
     {

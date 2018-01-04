@@ -1,4 +1,4 @@
-﻿namespace Andromeda2D.Entities.Components.UI
+﻿namespace Andromeda.Entities.Components.UI
 {
     public class UICheckButtonTextures
     {

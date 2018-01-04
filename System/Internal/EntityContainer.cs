@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Andromeda2D.Entities;
-using Andromeda2D.Entities.Components;
-using Andromeda2D.Entities.Components.Internal;
+using Andromeda.Entities;
+using Andromeda.Entities.Components;
+using Andromeda.Entities.Components.Internal;
 
-namespace Andromeda2D.System.Internal
+namespace Andromeda.System.Internal
 {
     public delegate void EntityAddedEvent(Entity entity);
     public delegate void EntityRemovedEvent(Entity entity);

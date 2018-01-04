@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     /// <summary>
     /// Exception thrown if two components 'clash'

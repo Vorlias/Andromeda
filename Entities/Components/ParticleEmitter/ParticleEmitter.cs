@@ -1,12 +1,12 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System.Collections.Generic;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.System.SequenceTypes;
-using Andromeda2D.System.Types;
-using Andromeda2D.System.Utility;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System.SequenceTypes;
+using Andromeda.System.Types;
+using Andromeda.System.Utility;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
 
     /// <summary>
