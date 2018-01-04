@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Andromeda2D.System.Internal
+namespace Andromeda.System.Internal
 {
     public class ExclusiveGameViewProperty
     {

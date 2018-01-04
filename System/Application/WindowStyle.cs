@@ -1,6 +1,6 @@
 ﻿using SFML.Window;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     public enum WindowStyle
     {

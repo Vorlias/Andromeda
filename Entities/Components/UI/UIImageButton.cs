@@ -4,30 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Andromeda2D.System;
+using Andromeda.System;
 using SFML.System;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.System.Debug;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System.Debug;
 using SFML.Window;
-using Andromeda2D.Entities.Components.UI;
-using Andromeda2D.Serialization;
-using Andromeda2D.System.Utility;
+using Andromeda.Entities.Components.UI;
+using Andromeda.Serialization;
+using Andromeda.System.Utility;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     public class UIImageButton : UIInteractable, ITextureComponent, IEventListenerComponent
     {
         public event MouseEvent OnButtonPressed;
-        
-
-        public override string Name
-        {
-            get
-            {
-                return "ImageButton";
-            }
-        }
-
 
         private Texture texture;
         private string textureId;
@@ -100,11 +90,6 @@ namespace Andromeda2D.Entities.Components
             rectCollider.CreateRectCollider(new Vector2f(100, 20));
         }
 
-        public override void ButtonClick(MouseInputAction inputAction, Vector2f mouseRelativePosition)
-        {
-            OnButtonPressed?.Invoke(inputAction);
-        }
-
         public override void AfterUpdate()
         {
 
@@ -113,6 +98,12 @@ namespace Andromeda2D.Entities.Components
         public override void BeforeUpdate()
         {
             
+        }
+
+        public override void MouseButtonClicked(MouseInputAction inputAction, bool inside)
+        {
+            if (inside)
+                OnButtonPressed?.Invoke(inputAction);
         }
     }
 }

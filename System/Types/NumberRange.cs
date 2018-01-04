@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Andromeda2D.System.Types
+namespace Andromeda.System.Types
 {
     /// <summary>
     /// A number range
     /// </summary>
-    public struct NumberRange
+    public struct NumberRange : INumberRange<float>
     {
         static Random numberRangeRandom = new Random();
 
@@ -14,7 +14,7 @@ namespace Andromeda2D.System.Types
         /// </summary>
         public float Min
         {
-            get; private set;
+            get; set;
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Andromeda2D.System.Types
         /// </summary>
         public float Max
         {
-            get; private set;
+            get; set;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Andromeda2D.System.Types
         /// </summary>
         /// <param name="other">The other number range</param>
         /// <returns>True if the NumberRanges overlap</returns>
-        public bool Overlaps(NumberRange other)
+        public bool Overlaps(INumberRange<float> other)
         {
             return !(other.Max < Min || other.Min > Max);
         }

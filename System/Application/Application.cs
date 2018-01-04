@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
 using SFML.Graphics;
-using Andromeda2D.System.Utility;
-using Andromeda2D.System.Services;
+using Andromeda.System.Utility;
+using Andromeda.System.Services;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     /// <summary>
     /// An application
@@ -388,12 +388,22 @@ namespace Andromeda2D.System
             interfaceView = new View(defaultView.Center, defaultView.Size);
         }
 
+        Color _clearColor = Color.Black;
+        /// <summary>
+        /// The clear colour of the application (defaulted to black)
+        /// </summary>
+        public Color ClearColor
+        {
+            get => _clearColor;
+            set => _clearColor = value;
+        }
+
         /// <summary>
         /// Performs all the rendering actions
         /// </summary>
         protected virtual void UpdateRendering()
         {
-            window.Clear();
+            window.Clear(ClearColor);
             Render();
             window.Draw(CustomCursor);
             window.Display();

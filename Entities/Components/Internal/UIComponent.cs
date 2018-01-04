@@ -5,18 +5,50 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
-using Andromeda2D.System;
+using Andromeda.System;
 using SFML.Window;
-using Andromeda2D.System.Utility;
-using Andromeda2D.Serialization;
+using Andromeda.System.Utility;
+using Andromeda.Serialization;
+using Andromeda.System.Types;
+using Andromeda.System;
 
-namespace Andromeda2D.Entities.Components.Internal
+namespace Andromeda.Entities.Components.Internal
 {
-    public abstract class UIComponent : Component, IRenderableComponent, IUpdatableComponent
+    [RequireComponents(typeof(UITransform)), DisallowMultiple]
+    public abstract class UIComponent : Component, IInterfaceComponent
     {
         public delegate void MouseEvent(MouseInputAction action);
         public delegate void KeyboardEvent(KeyboardInputAction action);
         public delegate void InterfaceEvent(UserInterfaceAction action);
+
+        public const int ZINDEX_MAX = 1000;
+        public const int ZINDEX_MIN = 0;
+
+        static IntNumberRange zIndexRange = new IntNumberRange(ZINDEX_MIN, ZINDEX_MAX);
+        public static IntNumberRange ZIndexRange
+        {
+            get => zIndexRange;
+        }
+
+        int _zIndex = 0;
+
+        /// <summary>
+        /// The ZIndex of this UIComponent
+        /// </summary>
+        public int ZIndex
+        {
+            get
+            {
+                if (Entity.Parent != null && Entity.Parent.HasComponent<IInterfaceComponent>())
+                {
+                    var interfaceComponent = Entity.Parent.GetComponent<IInterfaceComponent>();
+                    return interfaceComponent.ZIndex + _zIndex;
+                }
+                else
+                    return _zIndex;
+            }
+            set => _zIndex = zIndexRange.Clamped(value);
+        }
 
         public UIComponent()
         {
@@ -117,24 +149,6 @@ namespace Andromeda2D.Entities.Components.Internal
                 renderOrder = value;
             }
         }
-
-        public override bool AllowsMultipleInstances
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return "UIRenderer";
-            }
-        }
-
-        public UpdatePriority UpdatePriority => UpdatePriority.Interface;
 
         public virtual void Draw(RenderTarget target, RenderStates states)
         {

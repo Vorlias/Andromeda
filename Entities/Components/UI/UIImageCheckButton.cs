@@ -1,11 +1,11 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.Serialization;
-using Andromeda2D.System;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.Serialization;
+using Andromeda.System;
 
-namespace Andromeda2D.Entities.Components.UI
+namespace Andromeda.Entities.Components.UI
 {
 
     public class UIImageCheckButton : UIInteractable, IEventListenerComponent
@@ -13,15 +13,6 @@ namespace Andromeda2D.Entities.Components.UI
         public delegate void CheckStateChange(bool state);
         public event MouseEvent OnCheckboxPressed;
         public event CheckStateChange OnCheckboxStateChanged;
-
-
-        public override string Name
-        {
-            get
-            {
-                return "ImageButton";
-            }
-        }
 
         bool checkedState = false;
 
@@ -73,15 +64,7 @@ namespace Andromeda2D.Entities.Components.UI
 
         public override void OnButtonInit(Entity entity)
         {
-            //var rectCollider = Entity.AddComponent<PolygonRectCollider>();
-            //rectCollider.CreateRectCollider(new Vector2f(100, 20));
-        }
 
-        public override void ButtonClick(MouseInputAction inputAction, Vector2f mouseRelativePosition)
-        {
-            checkedState = !checkedState;
-            OnCheckboxPressed?.Invoke(inputAction);
-            OnCheckboxStateChanged?.Invoke(checkedState);
         }
 
         public override void AfterUpdate()
@@ -91,16 +74,17 @@ namespace Andromeda2D.Entities.Components.UI
 
         public override void BeforeUpdate()
         {
-            /*Texture texture = Textures.Unchecked;
 
-            if (texture != null && ButtonCollider.Polygon == null)
+        }
+
+        public override void MouseButtonClicked(MouseInputAction inputAction, bool inside)
+        {
+            if (inside)
             {
-                
-                ButtonCollider.CreateRectCollider(new Vector2f(texture.Size.X, texture.Size.Y));
-               
+                checkedState = !checkedState;
+                OnCheckboxPressed?.Invoke(inputAction);
+                OnCheckboxStateChanged?.Invoke(checkedState);
             }
-
-            Transform.Size = new Vector2f(texture.Size.X, texture.Size.Y);*/
         }
     }
 }

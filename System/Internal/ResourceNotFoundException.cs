@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Andromeda2D.System.Internal
+namespace Andromeda.System.Internal
 {
     class ResourceNotFoundException : KeyNotFoundException
     {

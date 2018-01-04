@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using Andromeda2D.Events;
-using Andromeda2D.System.Internal;
-using Andromeda2D.System.Utility;
+using Andromeda.Events;
+using Andromeda.System.Internal;
+using Andromeda.System.Utility;
 using SFML.System;
 using System;
 using SFML.Audio;
 using System.Linq;
 using SFML.Window;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     /// <summary>
     /// The base game state class
@@ -18,17 +18,11 @@ namespace Andromeda2D.System
         HashSet<IGameView> views;
         private ExclusiveGameViewProperty exclusiveView;
         private bool mouseGrabbed = false;
-        private ViewEvents viewEventQueue;
 
         bool started;
         public bool HasStarted
         {
             get => started;
-        }
-
-        public ViewEvents Events
-        {
-            get => viewEventQueue;
         }
 
         Vector2f mouseDelta = new Vector2f();
@@ -240,7 +234,6 @@ namespace Andromeda2D.System
             exclusiveView = new ExclusiveGameViewProperty(this);
             views = new HashSet<IGameView>();
             Input = new UserInputManager();
-            viewEventQueue = new ViewEvents();
         }
 
 

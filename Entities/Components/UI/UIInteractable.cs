@@ -1,20 +1,30 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.System;
-using Andromeda2D.Linq;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System;
+using Andromeda.Linq;
 using System;
-using Andromeda2D.System.Utility;
+using Andromeda.System.Utility;
 
-namespace Andromeda2D.Entities.Components.UI
+namespace Andromeda.Entities.Components.UI
 {
+
     /// <summary>
     /// Abstract UI class for interactive elements, like buttons etc.
     /// </summary>
-    public abstract class UIInteractable : UIComponent, IEventListenerComponent
+    public abstract class UIInteractable : UIComponent, IInteractableInterfaceComponent
     {
         public event InterfaceEvent OnMouseEnter, OnMouseLeave;
+
+        public virtual bool ShouldPreventFallthrough => true;
+        public virtual bool IsIgnoringFallthroughState => false;
+
+        bool _isFallThrough = false;
+        public bool HasFallthroughPriority
+        {
+            get => _isFallThrough;
+        }
 
         /// <summary>
         /// The UserInterface this transform is attached to
@@ -26,11 +36,6 @@ namespace Andromeda2D.Entities.Components.UI
                 entity.Ancestors.FirstComponent(out UserInterface ui);
                 return ui;
             }
-        }
-
-        public override abstract string Name
-        {
-            get;
         }
 
         private bool mouseDown = false;
@@ -62,7 +67,7 @@ namespace Andromeda2D.Entities.Components.UI
 
         public abstract void OnButtonInit(Entity entity);
 
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
             var rectCollider = Entity.AddComponent<PolygonRectCollider>();
             rectCollider.CreateRectCollider(new Vector2f(100, 20));
@@ -72,22 +77,25 @@ namespace Andromeda2D.Entities.Components.UI
 
         public abstract override void Draw(RenderTarget target, RenderStates states);
 
-        /// <summary>
-        /// Called when the mouse is clicked on the button
-        /// </summary>
-        /// <param name="inputAction">The mouse input action</param>
-        public abstract void ButtonClick(MouseInputAction inputAction, Vector2f mouseRelativePosition);
-
-        /// <summary>
-        /// Called when the mouse is clicked outside the button
-        /// </summary>
-        /// <param name="inputAction">The mouse input action</param>
-        public virtual void ButtonClickOutside(MouseInputAction inputAction)
+        private void HandleMouseButtonClick(MouseInputAction inputAction, bool inside)
         {
+            if (ShouldPreventFallthrough)
+                _isFallThrough = inside;
 
+            MouseButtonClicked(inputAction, inside);
         }
 
-        public virtual void ButtonReleased(MouseInputAction inputAction)
+        private void HandleMouseButtonRelease(MouseInputAction inputAction)
+        {
+            if (ShouldPreventFallthrough)
+                _isFallThrough = false;
+
+            MouseButtonReleased(inputAction);
+        }
+
+        public abstract void MouseButtonClicked(MouseInputAction inputAction, bool inside);
+
+        public virtual void MouseButtonReleased(MouseInputAction inputAction)
         {
 
         }
@@ -111,17 +119,17 @@ namespace Andromeda2D.Entities.Components.UI
                 if (IsMouseOver && !IsMouseDown)
                 {
                     mouseDown = true;
-                    ButtonClick(mouseAction, MouseRelativePosition);
+                    HandleMouseButtonClick(mouseAction, true);
                 }
                 else if (!IsMouseDown)
                 {
-                    ButtonClickOutside(mouseAction);
+                    HandleMouseButtonClick(mouseAction, false);
                 }
             }
             else if (mouseAction?.InputState == InputState.Inactive && mouseAction.Button == Mouse.Button.Left)
             {
                 if (mouseDown)
-                    ButtonReleased(mouseAction);
+                    HandleMouseButtonRelease(mouseAction);
 
                 mouseDown = false;
                 
@@ -135,9 +143,15 @@ namespace Andromeda2D.Entities.Components.UI
             {
                 hoverState = true;
                 OnMouseEnter?.Invoke(new UserInterfaceAction(UIActionType.MouseEnter, this));
+
+                if (ShouldPreventFallthrough)
+                    _isFallThrough = true;
             }
             else if (!IsMouseOver && hoverState && Visible)
             {
+                if (ShouldPreventFallthrough && HasFallthroughPriority)
+                    _isFallThrough = false;
+
                 hoverState = false;
                 OnMouseLeave?.Invoke(new UserInterfaceAction(UIActionType.MouseLeave, this));
             }

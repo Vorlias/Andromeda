@@ -1,9 +1,9 @@
 ﻿using SFML.System;
-using Andromeda2D.System;
-using Andromeda2D.System.SequenceTypes;
-using Andromeda2D.System.Utility;
+using Andromeda.System;
+using Andromeda.System.SequenceTypes;
+using Andromeda.System.Utility;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     /// <summary>
     /// Represents a single particle

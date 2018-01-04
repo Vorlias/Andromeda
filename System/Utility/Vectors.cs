@@ -1,9 +1,9 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using Andromeda2D.System.Types;
+using Andromeda.System.Types;
 
-namespace Andromeda2D.System.Utility
+namespace Andromeda.System.Utility
 {
     public static class Vectors
     {

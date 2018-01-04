@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     public abstract class GameCollectionService<ManageableType>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     public class InvalidTextureIdException : Exception
     {

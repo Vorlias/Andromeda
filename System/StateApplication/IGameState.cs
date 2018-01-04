@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using Andromeda2D.Events;
+using Andromeda.Events;
 using SFML.System;
+using System;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     /// <summary>
     /// GameState interface
@@ -11,7 +12,7 @@ namespace Andromeda2D.System
     {
         IEnumerable<IGameView> ActiveViewsByPriority { get; }
         StateApplication Application { get; }
-        ViewEvents Events { get; }
+
         bool HasStarted { get; }
         UserInputManager Input { get; }
         bool IsTempState { get; }

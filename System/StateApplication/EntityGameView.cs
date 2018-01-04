@@ -11,6 +11,7 @@ using Andromeda2D.System.Utility;
 using Andromeda2D.System.Internal;
 using Andromeda2D.Entities.Components.Internal;
 using System;
+using Andromeda2D.Entities.Components.UI;
 
 namespace Andromeda2D.System
 {
@@ -25,6 +26,21 @@ namespace Andromeda2D.System
         GameViewPriority priority;
 
         public bool IsSingleton => this is IGameViewSingleton;
+
+        public virtual void OnCreation()
+        {
+
+        }
+
+        public MouseCoordinates MousePosition
+        {
+            get => new MouseCoordinates(Application, this);
+        }
+
+        public EntityGameView()
+        {
+            OnCreation();
+        }
 
         Camera camera;
         public Camera Camera
@@ -120,7 +136,7 @@ namespace Andromeda2D.System
 
         public virtual void OnPreRender(RenderWindow window)
         {
-            
+
         }
 
         /// <summary>
@@ -130,7 +146,7 @@ namespace Andromeda2D.System
         {
             get
             {
-                return CollidableEntities.Where(e => e.HasComponent<IEventListenerComponent>() && e.Enabled ).Select(e => e.GetComponent<IEventListenerComponent>());
+                return CollidableEntities.Where(e => e.HasComponent<IEventListenerComponent>() && e.Enabled).Select(e => e.GetComponent<IEventListenerComponent>());
             }
         }
 
@@ -198,7 +214,7 @@ namespace Andromeda2D.System
                 if (value)
                 {
                     OnActivated();
-                    
+
                 }
                 else
                 {
@@ -269,8 +285,7 @@ namespace Andromeda2D.System
                 {
                     if (collider.CollidesWith(collider2))
                     {
-                        collider.Entity.Behaviours.ForEach(behaviour => behaviour.Collision(collider2.Entity));
-                        collider2.Entity.Behaviours.ForEach(behaviour => behaviour.Collision(collider.Entity));
+                        
                     }
                 }
             }
@@ -289,9 +304,20 @@ namespace Andromeda2D.System
             }
         }
 
+        internal IEnumerable<IInterfaceComponent> InterfaceComponents
+        {
+            get
+            {
+                List<IInterfaceComponent> components = new List<IInterfaceComponent>();
+                Children.Where(entity => entity.Enabled).Select(entity => entity.GetComponentsInDescendants<IInterfaceComponent>(true)).ForEach(list => components.AddRange(list));
+                return components.OrderByDescending(component => component.ZIndex);
+            }
+        }
+
         internal void UpdateEntities()
         {
             var updatableComponents = UpdatableComponents;
+            var interfaceComponents = InterfaceComponents;
 
             foreach (var entity in Descendants.Where(descendant => descendant.Enabled))
             {
@@ -305,8 +331,14 @@ namespace Andromeda2D.System
             }
 
             updatableComponents.ForEach(com => com.BeforeUpdate());
+            interfaceComponents.ForEach(com => com.BeforeUpdate());
+
+
             updatableComponents.ForEach(com => com.Update());
+            InterfaceComponents.ForEach(com => com.Update());
+
             updatableComponents.ForEach(com => com.AfterUpdate());
+            interfaceComponents.ForEach(com => com.AfterUpdate());
 
             UpdateCollisions();
         }
@@ -374,7 +406,7 @@ namespace Andromeda2D.System
 
             // Force clear all the entities in this view
             DestroyAllChildren();
-            
+
             // Reset all bound inputs
             Input.ClearBindings();
 
@@ -428,9 +460,33 @@ namespace Andromeda2D.System
                 entity.Input.InvokeInput(application, button, state);
             }
 
+            bool isPreventingFallthrough = false;
             foreach (IEventListenerComponent com in EventComponents)
             {
-                com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+                if (com is IInteractableInterfaceComponent i)
+                {
+                    if (!isPreventingFallthrough || i.IsIgnoringFallthroughState)
+                        com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+
+                    if (i.HasFallthroughPriority)
+                        isPreventingFallthrough = true;
+
+                }
+                else
+                    com.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+            }
+
+            foreach (IInterfaceComponent com in InterfaceComponents)
+            {
+                if (com is IInteractableInterfaceComponent i)
+                {
+                    if (!isPreventingFallthrough || i.IsIgnoringFallthroughState)
+                        i.InputRecieved(new MouseInputAction(button, state, Mouse.GetPosition(Application.Window)));
+
+                    if (i.HasFallthroughPriority)
+                        isPreventingFallthrough = true;
+
+                }
             }
         }
 

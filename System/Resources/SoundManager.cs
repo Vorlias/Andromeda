@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.System.Internal;
-using Andromeda2D.System.Utility;
+using Andromeda.System.Internal;
+using Andromeda.System.Utility;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     /// <summary>
     /// Class for managing sounds

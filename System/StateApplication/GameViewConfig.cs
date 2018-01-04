@@ -1,4 +1,4 @@
-﻿using Andromeda2D.System;
+﻿using Andromeda.System;
 
 namespace Andromeda.System
 {

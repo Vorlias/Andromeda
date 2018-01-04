@@ -2,7 +2,7 @@
 using System.Linq;
 using SFML.Window;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
 
     public partial class UserInputManager

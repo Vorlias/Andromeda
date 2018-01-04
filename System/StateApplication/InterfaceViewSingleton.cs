@@ -1,8 +1,8 @@
 ﻿using Andromeda.System;
-using Andromeda2D.Entities.Components;
+using Andromeda.Entities.Components;
 using System;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     public abstract class InterfaceViewSingleton<InterfaceViewClass> : InterfaceView, IGameViewSingleton where InterfaceViewClass : InterfaceView, new()
     {

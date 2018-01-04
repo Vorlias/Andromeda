@@ -1,7 +1,7 @@
 ﻿using SFML.System;
-using Andromeda2D.System.Types;
+using Andromeda.System.Types;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
 
     public interface IPolygonColliderComponent : ICollisionComponent

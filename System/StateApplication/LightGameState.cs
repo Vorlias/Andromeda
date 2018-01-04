@@ -1,12 +1,12 @@
-﻿using Andromeda2D.System;
+﻿using Andromeda.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.Events;
-using Andromeda2D.System.Internal;
-using Andromeda2D.System.Utility;
+using Andromeda.Events;
+using Andromeda.System.Internal;
+using Andromeda.System.Utility;
 
 namespace Andromeda.System
 {
@@ -34,6 +34,16 @@ namespace Andromeda.System
             Add(newView);
 
             return newView;
+        }
+
+        /// <summary>
+        /// Adds a new view to this GameState, which will be temporary until the GameState is unloaded
+        /// </summary>
+        /// <typeparam name="ViewType">The type of view</typeparam>
+        /// <returns>The created view</returns>
+        public ViewType AddTempView<ViewType>() where ViewType : IGameView, new()
+        {
+            return AddTempView<ViewType>(typeof(ViewType).Name);
         }
 
         public sealed override void OnActivated()

@@ -12,9 +12,12 @@ using Andromeda2D.Serialization;
 using Andromeda2D.System;
 using Andromeda2D.System.Internal;
 using Andromeda2D.System.Utility;
+using Andromeda.System;
 
 namespace Andromeda2D.Entities
 {
+
+    public delegate void EntityComponentAddedEvent(IComponent component);
 
     /// <summary>
     /// An entity
@@ -246,17 +249,6 @@ namespace Andromeda2D.Entities
         }
 
         /// <summary>
-        /// The behaviours attached to this entity
-        /// </summary>
-        internal IEnumerable<EntityBehaviour> Behaviours
-        {
-            get
-            {
-                return components.OfType<EntityBehaviour>().Where(component => component.IsEnabled);
-            }
-        }
-
-        /// <summary>
         /// Returns the full path of this entity
         /// </summary>
         public string FullName
@@ -296,7 +288,7 @@ namespace Andromeda2D.Entities
         }
         #endregion
 
-
+        public event EntityComponentAddedEvent ComponentAdded;
 
         /// <summary>
         /// Returns whether not the entity has the specified tag
@@ -350,40 +342,6 @@ namespace Andromeda2D.Entities
             return components.OfType<T>();
         }
 
-        public List<T> GetComponentsInChildren<T>() where T : IComponent
-        {
-            List<T> components = new List<T>();
-            Entity[] descendants = Children;
-
-            foreach (var child in descendants)
-            {
-                if (child.HasComponent<T>())
-                    components.Add(child.GetComponent<T>());
-            }
-
-            return components;
-        }
-
-        /// <summary>
-        /// Gets the components of the specified type in descendants
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public List<T> GetComponentsInDescendants<T>(bool includeParent = false) where T: IComponent
-        {
-            List<T> components = new List<T>();
-            Entity[] descendants = Children;
-
-            if (includeParent)
-                components.AddRange(GetComponents<T>());
-
-            foreach (var child in descendants)
-            {
-                components.AddRange(child.GetComponentsInDescendants<T>(true));
-            }
-
-            return components;
-        }
 
         /// <summary>
         /// Renders the entity and children of the entity
@@ -391,12 +349,6 @@ namespace Andromeda2D.Entities
         /// <param name="window"></param>
         internal void Render(RenderTarget target)
         {
-            var scriptedComponents = components.OfType<EntityBehaviour>();
-            foreach (EntityBehaviour behaviour in scriptedComponents)
-            {
-                behaviour.Render();
-            }
-
             foreach (Entity child in Children)
             {
                 child.Render(target);
@@ -457,11 +409,22 @@ namespace Andromeda2D.Entities
         public T AddComponent<T>() where T : IComponent, new()
         {
             T component = new T();
+            bool isMultipleAllowed = true;
+
+            var attrs = component.GetType().GetCustomAttributes(typeof(RequireComponentsAttribute), true);
+            foreach (RequireComponentsAttribute attr in attrs)
+            {
+                attr.AddRequiredComponents(this);
+            }
+
+            var allowMultiple = component.GetType().GetCustomAttributes(typeof(DisallowMultipleAttribute), false);
+            if (allowMultiple.Count() > 0)
+                isMultipleAllowed = false;
 
             var elements = components.ToArray().OfType<T>();
             T existing = component;
 
-            if (elements.Count() > 0 && !component.AllowsMultipleInstances)
+            if (elements.Count() > 0 && !isMultipleAllowed)
             {
                 existing = elements.First();
                 return existing;
@@ -470,6 +433,7 @@ namespace Andromeda2D.Entities
             {
                 component.ComponentInit(this);
                 components.Add(component);
+                ComponentAdded?.Invoke(component);
                 return component;
             }
         }
@@ -487,11 +451,7 @@ namespace Andromeda2D.Entities
         /// </summary>
         internal void StartBehaviours()
         {
-            var scriptedComponents = components.OfType<EntityBehaviour>();
-            foreach (EntityBehaviour behaviour in scriptedComponents.ToArray())
-            {
-                behaviour.Start();
-            }
+
         }
 
         /// <summary>
@@ -516,10 +476,8 @@ namespace Andromeda2D.Entities
         /// </summary>
         internal void Init()
         {
-            
+
         }
-
-
 
         public override string ToString()
         {
@@ -533,6 +491,27 @@ namespace Andromeda2D.Entities
         public override Entity CreateChild()
         {
             return new Entity(this);
+        }
+
+        /// <summary>
+        /// Gets the components of the specified type in descendants
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public List<T> GetComponentsInDescendants<T>(bool includeParent = false) where T : IComponent
+        {
+            List<T> components = new List<T>();
+            Entity[] descendants = Children;
+
+            if (includeParent)
+                components.AddRange(GetComponents<T>());
+
+            foreach (var child in descendants)
+            {
+                components.AddRange(child.GetComponentsInDescendants<T>(true));
+            }
+
+            return components;
         }
 
         /// <summary>
@@ -585,8 +564,9 @@ namespace Andromeda2D.Entities
             // This is a bit of a messy function, mainly for the cloning... :3
 
             IComponent component = (IComponent)Activator.CreateInstance(type);
+            var disallowMultiple = type.GetCustomAttributes(typeof(DisallowMultipleAttribute), false).Count() > 0;
 
-            if (component.AllowsMultipleInstances)
+            if (!disallowMultiple)
             {
                 created = component;
                 component.ComponentInit(this);
@@ -638,17 +618,7 @@ namespace Andromeda2D.Entities
 
             foreach (IComponent component in components)
             {
-                if (component is EntityBehaviour)
-                {
-                   
-                    IComponent componentCopy;
-                    if (copy.FindOrCreateComponent(component.GetType(), out componentCopy))
-                    {
-                        //componentCopy.ComponentInit(copy);
-                    }
-                }
-                else
-                    component.OnComponentCopy(this, copy);
+                component.OnComponentCopy(this, copy);
             }
 
             foreach (Entity child in Children)
@@ -686,7 +656,6 @@ namespace Andromeda2D.Entities
         public void Destroy()
         {
             Components.OfType<IDestroyedListener>().ForEach(listener => listener.OnDestroy());
-            Behaviours.ForEach(behaviour => behaviour.OnDestroy());
 
             if (ParentContainer != null)
             {
@@ -712,7 +681,6 @@ namespace Andromeda2D.Entities
             if (!initialized)
             {
                 initialized = true;
-                Behaviours.ToArray().ForEach(behaviour => behaviour.Start());
             }
         }
 

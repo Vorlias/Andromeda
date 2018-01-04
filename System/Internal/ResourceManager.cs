@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda2D.System.Internal
+namespace Andromeda.System.Internal
 {
 
     public abstract class ResourceManager<ResourceType>

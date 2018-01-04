@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda2D.Entities.Components.Internal
+namespace Andromeda.Entities.Components.Internal
 {
     public interface IDebugDrawable
     {

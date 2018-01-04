@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.Serialization;
-using Andromeda2D.System;
-using Andromeda2D.Linq;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.Serialization;
+using Andromeda.System;
+using Andromeda.Linq;
 using System;
+using Andromeda.System;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     /// <summary>
     /// User Interface Transform Component - Overrides the default Transform.
     /// </summary>
+    [DisallowMultiple]
     public sealed class UITransform : Component, IUpdatableComponent
     {
         private Transform transform;
@@ -135,7 +137,6 @@ namespace Andromeda2D.Entities.Components
                 offsetX = offsetX - absoluteSize.X;
             }
 
-            Console.WriteLine(LocalPosition);
             LocalPosition = new UICoordinates(scaleX, offsetX, scaleY, offsetY);
         }
 
@@ -219,14 +220,6 @@ namespace Andromeda2D.Entities.Components
             }
         }
 
-        public override bool AllowsMultipleInstances
-        {
-            get
-            {
-                return false;
-            }
-        }
-
         public void Update()
         {
             // We want to update the transform to reflect this ;)
@@ -234,7 +227,7 @@ namespace Andromeda2D.Entities.Components
             Entity.Transform.Origin = new Vector2f(0, 0);
         }
 
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
            // Create the transform if it doesn't exist.
            entity.FindComponent(out transform, true);
@@ -261,15 +254,7 @@ namespace Andromeda2D.Entities.Components
 
         public override string ToString()
         {
-            return Name + " - Position: " + LocalPosition + ", Size: " + LocalSize;
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return "UITransform";
-            }
+            return  "UITransform - Position: " + LocalPosition + ", Size: " + LocalSize;
         }
 
         public UpdatePriority UpdatePriority => UpdatePriority.Interface;

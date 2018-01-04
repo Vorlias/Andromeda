@@ -1,4 +1,4 @@
-﻿namespace Andromeda2D.Entities.Components
+﻿namespace Andromeda.Entities.Components
 {
     public enum UIPositionAnchor
     {
@@ -9,5 +9,7 @@
         BottomLeft = UIPositionAlign.Bottom | UIPositionAlign.Left | UIPositionAlign.InverseHeight,
         BottomCenter = UIPositionAlign.CenterWidth | UIPositionAlign.Bottom | UIPositionAlign.LeftCenter | UIPositionAlign.InverseHeight,
         BottomRight = UIPositionAlign.Bottom | UIPositionAlign.Right | UIPositionAlign.InverseWidth | UIPositionAlign.InverseHeight,
+
+        LeftCenter = UIPositionAlign.Left | UIPositionAlign.TopCenter | UIPositionAlign.CenterHeight,
     }
 }

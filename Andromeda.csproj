@@ -59,7 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
+    <Compile Include="Entities\Components\Behaviours\Controller.cs" />
+    <Compile Include="Entities\Components\Behaviours\IModel.cs" />
     <Compile Include="Entities\Components\Internal\IDestroyedListener.cs" />
+    <Compile Include="Entities\Components\Internal\IInterfaceComponent.cs" />
+    <Compile Include="Entities\Components\UI\IInteractableInterfaceComponent.cs" />
     <Compile Include="Entities\Components\UI\TextXAlignment.cs" />
     <Compile Include="Entities\Components\UI\TextYAlignment.cs" />
     <Compile Include="Entities\Components\UI\UICheckButtonTextures.cs" />
@@ -68,10 +72,14 @@
     <Compile Include="Entities\Components\UI\UIPositionAnchor.cs" />
     <Compile Include="Entities\Components\UI\UITexture.cs" />
     <Compile Include="Entities\UIEntity.cs" />
-    <Compile Include="Events\ViewEvents.cs" />
+    <Compile Include="Events\AndromedaEvent.cs" />
     <Compile Include="Graphics\LineShape.cs" />
     <Compile Include="System\Application\WindowStyle.cs" />
+    <Compile Include="System\Attributes\DisallowMultipleAttribute.cs" />
+    <Compile Include="System\Attributes\RequireComponentsAttribute.cs" />
+    <Compile Include="System\Debug.cs" />
     <Compile Include="System\DelayedAction.cs" />
+    <Compile Include="System\Input\ICastable.cs" />
     <Compile Include="System\Input\ITextInput.cs" />
     <Compile Include="System\Input\UserInputManager.InputBinding.cs" />
     <Compile Include="System\Input\UserInputManager.InputBindingAction.cs" />
@@ -86,6 +94,8 @@
     <Compile Include="System\StateApplication\InterfaceView.cs" />
     <Compile Include="System\StateApplication\InterfaceViewSingleton.cs" />
     <Compile Include="System\StateApplication\LightGameState.cs" />
+    <Compile Include="System\Types\IntNumberRange.cs" />
+    <Compile Include="System\Types\INumberRange.cs" />
     <Compile Include="System\Types\Sequences\ColorSequence.cs" />
     <Compile Include="System\Types\Sequences\ColorSequenceKeypoint.cs" />
     <Compile Include="System\Types\Sequences\ISequenceKeyframe.cs" />
@@ -175,14 +185,16 @@
     <Compile Include="System\Resources\InvalidTextureIdException.cs" />
     <Compile Include="System\Resources\SoundManager.cs" />
     <Compile Include="System\StateApplication\Managers\StateManager.cs" />
+    <Compile Include="System\Types\StarMapColliderInfo.cs" />
     <Compile Include="System\Types\UIAxis.cs" />
     <Compile Include="System\Types\UICoordinates.cs" />
     <Compile Include="System\Input\UserInputAction.cs" />
     <Compile Include="System\StateApplication\StateApplication.cs" />
     <Compile Include="System\StateApplication\Managers\GameManager.cs" />
     <Compile Include="System\Resources\TextureManager.cs" />
-    <Compile Include="System\Input\UserInputService.cs" />
+    <Compile Include="System\Input\UserInputManager.cs" />
     <Compile Include="System\Input\UserInterfaceAction.cs" />
+    <Compile Include="System\Utility\AndromedaBinaryUtil.cs" />
     <Compile Include="System\Utility\Extensions.cs" />
     <Compile Include="System\Utility\MathUtil.cs" />
     <Compile Include="System\Types\NumberRange.cs" />

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.Serialization;
-using Andromeda2D.System;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.Serialization;
+using Andromeda.System;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     public abstract class TextureComponent : Component, ITextureComponent
     {
