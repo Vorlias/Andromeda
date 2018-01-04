@@ -43,6 +43,17 @@ namespace Andromeda2D.System.Utility
             }
         }
 
+        /// <summary>
+        /// Gets the full name of the enum value including the type name - e.g. EnumClass.EnumValue
+        /// </summary>
+        /// <param name="enumerable"></param>
+        /// <returns>The full name of an enum</returns>
+        public static string GetFullName(this Enum enumerable)
+        {
+            Type enumType = enumerable.GetType();
+            return enumType.Name + "." + enumerable.ToString();
+        }
+
         public static bool InArray(this string item, IEnumerable<string> array)
         {
             return array.Contains(item);
