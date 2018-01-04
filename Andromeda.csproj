@@ -193,6 +193,7 @@
     <Compile Include="System\StateApplication\Managers\GameManager.cs" />
     <Compile Include="System\Resources\TextureManager.cs" />
     <Compile Include="System\Input\UserInputService.cs" />
+    <Compile Include="System\Input\UserInputManager.cs" />
     <Compile Include="System\Input\UserInterfaceAction.cs" />
     <Compile Include="System\Utility\AndromedaBinaryUtil.cs" />
     <Compile Include="System\Utility\Extensions.cs" />
