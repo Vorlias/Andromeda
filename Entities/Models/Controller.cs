@@ -1,6 +1,7 @@
 ﻿using Andromeda2D.Entities;
 using Andromeda2D.Entities.Components;
 using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Andromeda.Entities.Components
     /// A controller for a model
     /// </summary>
     /// <typeparam name="TModel">The model type</typeparam>
-    public abstract class Controller<TModel> : Component 
+    public abstract class Controller<TModel> : Component
         where  TModel : IModel
     {
         Entity _entity;

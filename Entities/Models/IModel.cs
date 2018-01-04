@@ -1,4 +1,6 @@
-﻿namespace Andromeda.Entities.Components
+﻿using System;
+
+namespace Andromeda.Entities.Components
 {
     /// <summary>
     /// A model for a controller
