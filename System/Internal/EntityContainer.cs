@@ -74,6 +74,8 @@ namespace Andromeda2D.System.Internal
         public TComponent Add<TComponent>() where  TComponent : IComponent, new()
         {
             Entity entity = new Entity();
+            entity.Name = typeof(TComponent).Name;
+
             TComponent com = entity.AddComponent<TComponent>();
             entity.SetParent(this);
             return com;
