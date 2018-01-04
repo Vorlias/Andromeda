@@ -2,7 +2,7 @@
 using Andromeda2D.Entities.Components.Internal;
 using Andromeda2D.System;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda.Entities.Models
 {
     /// <summary>
     /// Similar to Controller, but used for objects that are controlled by the user
