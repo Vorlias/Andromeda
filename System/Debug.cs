@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Andromeda2D.Entities;
+using Andromeda2D.Entities.Components;
+using Andromeda2D.System;
+using Andromeda2D.System.Internal;
+using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace Andromeda.Debugging
 {
@@ -29,7 +29,7 @@ namespace Andromeda.Debugging
             }
         }
 
-        internal static void WriteFile(string contents, params object[] arg)
+        internal static void LogFile(string contents, params object[] arg)
         {
             var dateTime = DateTime.Now;
             
@@ -116,14 +116,39 @@ namespace Andromeda.Debugging
         /// </summary>
         /// <param name="message">The message</param>
         /// <param name="arg">Any objects to use with the message string</param>
-        public static void WriteLine(string message, params object[] arg)
+        public static void Log(string message, params object[] arg)
         {
             if (Enabled)
             {
                 AddInfoTag();
                 Console.WriteLine(message, arg);
-                WriteFile("[INFO] " + message, arg);
+                LogFile("[INFO] " + message, arg);
             }
+        }
+
+        public static void Log(Application app, string message = "", params object[] arg)
+        {
+            LogInstance("Application:" + app.Title, message, arg);
+        }
+
+        public static void Log(GameState state, string message = "", params object[] arg)
+        {
+            LogInstance("State:" + state.Name, message, arg);
+        }
+
+        public static void Log(IGameView view, string message = "", params object[] arg)
+        {
+            LogInstance("View:" + view.GetType().Name, message, arg);
+        }
+
+        public static void Log(Entity entity, string message = "", params object[] arg)
+        {
+            LogInstance(entity.FullName, message, arg);
+        }
+
+        public static void Log(IComponent component, string message = "", params object[] arg)
+        {
+            LogInstance(component.Entity.FullName + ":" + component.GetType().Name, message, arg);
         }
 
         public static void Warn(string message,
@@ -139,7 +164,7 @@ namespace Andromeda.Debugging
                 Console.WriteLine("\tSource {0}, {1}:{2}", memberName, filePath, callerLineNumber);
                 Console.ForegroundColor = oldColor;
 
-                WriteFile("[WARNING] " + message);
+                LogFile("[WARNING] " + message);
             }
         }
 
@@ -156,8 +181,8 @@ namespace Andromeda.Debugging
                 Console.WriteLine("\tSource: {0}, {1}:{2}", memberName, filePath, callerLineNumber);
                 Console.ForegroundColor = oldColor;
 
-                WriteFile("[PROBLEM] " + message);
-                WriteFile("\tSource: {0}, {1}:{2}", memberName, filePath, callerLineNumber);
+                LogFile("[PROBLEM] " + message);
+                LogFile("\tSource: {0}, {1}:{2}", memberName, filePath, callerLineNumber);
                 PauseExit();
             }
         }
@@ -168,14 +193,14 @@ namespace Andromeda.Debugging
         /// <param name="instance">The instance</param>
         /// <param name="message">A message to go with the instance</param>
         /// <param name="arg">Any arguments for the formatted message string</param>
-        public static void WriteInstance(object instance, string message = "", params object[] arg)
+        public static void LogInstance(object instance, string message = "", params object[] arg)
         {
             if (Enabled)
             {
                 AddInfoTag();
                 AddInstanceReference(instance);
                 Console.WriteLine(message, arg);
-                WriteFile("[INFO] <" + instance.ToString() + "> " + message, arg);
+                LogFile("[INFO] <" + instance.ToString() + "> " + message, arg);
             }
         }
     }
