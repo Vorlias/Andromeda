@@ -9,6 +9,5 @@ namespace Andromeda.Legacy
     [Obsolete("Temporary support for Legacy component loading")]
     public interface ILegacyComponent
     {
-        Type LegacyType { get; }
     }
 }

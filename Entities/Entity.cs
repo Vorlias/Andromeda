@@ -587,8 +587,9 @@ namespace Andromeda.Entities
             }
             else
             {
-                var existing = components.Where(c => c.GetType() == type).FirstOrDefault();
-                if (existing == null)
+                var existing = components.Where(c => c.GetType() == type);
+                
+                if (existing.Count() == 0)
                 {
                     components.Add(component);
 
@@ -602,7 +603,7 @@ namespace Andromeda.Entities
                 {
                     if (returnExisting)
                     {
-                        created = existing;
+                        created = existing.First();
                         return true;
                     }
                     else
@@ -631,7 +632,7 @@ namespace Andromeda.Entities
             {
                 if (component is ILegacyComponent)
                 {
-                    FindOrCreateComponent((component as ILegacyComponent).LegacyType, out var created, false);
+                    copy.FindOrCreateComponent(component.GetType(), out var created, false);
                 }
                 else
                     component.OnComponentCopy(this, copy);
