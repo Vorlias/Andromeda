@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda.Entities.UIComponents
+namespace Andromeda.Entities.UILayoutComponents
 {
-    public enum UIListFillDirection
+    public enum UIListItemAlignment
     {
-        Horizontal,
-        Vertical
+        Left,
+        Center,
+        Right
     }
 }

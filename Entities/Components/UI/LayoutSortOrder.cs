@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda.Entities.UIComponents
+namespace Andromeda.Entities.UILayoutComponents
 {
     public enum LayoutSortOrder
     {

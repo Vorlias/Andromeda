@@ -1,4 +1,7 @@
-﻿using Andromeda.Entities.Components.Internal;
+﻿using Andromeda.Entities.Components;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.System;
+using SFML.Graphics;
 using SFML.System;
 using System;
 using System.Collections.Generic;
@@ -6,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda.Entities.UIComponents
+namespace Andromeda.Entities.UILayoutComponents
 {
     public class UIListLayout : UIComponent, ISortableInterfaceLayout
     {
