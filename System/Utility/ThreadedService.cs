@@ -12,6 +12,12 @@ namespace Andromeda2D.System.Services
     /// </summary>
     public abstract class ThreadedService
     {
+        public const int Hz144 = 7,
+            Hz60 = 16,
+            Hz30 = 33,
+            Hz25 = 40,
+            Hz15 = 66;
+
         protected abstract void Run();
 
         Thread thread;
@@ -20,10 +26,15 @@ namespace Andromeda2D.System.Services
             get;
         }
 
-        public static ThreadedService Service
+        public virtual string Name
+        {
+            get => GetType().Name;
+        }
+
+        /*public static ThreadedService Service
         {
             get;
-        }
+        }*/
 
         public abstract int Frequency
         {
@@ -35,17 +46,26 @@ namespace Andromeda2D.System.Services
         /// <summary>
         /// Whether or not the ThreadedService is running
         /// </summary>
-        public bool IsRunning
+        public bool Running
         {
             get => running;
         }
 
+        private void StartService()
+        {
+            Console.WriteLine("Running a new ThreadedService: " + Name);
+            Run();
+        }
+
         public void Start()
         {
-            ThreadStart start = new ThreadStart(Run);
-            thread = new Thread(start);
-            thread.Start();
-            running = true;
+            if (!running)
+            {
+                running = true;
+                ThreadStart start = new ThreadStart(StartService);
+                thread = new Thread(start);
+                thread.Start();
+            }
         }
 
         public void Terminate()

@@ -133,6 +133,12 @@ namespace Andromeda2D.System
             States.ActiveState.AfterUpdate();
         }
 
+        public StateApplication(IntPtr handle) : base(handle)
+        {
+            stateManager = new StateGameManager(this);
+            application = this;
+        }
+
         public StateApplication(VideoMode mode, string title, Styles styles = Styles.Default) : base(mode, title, styles)
         {
             stateManager = new StateGameManager(this);
