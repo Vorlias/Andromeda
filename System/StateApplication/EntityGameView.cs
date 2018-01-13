@@ -106,6 +106,11 @@ namespace Andromeda.System
         }
 
         /// <summary>
+        /// The mouse coordinates
+        /// </summary>
+        public MouseCoordinates MouseCoordinates => new MouseCoordinates(manager.Application, this);
+
+        /// <summary>
         /// The game's state manager
         /// </summary>
         protected StateManager States
