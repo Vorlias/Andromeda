@@ -55,8 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
-    <Compile Include="Entities\Components\Behaviours\Controller.cs" />
-    <Compile Include="Entities\Components\Behaviours\IModel.cs" />
+    <Compile Include="Entities\Models\Controller.cs" />
+	<Compile Include="Entities\Models\UserController.cs" />
+    <Compile Include="Entities\Models\IModel.cs" />
     <Compile Include="Entities\Components\Internal\IDestroyedListener.cs" />
     <Compile Include="Entities\Components\Internal\IInterfaceComponent.cs" />
     <Compile Include="Entities\Components\UI\IInteractableInterfaceComponent.cs" />
