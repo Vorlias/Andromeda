@@ -625,10 +625,7 @@ namespace Andromeda.Entities
             foreach (IComponent component in components)
             {
                 if (component is ILegacyComponent)
-                {
                     copy.AddComponent(component.GetType());
-                    //copy.FindOrCreateComponent(component.GetType(), out var created, false);
-                }
                 else
                     component.OnComponentCopy(this, copy);
             }
