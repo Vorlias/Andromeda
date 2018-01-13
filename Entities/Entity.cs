@@ -409,10 +409,6 @@ namespace Andromeda.Entities
         /// <returns>The component</returns>
         public T AddComponent<T>() where T : IComponent, new()
         {
-#if DEBUG
-            Debugging.Debug.Log("AddComponent {0} to {1}", typeof(T).Name, this.FullName);
-#endif
-
             T component = new T();
             bool isMultipleAllowed = true;
 
@@ -583,8 +579,6 @@ namespace Andromeda.Entities
                 {
                     attr.AddRequiredComponents(this);
                 }
-
-                Debugging.Debug.Log("Created component: " + type.Name);
 
                 components.Add(component);
 
