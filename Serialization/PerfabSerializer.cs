@@ -21,7 +21,7 @@ namespace Andromeda.System
     /// </summary>
     public class PrefabSerialization
     {
-        const string COMPONENT_NAMESPACE = "Andromeda2D.Entities.Components";
+        const string COMPONENT_NAMESPACE = "Andromeda.Entities.Components";
 
         List<string> lines = new List<string>();
         Entity prefabEntity;
