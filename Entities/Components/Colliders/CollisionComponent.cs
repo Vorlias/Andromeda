@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.System;
 using Andromeda2D.Entities.Components.Internal;
 
 namespace Andromeda2D.Entities.Components.Colliders
@@ -11,10 +10,11 @@ namespace Andromeda2D.Entities.Components.Colliders
     /// <summary>
     /// The base class for collision components
     /// </summary>
-    [DisallowMultiple]
     public abstract class CollisionComponent : Component, ICollisionComponent
     {
         List<ICollisionComponent> ignoreList = new List<ICollisionComponent>();
+
+        public override bool AllowsMultipleInstances => false;
 
         bool trigger = false;
 

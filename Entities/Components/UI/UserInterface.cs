@@ -4,15 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Andromeda.Entities.Components;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.System;
+using Andromeda2D.Entities.Components;
+using Andromeda2D.Entities.Components.Internal;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
-    [DisallowMultiple]
     public class UserInterface : Component, IContainerComponent
     {
+        public override bool AllowsMultipleInstances
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Adds a UIComponent of the specified type to this UserInterface
         /// </summary>
@@ -24,7 +30,7 @@ namespace Andromeda.Entities.Components
             return child.AddComponent<UIComponentType>();
         }
 
-        protected override void OnComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
             entity.Name = "UserInterface";
         }
@@ -32,6 +38,14 @@ namespace Andromeda.Entities.Components
         public void ChildAdded(Entity entity)
         {
             entity.AddComponent<UITransform>();
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "UserInterface";
+            }
         }
 
         public override void OnComponentCopy(Entity source, Entity copy)
@@ -44,9 +58,9 @@ namespace Andromeda.Entities.Components
             int count = Entity.GetComponentsInDescendants<UIComponent>().Count;
 
             if (count == 1)
-                return "UserInterface - " + count + " UIComponent";
+                return Name + " - " + count + " UIComponent";
             else
-                return "UserInterface - " + count +" UIComponents";
+                return Name + " - " + count +" UIComponents";
         }
     }
 }

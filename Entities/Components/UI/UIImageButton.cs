@@ -4,20 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Andromeda.System;
+using Andromeda2D.System;
 using SFML.System;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.System.Debug;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.System.Debug;
 using SFML.Window;
-using Andromeda.Entities.Components.UI;
-using Andromeda.Serialization;
-using Andromeda.System.Utility;
+using Andromeda2D.Entities.Components.UI;
+using Andromeda2D.Serialization;
+using Andromeda2D.System.Utility;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     public class UIImageButton : UIInteractable, ITextureComponent, IEventListenerComponent
     {
         public event MouseEvent OnButtonPressed;
+        
+
+        public override string Name
+        {
+            get
+            {
+                return "ImageButton";
+            }
+        }
+
 
         private Texture texture;
         private string textureId;

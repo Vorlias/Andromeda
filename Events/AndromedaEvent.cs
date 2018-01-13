@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Andromeda.Events
+namespace Andromeda2D.Events
 {
     /// <summary>
     /// An event with no arguments

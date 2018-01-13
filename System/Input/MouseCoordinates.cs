@@ -1,11 +1,11 @@
 ﻿using SFML.System;
 using SFML.Window;
-using Andromeda.System;
-using Andromeda.System.Utility;
+using Andromeda2D.System;
+using Andromeda2D.System.Utility;
 using SFML.Graphics;
-using Andromeda.Entities.Components;
+using Andromeda2D.Entities.Components;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
     /// <summary>
     /// The coordinates of the mouse

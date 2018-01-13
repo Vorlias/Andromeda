@@ -1,6 +1,6 @@
 ﻿using SFML.Window;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
     /// <summary>
     /// A combination of keys

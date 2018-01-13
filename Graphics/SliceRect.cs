@@ -1,4 +1,4 @@
-﻿namespace Andromeda.Graphics
+﻿namespace Andromeda2D.Graphics
 {
     public struct SliceRect
     {

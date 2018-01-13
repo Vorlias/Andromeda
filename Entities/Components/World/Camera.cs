@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Andromeda.Entities.Components.Internal;
+using Andromeda2D.Entities.Components.Internal;
 using SFML.System;
-using Andromeda.System;
-using Andromeda.System.Utility;
-using Andromeda.System;
+using Andromeda2D.System;
+using Andromeda2D.System.Utility;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     public class ScaledResolution
     {
@@ -27,9 +26,10 @@ namespace Andromeda.Entities.Components
         }
     }
 
-    [DisallowMultiple]
     public class Camera : Component, IUpdatableComponent
     {
+        public override bool AllowsMultipleInstances => false;
+
         View view;
         public View View
         {
@@ -87,7 +87,7 @@ namespace Andromeda.Entities.Components
             set => throw new NotImplementedException();
         }
 
-        protected override void OnComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
             StateApplication app = StateApplication.Application;
 

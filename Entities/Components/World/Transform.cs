@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.Serialization;
-using Andromeda.System.Utility;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.Serialization;
+using Andromeda2D.System.Utility;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
+
+
+
     public sealed class Transform : Transformable, IComponent
     {
         public enum AxisType

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     [Flags]
     public enum UIPositionAlign

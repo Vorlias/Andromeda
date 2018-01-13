@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.Entities.Components.Colliders;
-using Andromeda.Serialization;
-using Andromeda.System.Types;
-using Andromeda.System.Utility;
+using Andromeda2D.Entities.Components.Colliders;
+using Andromeda2D.Serialization;
+using Andromeda2D.System.Types;
+using Andromeda2D.System.Utility;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     /// <summary>
     /// Rectangle Collider component (Polygon rectangle)
@@ -29,6 +29,14 @@ namespace Andromeda.Entities.Components
             set
             {
                 polygon = value;
+            }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "PolygonRectCollider";
             }
         }
 
@@ -62,7 +70,7 @@ namespace Andromeda.Entities.Components
             com.polygon = polygon;
         }
 
-        protected override void OnComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
             // If we have a sprite renderer, we can default to the sprite ;)
             if (entity.HasComponent<SpriteRenderer>())

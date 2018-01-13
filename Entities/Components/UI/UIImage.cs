@@ -4,17 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.System;
-using Andromeda.Serialization;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.System;
+using Andromeda2D.Serialization;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     /// <summary>
     /// An image in a User Interface
     /// </summary>
     public class UIImage : UIComponent, ITextureComponent
     {
+        public override string Name => "UIImage";
+
         private Texture texture;
         private string textureId;
 

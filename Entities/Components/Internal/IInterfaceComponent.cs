@@ -1,8 +1,8 @@
-﻿using Andromeda.System;
+﻿using Andromeda2D.System;
 using SFML.Graphics;
 using SFML.System;
 
-namespace Andromeda.Entities.Components.Internal
+namespace Andromeda2D.Entities.Components.Internal
 {
     /// <summary>
     /// A component that is used by a UserInterface

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Andromeda.System.Types
+namespace Andromeda2D.System.Types
 {
     public struct IntNumberRange : INumberRange<int>
     {

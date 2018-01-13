@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.Entities;
-using Andromeda.Entities.Components;
+using Andromeda2D.Entities;
+using Andromeda2D.Entities.Components;
 
-namespace Andromeda.System.Utility
+namespace Andromeda2D.System.Utility
 {
     public static class Extensions
     {
@@ -41,17 +41,6 @@ namespace Andromeda.System.Utility
             {
                 action.Invoke(value);
             }
-        }
-
-        /// <summary>
-        /// Gets the full name of the enum value including the type name - e.g. EnumClass.EnumValue
-        /// </summary>
-        /// <param name="enumerable"></param>
-        /// <returns>The full name of an enum</returns>
-        public static string GetFullName(this Enum enumerable)
-        {
-            Type enumType = enumerable.GetType();
-            return enumType.Name + "." + enumerable.ToString();
         }
 
         public static bool InArray(this string item, IEnumerable<string> array)

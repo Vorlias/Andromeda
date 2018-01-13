@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
 
     public class WeightedRandom<WeightedItem>

@@ -1,6 +1,6 @@
-﻿using Andromeda.Entities.Components.Internal;
+﻿using Andromeda2D.Entities.Components.Internal;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
     public class UserInterfaceAction : UserInputAction
     {

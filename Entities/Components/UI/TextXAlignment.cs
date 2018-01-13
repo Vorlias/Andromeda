@@ -1,6 +1,6 @@
-﻿using Andromeda.Entities.Components.Internal;
+﻿using Andromeda2D.Entities.Components.Internal;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     public enum TextXAlignment
     {

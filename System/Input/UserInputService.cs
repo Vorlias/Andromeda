@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.System;
-using Andromeda.System.Utility;
+using Andromeda2D.System.Utility;
 using Andromeda.System.Input;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
 
     /// <summary>
@@ -112,7 +112,7 @@ namespace Andromeda.System
         /// <param name="inputs">The inputs</param>
         public void Rebind(Enum value, params object[] inputs)
         {
-            Rebind(value.GetFullName(), inputs);
+            Rebind(value.ToString(), inputs);
         }
 
 
@@ -124,7 +124,7 @@ namespace Andromeda.System
         /// <param name="inputs">The inputs (Key, MouseButton, etc.)</param>
         public void BindAction(Enum value, Action<string, UserInputAction> actionMethod, params object[] inputs)
         {
-            InputBindingAction action = new InputBindingAction(value.GetFullName(), actionMethod, inputs);
+            InputBindingAction action = new InputBindingAction(value.ToString(), actionMethod, inputs);
             actions.Add(action);
             bindings.Add(action);
         }
@@ -228,7 +228,7 @@ namespace Andromeda.System
         /// <param name="inputs">The inputs for this action</param>
         public void Bind(Enum value, params object[] inputs)
         {
-            InputBinding binding = new InputBinding(value.GetFullName(), inputs);
+            InputBinding binding = new InputBinding(value.ToString(), inputs);
             bindings.Add(binding);
         }
 
@@ -268,7 +268,7 @@ namespace Andromeda.System
         /// <returns></returns>
         public bool IsActive(Enum enumValue)
         {
-            return IsActive(enumValue.GetFullName());
+            return IsActive(enumValue.ToString());
         }
 
         /// <summary>

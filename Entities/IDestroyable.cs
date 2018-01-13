@@ -1,4 +1,4 @@
-﻿namespace Andromeda.Entities
+﻿namespace Andromeda2D.Entities
 {
     public interface IDestroyable
     {

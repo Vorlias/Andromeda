@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
     internal class PrefabSyntaxErrorException : Exception
     {

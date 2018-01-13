@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.Serialization;
-using Andromeda.System;
-using Andromeda.Linq;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.Serialization;
+using Andromeda2D.System;
+using Andromeda2D.Linq;
 using System;
-using Andromeda.System;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     /// <summary>
     /// User Interface Transform Component - Overrides the default Transform.
     /// </summary>
-    [DisallowMultiple]
     public sealed class UITransform : Component, IUpdatableComponent
     {
         private Transform transform;
@@ -220,6 +218,14 @@ namespace Andromeda.Entities.Components
             }
         }
 
+        public override bool AllowsMultipleInstances
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public void Update()
         {
             // We want to update the transform to reflect this ;)
@@ -227,7 +233,7 @@ namespace Andromeda.Entities.Components
             Entity.Transform.Origin = new Vector2f(0, 0);
         }
 
-        protected override void OnComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
            // Create the transform if it doesn't exist.
            entity.FindComponent(out transform, true);
@@ -254,7 +260,15 @@ namespace Andromeda.Entities.Components
 
         public override string ToString()
         {
-            return  "UITransform - Position: " + LocalPosition + ", Size: " + LocalSize;
+            return Name + " - Position: " + LocalPosition + ", Size: " + LocalSize;
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "UITransform";
+            }
         }
 
         public UpdatePriority UpdatePriority => UpdatePriority.Interface;

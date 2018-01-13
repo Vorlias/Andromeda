@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.System;
-using Andromeda.Serialization;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.System;
+using Andromeda2D.Serialization;
 using SFML.System;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     public partial class UIText : UIComponent
     {
@@ -149,7 +149,7 @@ namespace Andromeda.Entities.Components
             }
         }
 
-        protected override void OnComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
             RenderOrder = RenderOrder.Interface + 1; // Bring it to top
             Entity.AddComponent<UITransform>();

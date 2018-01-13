@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Andromeda.Events;
+using Andromeda2D.Events;
 using SFML.System;
 using System;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
     /// <summary>
     /// GameState interface

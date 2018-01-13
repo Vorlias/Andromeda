@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.System.Internal;
+using Andromeda2D.System.Internal;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
     public class FontManager : ResourceManager<Font>
     {

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.System.Utility;
+using Andromeda2D.System.Utility;
 
-namespace Andromeda.System.Types
+namespace Andromeda2D.System.Types
 {
 
     public class Polygon : List<Vector2f>

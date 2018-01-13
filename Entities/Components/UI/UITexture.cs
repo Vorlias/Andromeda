@@ -1,7 +1,7 @@
 ﻿using SFML.Graphics;
-using Andromeda.System;
+using Andromeda2D.System;
 
-namespace Andromeda.Entities.Components.UI
+namespace Andromeda2D.Entities.Components.UI
 {
     /// <summary>
     /// Information about a texture

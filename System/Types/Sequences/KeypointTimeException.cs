@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Andromeda.System.SequenceTypes
+namespace Andromeda2D.System.SequenceTypes
 {
     public class KeypointTimeException : Exception
     {

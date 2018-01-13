@@ -1,6 +1,6 @@
 ﻿using SFML.Graphics;
 
-namespace Andromeda.Graphics
+namespace Andromeda2D.Graphics
 {
     public static class TextureExtension
     {

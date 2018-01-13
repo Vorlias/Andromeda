@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.Entities;
-using Andromeda.Entities.Components.Internal;
+using Andromeda2D.Entities;
+using Andromeda2D.Entities.Components.Internal;
 
-namespace Andromeda.System.Internal
+namespace Andromeda2D.System.Internal
 {
     /// <summary>
     /// Interface for instance containers

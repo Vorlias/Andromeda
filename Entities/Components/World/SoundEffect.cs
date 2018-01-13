@@ -5,13 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.System;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.System;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     public class SoundEffect : Component, IDestroyedListener
     {
+        public override bool AllowsMultipleInstances => true;
+        public override string Name => "SoundEffect";
+
+        /// <summary>
+        /// The sound buffer
+        /// </summary>
+        /*public SoundBuffer Buffer
+        {
+            get => buffer;
+            set => buffer = value;
+        }*/
+
         string bufferId;
 
         /// <summary>
@@ -67,7 +79,7 @@ namespace Andromeda.Entities.Components
 
         }
 
-        protected override void OnComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
             
         }

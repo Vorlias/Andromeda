@@ -1,13 +1,13 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.System;
-using Andromeda.Linq;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.System;
+using Andromeda2D.Linq;
 using System;
-using Andromeda.System.Utility;
+using Andromeda2D.System.Utility;
 
-namespace Andromeda.Entities.Components.UI
+namespace Andromeda2D.Entities.Components.UI
 {
 
     /// <summary>
@@ -67,7 +67,7 @@ namespace Andromeda.Entities.Components.UI
 
         public abstract void OnButtonInit(Entity entity);
 
-        protected override void OnComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
             var rectCollider = Entity.AddComponent<PolygonRectCollider>();
             rectCollider.CreateRectCollider(new Vector2f(100, 20));

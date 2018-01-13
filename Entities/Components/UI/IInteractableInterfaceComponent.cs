@@ -1,8 +1,8 @@
-﻿using Andromeda.Entities.Components.Internal;
-using Andromeda.System;
+﻿using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.System;
 using SFML.System;
 
-namespace Andromeda.Entities.Components.UI
+namespace Andromeda2D.Entities.Components.UI
 {
     interface IInteractableInterfaceComponent
     {

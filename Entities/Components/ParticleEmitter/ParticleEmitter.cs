@@ -1,12 +1,12 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System.Collections.Generic;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.System.SequenceTypes;
-using Andromeda.System.Types;
-using Andromeda.System.Utility;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.System.SequenceTypes;
+using Andromeda2D.System.Types;
+using Andromeda2D.System.Utility;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
 
     /// <summary>
@@ -14,6 +14,10 @@ namespace Andromeda.Entities.Components
     /// </summary>
     public class ParticleEmitter : TextureComponent, IUpdatableComponent
     {
+        public override bool AllowsMultipleInstances => true;
+
+        public override string Name => "ParticleEmitter";
+
         public UpdatePriority UpdatePriority => UpdatePriority.Normal;
 
         NumberRange rotation = new NumberRange(0.0f),

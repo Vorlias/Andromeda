@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Andromeda.System.SequenceTypes
+namespace Andromeda2D.System.SequenceTypes
 {
     /// <summary>
     /// A sequence of numbers

@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.Serialization;
-using Andromeda.System;
-using Andromeda.System;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.Serialization;
+using Andromeda2D.System;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
-    [DisallowMultiple]
+
     public sealed class SpriteRenderer : TextureComponent
     {
         private AnchorPoint renderAnchor = new AnchorPoint(0.5f, 0.5f);
@@ -47,6 +46,26 @@ namespace Andromeda.Entities.Components
             get
             {
                 return renderAnchor.AppliedTo(this);
+            }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "SpriteRenderer";
+            }
+        }
+
+        
+
+
+
+        public override bool AllowsMultipleInstances
+        {
+            get
+            {
+                return false;
             }
         }
 

@@ -4,14 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.System;
-using Andromeda.System.Utility;
-using Andromeda.Entities.Components.Colliders;
-using Andromeda.System.Types;
+using Andromeda2D.System.Utility;
+using Andromeda2D.Entities.Components.Colliders;
+using Andromeda2D.System.Types;
 
-namespace Andromeda.Entities.Components
+namespace Andromeda2D.Entities.Components
 {
     public class PolygonCircleCollider : CollisionComponent, IPolygonColliderComponent
     {
+
+        public override string Name
+        {
+            get
+            {
+                return "CircleCollider";
+            }
+        }
+
         private Vector2f origin;
         public Vector2f Origin
         {
@@ -59,7 +68,7 @@ namespace Andromeda.Entities.Components
 
         }
 
-        protected override void OnComponentInit(Entity entity)
+        public override void OnComponentInit(Entity entity)
         {
             // If we have a sprite renderer, we can default to the sprite ;)
             if (entity.HasComponent<SpriteRenderer>())

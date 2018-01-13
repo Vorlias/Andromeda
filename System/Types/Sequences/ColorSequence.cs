@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.System.Utility;
+using Andromeda2D.System.Utility;
 
-namespace Andromeda.System.SequenceTypes
+namespace Andromeda2D.System.SequenceTypes
 { 
     /// <summary>
     /// A sequence of colours

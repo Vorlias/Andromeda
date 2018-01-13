@@ -1,12 +1,12 @@
-﻿using Andromeda.System;
+﻿using Andromeda2D.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.Events;
-using Andromeda.System.Internal;
-using Andromeda.System.Utility;
+using Andromeda2D.Events;
+using Andromeda2D.System.Internal;
+using Andromeda2D.System.Utility;
 
 namespace Andromeda.System
 {

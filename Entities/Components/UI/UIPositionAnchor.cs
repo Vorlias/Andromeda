@@ -1,4 +1,4 @@
-﻿namespace Andromeda.Entities.Components
+﻿namespace Andromeda2D.Entities.Components
 {
     public enum UIPositionAnchor
     {

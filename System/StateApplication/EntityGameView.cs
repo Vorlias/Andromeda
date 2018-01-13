@@ -27,21 +27,6 @@ namespace Andromeda2D.System
 
         public bool IsSingleton => this is IGameViewSingleton;
 
-        public virtual void OnCreation()
-        {
-
-        }
-
-        public MouseCoordinates MousePosition
-        {
-            get => new MouseCoordinates(Application, this);
-        }
-
-        public EntityGameView()
-        {
-            OnCreation();
-        }
-
         Camera camera;
         public Camera Camera
         {
@@ -285,7 +270,8 @@ namespace Andromeda2D.System
                 {
                     if (collider.CollidesWith(collider2))
                     {
-                        
+                        collider.Entity.Behaviours.ForEach(behaviour => behaviour.Collision(collider2.Entity));
+                        collider2.Entity.Behaviours.ForEach(behaviour => behaviour.Collision(collider.Entity));
                     }
                 }
             }

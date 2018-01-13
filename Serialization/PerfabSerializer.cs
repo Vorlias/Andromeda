@@ -5,15 +5,15 @@ using System.Reflection;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda.Entities;
-using Andromeda.System.Utility;
-using Andromeda.Entities.Components;
+using Andromeda2D.Entities;
+using Andromeda2D.System.Utility;
+using Andromeda2D.Entities.Components;
 using SFML.System;
-using Andromeda.Serialization;
-using Andromeda.Entities.Components.Internal;
-using Andromeda.System.Types;
+using Andromeda2D.Serialization;
+using Andromeda2D.Entities.Components.Internal;
+using Andromeda2D.System.Types;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
     /// <summary>
     /// Experimental Prefab Serialization
@@ -67,7 +67,7 @@ namespace Andromeda.System
                 Assemblies.ForEach(Assembly => {
                     foreach (Type t in Assembly.GetTypes())
                     {
-                        if (t.IsSubclassOf(typeof(Component)) || t.IsSubclassOf(typeof(UIComponent)) )
+                        if (t.IsSubclassOf(typeof(Component)) || t.IsSubclassOf(typeof(UIComponent)) || t.IsSubclassOf(typeof(EntityBehaviour)) )
                         {
                             validTypes.Add(t);
                         }
@@ -469,7 +469,7 @@ namespace Andromeda.System
 
                     foreach (var component in instance.Components)
                     {
-                        Console.WriteLine("\t###\tCOMPONENT " + component.GetType().Name);
+                        Console.WriteLine("\t###\tCOMPONENT " + component.Name);
                     }
                 }
             }

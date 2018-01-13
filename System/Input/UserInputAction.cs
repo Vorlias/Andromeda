@@ -3,9 +3,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
-    public abstract class UserInputAction : ICastable<UserInputAction>
+
+    public abstract class UserInputAction
     {
         protected InputState state;
 
@@ -26,20 +27,6 @@ namespace Andromeda.System
         public abstract InputType InputType
         {
             get;
-        }
-
-        public bool TryCast<TInputAction>(out TInputAction inputAction) where TInputAction : UserInputAction
-        {
-            if (this is TInputAction)
-            {
-                inputAction = (TInputAction)this;
-                return true;
-            }
-            else
-            {
-                inputAction = default(TInputAction);
-                return false;
-            }
         }
 
         public MouseInputAction Mouse

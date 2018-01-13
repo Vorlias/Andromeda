@@ -2,7 +2,7 @@
 using SFML.Window;
 using System.Linq;
 
-namespace Andromeda.System
+namespace Andromeda2D.System
 {
     public class KeyboardInputAction : UserInputAction
     {
