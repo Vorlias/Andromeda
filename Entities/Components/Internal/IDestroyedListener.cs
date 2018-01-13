@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Andromeda.Entities.Components.Internal
 {
-    interface IDestroyedListener
+    public interface IDestroyedListener
     {
         void OnDestroy();
     }
