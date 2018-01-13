@@ -447,10 +447,6 @@ namespace Andromeda.Entities
 
         internal void Update()
         {
-            foreach (Entity child in Children)
-            {
-                child.Update();
-            }
         }
 
         /// <summary>

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
+    <Compile Include="Entities\Components\Colliders\ICollisionListener.cs" />
     <Compile Include="Entities\Models\Controller.cs" />
     <Compile Include="Entities\Models\UserController.cs" />
     <Compile Include="Entities\Models\IModel.cs" />

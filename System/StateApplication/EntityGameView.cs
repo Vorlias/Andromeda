@@ -12,6 +12,8 @@ using Andromeda.System.Internal;
 using Andromeda.Entities.Components.Internal;
 using System;
 using Andromeda.Entities.Components.UI;
+using Andromeda.Entities.Components.Colliders;
+using Andromeda.Linq;
 
 namespace Andromeda.System
 {
@@ -290,7 +292,8 @@ namespace Andromeda.System
                 {
                     if (collider.CollidesWith(collider2))
                     {
-                        
+                        collider.Entity.WithComponents<ICollisionListener>(listener => listener.Collided(collider2.Entity));
+                        collider2.Entity.WithComponents<ICollisionListener>(listener => listener.Collided(collider.Entity));
                     }
                 }
             }
