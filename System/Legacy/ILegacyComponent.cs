@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Andromeda.Legacy
 {
     [Obsolete("Temporary support for Legacy component loading")]
-    interface ILegacyComponent
+    public interface ILegacyComponent
     {
         Type LegacyType { get; }
     }
