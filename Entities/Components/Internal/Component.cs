@@ -10,11 +10,6 @@ namespace Andromeda2D.Entities.Components.Internal
     {
         protected Entity entity;
 
-        public virtual bool AllowsMultipleInstances
-        {
-            get => true;
-        }
-
         public Entity Entity
         {
             get
@@ -23,22 +18,22 @@ namespace Andromeda2D.Entities.Components.Internal
             }
         }
 
-        public virtual string Name
-        {
-            get => GetType().Name;
-        }
-
         public virtual void OnComponentCopy(Entity source, Entity copy)
         {
 
         }
 
-        public virtual void OnComponentInit(Entity entity)
+        protected virtual void OnComponentInit(Entity entity)
         {
 
         }
 
-        public void ComponentInit(Entity entity)
+        void IComponent.ComponentInit(Entity entity)
+        {
+            this.ComponentInit(entity);
+        }
+
+        private void ComponentInit(Entity entity)
         {
             if (this.entity == null)
                 this.entity = entity;

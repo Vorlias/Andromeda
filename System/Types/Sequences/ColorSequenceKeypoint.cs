@@ -1,7 +1,7 @@
 ﻿using System;
 using SFML.Graphics;
 
-namespace Andromeda2D.System.SequenceTypes
+namespace Andromeda.System.SequenceTypes
 {
     public struct ColorSequenceKeypoint : ISequenceKeyframe<Color>
     {

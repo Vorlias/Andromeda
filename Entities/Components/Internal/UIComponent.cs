@@ -5,14 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
-using Andromeda2D.System;
+using Andromeda.System;
 using SFML.Window;
-using Andromeda2D.System.Utility;
-using Andromeda2D.Serialization;
-using Andromeda2D.System.Types;
+using Andromeda.System.Utility;
+using Andromeda.Serialization;
+using Andromeda.System.Types;
+using Andromeda.System;
 
-namespace Andromeda2D.Entities.Components.Internal
+namespace Andromeda.Entities.Components.Internal
 {
+    [RequireComponents(typeof(UITransform)), DisallowMultiple]
     public abstract class UIComponent : Component, IInterfaceComponent
     {
         public delegate void MouseEvent(MouseInputAction action);
@@ -147,24 +149,6 @@ namespace Andromeda2D.Entities.Components.Internal
                 renderOrder = value;
             }
         }
-
-        public override bool AllowsMultipleInstances
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return "UIRenderer";
-            }
-        }
-
-        
 
         public virtual void Draw(RenderTarget target, RenderStates states)
         {

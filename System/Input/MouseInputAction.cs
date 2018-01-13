@@ -1,7 +1,7 @@
 ﻿using SFML.Window;
 using SFML.System;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     public class MouseInputAction : UserInputAction
     {

@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using Andromeda2D.Events;
-using Andromeda2D.System.Internal;
-using Andromeda2D.System.Utility;
+using Andromeda.Events;
+using Andromeda.System.Internal;
+using Andromeda.System.Utility;
 using SFML.System;
 using System;
 using SFML.Audio;
 using System.Linq;
 using SFML.Window;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     /// <summary>
     /// The base game state class

@@ -1,4 +1,4 @@
-﻿namespace Andromeda2D.System
+﻿namespace Andromeda.System
 {
     /// <summary>
     /// The GameState's priority

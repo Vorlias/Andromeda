@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
 
     public interface IRenderableComponent : Drawable, IComponent

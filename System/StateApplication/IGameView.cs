@@ -1,8 +1,8 @@
-﻿using Andromeda2D.Entities.Components;
+﻿using Andromeda.Entities.Components;
 using SFML.Graphics;
 using SFML.Window;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     public interface IGameView
     {

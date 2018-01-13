@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Andromeda2D.Entities;
+using Andromeda.Entities;
+using Andromeda.Entities.Components;
+using Andromeda.Entities.Components.Internal;
 
-namespace Andromeda2D.System.Internal
+namespace Andromeda.System.Internal
 {
+    public delegate void EntityAddedEvent(Entity entity);
+    public delegate void EntityRemovedEvent(Entity entity);
+
     public abstract class EntityContainer : IEntityContainer
     {
         HashSet<Entity> children;
+
+        public event EntityAddedEvent EntityAdded;
+        public event EntityRemovedEvent EntityRemoved;
 
         public EntityContainer()
         {
@@ -45,6 +53,7 @@ namespace Andromeda2D.System.Internal
         internal void RemoveChild(Entity child)
         {
             children.Remove(child);
+            EntityRemoved?.Invoke(child);
         }
 
         /// <summary>
@@ -54,6 +63,22 @@ namespace Andromeda2D.System.Internal
         internal void AddChild(Entity child)
         {
             children.Add(child);
+            EntityAdded?.Invoke(child);
+        }
+
+        /// <summary>
+        /// Add an entity that has the specified component in it
+        /// </summary>
+        /// <typeparam name="TComponent">The component</typeparam>
+        /// <returns></returns>
+        public TComponent Add<TComponent>() where  TComponent : IComponent, new()
+        {
+            Entity entity = new Entity();
+            entity.Name = typeof(TComponent).Name;
+
+            TComponent com = entity.AddComponent<TComponent>();
+            entity.SetParent(this);
+            return com;
         }
 
         /// <summary>
@@ -109,6 +134,20 @@ namespace Andromeda2D.System.Internal
                 return matches.First();
             else
                 return null;
+        }
+
+        public List<T> GetComponentsInChildren<T>() where T : IComponent
+        {
+            List<T> components = new List<T>();
+            Entity[] descendants = Children;
+
+            foreach (var child in descendants)
+            {
+                if (child.HasComponent<T>())
+                    components.Add(child.GetComponent<T>());
+            }
+
+            return components;
         }
 
         /// <summary>

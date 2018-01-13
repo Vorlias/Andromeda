@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.Entities.Components.Colliders;
-using Andromeda2D.System.Types;
-using Andromeda2D.System.Utility;
+using Andromeda.Entities.Components.Colliders;
+using Andromeda.System.Types;
+using Andromeda.System.Utility;
 using Andromeda.Colliders;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     /// <summary>
     /// A collider based on polygon points
@@ -137,20 +137,12 @@ namespace Andromeda2D.Entities.Components
             Origin = -(i.Size / 2).ToFloat();
         }
 
-        public override string Name
-        {
-            get
-            {
-                return "PolygonCollider";
-            }
-        }
-
         public override void OnComponentCopy(Entity source, Entity copy)
         {
             //throw new NotImplementedException();
         }
 
-        public override void OnComponentInit(Entity entity)
+        protected override void OnComponentInit(Entity entity)
         {
             SpriteRenderer renderer;
             if (entity.FindComponent(out renderer))

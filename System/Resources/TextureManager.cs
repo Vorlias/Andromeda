@@ -3,12 +3,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
-using Andromeda2D.System.Utility;
-using Andromeda2D.System.Internal;
-using Andromeda2D.Graphics;
+using Andromeda.System.Utility;
+using Andromeda.System.Internal;
+using Andromeda.Graphics;
 using SFML.System;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
 
     public class TextureManager : ResourceManager<Texture>

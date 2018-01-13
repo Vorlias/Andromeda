@@ -1,4 +1,4 @@
-﻿namespace Andromeda2D.System
+﻿namespace Andromeda.System
 {
     public enum MouseInputType
     {

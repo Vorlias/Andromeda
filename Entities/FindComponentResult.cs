@@ -1,6 +1,6 @@
-﻿using Andromeda2D.Entities.Components;
+﻿using Andromeda.Entities.Components;
 
-namespace Andromeda2D.Entities
+namespace Andromeda.Entities
 {
     /// <summary>
     /// The result of FindComponent

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Andromeda2D.Entities
+namespace Andromeda.Entities
 {
     public sealed class ComponentNotFoundException<T> : Exception
     {

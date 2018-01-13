@@ -1,13 +1,13 @@
-﻿using Andromeda2D.Entities;
-using Andromeda2D.Entities.Components;
-using Andromeda2D.System.Internal;
+﻿using Andromeda.Entities;
+using Andromeda.Entities.Components;
+using Andromeda.System.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Andromeda2D.Linq
+namespace Andromeda.Linq
 {
     public static class EntityCollectionLinq
     {

@@ -1,4 +1,4 @@
-﻿namespace Andromeda2D.System.Types
+﻿namespace Andromeda.System.Types
 {
     public interface INumberRange<NumberType> where NumberType : struct
     {

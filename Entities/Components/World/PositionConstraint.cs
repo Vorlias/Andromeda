@@ -1,6 +1,6 @@
 ﻿using SFML.System;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     public sealed class PositionConstraint
     {

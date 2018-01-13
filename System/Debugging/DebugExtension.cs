@@ -1,12 +1,12 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using Andromeda2D.Entities;
-using Andromeda2D.Entities.Components;
-using Andromeda2D.System.Types;
-using Andromeda2D.System.Utility;
+using Andromeda.Entities;
+using Andromeda.Entities.Components;
+using Andromeda.System.Types;
+using Andromeda.System.Utility;
 
-namespace Andromeda2D.System.Debug
+namespace Andromeda.System.Debug
 {
     public static class DebugRenderer
     {
