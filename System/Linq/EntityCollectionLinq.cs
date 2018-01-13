@@ -58,6 +58,16 @@ namespace Andromeda.Linq
             return entityCollection;
         }
 
+        public static void WithComponents<TComponent>(this Entity entity, Action<TComponent> action)
+            where TComponent : IComponent
+        {
+            var matching = entity.GetComponents<TComponent>();
+            foreach (var match in matching)
+            {
+                action(match);
+            }
+        }
+
         public static IEnumerable<Entity> DescendantsWhere(this EntityContainer ec, Func<Entity, bool> entity)
         {
             List<Entity> entityCollection = new List<Entity>();
