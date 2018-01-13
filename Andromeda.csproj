@@ -56,7 +56,7 @@
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
     <Compile Include="Entities\Models\Controller.cs" />
-	<Compile Include="Entities\Models\UserController.cs" />
+    <Compile Include="Entities\Models\UserController.cs" />
     <Compile Include="Entities\Models\IModel.cs" />
     <Compile Include="Entities\Components\Internal\IDestroyedListener.cs" />
     <Compile Include="Entities\Components\Internal\IInterfaceComponent.cs" />
@@ -144,7 +144,6 @@
     <Compile Include="Entities\Components\Internal\IPolygonColliderComponent.cs" />
     <Compile Include="Entities\Components\Colliders\PolygonCollider.cs" />
     <Compile Include="Entities\Components\Colliders\PolygonRectCollider.cs" />
-    <Compile Include="Entities\Components\Behaviours\EntityBehaviour.cs" />
     <Compile Include="Entities\Components\Internal\ICollisionComponent.cs" />
     <Compile Include="Entities\Components\Internal\IComponent.cs" />
     <Compile Include="Entities\Components\Internal\IRenderableComponent.cs" />
