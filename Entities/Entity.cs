@@ -565,57 +565,49 @@ namespace Andromeda.Entities
         }
 
         /// <summary>
+        /// Add a component of the specified type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        internal IComponent AddComponent(Type type)
+        {
+            var existing = components.Where(component => component.GetType() == type);
+            var allowMultiple = type.GetCustomAttributes(typeof(DisallowMultipleAttribute), false).Count() == 0;
+
+            if (existing.Count() == 0 || allowMultiple)
+            {
+                IComponent component = (IComponent)Activator.CreateInstance(type);
+
+                var attrs = type.GetCustomAttributes(typeof(RequireComponentsAttribute), true);
+                foreach (RequireComponentsAttribute attr in attrs)
+                {
+                    attr.AddRequiredComponents(this);
+                }
+
+                Debugging.Debug.Log("Created component: " + type.Name);
+
+                components.Add(component);
+
+                if (!IsPrefab)
+                    component.ComponentInit(this);
+
+                return component;
+            }
+            else
+                return existing.First();
+        }
+
+        /// <summary>
         /// Tries to find the component of the specified type, otherwise creates it
         /// </summary>
         /// <param name="type">The type of the component</param>
         /// <param name="created">The component returned, null if it could not be created</param>
         /// <returns>If the component was successfully created</returns>
+        [Obsolete("Will always return true.")]
         internal bool FindOrCreateComponent(Type type, out IComponent created, bool returnExisting = true)
         {
-            // This is a bit of a messy function, mainly for the cloning... :3
-
-           
-            var disallowMultiple = type.GetCustomAttributes(typeof(DisallowMultipleAttribute), false).Count() > 0;
-
-            if (!disallowMultiple)
-            {
-                IComponent component = (IComponent)Activator.CreateInstance(type);
-                created = component;
-                component.ComponentInit(this);
-                components.Add(component);
-
-                return true;
-            }
-            else
-            {
-                var existing = components.Where(c => c.GetType() == type);
-                
-                if (existing.Count() == 0)
-                {
-                    IComponent component = (IComponent)Activator.CreateInstance(type);
-                    components.Add(component);
-
-                    if (!IsPrefab)
-                        component.ComponentInit(this);
-
-                    created = component;
-                    return true;
-                }
-                else
-                {
-                    if (returnExisting)
-                    {
-                        created = existing.First();
-                        return true;
-                    }
-                    else
-                    {
-                        created = null;
-                        return false;
-                    }
-                }
-            }
-           
+            created = AddComponent(type);
+            return true;
         }
 
         /// <summary>
@@ -634,7 +626,8 @@ namespace Andromeda.Entities
             {
                 if (component is ILegacyComponent)
                 {
-                    copy.FindOrCreateComponent(component.GetType(), out var created, false);
+                    copy.AddComponent(component.GetType());
+                    //copy.FindOrCreateComponent(component.GetType(), out var created, false);
                 }
                 else
                     component.OnComponentCopy(this, copy);
