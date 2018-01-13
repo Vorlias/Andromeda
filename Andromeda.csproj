@@ -80,6 +80,7 @@
     <Compile Include="System\Input\ITextInput.cs" />
     <Compile Include="System\Input\UserInputManager.InputBinding.cs" />
     <Compile Include="System\Input\UserInputManager.InputBindingAction.cs" />
+    <Compile Include="System\Legacy\ILegacyComponent.cs" />
     <Compile Include="System\Linq\EntityCollectionLinq.cs" />
     <Compile Include="System\StateApplication\BasicGameView.cs" />
     <Compile Include="System\StateApplication\GameState.cs" />

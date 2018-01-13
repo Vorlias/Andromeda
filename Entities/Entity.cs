@@ -13,6 +13,7 @@ using Andromeda.System;
 using Andromeda.System.Internal;
 using Andromeda.System.Utility;
 using Andromeda.System;
+using Andromeda.Legacy;
 
 namespace Andromeda.Entities
 {
@@ -408,6 +409,10 @@ namespace Andromeda.Entities
         /// <returns>The component</returns>
         public T AddComponent<T>() where T : IComponent, new()
         {
+#if DEBUG
+            Debugging.Debug.Log("AddComponent {0} to {1}", typeof(T).Name, this.FullName);
+#endif
+
             T component = new T();
             bool isMultipleAllowed = true;
 
@@ -419,13 +424,19 @@ namespace Andromeda.Entities
 
             var allowMultiple = component.GetType().GetCustomAttributes(typeof(DisallowMultipleAttribute), false);
             if (allowMultiple.Count() > 0)
+            { 
                 isMultipleAllowed = false;
+            }
 
             var elements = components.ToArray().OfType<T>();
             T existing = component;
 
             if (elements.Count() > 0 && !isMultipleAllowed)
             {
+#if DEBUG
+                Debugging.Debug.Warn("Attempt to add multiple " + typeof(T).Name + " ignored.");
+#endif
+
                 existing = elements.First();
                 return existing;
             }
@@ -618,7 +629,12 @@ namespace Andromeda.Entities
 
             foreach (IComponent component in components)
             {
-                component.OnComponentCopy(this, copy);
+                if (component is ILegacyComponent)
+                {
+                    FindOrCreateComponent((component as ILegacyComponent).LegacyType, out var created, false);
+                }
+                else
+                    component.OnComponentCopy(this, copy);
             }
 
             foreach (Entity child in Children)
