@@ -574,11 +574,12 @@ namespace Andromeda.Entities
         {
             // This is a bit of a messy function, mainly for the cloning... :3
 
-            IComponent component = (IComponent)Activator.CreateInstance(type);
+           
             var disallowMultiple = type.GetCustomAttributes(typeof(DisallowMultipleAttribute), false).Count() > 0;
 
             if (!disallowMultiple)
             {
+                IComponent component = (IComponent)Activator.CreateInstance(type);
                 created = component;
                 component.ComponentInit(this);
                 components.Add(component);
@@ -591,6 +592,7 @@ namespace Andromeda.Entities
                 
                 if (existing.Count() == 0)
                 {
+                    IComponent component = (IComponent)Activator.CreateInstance(type);
                     components.Add(component);
 
                     if (!IsPrefab)
