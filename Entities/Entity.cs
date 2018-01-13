@@ -5,16 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Andromeda2D.Entities.Components;
-using Andromeda2D.Entities.Components.Colliders;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.Serialization;
-using Andromeda2D.System;
-using Andromeda2D.System.Internal;
-using Andromeda2D.System.Utility;
+using Andromeda.Entities.Components;
+using Andromeda.Entities.Components.Colliders;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.Serialization;
+using Andromeda.System;
+using Andromeda.System.Internal;
+using Andromeda.System.Utility;
 using Andromeda.System;
 
-namespace Andromeda2D.Entities
+namespace Andromeda.Entities
 {
 
     public delegate void EntityComponentAddedEvent(IComponent component);

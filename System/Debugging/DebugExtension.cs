@@ -188,10 +188,6 @@ namespace Andromeda.System.Debug
                         var renderer = component as SpriteRenderer;
                         Console.WriteLine(prefix + "  │└≡[SpriteRenderer `" + renderer.TextureId + "`]");
                     }
-                    else if (component is EntityBehaviour)
-                    {
-                        Console.WriteLine(prefix + "  │└≡[" + component.GetType().Name + " (Script)]");
-                    }
                     else if (component is ICollisionComponent)
                     {
                         Console.WriteLine(prefix + "  │└≡[" + component.GetType().Name + " (Collider)]");

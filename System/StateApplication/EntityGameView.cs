@@ -4,16 +4,16 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.Graphics;
-using Andromeda2D.Entities;
-using Andromeda2D.Entities.Components;
+using Andromeda.Entities;
+using Andromeda.Entities.Components;
 using SFML.System;
-using Andromeda2D.System.Utility;
-using Andromeda2D.System.Internal;
-using Andromeda2D.Entities.Components.Internal;
+using Andromeda.System.Utility;
+using Andromeda.System.Internal;
+using Andromeda.Entities.Components.Internal;
 using System;
-using Andromeda2D.Entities.Components.UI;
+using Andromeda.Entities.Components.UI;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     /// <summary>
     /// A GameView which uses entities

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Andromeda.System;
-using Andromeda2D.Entities.Components.Internal;
+using Andromeda.Entities.Components.Internal;
 
-namespace Andromeda2D.Entities.Components.Colliders
+namespace Andromeda.Entities.Components.Colliders
 {
     /// <summary>
     /// The base class for collision components
