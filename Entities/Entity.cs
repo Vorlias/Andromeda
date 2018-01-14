@@ -1,20 +1,16 @@
-﻿using SFML.Graphics;
-using SFML.System;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Andromeda.Entities.Components;
+﻿using Andromeda.Entities.Components;
 using Andromeda.Entities.Components.Colliders;
 using Andromeda.Entities.Components.Internal;
+using Andromeda.Legacy;
 using Andromeda.Serialization;
 using Andromeda.System;
 using Andromeda.System.Internal;
 using Andromeda.System.Utility;
-using Andromeda.System;
-using Andromeda.Legacy;
-using Andromeda.Debugging;
+using SFML.Graphics;
+using SFML.System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Andromeda.Entities
 {
@@ -451,7 +447,7 @@ namespace Andromeda.Entities
         /// </summary>
         internal void StartBehaviours()
         {
-
+            
         }
 
         /// <summary>
@@ -677,6 +673,7 @@ namespace Andromeda.Entities
             if (!initialized)
             {
                 initialized = true;
+                components.OfType<IActivationListener>().ForEach(com => com.Activated());
             }
         }
 
