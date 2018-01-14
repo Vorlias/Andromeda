@@ -10,7 +10,6 @@ using SFML.Window;
 using Andromeda.System.Utility;
 using Andromeda.Serialization;
 using Andromeda.System.Types;
-using Andromeda.System;
 
 namespace Andromeda.Entities.Components.Internal
 {

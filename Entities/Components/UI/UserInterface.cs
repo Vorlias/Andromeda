@@ -10,7 +10,7 @@ using Andromeda.System;
 
 namespace Andromeda.Entities.Components
 {
-    [DisallowMultiple, RequireComponents(typeof(UITransform))]
+    [DisallowMultiple]
     public class UserInterface : Component, IContainerComponent
     {
         /// <summary>
@@ -31,6 +31,7 @@ namespace Andromeda.Entities.Components
 
         public void ChildAdded(Entity entity)
         {
+            //entity.AddComponent<UITransform>();
         }
 
         public override void OnComponentCopy(Entity source, Entity copy)
