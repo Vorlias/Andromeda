@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Andromeda.Entities.Components.Internal
 {
-    interface IActivationListener : IComponent
+    public interface IActivationListener : IComponent
     {
         void Activated();
         void Deactivated();

@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
     <Compile Include="Entities\Components\Colliders\ICollisionListener.cs" />
+    <Compile Include="Entities\Components\Internal\IActivationListener.cs" />
     <Compile Include="Entities\Components\UI\Layouts\ISortableInterfaceLayout.cs" />
     <Compile Include="Entities\Components\UI\LayoutSortOrder.cs" />
     <Compile Include="Entities\Components\UI\Layouts\UIListFillDirection.cs" />
