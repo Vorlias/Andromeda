@@ -430,10 +430,6 @@ namespace Andromeda.Entities
 
             if (elements.Count() > 0 && !isMultipleAllowed)
             {
-#if DEBUG
-                DebugConsole.Warn("Attempt to add multiple " + typeof(T).Name + " to " + GameView.GetType().Name + "/" + FullName + " ignored", DebugTraceMode.None);
-#endif
-
                 existing = elements.First();
                 return existing;
             }
