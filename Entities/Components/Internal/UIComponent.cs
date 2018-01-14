@@ -92,9 +92,6 @@ namespace Andromeda.Entities.Components.Internal
         {
             get
             {
-                if (!entity.HasComponent<UITransform>())
-                    entity.AddComponent<UITransform>();
-
                 return entity.GetComponent<UITransform>();
             }
         }
