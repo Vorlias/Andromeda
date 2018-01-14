@@ -8,11 +8,23 @@ using System.Runtime.CompilerServices;
 
 namespace Andromeda.Debugging
 {
+    [Flags]
+    public enum DebugFlags
+    {
+        Info = 1,
+        Warnings = 2, 
+        Engine = 4,
+        Errors = 8,
+
+        Production = Warnings | Errors,
+        Verbose = Info | Warnings | Engine | Errors,
+        Development = Info | Warnings | Errors,
+    }
 
     /// <summary>
     /// Formatted console debugging
     /// </summary>
-    public static class Debug
+    public static class DebugConsole
     {
 
         private static bool? _consoleActive;
@@ -63,6 +75,18 @@ namespace Andromeda.Debugging
             set;
         }
 
+        static DebugFlags _flags = DebugFlags.Production;
+        public static DebugFlags Flags
+        {
+            get => _flags;
+            set => _flags = value;
+        }
+
+        internal static bool HasFlag(DebugFlags flag)
+        {
+            return (flag & Flags) != 0;
+        }
+
         private static void AddInstanceReference(object instance)
         {
             var oldColor = Console.ForegroundColor;
@@ -78,6 +102,19 @@ namespace Andromeda.Debugging
             Console.Write("[WARNING] ");
             Console.WriteLine(errorMessage, arg);
             Console.ForegroundColor = oldColor;
+        }
+
+        internal static void WriteEngine(string message, params object[] arg)
+        {
+            if (HasFlag(DebugFlags.Engine))
+            { 
+                var oldColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("[ENGINE] ");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine(message, arg);
+                Console.ForegroundColor = oldColor;
+            }
         }
 
         internal static void WriteErrorLine(string errorMessage, params object[] arg)
@@ -118,7 +155,7 @@ namespace Andromeda.Debugging
         /// <param name="arg">Any objects to use with the message string</param>
         public static void Log(string message, params object[] arg)
         {
-            if (Enabled)
+            if (Enabled && HasFlag(DebugFlags.Info))
             {
                 AddInfoTag();
                 Console.WriteLine(message, arg);
@@ -156,7 +193,7 @@ namespace Andromeda.Debugging
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            if (Enabled)
+            if (Enabled && HasFlag(DebugFlags.Warnings))
             {
                 AddWarningTag(message);
                 var oldColor = Console.ForegroundColor;
@@ -173,7 +210,7 @@ namespace Andromeda.Debugging
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int callerLineNumber = 0)
         {
-            if (Enabled)
+            if (Enabled && HasFlag(DebugFlags.Errors))
             {
                 WriteErrorLine(message);
                 var oldColor = Console.ForegroundColor;
@@ -195,7 +232,7 @@ namespace Andromeda.Debugging
         /// <param name="arg">Any arguments for the formatted message string</param>
         public static void LogInstance(object instance, string message = "", params object[] arg)
         {
-            if (Enabled)
+            if (Enabled && HasFlag(DebugFlags.Info))
             {
                 AddInfoTag();
                 AddInstanceReference(instance);

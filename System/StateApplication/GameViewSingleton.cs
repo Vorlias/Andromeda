@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Andromeda.Debugging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,7 +60,6 @@ namespace Andromeda.System
             {
                 if (singleton == null)
                 {
-                    Console.WriteLine("Created singleton (.Instance)");
                     singleton = new GameViewClass();
                    // singleton.OnStart();
                 }

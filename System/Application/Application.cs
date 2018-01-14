@@ -8,6 +8,7 @@ using SFML.System;
 using SFML.Graphics;
 using Andromeda.System.Utility;
 using Andromeda.System.Services;
+using Andromeda.Debugging;
 
 namespace Andromeda.System
 {
@@ -416,6 +417,9 @@ namespace Andromeda.System
         /// </summary>
         public virtual void Run()
         {
+            //Debugging.DebugConsole.WriteVersion();
+            DebugConsole.WriteEngine("Running Andromeda Application v{0}", EngineInfo.String);
+
             // Run all the stuff to initialize the window
             InitializeApplication();
 

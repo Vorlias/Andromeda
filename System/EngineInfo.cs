@@ -20,7 +20,7 @@ namespace Andromeda.System
         {
             get
             {
-                return string.Format("{0}.{1}.{2}{4}", MAJOR, MINOR, REVISION, SUFFIX);
+                return string.Format("{0}.{1}.{2}{3}", MAJOR, MINOR, REVISION, SUFFIX);
             }
         }
 

@@ -430,7 +430,7 @@ namespace Andromeda.Entities
             if (elements.Count() > 0 && !isMultipleAllowed)
             {
 #if DEBUG
-                Debugging.Debug.Warn("Attempt to add multiple " + typeof(T).Name + " ignored.");
+                Debugging.DebugConsole.Warn("Attempt to add multiple " + typeof(T).Name + " ignored.");
 #endif
 
                 existing = elements.First();
