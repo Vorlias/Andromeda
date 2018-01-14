@@ -14,6 +14,7 @@ using Andromeda.System.Internal;
 using Andromeda.System.Utility;
 using Andromeda.System;
 using Andromeda.Legacy;
+using Andromeda.Debugging;
 
 namespace Andromeda.Entities
 {
@@ -430,7 +431,7 @@ namespace Andromeda.Entities
             if (elements.Count() > 0 && !isMultipleAllowed)
             {
 #if DEBUG
-                Debugging.DebugConsole.Warn("Attempt to add multiple " + typeof(T).Name + " ignored.");
+                DebugConsole.Warn("Attempt to add multiple " + typeof(T).Name + " to " + GameView.GetType().Name + "/" + FullName + " ignored", DebugTraceMode.None);
 #endif
 
                 existing = elements.First();

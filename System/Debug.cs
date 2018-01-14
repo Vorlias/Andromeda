@@ -21,6 +21,12 @@ namespace Andromeda.Debugging
         Development = Info | Warnings | Errors,
     }
 
+    public enum DebugTraceMode
+    {
+        StackTrace,
+        None
+    }
+
     /// <summary>
     /// Formatted console debugging
     /// </summary>
@@ -189,6 +195,7 @@ namespace Andromeda.Debugging
         }
 
         public static void Warn(string message,
+            DebugTraceMode traceMode = DebugTraceMode.StackTrace,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int callerLineNumber = 0)
@@ -198,7 +205,10 @@ namespace Andromeda.Debugging
                 AddWarningTag(message);
                 var oldColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("\tSource {0}, {1}:{2}", memberName, filePath, callerLineNumber);
+
+                if (traceMode == DebugTraceMode.StackTrace)
+                    Console.WriteLine("\tSource {0}, {1}:{2}", memberName, filePath, callerLineNumber);
+
                 Console.ForegroundColor = oldColor;
 
                 LogFile("[WARNING] " + message);
@@ -206,6 +216,7 @@ namespace Andromeda.Debugging
         }
 
         public static void Error(string message,
+            DebugTraceMode traceMode = DebugTraceMode.StackTrace,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int callerLineNumber = 0)
@@ -215,7 +226,10 @@ namespace Andromeda.Debugging
                 WriteErrorLine(message);
                 var oldColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("\tSource: {0}, {1}:{2}", memberName, filePath, callerLineNumber);
+
+                if (traceMode == DebugTraceMode.StackTrace)
+                    Console.WriteLine("\tSource: {0}, {1}:{2}", memberName, filePath, callerLineNumber);
+
                 Console.ForegroundColor = oldColor;
 
                 LogFile("[PROBLEM] " + message);

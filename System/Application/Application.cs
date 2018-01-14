@@ -379,6 +379,7 @@ namespace Andromeda.System
 
             SetupCursor();
 
+            DebugConsole.WriteEngine("Starting Application");
             BeforeStart();
             Start();
             InitializeStates();
@@ -387,6 +388,7 @@ namespace Andromeda.System
             View defaultView = window.DefaultView;
             gameView = new View(defaultView.Center, defaultView.Size);
             interfaceView = new View(defaultView.Center, defaultView.Size);
+            DebugConsole.WriteEngine("Set up views");
         }
 
         Color _clearColor = Color.Black;
