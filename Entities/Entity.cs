@@ -51,6 +51,11 @@ namespace Andromeda.Entities
         }
 
         /// <summary>
+        /// The components of this entity
+        /// </summary>
+        internal IEnumerable<IComponent> Components => components;
+
+        /// <summary>
         /// Whether or not this entity is enabled
         /// </summary>
         public bool Enabled
@@ -99,7 +104,7 @@ namespace Andromeda.Entities
         /// </summary>
         public IGameState GameState
         {
-            get => GameView.ParentState;
+            get => GameView?.ParentState;
         }
 
         /// <summary>
