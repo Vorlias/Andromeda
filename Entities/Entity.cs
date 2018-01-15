@@ -243,14 +243,6 @@ namespace Andromeda.Entities
             }
         }
 
-        internal IEnumerable<IComponent> Components
-        {
-            get
-            {
-                return components;
-            }
-        }
-
         /// <summary>
         /// Returns the full path of this entity
         /// </summary>
