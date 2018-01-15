@@ -8,10 +8,11 @@ using Andromeda.Entities.Components.Internal;
 using Andromeda.System;
 using Andromeda.Serialization;
 using SFML.System;
+using Andromeda.System.Input;
 
 namespace Andromeda.Entities.Components
 {
-    public partial class UIText : UIComponent
+    public partial class UIText : UIComponent, ITextObject
     {
         public enum SizeMode
         {
