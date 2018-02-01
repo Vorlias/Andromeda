@@ -24,6 +24,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 Andromeda.Locale/
+Andromeda.Tests/
 
 # Visual Studio 2015 cache/options directory
 .vs/
