@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Andromeda.Debugging;
+using Andromeda.System.Services;
+using Andromeda.System.Utility;
+using SFML.Graphics;
+using SFML.System;
+using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Window;
-using SFML.System;
-using SFML.Graphics;
-using Andromeda.System.Utility;
-using Andromeda.System.Services;
-using Andromeda.Debugging;
 
 namespace Andromeda.System
 {
@@ -386,6 +384,7 @@ namespace Andromeda.System
         protected virtual void UpdateEvents()
         {
             window.DispatchEvents();
+            appServices.ForEach(service => service.Updated(this));
             Update();
         }
 

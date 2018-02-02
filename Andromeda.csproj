@@ -78,6 +78,7 @@
     <Compile Include="Entities\UIEntity.cs" />
     <Compile Include="Events\AndromedaEvent.cs" />
     <Compile Include="Graphics\LineShape.cs" />
+    <Compile Include="System\Application\ApplicationService.cs" />
     <Compile Include="System\Application\WindowStyle.cs" />
     <Compile Include="System\Attributes\DisallowMultipleAttribute.cs" />
     <Compile Include="System\Attributes\RequireComponentsAttribute.cs" />
