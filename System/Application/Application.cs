@@ -12,6 +12,7 @@ using Andromeda.Debugging;
 
 namespace Andromeda.System
 {
+
     /// <summary>
     /// An application
     /// </summary>
@@ -33,16 +34,46 @@ namespace Andromeda.System
         IntPtr context;
         ApplicationSettings settings;
         View gameView, interfaceView;
-        HashSet<ThreadedService> services = new HashSet<ThreadedService>();
+        HashSet<ThreadedService> threadServices = new HashSet<ThreadedService>();
+        HashSet<ApplicationService> appServices = new HashSet<ApplicationService>();
 
         public CustomMouseCursor CustomCursor
         {
             get;
         }
 
-        public Service GetService<Service>() where Service : ThreadedService, new()
+        /// <summary>
+        /// Gets the AppService of the specified type
+        /// </summary>
+        /// <typeparam name="AppService">The type of the service</typeparam>
+        /// <returns></returns>
+        public AppService GetService<AppService>() where AppService : ApplicationService
         {
-            var service = services.OfType<Service>();
+            return appServices.OfType<AppService>().FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Registers a new service of the specified type
+        /// </summary>
+        /// <typeparam name="AppService">The type of the service</typeparam>
+        /// <returns></returns>
+        public AppService RegisterService<AppService>() where AppService : ApplicationService, new()
+        {
+            var exists = appServices.OfType<AppService>().Count();
+            if (exists == 0)
+            {
+                var svc = new AppService();
+                svc.Application = this;
+                appServices.Add(svc);
+                return svc;
+            }
+            else
+                return null;
+        }
+
+        public Service GetThreadService<Service>() where Service : ThreadedService, new()
+        {
+            var service = threadServices.OfType<Service>();
             if (service.Count() > 0)
             {
                 return service.First();
@@ -51,7 +82,7 @@ namespace Andromeda.System
             {
                 Service newSvc = new Service();
                 newSvc.Start();
-                services.Add(newSvc);
+                threadServices.Add(newSvc);
                 return newSvc;
             }
         }
