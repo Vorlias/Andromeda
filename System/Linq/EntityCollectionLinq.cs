@@ -1,4 +1,5 @@
-﻿using Andromeda.Entities;
+﻿using Andromeda.Debugging;
+using Andromeda.Entities;
 using Andromeda.Entities.Components;
 using Andromeda.System.Internal;
 using System;
@@ -25,6 +26,23 @@ namespace Andromeda.Linq
                 component = default(C);
                 return false;
             }
+        }
+
+        public static IEnumerable<C> GetDescendantComponentsByType<C>(this Entity entity)
+            where C : class
+        {
+            
+            List<C> coms = new List<C>();
+            coms.AddRange(entity.GetComponentsByType<C>());
+            entity.Descendants.ForEach(desc => coms.AddRange(desc.GetComponentsByType<C>()));
+            DebugConsole.Log("~GetDescendants " + coms.Count);
+            return coms;
+        }
+
+        public static IEnumerable<C> GetComponentsByType<C>(this Entity entity)
+            where C : class
+        {
+            return entity.Components.OfType<C>();
         }
 
         public static IEnumerable<C> ComponentsOfType<C>(this IEnumerable<Entity> entities)
