@@ -494,7 +494,7 @@ namespace Andromeda.Entities
         public List<T> GetComponentsInDescendants<T>(bool includeParent = false) where T : IComponent
         {
             List<T> components = new List<T>();
-            Entity[] descendants = Children;
+            List<Entity> descendants = Descendants;
 
             if (includeParent)
                 components.AddRange(GetComponents<T>());
