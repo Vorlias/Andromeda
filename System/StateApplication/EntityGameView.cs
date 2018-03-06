@@ -338,15 +338,18 @@ namespace Andromeda.System
                 }
             }
 
-            updatableComponents.ForEach(com => com.BeforeUpdate());
+            
             interfaceComponents.ForEach(com => com.BeforeUpdate());
-
-
-            updatableComponents.ForEach(com => com.Update());
             InterfaceComponents.ForEach(com => com.Update());
-
-            updatableComponents.ForEach(com => com.AfterUpdate());
             interfaceComponents.ForEach(com => com.AfterUpdate());
+
+            updatableComponents.ForEach(com => com.BeforeUpdate());
+            updatableComponents.ForEach(com => com.Update());
+            updatableComponents.ForEach(com => com.AfterUpdate());
+
+            
+            
+            
 
             UpdateCollisions();
         }
@@ -444,8 +447,8 @@ namespace Andromeda.System
 
         public void Update(StateApplication application)
         {
-            OnUpdate(application);
             UpdateEntities();
+            OnUpdate(application);
         }
 
         public void Render(RenderWindow window)
