@@ -13,6 +13,8 @@ namespace Andromeda.Entities.UILayoutComponents
 {
     public class UIListLayout : UIComponent, ISortableInterfaceLayout
     {
+        public override UpdatePriority UpdatePriority => UpdatePriority.Interface + 1;
+
         Vector2f padding = new Vector2f(0, 0);
 
         public Vector2f Padding
@@ -58,7 +60,7 @@ namespace Andromeda.Entities.UILayoutComponents
 
         public override void AfterUpdate()
         {
-            
+
 
             var uiChildren = Entity.GetComponentsInChildren<UIComponent>().Where(com => com.Visible);
 
@@ -114,6 +116,7 @@ namespace Andromeda.Entities.UILayoutComponents
                 maxSizeX = offsetX;
             }
 
+
             Transform.LocalSize = new UICoordinates(0, maxSizeX, 0, maxSizeY);
         }
 
@@ -152,7 +155,7 @@ namespace Andromeda.Entities.UILayoutComponents
 
         public override void BeforeUpdate()
         {
-           
+
         }
 
         float maxSizeX = 0;
@@ -171,6 +174,7 @@ namespace Andromeda.Entities.UILayoutComponents
         public override void Update()
         {
 
+            
         }
     }
 }

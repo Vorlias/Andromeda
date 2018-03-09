@@ -308,7 +308,7 @@ namespace Andromeda.System
             {
                 List<IUpdatableComponent> components = new List<IUpdatableComponent>();
                 Children.Where(entity => entity.Enabled).Select(entity => entity.GetComponentsInDescendants<IUpdatableComponent>(true)).ForEach(list => components.AddRange(list));
-                return components.OrderByDescending(component => component.UpdatePriority);
+                return components.OrderBy(component => component.UpdatePriority);
             }
         }
 
@@ -325,7 +325,6 @@ namespace Andromeda.System
         internal void UpdateEntities()
         {
             var updatableComponents = UpdatableComponents;
-            var interfaceComponents = InterfaceComponents;
 
             foreach (var entity in Descendants.Where(descendant => descendant.Enabled))
             {
