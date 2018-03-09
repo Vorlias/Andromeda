@@ -146,6 +146,8 @@ namespace Andromeda.Entities.Components.Internal
             }
         }
 
+        public UpdatePriority UpdatePriority => UpdatePriority.Interface;
+
         public virtual void Draw(RenderTarget target, RenderStates states)
         {
         }

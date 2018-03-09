@@ -58,62 +58,8 @@ namespace Andromeda.Entities.UILayoutComponents
 
         public override void AfterUpdate()
         {
-            Transform.LocalSize = new UICoordinates(0, maxSizeX, 0, maxSizeY);
-        }
+            
 
-        public UIText AddText(string text, uint fontSize, Color color,
-            TextYAlignment yAlignment = TextYAlignment.Center, TextXAlignment xAlignment = TextXAlignment.Left
-            )
-        {
-            UIText obj = Add<UIText>();
-            obj.TextYAlignment = yAlignment;
-            obj.TextXAlignment = xAlignment;
-            obj.Color = color;
-            obj.Text = text;
-            obj.FontSize = fontSize;
-
-            return obj;
-        }
-
-        public UIListLayout AddListLayout(Vector2f padding = default(Vector2f), UIListItemAlignment uiListItemAlignment = UIListItemAlignment.Left)
-        {
-            var uiListLayout = Add<UIListLayout>();
-            uiListLayout.padding = padding;
-            uiListLayout.ListItemAlignment = uiListItemAlignment;
-            return uiListLayout;
-        }
-
-        void Test()
-        {
-
-        }
-
-        public UIComponentType Add<UIComponentType>() where UIComponentType : UIComponent, new()
-        {
-            Entity child = Entity.CreateChild();
-            return child.AddComponent<UIComponentType>();
-        }
-
-        public override void BeforeUpdate()
-        {
-
-        }
-
-        float maxSizeX = 0;
-        float maxSizeY = 0;
-
-        public IEnumerable<UIComponentType> ItemsOfType<UIComponentType>() where UIComponentType : UIComponent
-        {
-            return Items.OfType<UIComponentType>();
-        }
-
-        public IEnumerable<UIComponent> Items
-        {
-            get => Entity.GetComponentsInChildren<UIComponent>().Where(com => com.Visible);
-        }
-
-        public override void Update()
-        {
             var uiChildren = Entity.GetComponentsInChildren<UIComponent>().Where(com => com.Visible);
 
             if (FillDirection == UIListFillDirection.Vertical)
@@ -167,6 +113,64 @@ namespace Andromeda.Entities.UILayoutComponents
 
                 maxSizeX = offsetX;
             }
+
+            Transform.LocalSize = new UICoordinates(0, maxSizeX, 0, maxSizeY);
+        }
+
+        public UIText AddText(string text, uint fontSize, Color color,
+            TextYAlignment yAlignment = TextYAlignment.Center, TextXAlignment xAlignment = TextXAlignment.Left
+            )
+        {
+            UIText obj = Add<UIText>();
+            obj.TextYAlignment = yAlignment;
+            obj.TextXAlignment = xAlignment;
+            obj.Color = color;
+            obj.Text = text;
+            obj.FontSize = fontSize;
+
+            return obj;
+        }
+
+        public UIListLayout AddListLayout(Vector2f padding = default(Vector2f), UIListItemAlignment uiListItemAlignment = UIListItemAlignment.Left)
+        {
+            var uiListLayout = Add<UIListLayout>();
+            uiListLayout.padding = padding;
+            uiListLayout.ListItemAlignment = uiListItemAlignment;
+            return uiListLayout;
+        }
+
+        void Test()
+        {
+
+        }
+
+        public UIComponentType Add<UIComponentType>() where UIComponentType : UIComponent, new()
+        {
+            Entity child = Entity.CreateChild();
+            return child.AddComponent<UIComponentType>();
+        }
+
+        public override void BeforeUpdate()
+        {
+           
+        }
+
+        float maxSizeX = 0;
+        float maxSizeY = 0;
+
+        public IEnumerable<UIComponentType> ItemsOfType<UIComponentType>() where UIComponentType : UIComponent
+        {
+            return Items.OfType<UIComponentType>();
+        }
+
+        public IEnumerable<UIComponent> Items
+        {
+            get => Entity.GetComponentsInChildren<UIComponent>().Where(com => com.Visible);
+        }
+
+        public override void Update()
+        {
+
         }
     }
 }
