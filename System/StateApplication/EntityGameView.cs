@@ -337,7 +337,8 @@ namespace Andromeda.System
                 }
             }
 
-            updatableComponents.ForEach(com => {
+            updatableComponents.ForEach(com =>
+            {
                 com.BeforeUpdate();
                 com.Update();
                 com.AfterUpdate();
@@ -346,8 +347,6 @@ namespace Andromeda.System
             UpdateCollisions();
         }
 
-        const bool USE_NEW_RENDERING = true;
-
         internal void RenderEntities(RenderWindow window)
         {
             var uiElements = Renderable.OfType<UIComponent>();
@@ -355,10 +354,13 @@ namespace Andromeda.System
 
 #if !USE_LEGACY_CAMERA
             if (Camera == null)
-                    Camera = CreateChild().AddComponent<Camera>();
+            {
+                Camera = CreateChild().AddComponent<Camera>();
 
+                // Force camera update, so it initializes
+                Camera.Update();
+            }
 
-            Camera.Update();
 
 
             window.SetView(Camera.View);
