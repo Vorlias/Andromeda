@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -227,6 +227,10 @@ xcopy /y "$(SolutionDir)lib\csfml-graphics-2.dll" .</PreBuildEvent>
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
+    <PackageId>Andromeda</PackageId>
+    <Version>1.0.0-beta</Version>
+    <Authors>Vorlias</Authors>
+    <Company>Vorlias</Company>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

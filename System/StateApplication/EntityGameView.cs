@@ -44,35 +44,35 @@ namespace Andromeda.System
             OnCreation();
         }
 
-        Camera camera;
-        public Camera Camera
-        {
-            get
-            {
-                return camera;
-            }
-        }
+        public Camera Camera { get; private set; }
 
         /// <summary>
         /// Sets the camera type, will also create a camera if it doesn't exist
         /// </summary>
         /// <param name="type">The type of camera</param>
+#if !USE_LEGACY_CAMERA
+        [Obsolete("New rendering means camera now works with both UI and non-UI")]
+#endif
         public void SetCameraType(CameraType type)
         {
-            if (camera == null)
+            if (Camera == null)
             {
                 var existing = UpdatableComponents.OfType<Camera>();
                 if (existing.Count() > 0)
                 {
-                    camera = existing.First();
+                    Camera = existing.First();
                 }
                 else
                 {
-                    camera = CreateChild().AddComponent<Camera>();
+                    Camera = CreateChild().AddComponent<Camera>();
                 }
             }
-
-            camera.CameraType = type;
+#if !USE_LEGACY_CAMERA
+            Camera.CameraType = CameraType.World;
+            Debugging.DebugConsole.Warn("SetCameraType is deprecated.");
+#else
+            Camera.CameraType = type;
+#endif
         }
 
         private UserInputManager inputService;
@@ -346,24 +346,54 @@ namespace Andromeda.System
             UpdateCollisions();
         }
 
+        const bool USE_NEW_RENDERING = true;
+
         internal void RenderEntities(RenderWindow window)
         {
-            if (camera != null)
-            {
-                if (Camera.CameraType == CameraType.Interface)
-                    window.SetView(Camera.View);
-                else if (Camera.CameraType == CameraType.World)
-                    window.SetView(Camera.View);
-            }
-            else
-            {
-                window.SetView(Application.InterfaceView);
-            }
+            var uiElements = Renderable.OfType<UIComponent>();
+            var nonUI = Renderable.Where(item => !(item is UIComponent));
 
-            foreach (var component in Renderable)
+#if !USE_LEGACY_CAMERA
+            if (Camera == null)
+                    Camera = CreateChild().AddComponent<Camera>();
+
+
+            Camera.Update();
+
+
+            window.SetView(Camera.View);
+            foreach (var component in nonUI)
             {
                 component.Draw(window, RenderStates.Default);
             }
+
+            window.SetView(Application.InterfaceView);
+            foreach (var component in uiElements)
+            {
+                component.Draw(window, RenderStates.Default);
+            }
+#else
+            if (Camera != null)
+                {
+                    if (Camera.CameraType == CameraType.Interface)
+                        window.SetView(Camera.View);
+                    else if (Camera.CameraType == CameraType.World)
+                        window.SetView(Camera.View);
+                }
+                else
+                {
+                    window.SetView(Application.InterfaceView);
+                }
+
+                foreach (var component in Renderable)
+                {
+                    component.Draw(window, RenderStates.Default);
+                }
+#endif
+
+
+
+
         }
 
         public void Start()

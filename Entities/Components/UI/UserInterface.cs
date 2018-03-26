@@ -27,12 +27,21 @@ namespace Andromeda.Entities.Components
         protected override void OnComponentInit(Entity entity)
         {
             entity.Name = "UserInterface";
+
+#if USE_LEGACY_CAMERA
+            if (entity.ParentContainer is EntityGameView entityView)
+            {
+                entityView.SetCameraType(CameraType.Interface);
+                Debugging.DebugConsole.Log("Set View to CameraType.Interface for " + entityView.Id);
+            }
+#endif
         }
 
         public void ChildAdded(Entity entity)
         {
             //entity.AddComponent<UITransform>();
         }
+        
 
         public override void OnComponentCopy(Entity source, Entity copy)
         {
