@@ -295,7 +295,7 @@ namespace Andromeda.Entities
             return tags.Contains(tag);
         }
 
-    
+
         internal void SetParentView(EntityGameView state)
         {
             parentState = state;
@@ -358,7 +358,7 @@ namespace Andromeda.Entities
         /// <typeparam name="T">The component type</typeparam>
         /// <param name="create">Whether or not the type should be created if not found</param>
         /// <returns></returns>
-        public FindComponentResult<T> FindComponent<T>(bool create = false) where T: IComponent, new()
+        public FindComponentResult<T> FindComponent<T>(bool create = false) where T : IComponent, new()
         {
             if (HasComponent<T>())
                 return new FindComponentResult<T>(GetComponent<T>(), true);
@@ -414,7 +414,7 @@ namespace Andromeda.Entities
 
             var allowMultiple = component.GetType().GetCustomAttributes(typeof(DisallowMultipleAttribute), false);
             if (allowMultiple.Count() > 0)
-            { 
+            {
                 isMultipleAllowed = false;
             }
 
@@ -435,6 +435,9 @@ namespace Andromeda.Entities
             }
         }
 
+
+
+
         internal void Update()
         {
         }
@@ -444,7 +447,7 @@ namespace Andromeda.Entities
         /// </summary>
         internal void StartBehaviours()
         {
-            
+
         }
 
         /// <summary>
@@ -600,7 +603,7 @@ namespace Andromeda.Entities
             copy.SetParentView(GameView);
             if (parent != null)
                 copy.SetParent(parent);
-            
+
 
             foreach (IComponent component in components)
             {
