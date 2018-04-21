@@ -31,6 +31,9 @@ namespace Andromeda.Entities.UILayoutComponents
         }
 
         UIListFillDirection fillDirection = UIListFillDirection.Vertical;
+        /// <summary>
+        /// The fill direction of the UIListLayout
+        /// </summary>
         public UIListFillDirection FillDirection
         {
             get => fillDirection;
@@ -38,6 +41,9 @@ namespace Andromeda.Entities.UILayoutComponents
         }
 
         bool sizeToContents = true;
+        /// <summary>
+        /// Whether or not the UIListLayout will change size to fit contents
+        /// </summary>
         public bool SizeToContents
         {
             get => sizeToContents;
@@ -45,6 +51,9 @@ namespace Andromeda.Entities.UILayoutComponents
         }
 
         LayoutSortOrder order = LayoutSortOrder.InstanceOrder;
+        /// <summary>
+        /// The sort order of this UIListLayout
+        /// </summary>
         public LayoutSortOrder LayoutSortOrder
         {
             get => order;
@@ -52,6 +61,9 @@ namespace Andromeda.Entities.UILayoutComponents
         }
 
         Func<UIComponent, bool> sort;
+        /// <summary>
+        /// The custom sort function
+        /// </summary>
         public Func<UIComponent, bool> CustomSortFunction
         {
             get => sort;
@@ -120,6 +132,15 @@ namespace Andromeda.Entities.UILayoutComponents
             Transform.LocalSize = new UICoordinates(0, maxSizeX, 0, maxSizeY);
         }
 
+        /// <summary>
+        /// Add text to this UIListLayout
+        /// </summary>
+        /// <param name="text">The text of this UIListLayout</param>
+        /// <param name="fontSize">The size of the text</param>
+        /// <param name="color">The color of the text</param>
+        /// <param name="yAlignment">The Y alignment of the text</param>
+        /// <param name="xAlignment">The X alignment of the text</param>
+        /// <returns></returns>
         public UIText AddText(string text, uint fontSize, Color color,
             TextYAlignment yAlignment = TextYAlignment.Center, TextXAlignment xAlignment = TextXAlignment.Left
             )
@@ -134,6 +155,12 @@ namespace Andromeda.Entities.UILayoutComponents
             return obj;
         }
 
+        /// <summary>
+        /// Add a child list layout
+        /// </summary>
+        /// <param name="padding">The padding of the child list layout</param>
+        /// <param name="uiListItemAlignment">The alignment of the child list layout relative to the parent</param>
+        /// <returns></returns>
         public UIListLayout AddListLayout(Vector2f padding = default(Vector2f), UIListItemAlignment uiListItemAlignment = UIListItemAlignment.Left)
         {
             var uiListLayout = Add<UIListLayout>();
@@ -166,6 +193,9 @@ namespace Andromeda.Entities.UILayoutComponents
             return Items.OfType<UIComponentType>();
         }
 
+        /// <summary>
+        /// The items in this UIListLayout
+        /// </summary>
         public IEnumerable<UIComponent> Items
         {
             get => Entity.GetComponentsInChildren<UIComponent>().Where(com => com.Visible);
@@ -174,7 +204,6 @@ namespace Andromeda.Entities.UILayoutComponents
         public override void Update()
         {
 
-            
         }
     }
 }

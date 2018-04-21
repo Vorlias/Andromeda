@@ -34,6 +34,9 @@ namespace Andromeda.System
 
         }
 
+        /// <summary>
+        /// The mouse coordinates
+        /// </summary>
         public MouseCoordinates MousePosition
         {
             get => new MouseCoordinates(Application, this);
@@ -44,6 +47,9 @@ namespace Andromeda.System
             OnCreation();
         }
 
+        /// <summary>
+        /// The camera of this GameView
+        /// </summary>
         public Camera Camera { get; private set; }
 
         /// <summary>

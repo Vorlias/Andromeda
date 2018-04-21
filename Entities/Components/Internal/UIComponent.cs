@@ -72,21 +72,37 @@ namespace Andromeda.Entities.Components.Internal
             set => Entity.Visible = value;
         }
 
+        /// <summary>
+        /// The resulting size of this UIComponent relative to the window
+        /// </summary>
         public Vector2f AbsoluteSize => Transform.LocalSize.GlobalAbsolute;
+
+        /// <summary>
+        /// The resulting window position of this UIComponent
+        /// </summary>
         public Vector2f AbsolutePosition => Transform.LocalPosition.GlobalAbsolute;
 
+        /// <summary>
+        /// The position of this UIComponent
+        /// </summary>
         public UICoordinates Position
         {
             get => Transform.LocalPosition;
             set => Transform.LocalPosition = value;
         }
 
+        /// <summary>
+        /// The size of this UIComponent
+        /// </summary>
         public UICoordinates Size
         {
             get => Transform.LocalSize;
             set => Transform.LocalSize = value;
         }
 
+        /// <summary>
+        /// The transform of this UIComponent
+        /// </summary>
         public UITransform Transform
         {
             get
@@ -132,6 +148,9 @@ namespace Andromeda.Entities.Components.Internal
 
         private RenderOrder renderOrder;
 
+        /// <summary>
+        /// The render order of this UIComponent
+        /// </summary>
         [SerializableProperty("RenderOrder", PropertyType = SerializedPropertyType.Enum)]
         public RenderOrder RenderOrder
         {
