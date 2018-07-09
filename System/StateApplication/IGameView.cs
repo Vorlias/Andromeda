@@ -17,6 +17,10 @@ namespace Andromeda.System
         void Reset();
         void Start();
 
+        void OnDeactivated();
+
+        void OnActivated();
+
         void SetParentState(IGameState state);
 
         void ProcessInput(Application application, Mouse.Button button, InputState state);

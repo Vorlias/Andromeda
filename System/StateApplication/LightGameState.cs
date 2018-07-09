@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Andromeda.Events;
 using Andromeda.System.Internal;
 using Andromeda.System.Utility;
+using Andromeda.Debugging;
 
 namespace Andromeda.System
 {
@@ -48,6 +49,7 @@ namespace Andromeda.System
 
         public sealed override void OnActivated()
         {
+            DebugConsole.WriteEngine("Activate State: " + Name + " via <LightGameState::OnActivated()>");
             InitializeViews();
             Views.ForEach(view => view.Start());
             OnLightActivated();

@@ -139,6 +139,11 @@ namespace Andromeda.System
             application = this;
         }
 
+        public StateApplication(IntPtr handle) : base(handle)
+        {
+            
+        }
+
         protected sealed override void BeforeStart()
         {
             Window.SetFramerateLimit(144);

@@ -7,6 +7,7 @@ using System;
 using SFML.Audio;
 using System.Linq;
 using SFML.Window;
+using Andromeda.Debugging;
 
 namespace Andromeda.System
 {
@@ -15,7 +16,7 @@ namespace Andromeda.System
     /// </summary>
     public abstract class GameState : IGameState
     {
-        HashSet<IGameView> views;
+        List<IGameView> views;
         private ExclusiveGameViewProperty exclusiveView;
         private bool mouseGrabbed = false;
 
@@ -232,7 +233,7 @@ namespace Andromeda.System
         protected GameState()
         {
             exclusiveView = new ExclusiveGameViewProperty(this);
-            views = new HashSet<IGameView>();
+            views = new List<IGameView>();
             Input = new UserInputManager();
         }
 
@@ -267,7 +268,10 @@ namespace Andromeda.System
                 view.ParentState = this;
 
                 if (view.IsActive)
+                {
+                    view.OnActivated();
                     view.Activated();
+                }
             }
         }
 
@@ -288,6 +292,7 @@ namespace Andromeda.System
         {
             if (StateManager.ActiveState == this)
             {
+                Views.Where(view => view.IsActive).ForEach(view => view.OnDeactivated());
                 OnDeactivated();
                 OnReset();
 
@@ -297,6 +302,7 @@ namespace Andromeda.System
                 }
 
                 OnActivated();
+                Views.Where(view => view.IsActive).ForEach(view => view.OnActivated());
             }
             else
             {
@@ -325,6 +331,7 @@ namespace Andromeda.System
         /// </summary>
         protected void StartViews()
         {
+            DebugConsole.WriteEngine("Starting views for: " + Name + " via <GameState::StartViews()>");
             views.ForEach(view => view.Start());
         }
 

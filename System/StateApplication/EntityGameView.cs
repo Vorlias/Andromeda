@@ -14,6 +14,8 @@ using System;
 using Andromeda.Entities.Components.UI;
 using Andromeda.Entities.Components.Colliders;
 using Andromeda.Linq;
+using Andromeda.Debugging;
+using System.Diagnostics;
 
 namespace Andromeda.System
 {
@@ -47,35 +49,61 @@ namespace Andromeda.System
             OnCreation();
         }
 
+        private Camera _camera;
         /// <summary>
         /// The camera of this GameView
         /// </summary>
-        public Camera Camera { get; private set; }
+        public Camera Camera
+        {
+            get
+            {
+                var existing = UpdatableComponents.OfType<Camera>();
+                if (existing.Count() > 1)
+                {
+                    DebugConsole.Warn("Multiple cameras detected!");
+                }
+
+                //if (_camera == null)
+                //{
+                //    var existing = UpdatableComponents.OfType<Camera>();
+                //    if (existing.Count() > 0)
+                //    {
+                //        _camera = existing.First();
+                //    }
+                //    else
+                //    {
+                //        _camera = CreateChild().AddComponent<Camera>();
+                //        _camera.Entity.Name = "Camera";
+                //        //_camera.Update();
+                //        DebugConsole.Warn("Created camera in view");
+                //    }
+                //}
+
+                return _camera;
+            }
+        }
+
+
+        protected void AddCamera()
+        {
+            if (_camera == null)
+                _camera = CreateChild().AddComponent<Camera>();
+            else
+                DebugConsole.Warn("Camera already exists!");
+        }
 
         /// <summary>
         /// Sets the camera type, will also create a camera if it doesn't exist
         /// </summary>
         /// <param name="type">The type of camera</param>
 #if !USE_LEGACY_CAMERA
-        [Obsolete("New rendering means camera now works with both UI and non-UI")]
+        [Obsolete]
 #endif
         public void SetCameraType(CameraType type)
         {
-            if (Camera == null)
-            {
-                var existing = UpdatableComponents.OfType<Camera>();
-                if (existing.Count() > 0)
-                {
-                    Camera = existing.First();
-                }
-                else
-                {
-                    Camera = CreateChild().AddComponent<Camera>();
-                }
-            }
 #if !USE_LEGACY_CAMERA
             Camera.CameraType = CameraType.World;
-            Debugging.DebugConsole.Warn("SetCameraType is deprecated.");
+            Debugging.DebugConsole.Warn("SetCameraType is non-functional.");
 #else
             Camera.CameraType = type;
 #endif
@@ -226,6 +254,7 @@ namespace Andromeda.System
             {
                 if (value)
                 {
+                    DebugConsole.WriteEngine("Set active (via IsActive): " + this.GetType().Name);
                     OnActivated();
 
                 }
@@ -252,7 +281,7 @@ namespace Andromeda.System
         /// </summary>
         public virtual void OnStart()
         {
-
+            
         }
 
         /// <summary>
@@ -353,6 +382,28 @@ namespace Andromeda.System
             UpdateCollisions();
         }
 
+        [Conditional("DEBUG")]
+        internal void RenderDebug(RenderWindow window)
+        {
+            string cameraString = "";
+            UpdatableComponents.ForEach(updatable =>
+            {
+                cameraString += updatable.Entity.FullName + "\n";
+            });
+
+            if (Camera != null)
+            {
+                RectangleShape rs = new RectangleShape();
+                rs.Size = new Vector2f(10, 10);
+                rs.Position = Camera.WorldPosition;
+                window.Draw(rs);
+            }
+
+            Text tx = new Text(cameraString, FontManager.Get("Liberation-Mono"), 10);
+            tx.Position = new Vector2f(100, 100);
+            window.Draw(tx);
+        }
+
         internal void RenderEntities(RenderWindow window)
         {
             var uiElements = Renderable.OfType<UIComponent>();
@@ -361,15 +412,15 @@ namespace Andromeda.System
 #if !USE_LEGACY_CAMERA
             if (Camera == null)
             {
-                Camera = CreateChild().AddComponent<Camera>();
-
-                // Force camera update, so it initializes
+                _camera = CreateChild().AddComponent<Camera>();
                 Camera.Update();
             }
 
+            if (Camera.View != null)
+               window.SetView(Camera.View);
+            else
+                DebugConsole.Warn("View is null for Camera " + Camera.FriendlyId);
 
-
-            window.SetView(Camera.View);
             foreach (var component in nonUI)
             {
                 component.Draw(window, RenderStates.Default);
@@ -382,36 +433,31 @@ namespace Andromeda.System
             }
 #else
             if (Camera != null)
-                {
-                    if (Camera.CameraType == CameraType.Interface)
-                        window.SetView(Camera.View);
-                    else if (Camera.CameraType == CameraType.World)
-                        window.SetView(Camera.View);
-                }
-                else
-                {
-                    window.SetView(Application.InterfaceView);
-                }
+            {
+                if (Camera.CameraType == CameraType.Interface)
+                    window.SetView(Camera.View);
+                else if (Camera.CameraType == CameraType.World)
+                    window.SetView(Camera.View);
+            }
+            else
+            {
+                window.SetView(Application.InterfaceView);
+            }
 
-                foreach (var component in Renderable)
-                {
-                    component.Draw(window, RenderStates.Default);
-                }
+            foreach (var component in Renderable)
+            {
+                component.Draw(window, RenderStates.Default);
+            }
 #endif
 
 
-
+            RenderDebug(window);
 
         }
 
         public void Start()
         {
             OnStart();
-
-            if (active)
-            {
-                OnActivated();
-            }
         }
 
         /// <summary>

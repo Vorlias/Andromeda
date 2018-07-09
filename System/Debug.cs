@@ -3,6 +3,7 @@ using Andromeda.Entities.Components;
 using Andromeda.System;
 using Andromeda.System.Internal;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 
@@ -110,6 +111,7 @@ namespace Andromeda.Debugging
             Console.ForegroundColor = oldColor;
         }
 
+        [Conditional("DEBUG")]
         internal static void WriteEngine(string message, params object[] arg)
         {
             if (HasFlag(DebugFlags.Engine))

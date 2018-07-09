@@ -21,6 +21,7 @@ namespace Andromeda.System
 
         static GameViewSingleton()
         {
+            
         }
 
         static bool started = false;
@@ -34,6 +35,17 @@ namespace Andromeda.System
         public sealed override void OnAdded()
         {
             // Do nothing because it doesn't get added
+        }
+
+        public virtual void OnSingletonActivated()
+        {
+
+        }
+
+        public override sealed void OnActivated()
+        {
+            DebugConsole.WriteEngine("OnActivated - Singleton");
+            OnSingletonActivated();
         }
 
 
@@ -61,7 +73,6 @@ namespace Andromeda.System
                 if (singleton == null)
                 {
                     singleton = new GameViewClass();
-                   // singleton.OnStart();
                 }
                     
                 return singleton;
