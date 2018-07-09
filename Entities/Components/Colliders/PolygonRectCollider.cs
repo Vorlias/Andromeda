@@ -42,6 +42,17 @@ namespace Andromeda.Entities.Components
             polygon = Polygon.CreateRectangle(size.X, size.Y);
         }
 
+        /// <summary>
+        /// Create a rect collider based off a sprite renderer
+        /// </summary>
+        /// <param name="spriteRenderer">The sprite renderer</param>
+        public void CreateRectCollider(SpriteRenderer spriteRenderer)
+        {
+            var textureSize = spriteRenderer.Texture.Size.ToFloat();
+            CreateRectCollider(new Vector2f(textureSize.X, textureSize.Y)); // Create a collider with the size of the sprite (ish)
+            origin = -(textureSize / 2);
+        }
+
         private Vector2f origin;
         public Vector2f Origin
         {
@@ -64,14 +75,7 @@ namespace Andromeda.Entities.Components
 
         protected override void OnComponentInit(Entity entity)
         {
-            // If we have a sprite renderer, we can default to the sprite ;)
-            if (entity.HasComponent<SpriteRenderer>())
-            {
-                var spriteRenderer = entity.GetComponent<SpriteRenderer>();
-                var textureSize = spriteRenderer.Texture.Size.ToFloat();
-                CreateRectCollider(new Vector2f(textureSize.X, textureSize.Y)); // Create a collider with the size of the sprite (ish)
-                origin = -(textureSize / 2);
-            }
+
         }
     }
 }

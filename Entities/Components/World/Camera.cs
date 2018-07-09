@@ -34,9 +34,6 @@ namespace Andromeda.Entities.Components
 
         public bool DebugEnabled { get; set; } = false;
 
-        private Guid Id { get; } = Guid.NewGuid();
-        internal string FriendlyId => Entity.GameState.Name + ":" + Entity.GameView.GetType().Name + ":" + Id;
-
         View view;
         public View View
         {
@@ -107,18 +104,16 @@ namespace Andromeda.Entities.Components
             StateApplication app = StateApplication.Application;
 
             entity.AddComponent<Transform>();
-
-            DebugConsole.WriteEngine("Create Camera: {0}", FriendlyId);
         }
 
         public void AfterUpdate()
         {
-            
+
         }
 
         public void BeforeUpdate()
         {
-            
+
         }
 
         /// <summary>
@@ -141,7 +136,6 @@ namespace Andromeda.Entities.Components
                 if (view == null)
                 {
                     view = new View(application.InterfaceView);
-                    DebugConsole.WriteEngine("Created interface view for Camera " + FriendlyId);
                 }
 
                 view.Rotation = 0;
@@ -152,7 +146,6 @@ namespace Andromeda.Entities.Components
                 if (view == null)
                 {
                     view = new View(application.WorldView);
-                    DebugConsole.WriteEngine("Created world view for Camera " + FriendlyId);
                 }
 
                 if (GameResolution.Enabled)
@@ -167,7 +160,7 @@ namespace Andromeda.Entities.Components
                 view.Rotation = Entity.Transform.LocalRotation;
             }
 
-            
+
         }
 
         public void Update()
@@ -175,7 +168,8 @@ namespace Andromeda.Entities.Components
 
             CreateViewIfNotExist();
 
-            Entity.GameState.Application.Window.SetView(view);
+            if (Entity.GameState != null)
+                Entity.GameState.Application.Window.SetView(view);
         }
 
         public Vector2f ScreenToWorldPoint(Vector2f screenPoint)

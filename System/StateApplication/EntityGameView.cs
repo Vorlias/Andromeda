@@ -418,8 +418,6 @@ namespace Andromeda.System
 
             if (Camera.View != null)
                window.SetView(Camera.View);
-            else
-                DebugConsole.Warn("View is null for Camera " + Camera.FriendlyId);
 
             foreach (var component in nonUI)
             {
