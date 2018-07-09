@@ -451,7 +451,7 @@ namespace Andromeda.System
 #endif
 
 
-            RenderDebug(window);
+            //RenderDebug(window);
 
         }
 
