@@ -84,7 +84,7 @@ namespace Andromeda.System
         /// <param name="name">The name of this binding</param>
         /// <param name="actionMethod">The method that is called when these inputs are invoked</param>
         /// <param name="inputs">The inputs (Key, MouseButton, etc.)</param>
-        public void BindAction(string name, Action<string, UserInputAction> actionMethod, params object[] inputs)
+        public void BindAction(string name, Action<string, UserInputAction> actionMethod, params InputValue[] inputs)
         {
             InputBindingAction action = new InputBindingAction(name, actionMethod, inputs);
             actions.Add(action);
@@ -92,11 +92,21 @@ namespace Andromeda.System
         }
 
         /// <summary>
+        /// Gets all actions with the specified prefix
+        /// </summary>
+        /// <param name="prefix">The prefix</param>
+        /// <returns>All actions matching prefix</returns>
+        public IEnumerable<InputBindingAction> GetActionsStartingWith(string prefix)
+        {
+            return ActionsByPriority.Where(action => action.ActionName.StartsWith(prefix));
+        }
+
+        /// <summary>
         /// Rebinds an input action
         /// </summary>
         /// <param name="name">The name of the input action</param>
         /// <param name="inputs">The inputs</param>
-        public void Rebind(string name, params object[] inputs)
+        public void Rebind(string name, params InputValue[] inputs)
         {
             var matchingBindings = bindings.Where(binding => binding.ActionName == name);
             foreach (var match in matchingBindings)
@@ -110,7 +120,7 @@ namespace Andromeda.System
         /// </summary>
         /// <param name="value">The input name</param>
         /// <param name="inputs">The inputs</param>
-        public void Rebind(Enum value, params object[] inputs)
+        public void Rebind(Enum value, params System.InputValue[] inputs)
         {
             Rebind(value.GetFullName(), inputs);
         }
@@ -122,7 +132,7 @@ namespace Andromeda.System
         /// <param name="value">The enum value of this binding</param>
         /// <param name="actionMethod">The method that is called when these inputs are invoked</param>
         /// <param name="inputs">The inputs (Key, MouseButton, etc.)</param>
-        public void BindAction(Enum value, Action<string, UserInputAction> actionMethod, params object[] inputs)
+        public void BindAction(Enum value, Action<string, UserInputAction> actionMethod, params InputValue[] inputs)
         {
             InputBindingAction action = new InputBindingAction(value.GetFullName(), actionMethod, inputs);
             actions.Add(action);
@@ -226,7 +236,7 @@ namespace Andromeda.System
         /// </summary>
         /// <param name="value">The enum value of the action</param>
         /// <param name="inputs">The inputs for this action</param>
-        public void Bind(Enum value, params object[] inputs)
+        public void Bind(Enum value, params InputValue[] inputs)
         {
             InputBinding binding = new InputBinding(value.GetFullName(), inputs);
             bindings.Add(binding);
@@ -237,7 +247,7 @@ namespace Andromeda.System
         /// </summary>
         /// <param name="name">The name of the action</param>
         /// <param name="inputs">The inputs for this action</param>
-        public void Bind(string name, params object[] inputs)
+        public void Bind(string name, params InputValue[] inputs)
         {
             InputBinding binding = new InputBinding(name, inputs);
             bindings.Add(binding);

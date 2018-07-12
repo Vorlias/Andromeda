@@ -86,6 +86,7 @@
     <Compile Include="System\Debug.cs" />
     <Compile Include="System\DelayedAction.cs" />
     <Compile Include="System\Input\ICastable.cs" />
+    <Compile Include="System\Input\InputValue.cs" />
     <Compile Include="System\Input\ITextInput.cs" />
     <Compile Include="System\Input\ITextObject.cs" />
     <Compile Include="System\Input\UserInputManager.InputBinding.cs" />

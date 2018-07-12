@@ -9,7 +9,7 @@ namespace Andromeda.System
     {
         public class InputBinding
         {
-            internal object[] inputs;
+            internal System.InputValue[] inputs;
             protected string actionName;
             //protected InputBindingBehaviour inputBehaviour = InputBindingBehaviour.Fallthrough;
 
@@ -27,11 +27,13 @@ namespace Andromeda.System
             /// <summary>
             /// The mouse buttons that are used in this action
             /// </summary>
-            public Mouse.Button[] MouseButtons
+            public IEnumerable<Mouse.Button> MouseButtons
             {
                 get
                 {
-                    return inputs.OfType<Mouse.Button>().ToArray();
+                    return inputs
+                        .Where(input => input.Type == System.InputValue.InputType.Mouse)
+                        .Select(input => input.Button);
                 }
             }
 
@@ -49,11 +51,13 @@ namespace Andromeda.System
             /// <summary>
             /// The keys that are used in this action
             /// </summary>
-            public Keyboard.Key[] KeyCodes
+            public IEnumerable<Keyboard.Key> KeyCodes
             {
                 get
                 {
-                    return inputs.OfType<Keyboard.Key>().ToArray();
+                    return inputs
+                        .Where(input => input.Type == System.InputValue.InputType.Keyboard)
+                        .Select(input => input.KeyCode);
                 }
             }
 
@@ -62,7 +66,9 @@ namespace Andromeda.System
             /// </summary>
             public IEnumerable<KeyCombination> KeyCombinations
             {
-                get => inputs.OfType<KeyCombination>();
+                get => inputs
+                    .Where(input => input.Type == System.InputValue.InputType.KeyboardCombination)
+                    .Select(input => new KeyCombination(input.KeyCodes));
             }
 
             /// <summary>
@@ -91,7 +97,7 @@ namespace Andromeda.System
                 return false;
             }
 
-            public InputBinding(string actionName, object[] inputs)
+            public InputBinding(string actionName, System.InputValue[] inputs)
             {
                 this.actionName = actionName;
                 this.inputs = inputs;
