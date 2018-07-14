@@ -24,6 +24,17 @@ namespace Andromeda.System.Utility
             return new Vector2u(mode.Height / nGCD, mode.Width / nGCD);
         }
 
+        /// <summary>
+        /// Get the aspect ratio of the specified size
+        /// </summary>
+        /// <param name="size">The size</param>
+        /// <returns>The aspect ratio (Height, Width)</returns>
+        public static Vector2u GetAspectRatio(Vector2u size)
+        {
+            uint nGCD = GetGreatestCommonDivisor(size.Y, size.X);
+            return new Vector2u(size.Y / nGCD, size.X / nGCD);
+        }
+
         private static uint GetGreatestCommonDivisor(uint a, uint b)
         {
             return b == 0 ? a : GetGreatestCommonDivisor(b, a % b);
