@@ -123,28 +123,7 @@ namespace Andromeda.Resources.Archive
 
             var entry = archive.Entries.Where(e => e.FullName == relativeFile).First();
 
-            Polygon polygon = new Polygon();
-
-            int version, vertexCount;
-            Vector2u size;
-            bool autoSize;
-
-            using (Stream reader = entry.Open())
-            {
-                version = reader.ReadByte();
-                autoSize = reader.ReadBool();
-                size = reader.ReadVector2u();
-
-                vertexCount = reader.ReadInt32();
-
-                for (int i = 0; i < vertexCount; i++)
-                {
-                    Vector2i vertex = reader.ReadVector2i();
-                    polygon.Add(vertex.ToFloat());
-                }
-            }
-
-            return new StarMapColliderInfo(polygon, size);
+            return new StarMapColliderInfo(entry.Open());
         }
 
         public Polygon ReadACColliderBinary(string relativeFile)

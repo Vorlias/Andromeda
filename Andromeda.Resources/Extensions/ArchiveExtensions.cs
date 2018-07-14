@@ -30,6 +30,18 @@ namespace Andromeda.Resources.Extensions
             texArchive.LoadImages();
         }
 
+        public static void LoadSpritesheets(this PackageResources resourcePackage, string archivePath)
+        {
+            var x = resourcePackage.Archive as TextureArchive;
+            x.LoadEncodedSpritesheets();
+            x.LoadSpritesheets();
+        }
+
+        public static void LoadSpritesheets(this FolderResources folderResources, string folderPath)
+        {
+            //var x = folderResources.
+        }
+
         public static void LoadArchiveFonts(this FontManager manager, string archivePath)
         {
             AssetArchive arch = AssetArchive.ReadArchive(archivePath);

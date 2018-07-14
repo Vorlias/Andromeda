@@ -60,6 +60,20 @@
     <Compile Include="Extensions\ArchiveExtensions.cs" />
     <Compile Include="FileTypes\SpriteFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\FolderResources.cs" />
+    <Compile Include="Resources\FontResource.cs" />
+    <Compile Include="Resources\ILoadableResource.cs" />
+    <Compile Include="Resources\IResource.cs" />
+    <Compile Include="Resources\IResourcePackage.cs" />
+    <Compile Include="Resources\PackageResources.cs" />
+    <Compile Include="Resources\PrefabResource.cs" />
+    <Compile Include="Resources\ResourcePackExt.cs" />
+    <Compile Include="Resources\Resources.cs" />
+    <Compile Include="Resources\ResourceType.cs" />
+    <Compile Include="Resources\SMColliderResource.cs" />
+    <Compile Include="Resources\SpritePackResource.cs" />
+    <Compile Include="Resources\TextureResouce.cs" />
+    <Compile Include="Streaming\StreamManager.cs" />
     <Compile Include="Types\TextureMap.cs" />
     <Compile Include="Types\TextureMapMetadata.cs" />
   </ItemGroup>
