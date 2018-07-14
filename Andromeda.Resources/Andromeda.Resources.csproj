@@ -73,7 +73,6 @@
     <Compile Include="Resources\SMColliderResource.cs" />
     <Compile Include="Resources\SpritePackResource.cs" />
     <Compile Include="Resources\TextureResouce.cs" />
-    <Compile Include="Streaming\StreamManager.cs" />
     <Compile Include="Types\TextureMap.cs" />
     <Compile Include="Types\TextureMapMetadata.cs" />
   </ItemGroup>
