@@ -21,7 +21,7 @@ namespace Andromeda.System.Utility
         public static Vector2u GetAspectRatio(VideoMode mode)
         {
             uint nGCD = GetGreatestCommonDivisor(mode.Height, mode.Width);
-            return new Vector2u(mode.Height / nGCD, mode.Width / nGCD);
+            return new Vector2u(mode.Width / nGCD, mode.Height / nGCD);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Andromeda.System.Utility
         public static Vector2u GetAspectRatio(Vector2u size)
         {
             uint nGCD = GetGreatestCommonDivisor(size.Y, size.X);
-            return new Vector2u(size.Y / nGCD, size.X / nGCD);
+            return new Vector2u(size.X / nGCD, size.Y / nGCD);
         }
 
         private static uint GetGreatestCommonDivisor(uint a, uint b)
