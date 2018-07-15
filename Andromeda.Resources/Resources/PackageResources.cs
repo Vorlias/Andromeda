@@ -25,6 +25,8 @@ namespace Andromeda.Resources
                         resources.Add(new PrefabResource(file.Open()));
                     else if (file.FullName.EndsWith(".as"))
                         resources.Add(new SpritePackResource(Archive.ReadAllBytes(file.FullName)));
+                    else if (file.FullName.EndsWith(".txt") || file.FullName.EndsWith(".json"))
+                        resources.Add(new TextFileResource(file.Open()));
                 }
 
                 return resources;

@@ -27,6 +27,8 @@ namespace Andromeda.Resources
                         resources.Add(new PrefabResource(new FileStream(file.FullName, FileMode.Open)));
                     else if (file.Extension == ".as")
                         resources.Add(new SpritePackResource(File.ReadAllBytes(file.FullName)));
+                    else if (file.Extension == ".txt" || file.Extension == ".json" || file.Extension == ".ini" || file.Extension == ".cfg")
+                        resources.Add(new TextFileResource(File.OpenRead(file.FullName)));
                 }
 
                 return resources;

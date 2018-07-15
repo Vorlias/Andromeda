@@ -7,5 +7,6 @@
         SMCollider,
         Prefab,
         Sprite,
+        Text,
     }
 }
