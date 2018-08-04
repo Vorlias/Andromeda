@@ -33,7 +33,7 @@ namespace Andromeda.Entities.Components.Internal
         /// <summary>
         /// The transparency of this UI component
         /// </summary>
-        public int Transparency { get; set; }
+        public float Transparency { get; set; }
 
         /// <summary>
         /// The ZIndex of this UIComponent
