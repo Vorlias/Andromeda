@@ -22,19 +22,18 @@ namespace Andromeda.Entities.Components.Internal
 
         public const int ZINDEX_MAX = 1000;
         public const int ZINDEX_MIN = 0;
+        int _zIndex = 0;
 
         static IntNumberRange zIndexRange = new IntNumberRange(ZINDEX_MIN, ZINDEX_MAX);
         public static IntNumberRange ZIndexRange
         {
             get => zIndexRange;
         }
-
+   
         /// <summary>
-        /// The opacity of this UI component
+        /// The transparency of this UI component
         /// </summary>
         public int Transparency { get; set; }
-
-        int _zIndex = 0;
 
         /// <summary>
         /// The ZIndex of this UIComponent

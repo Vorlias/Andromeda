@@ -177,7 +177,7 @@ namespace Andromeda.Entities.Components
         public override void Draw(RenderTarget target, RenderStates states)
         {
             Text fontText = new Text(Text, Font, FontSize);
-            fontText.FillColor = Color;
+            fontText.FillColor = new Color(Color.R, Color.G, Color.B, (byte)(Color.A * (1-Transparency)) );
             Width = fontText.GetLocalBounds().Width;
             fontText.Position = GetPositionOfText(fontText);
             target.Draw(fontText);
