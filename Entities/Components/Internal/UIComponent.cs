@@ -10,6 +10,7 @@ using SFML.Window;
 using Andromeda.System.Utility;
 using Andromeda.Serialization;
 using Andromeda.System.Types;
+using Andromeda.Debugging;
 
 namespace Andromeda.Entities.Components.Internal
 {
@@ -23,6 +24,7 @@ namespace Andromeda.Entities.Components.Internal
         public const int ZINDEX_MAX = 1000;
         public const int ZINDEX_MIN = 0;
         int _zIndex = 0;
+        float _transparency = 0;
 
         static IntNumberRange zIndexRange = new IntNumberRange(ZINDEX_MIN, ZINDEX_MAX);
         public static IntNumberRange ZIndexRange
@@ -33,7 +35,22 @@ namespace Andromeda.Entities.Components.Internal
         /// <summary>
         /// The transparency of this UI component
         /// </summary>
-        public float Transparency { get; set; }
+        public float Transparency {
+            get => _transparency;
+            set {
+                if (_transparency <= 1 && _transparency >= 0)
+                    _transparency = value;
+                else
+                {
+                    if (value > 1)
+                        _transparency = 1;
+                    else
+                        _transparency = 0;
+
+                    DebugConsole.Warn(String.Format("Attempting to set Transparency beyond bounds: {0} isn't in range of 0 - 1", value), DebugTraceMode.None);
+                }
+            }
+        }
 
         /// <summary>
         /// The ZIndex of this UIComponent
