@@ -29,6 +29,11 @@ namespace Andromeda.Entities.Components.Internal
             get => zIndexRange;
         }
 
+        /// <summary>
+        /// The opacity of this UI component
+        /// </summary>
+        public int Transparency { get; set; }
+
         int _zIndex = 0;
 
         /// <summary>
@@ -166,6 +171,7 @@ namespace Andromeda.Entities.Components.Internal
         }
 
         public virtual UpdatePriority UpdatePriority => UpdatePriority.Interface;
+
 
         public virtual void Draw(RenderTarget target, RenderStates states)
         {
