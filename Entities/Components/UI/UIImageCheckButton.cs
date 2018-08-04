@@ -34,7 +34,7 @@ namespace Andromeda.Entities.Components.UI
         public override void OnComponentCopy(Entity source, Entity copy)
         {
             //var copyComponent = copy.AddComponent<UIImageButton>();
-            
+
         }
 
         public override void Draw(RenderTarget target, RenderStates states)
@@ -55,7 +55,7 @@ namespace Andromeda.Entities.Components.UI
                 {
                     Position = Entity.Transform.Position,
                     Scale = new Vector2f(totalSize.X / texture.Size.X, totalSize.Y / texture.Size.Y),
-                    Color = Color
+                    Color = new Color(Color.R, Color.G, Color.B, (byte)(Color.A * (1 - Transparency)))
                 };
 
                 target.Draw(sprite);
