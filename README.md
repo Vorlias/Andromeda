@@ -1,4 +1,4 @@
-# ![Andromeda2D](https://vorlias.com/images/andromeda.png)
+# ![Andromeda2D](https://assets.vorlias.com/i0/andromeda.png)
 
 This is a work in progress C#/SFML game engine.
 
