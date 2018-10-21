@@ -52,6 +52,15 @@ namespace Andromeda.Resources.Utility
         }
 
         /// <summary>
+        /// Writes a byte to the Stream
+        /// </summary>
+        /// <param name="value"></param>
+        public void WriteByte(byte value)
+        {
+            list.Add(value);
+        }
+
+        /// <summary>
         /// Writes a ushort (UInt16) to the Stream
         /// </summary>
         /// <param name="value">The value</param>

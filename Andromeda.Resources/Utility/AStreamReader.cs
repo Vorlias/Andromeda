@@ -27,6 +27,15 @@ namespace Andromeda.Resources.Utility
         }
 
         /// <summary>
+        /// Gets a byte from the Stream
+        /// </summary>
+        /// <returns></returns>
+        public byte GetByte()
+        {
+            return (byte)stream.ReadByte();
+        }
+
+        /// <summary>
         /// Get a string of a specified length from the Stream
         /// </summary>
         /// <param name="stream">The stream</param>
