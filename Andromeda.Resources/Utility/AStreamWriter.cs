@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -113,6 +114,45 @@ namespace Andromeda.Resources.Utility
         public void WriteUInt64(ulong value)
         {
             list.AddRange(BitConverter.GetBytes(value));
+        }
+
+        /// <summary>
+        /// Writes a float to the Stream.
+        /// </summary>
+        /// <param name="value">The value</param>
+        public void WriteFloat(float value)
+        {
+            list.AddRange(BitConverter.GetBytes(value));
+        }
+
+        /// <summary>
+        /// Writes a Vector2u to the Stream
+        /// </summary>
+        /// <param name="vector2f">The value</param>
+        public void WriteVector2u(Vector2u vector2u)
+        {
+            WriteInt64(vector2u.X);
+            WriteInt64(vector2u.Y);
+        }
+
+        /// <summary>
+        /// Writes a Vector2i to the Stream
+        /// </summary>
+        /// <param name="vector2f">The value</param>
+        public void WriteVector2i(Vector2i vector2i)
+        {
+            WriteInt32(vector2i.X);
+            WriteInt32(vector2i.Y);
+        }
+
+        /// <summary>
+        /// Writes a Vector2f to the Stream
+        /// </summary>
+        /// <param name="vector2f">The value</param>
+        public void WriteVector2f(Vector2f vector2f)
+        {
+            WriteFloat(vector2f.X);
+            WriteFloat(vector2f.Y);
         }
     }
 }

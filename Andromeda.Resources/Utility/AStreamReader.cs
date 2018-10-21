@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.System;
+using System;
 using System.IO;
 using System.Text;
 
@@ -76,6 +77,32 @@ namespace Andromeda.Resources.Utility
         }
 
         /// <summary>
+        /// Get an ushort (UInt16) from the Stream
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public ushort GetUInt16()
+        {
+            byte[] buffer = new byte[sizeof(ushort)];
+            stream.Read(buffer, 0, sizeof(ushort));
+            ushort result = BitConverter.ToUInt16(buffer, 0);
+            return result;
+        }
+
+        /// <summary>
+        /// Get an uint (UInt32) from the Stream
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public uint GetUInt32()
+        {
+            byte[] buffer = new byte[sizeof(uint)];
+            stream.Read(buffer, 0, sizeof(uint));
+            uint result = BitConverter.ToUInt32(buffer, 0);
+            return result;
+        }
+
+        /// <summary>
         /// Get an int (Int32) from the Stream
         /// </summary>
         /// <param name="stream"></param>
@@ -123,6 +150,51 @@ namespace Andromeda.Resources.Utility
             stream.Read(buffer, 0, sizeof(short));
             short result = BitConverter.ToInt16(buffer, 0);
             return result;
+        }
+
+        /// <summary>
+        /// Gets a float (Single) from the Stream
+        /// </summary>
+        /// <returns></returns>
+        public float GetFloat()
+        {
+            byte[] buffer = new byte[sizeof(float)];
+            stream.Read(buffer, 0, sizeof(float));
+            float result = BitConverter.ToSingle(buffer, 0);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a Vector2u from the Stream
+        /// </summary>
+        /// <returns></returns>
+        public Vector2u GetVector2u()
+        {
+            var x = GetUInt32();
+            var y = GetUInt32();
+            return new Vector2u(x, y);
+        }
+
+        /// <summary>
+        /// Gets a Vector2i from the Stream
+        /// </summary>
+        /// <returns></returns>
+        public Vector2i GetVector2i()
+        {
+            var x = GetInt32();
+            var y = GetInt32();
+            return new Vector2i(x, y);
+        }
+
+        /// <summary>
+        /// Gets a Vector2f from the Stream
+        /// </summary>
+        /// <returns></returns>
+        public Vector2f GetVector2f()
+        {
+            var x = GetFloat();
+            var y = GetFloat();
+            return new Vector2f(x, y);
         }
 
 
