@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Andromeda.Resources.Utility
 {
+    [Obsolete("Use BinaryWriter instead.")]
     public class AStreamWriter : IDisposable
     {
         List<byte> list = new List<byte>();

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Andromeda.Resources.Utility
 {
+    [Obsolete("Use BinaryReader instead.")]
     public class AStreamReader : IDisposable
     {
         Stream stream;
