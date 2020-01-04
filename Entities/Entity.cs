@@ -1,20 +1,18 @@
-﻿using SFML.Graphics;
+﻿using Andromeda.Entities.Components;
+using Andromeda.Entities.Components.Colliders;
+using Andromeda.Entities.Components.Internal;
+using Andromeda.Legacy;
+using Andromeda.Serialization;
+using Andromeda.System;
+using Andromeda.System.Internal;
+using Andromeda.System.Utility;
+using SFML.Graphics;
 using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Andromeda2D.Entities.Components;
-using Andromeda2D.Entities.Components.Colliders;
-using Andromeda2D.Entities.Components.Internal;
-using Andromeda2D.Serialization;
-using Andromeda2D.System;
-using Andromeda2D.System.Internal;
-using Andromeda2D.System.Utility;
-using Andromeda.System;
 
-namespace Andromeda2D.Entities
+namespace Andromeda.Entities
 {
 
     public delegate void EntityComponentAddedEvent(IComponent component);
@@ -51,6 +49,11 @@ namespace Andromeda2D.Entities
                 return tags;
             }
         }
+
+        /// <summary>
+        /// The components of this entity
+        /// </summary>
+        internal IEnumerable<IComponent> Components => components;
 
         /// <summary>
         /// Whether or not this entity is enabled
@@ -101,7 +104,7 @@ namespace Andromeda2D.Entities
         /// </summary>
         public IGameState GameState
         {
-            get => GameView.ParentState;
+            get => GameView?.ParentState;
         }
 
         /// <summary>
@@ -240,14 +243,6 @@ namespace Andromeda2D.Entities
             }
         }
 
-        internal IEnumerable<IComponent> Components
-        {
-            get
-            {
-                return components;
-            }
-        }
-
         /// <summary>
         /// Returns the full path of this entity
         /// </summary>
@@ -300,7 +295,7 @@ namespace Andromeda2D.Entities
             return tags.Contains(tag);
         }
 
-    
+
         internal void SetParentView(EntityGameView state)
         {
             parentState = state;
@@ -363,7 +358,7 @@ namespace Andromeda2D.Entities
         /// <typeparam name="T">The component type</typeparam>
         /// <param name="create">Whether or not the type should be created if not found</param>
         /// <returns></returns>
-        public FindComponentResult<T> FindComponent<T>(bool create = false) where T: IComponent, new()
+        public FindComponentResult<T> FindComponent<T>(bool create = false) where T : IComponent, new()
         {
             if (HasComponent<T>())
                 return new FindComponentResult<T>(GetComponent<T>(), true);
@@ -419,7 +414,9 @@ namespace Andromeda2D.Entities
 
             var allowMultiple = component.GetType().GetCustomAttributes(typeof(DisallowMultipleAttribute), false);
             if (allowMultiple.Count() > 0)
+            {
                 isMultipleAllowed = false;
+            }
 
             var elements = components.ToArray().OfType<T>();
             T existing = component;
@@ -438,12 +435,11 @@ namespace Andromeda2D.Entities
             }
         }
 
+
+
+
         internal void Update()
         {
-            foreach (Entity child in Children)
-            {
-                child.Update();
-            }
         }
 
         /// <summary>
@@ -501,7 +497,7 @@ namespace Andromeda2D.Entities
         public List<T> GetComponentsInDescendants<T>(bool includeParent = false) where T : IComponent
         {
             List<T> components = new List<T>();
-            Entity[] descendants = Children;
+            List<Entity> descendants = Descendants;
 
             if (includeParent)
                 components.AddRange(GetComponents<T>());
@@ -554,54 +550,47 @@ namespace Andromeda2D.Entities
         }
 
         /// <summary>
+        /// Add a component of the specified type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        internal IComponent AddComponent(Type type)
+        {
+            var existing = components.Where(component => component.GetType() == type);
+            var allowMultiple = type.GetCustomAttributes(typeof(DisallowMultipleAttribute), false).Count() == 0;
+
+            if (existing.Count() == 0 || allowMultiple)
+            {
+                IComponent component = (IComponent)Activator.CreateInstance(type);
+
+                var attrs = type.GetCustomAttributes(typeof(RequireComponentsAttribute), true);
+                foreach (RequireComponentsAttribute attr in attrs)
+                {
+                    attr.AddRequiredComponents(this);
+                }
+
+                components.Add(component);
+
+                if (!IsPrefab)
+                    component.ComponentInit(this);
+
+                return component;
+            }
+            else
+                return existing.First();
+        }
+
+        /// <summary>
         /// Tries to find the component of the specified type, otherwise creates it
         /// </summary>
         /// <param name="type">The type of the component</param>
         /// <param name="created">The component returned, null if it could not be created</param>
         /// <returns>If the component was successfully created</returns>
+        [Obsolete("Will always return true.")]
         internal bool FindOrCreateComponent(Type type, out IComponent created, bool returnExisting = true)
         {
-            // This is a bit of a messy function, mainly for the cloning... :3
-
-            IComponent component = (IComponent)Activator.CreateInstance(type);
-            var disallowMultiple = type.GetCustomAttributes(typeof(DisallowMultipleAttribute), false).Count() > 0;
-
-            if (!disallowMultiple)
-            {
-                created = component;
-                component.ComponentInit(this);
-                components.Add(component);
-
-                return true;
-            }
-            else
-            {
-                var existing = components.Where(c => c.GetType() == type).FirstOrDefault();
-                if (existing == null)
-                {
-                    components.Add(component);
-
-                    if (!IsPrefab)
-                        component.ComponentInit(this);
-
-                    created = component;
-                    return true;
-                }
-                else
-                {
-                    if (returnExisting)
-                    {
-                        created = existing;
-                        return true;
-                    }
-                    else
-                    {
-                        created = null;
-                        return false;
-                    }
-                }
-            }
-           
+            created = AddComponent(type);
+            return true;
         }
 
         /// <summary>
@@ -614,11 +603,14 @@ namespace Andromeda2D.Entities
             copy.SetParentView(GameView);
             if (parent != null)
                 copy.SetParent(parent);
-            
+
 
             foreach (IComponent component in components)
             {
-                component.OnComponentCopy(this, copy);
+                if (component is ILegacyComponent)
+                    copy.AddComponent(component.GetType());
+                else
+                    component.OnComponentCopy(this, copy);
             }
 
             foreach (Entity child in Children)
@@ -681,6 +673,7 @@ namespace Andromeda2D.Entities
             if (!initialized)
             {
                 initialized = true;
+                components.OfType<IActivationListener>().ForEach(com => com.Activated());
             }
         }
 

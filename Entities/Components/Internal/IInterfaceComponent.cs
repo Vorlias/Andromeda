@@ -7,11 +7,12 @@ namespace Andromeda.Entities.Components.Internal
     /// <summary>
     /// A component that is used by a UserInterface
     /// </summary>
-    interface IInterfaceComponent : IRenderableComponent, IComponent
+    interface IInterfaceComponent : IRenderableComponent, IComponent, IUpdatableComponent
     {
         int ZIndex { get; set; }
         bool Visible { get; set; }
         UITransform Transform { get; }
+        float Transparency { get; set; }
         Color Color { get; set; }
 
         Vector2f AbsoluteSize { get; }

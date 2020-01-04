@@ -45,7 +45,6 @@ namespace Andromeda.System
             {
                 if (singleton == null)
                 {
-                    Console.WriteLine("Created singleton (.Instance)");
                     singleton = new InterfaceViewClass();
                     // singleton.OnStart();
                 }

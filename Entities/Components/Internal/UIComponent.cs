@@ -10,7 +10,7 @@ using SFML.Window;
 using Andromeda.System.Utility;
 using Andromeda.Serialization;
 using Andromeda.System.Types;
-using Andromeda.System;
+using Andromeda.Debugging;
 
 namespace Andromeda.Entities.Components.Internal
 {
@@ -23,14 +23,34 @@ namespace Andromeda.Entities.Components.Internal
 
         public const int ZINDEX_MAX = 1000;
         public const int ZINDEX_MIN = 0;
+        int _zIndex = 0;
+        float _transparency = 0;
 
         static IntNumberRange zIndexRange = new IntNumberRange(ZINDEX_MIN, ZINDEX_MAX);
         public static IntNumberRange ZIndexRange
         {
             get => zIndexRange;
         }
+   
+        /// <summary>
+        /// The transparency of this UI component
+        /// </summary>
+        public float Transparency {
+            get => _transparency;
+            set {
+                if (_transparency <= 1 && _transparency >= 0)
+                    _transparency = value;
+                else
+                {
+                    if (value > 1)
+                        _transparency = 1;
+                    else
+                        _transparency = 0;
 
-        int _zIndex = 0;
+                    DebugConsole.Warn(String.Format("Attempting to set Transparency beyond bounds: {0} isn't in range of 0 - 1", value), DebugTraceMode.None);
+                }
+            }
+        }
 
         /// <summary>
         /// The ZIndex of this UIComponent
@@ -73,28 +93,41 @@ namespace Andromeda.Entities.Components.Internal
             set => Entity.Visible = value;
         }
 
+        /// <summary>
+        /// The resulting size of this UIComponent relative to the window
+        /// </summary>
         public Vector2f AbsoluteSize => Transform.LocalSize.GlobalAbsolute;
+
+        /// <summary>
+        /// The resulting window position of this UIComponent
+        /// </summary>
         public Vector2f AbsolutePosition => Transform.LocalPosition.GlobalAbsolute;
 
+        /// <summary>
+        /// The position of this UIComponent
+        /// </summary>
         public UICoordinates Position
         {
             get => Transform.LocalPosition;
             set => Transform.LocalPosition = value;
         }
 
+        /// <summary>
+        /// The size of this UIComponent
+        /// </summary>
         public UICoordinates Size
         {
             get => Transform.LocalSize;
             set => Transform.LocalSize = value;
         }
 
+        /// <summary>
+        /// The transform of this UIComponent
+        /// </summary>
         public UITransform Transform
         {
             get
             {
-                if (!entity.HasComponent<UITransform>())
-                    entity.AddComponent<UITransform>();
-
                 return entity.GetComponent<UITransform>();
             }
         }
@@ -136,6 +169,9 @@ namespace Andromeda.Entities.Components.Internal
 
         private RenderOrder renderOrder;
 
+        /// <summary>
+        /// The render order of this UIComponent
+        /// </summary>
         [SerializableProperty("RenderOrder", PropertyType = SerializedPropertyType.Enum)]
         public RenderOrder RenderOrder
         {
@@ -149,6 +185,9 @@ namespace Andromeda.Entities.Components.Internal
                 renderOrder = value;
             }
         }
+
+        public virtual UpdatePriority UpdatePriority => UpdatePriority.Interface;
+
 
         public virtual void Draw(RenderTarget target, RenderStates states)
         {

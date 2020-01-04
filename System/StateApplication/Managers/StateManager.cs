@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Andromeda.Debugging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,6 +55,9 @@ namespace Andromeda.System
         {
             if (Has(name))
             {
+
+                DebugConsole.WriteEngine("Activate state: " + name);
+
                 if (activeState != null)
                     activeState.OnDeactivated();
 
@@ -76,6 +80,7 @@ namespace Andromeda.System
         /// <returns>The state</returns>
         public StateType CreateState<StateType>(string name) where StateType : GameState, new()
         {
+            DebugConsole.WriteEngine("CreateState " + name);
             StateType newState = new StateType();
             newState.SetManager(this);
             newState.SetName(name);

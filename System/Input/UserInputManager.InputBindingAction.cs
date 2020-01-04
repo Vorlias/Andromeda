@@ -38,7 +38,7 @@ namespace Andromeda.System
             /// <param name="name">The name of the action</param>
             /// <param name="action">The action that is taken</param>
             /// <param name="inputs">The inputs that invoke this action</param>
-            internal InputBindingAction(string name, Action<string, UserInputAction> action, object[] inputs, InputBindingPriority priority = InputBindingPriority.Normal) : base(name, inputs)
+            internal InputBindingAction(string name, Action<string, UserInputAction> action, System.InputValue[] inputs, InputBindingPriority priority = InputBindingPriority.Normal) : base(name, inputs)
             {
                 this.action = action;
                 this.priority = priority;

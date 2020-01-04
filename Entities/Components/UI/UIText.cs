@@ -8,10 +8,11 @@ using Andromeda.Entities.Components.Internal;
 using Andromeda.System;
 using Andromeda.Serialization;
 using SFML.System;
+using Andromeda.System.Input;
 
 namespace Andromeda.Entities.Components
 {
-    public partial class UIText : UIComponent
+    public partial class UIText : UIComponent, ITextObject
     {
         public enum SizeMode
         {
@@ -152,7 +153,6 @@ namespace Andromeda.Entities.Components
         protected override void OnComponentInit(Entity entity)
         {
             RenderOrder = RenderOrder.Interface + 1; // Bring it to top
-            Entity.AddComponent<UITransform>();
         }
 
         public override void OnComponentCopy(Entity source, Entity copy)
@@ -177,7 +177,7 @@ namespace Andromeda.Entities.Components
         public override void Draw(RenderTarget target, RenderStates states)
         {
             Text fontText = new Text(Text, Font, FontSize);
-            fontText.FillColor = Color;
+            fontText.FillColor = new Color(Color.R, Color.G, Color.B, (byte)(Color.A * (1-Transparency)) );
             Width = fontText.GetLocalBounds().Width;
             fontText.Position = GetPositionOfText(fontText);
             target.Draw(fontText);

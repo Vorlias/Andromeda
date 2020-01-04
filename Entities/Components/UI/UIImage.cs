@@ -40,7 +40,7 @@ namespace Andromeda.Entities.Components
                 Sprite sprite = new Sprite(texture)
                 {
                     Position = Transform.GlobalPosition.GlobalAbsolute,
-                    Color = Color
+                    Color = new Color(Color.R, Color.G, Color.B, (byte)(Color.A * (1-Transparency)) )
                 };
 
                 target.Draw(sprite);

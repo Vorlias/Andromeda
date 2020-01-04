@@ -20,6 +20,16 @@ namespace Andromeda.System
         StateGameManager manager;
         GameViewPriority priority;
 
+        public void OnActivated()
+        {
+
+        }
+
+        public void OnDeactivated()
+        {
+
+        }
+
         /// <summary>
         /// Internal function that sets up the view
         /// </summary>

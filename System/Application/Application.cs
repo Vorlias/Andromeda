@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Andromeda.Debugging;
+using Andromeda.System.Services;
+using Andromeda.System.Utility;
+using SFML.Graphics;
+using SFML.System;
+using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Window;
-using SFML.System;
-using SFML.Graphics;
-using Andromeda.System.Utility;
-using Andromeda.System.Services;
 
 namespace Andromeda.System
 {
+
     /// <summary>
     /// An application
     /// </summary>
@@ -32,16 +32,46 @@ namespace Andromeda.System
         IntPtr context;
         ApplicationSettings settings;
         View gameView, interfaceView;
-        HashSet<ThreadedService> services = new HashSet<ThreadedService>();
+        HashSet<ThreadedService> threadServices = new HashSet<ThreadedService>();
+        HashSet<ApplicationService> appServices = new HashSet<ApplicationService>();
 
         public CustomMouseCursor CustomCursor
         {
             get;
         }
 
-        public Service GetService<Service>() where Service : ThreadedService, new()
+        /// <summary>
+        /// Gets the AppService of the specified type
+        /// </summary>
+        /// <typeparam name="AppService">The type of the service</typeparam>
+        /// <returns></returns>
+        public AppService GetService<AppService>() where AppService : ApplicationService
         {
-            var service = services.OfType<Service>();
+            return appServices.OfType<AppService>().FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Registers a new service of the specified type
+        /// </summary>
+        /// <typeparam name="AppService">The type of the service</typeparam>
+        /// <returns></returns>
+        public AppService RegisterService<AppService>() where AppService : ApplicationService, new()
+        {
+            var exists = appServices.OfType<AppService>().Count();
+            if (exists == 0)
+            {
+                var svc = new AppService();
+                svc.Application = this;
+                appServices.Add(svc);
+                return svc;
+            }
+            else
+                return null;
+        }
+
+        public Service GetThreadService<Service>() where Service : ThreadedService, new()
+        {
+            var service = threadServices.OfType<Service>();
             if (service.Count() > 0)
             {
                 return service.First();
@@ -50,7 +80,7 @@ namespace Andromeda.System
             {
                 Service newSvc = new Service();
                 newSvc.Start();
-                services.Add(newSvc);
+                threadServices.Add(newSvc);
                 return newSvc;
             }
         }
@@ -354,6 +384,7 @@ namespace Andromeda.System
         protected virtual void UpdateEvents()
         {
             window.DispatchEvents();
+            appServices.ForEach(service => service.Updated(this));
             Update();
         }
 
@@ -378,6 +409,7 @@ namespace Andromeda.System
 
             SetupCursor();
 
+            DebugConsole.WriteEngine("Starting Application");
             BeforeStart();
             Start();
             InitializeStates();
@@ -386,6 +418,7 @@ namespace Andromeda.System
             View defaultView = window.DefaultView;
             gameView = new View(defaultView.Center, defaultView.Size);
             interfaceView = new View(defaultView.Center, defaultView.Size);
+            DebugConsole.WriteEngine("Set up views");
         }
 
         Color _clearColor = Color.Black;
@@ -416,6 +449,9 @@ namespace Andromeda.System
         /// </summary>
         public virtual void Run()
         {
+            //Debugging.DebugConsole.WriteVersion();
+            DebugConsole.WriteEngine("Running Andromeda Application v{0}", EngineInfo.String);
+
             // Run all the stuff to initialize the window
             InitializeApplication();
 

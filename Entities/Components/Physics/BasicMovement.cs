@@ -8,6 +8,7 @@ using Andromeda.Entities.Components.Internal;
 using Andromeda.System;
 using Andromeda.System.Utility;
 using Andromeda.System;
+using Andromeda.Entities.Components.Internal;
 
 namespace Andromeda.Entities.Components
 {

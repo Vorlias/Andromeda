@@ -4,16 +4,20 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Window;
 using SFML.Graphics;
-using Andromeda2D.Entities;
-using Andromeda2D.Entities.Components;
+using Andromeda.Entities;
+using Andromeda.Entities.Components;
 using SFML.System;
-using Andromeda2D.System.Utility;
-using Andromeda2D.System.Internal;
-using Andromeda2D.Entities.Components.Internal;
+using Andromeda.System.Utility;
+using Andromeda.System.Internal;
+using Andromeda.Entities.Components.Internal;
 using System;
-using Andromeda2D.Entities.Components.UI;
+using Andromeda.Entities.Components.UI;
+using Andromeda.Entities.Components.Colliders;
+using Andromeda.Linq;
+using Andromeda.Debugging;
+using System.Diagnostics;
 
-namespace Andromeda2D.System
+namespace Andromeda.System
 {
     /// <summary>
     /// A GameView which uses entities
@@ -32,6 +36,9 @@ namespace Andromeda2D.System
 
         }
 
+        /// <summary>
+        /// The mouse coordinates
+        /// </summary>
         public MouseCoordinates MousePosition
         {
             get => new MouseCoordinates(Application, this);
@@ -42,35 +49,64 @@ namespace Andromeda2D.System
             OnCreation();
         }
 
-        Camera camera;
+        private Camera _camera;
+        /// <summary>
+        /// The camera of this GameView
+        /// </summary>
         public Camera Camera
         {
             get
             {
-                return camera;
+                var existing = UpdatableComponents.OfType<Camera>();
+                if (existing.Count() > 1)
+                {
+                    DebugConsole.Warn("Multiple cameras detected!");
+                }
+
+                //if (_camera == null)
+                //{
+                //    var existing = UpdatableComponents.OfType<Camera>();
+                //    if (existing.Count() > 0)
+                //    {
+                //        _camera = existing.First();
+                //    }
+                //    else
+                //    {
+                //        _camera = CreateChild().AddComponent<Camera>();
+                //        _camera.Entity.Name = "Camera";
+                //        //_camera.Update();
+                //        DebugConsole.Warn("Created camera in view");
+                //    }
+                //}
+
+                return _camera;
             }
+        }
+
+
+        protected void AddCamera()
+        {
+            if (_camera == null)
+                _camera = CreateChild().AddComponent<Camera>();
+            else
+                DebugConsole.Warn("Camera already exists!");
         }
 
         /// <summary>
         /// Sets the camera type, will also create a camera if it doesn't exist
         /// </summary>
         /// <param name="type">The type of camera</param>
+#if !USE_LEGACY_CAMERA
+        [Obsolete]
+#endif
         public void SetCameraType(CameraType type)
         {
-            if (camera == null)
-            {
-                var existing = UpdatableComponents.OfType<Camera>();
-                if (existing.Count() > 0)
-                {
-                    camera = existing.First();
-                }
-                else
-                {
-                    camera = CreateChild().AddComponent<Camera>();
-                }
-            }
-
-            camera.CameraType = type;
+#if !USE_LEGACY_CAMERA
+            Camera.CameraType = CameraType.World;
+            Debugging.DebugConsole.Warn("SetCameraType is non-functional.");
+#else
+            Camera.CameraType = type;
+#endif
         }
 
         private UserInputManager inputService;
@@ -104,6 +140,11 @@ namespace Andromeda2D.System
                 return manager.Application;
             }
         }
+
+        /// <summary>
+        /// The mouse coordinates
+        /// </summary>
+        public MouseCoordinates MouseCoordinates => new MouseCoordinates(manager.Application, this);
 
         /// <summary>
         /// The game's state manager
@@ -213,6 +254,7 @@ namespace Andromeda2D.System
             {
                 if (value)
                 {
+                    DebugConsole.WriteEngine("Set active (via IsActive): " + this.GetType().Name);
                     OnActivated();
 
                 }
@@ -239,7 +281,7 @@ namespace Andromeda2D.System
         /// </summary>
         public virtual void OnStart()
         {
-
+            
         }
 
         /// <summary>
@@ -285,7 +327,8 @@ namespace Andromeda2D.System
                 {
                     if (collider.CollidesWith(collider2))
                     {
-                        
+                        collider.Entity.WithComponents<ICollisionListener>(listener => listener.Collided(collider2.Entity));
+                        collider2.Entity.WithComponents<ICollisionListener>(listener => listener.Collided(collider.Entity));
                     }
                 }
             }
@@ -300,7 +343,7 @@ namespace Andromeda2D.System
             {
                 List<IUpdatableComponent> components = new List<IUpdatableComponent>();
                 Children.Where(entity => entity.Enabled).Select(entity => entity.GetComponentsInDescendants<IUpdatableComponent>(true)).ForEach(list => components.AddRange(list));
-                return components.OrderByDescending(component => component.UpdatePriority);
+                return components.OrderBy(component => component.UpdatePriority);
             }
         }
 
@@ -317,7 +360,6 @@ namespace Andromeda2D.System
         internal void UpdateEntities()
         {
             var updatableComponents = UpdatableComponents;
-            var interfaceComponents = InterfaceComponents;
 
             foreach (var entity in Descendants.Where(descendant => descendant.Enabled))
             {
@@ -330,22 +372,65 @@ namespace Andromeda2D.System
                 }
             }
 
-            updatableComponents.ForEach(com => com.BeforeUpdate());
-            interfaceComponents.ForEach(com => com.BeforeUpdate());
-
-
-            updatableComponents.ForEach(com => com.Update());
-            InterfaceComponents.ForEach(com => com.Update());
-
-            updatableComponents.ForEach(com => com.AfterUpdate());
-            interfaceComponents.ForEach(com => com.AfterUpdate());
+            updatableComponents.ForEach(com =>
+            {
+                com.BeforeUpdate();
+                com.Update();
+                com.AfterUpdate();
+            });
 
             UpdateCollisions();
         }
 
+        [Conditional("DEBUG")]
+        internal void RenderDebug(RenderWindow window)
+        {
+            string cameraString = "";
+            UpdatableComponents.ForEach(updatable =>
+            {
+                cameraString += updatable.Entity.FullName + "\n";
+            });
+
+            if (Camera != null)
+            {
+                RectangleShape rs = new RectangleShape();
+                rs.Size = new Vector2f(10, 10);
+                rs.Position = Camera.WorldPosition;
+                window.Draw(rs);
+            }
+
+            Text tx = new Text(cameraString, FontManager.Get("Liberation-Mono"), 10);
+            tx.Position = new Vector2f(100, 100);
+            window.Draw(tx);
+        }
+
         internal void RenderEntities(RenderWindow window)
         {
-            if (camera != null)
+            var uiElements = Renderable.OfType<UIComponent>();
+            var nonUI = Renderable.Where(item => !(item is UIComponent));
+
+#if !USE_LEGACY_CAMERA
+            if (Camera == null)
+            {
+                _camera = CreateChild().AddComponent<Camera>();
+                Camera.Update();
+            }
+
+            if (Camera.View != null)
+               window.SetView(Camera.View);
+
+            foreach (var component in nonUI)
+            {
+                component.Draw(window, RenderStates.Default);
+            }
+
+            window.SetView(Application.InterfaceView);
+            foreach (var component in uiElements)
+            {
+                component.Draw(window, RenderStates.Default);
+            }
+#else
+            if (Camera != null)
             {
                 if (Camera.CameraType == CameraType.Interface)
                     window.SetView(Camera.View);
@@ -361,16 +446,16 @@ namespace Andromeda2D.System
             {
                 component.Draw(window, RenderStates.Default);
             }
+#endif
+
+
+            //RenderDebug(window);
+
         }
 
         public void Start()
         {
             OnStart();
-
-            if (active)
-            {
-                OnActivated();
-            }
         }
 
         /// <summary>

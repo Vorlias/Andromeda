@@ -1,6 +1,6 @@
 ﻿using SFML.Graphics;
 
-namespace Andromeda2D.Entities.Components
+namespace Andromeda.Entities.Components
 {
     public interface ITextureComponent : IRenderableComponent
     {

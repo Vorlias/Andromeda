@@ -10,6 +10,7 @@ using Andromeda.System.Internal;
 using Andromeda.Events;
 using SFML.System;
 using SFML.Window;
+using Andromeda.Debugging;
 
 namespace Andromeda.System
 {
@@ -101,6 +102,7 @@ namespace Andromeda.System
         /// </summary>
         internal override void Start()
         {
+            DebugConsole.WriteEngine("" + Name + "::Start() via <PersistentGameState::Start()>");
             Initialize();
             InitializeViews();
             Views.ForEach(view => view.Start());

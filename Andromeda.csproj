@@ -17,9 +17,10 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Andromeda.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,21 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="sfmlnet-audio-2, Version=2.2.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SFML.Net\SFML.Net\lib\x86\sfmlnet-audio-2.dll</HintPath>
+    <Reference Include="sfmlnet-audio-2">
+      <HintPath>lib\sfmlnet-audio-2.dll</HintPath>
     </Reference>
-    <Reference Include="sfmlnet-graphics-2, Version=2.2.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SFML.Net\SFML.Net\lib\x86\sfmlnet-graphics-2.dll</HintPath>
+    <Reference Include="sfmlnet-graphics-2">
+      <HintPath>lib\sfmlnet-graphics-2.dll</HintPath>
     </Reference>
-    <Reference Include="sfmlnet-system-2, Version=2.2.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SFML.Net\SFML.Net\lib\x86\sfmlnet-system-2.dll</HintPath>
+    <Reference Include="sfmlnet-system-2">
+      <HintPath>lib\sfmlnet-system-2.dll</HintPath>
     </Reference>
-    <Reference Include="sfmlnet-window-2, Version=2.2.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SFML.Net\SFML.Net\lib\x86\sfmlnet-window-2.dll</HintPath>
+    <Reference Include="sfmlnet-window-2">
+      <HintPath>lib\sfmlnet-window-2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,8 +56,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ComponentNotFoundException.cs" />
-    <Compile Include="Entities\Components\Behaviours\Controller.cs" />
-    <Compile Include="Entities\Components\Behaviours\IModel.cs" />
+    <Compile Include="Entities\Components\Colliders\ICollisionListener.cs" />
+    <Compile Include="Entities\Components\Internal\IActivationListener.cs" />
+    <Compile Include="Entities\Components\UI\Layouts\ISortableInterfaceLayout.cs" />
+    <Compile Include="Entities\Components\UI\LayoutSortOrder.cs" />
+    <Compile Include="Entities\Components\UI\Layouts\UIListFillDirection.cs" />
+    <Compile Include="Entities\Components\UI\Layouts\UIListItemAlignment.cs" />
+    <Compile Include="Entities\Components\UI\Layouts\UIListLayout.cs" />
+    <Compile Include="Entities\Models\Controller.cs" />
+    <Compile Include="Entities\Models\UserController.cs" />
+    <Compile Include="Entities\Models\IModel.cs" />
     <Compile Include="Entities\Components\Internal\IDestroyedListener.cs" />
     <Compile Include="Entities\Components\Internal\IInterfaceComponent.cs" />
     <Compile Include="Entities\Components\UI\IInteractableInterfaceComponent.cs" />
@@ -74,15 +79,19 @@
     <Compile Include="Entities\UIEntity.cs" />
     <Compile Include="Events\AndromedaEvent.cs" />
     <Compile Include="Graphics\LineShape.cs" />
+    <Compile Include="System\Application\ApplicationService.cs" />
     <Compile Include="System\Application\WindowStyle.cs" />
     <Compile Include="System\Attributes\DisallowMultipleAttribute.cs" />
     <Compile Include="System\Attributes\RequireComponentsAttribute.cs" />
     <Compile Include="System\Debug.cs" />
     <Compile Include="System\DelayedAction.cs" />
     <Compile Include="System\Input\ICastable.cs" />
+    <Compile Include="System\Input\InputValue.cs" />
     <Compile Include="System\Input\ITextInput.cs" />
+    <Compile Include="System\Input\ITextObject.cs" />
     <Compile Include="System\Input\UserInputManager.InputBinding.cs" />
     <Compile Include="System\Input\UserInputManager.InputBindingAction.cs" />
+    <Compile Include="System\Legacy\ILegacyComponent.cs" />
     <Compile Include="System\Linq\EntityCollectionLinq.cs" />
     <Compile Include="System\StateApplication\BasicGameView.cs" />
     <Compile Include="System\StateApplication\GameState.cs" />
@@ -94,6 +103,7 @@
     <Compile Include="System\StateApplication\InterfaceView.cs" />
     <Compile Include="System\StateApplication\InterfaceViewSingleton.cs" />
     <Compile Include="System\StateApplication\LightGameState.cs" />
+    <Compile Include="System\Types\ColorRange.cs" />
     <Compile Include="System\Types\IntNumberRange.cs" />
     <Compile Include="System\Types\INumberRange.cs" />
     <Compile Include="System\Types\Sequences\ColorSequence.cs" />
@@ -147,7 +157,6 @@
     <Compile Include="Entities\Components\Internal\IPolygonColliderComponent.cs" />
     <Compile Include="Entities\Components\Colliders\PolygonCollider.cs" />
     <Compile Include="Entities\Components\Colliders\PolygonRectCollider.cs" />
-    <Compile Include="Entities\Components\Behaviours\EntityBehaviour.cs" />
     <Compile Include="Entities\Components\Internal\ICollisionComponent.cs" />
     <Compile Include="Entities\Components\Internal\IComponent.cs" />
     <Compile Include="Entities\Components\Internal\IRenderableComponent.cs" />
@@ -212,6 +221,20 @@
     <Folder Include="Entities\Components\UI\Enums\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy /y "$(SolutionDir)lib\csfml-audio-2.dll" .
+xcopy /y "$(SolutionDir)lib\csfml-window-2.dll" .
+xcopy /y "$(SolutionDir)lib\csfml-system-2.dll" .
+xcopy /y "$(SolutionDir)lib\csfml-graphics-2.dll" .</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <PackageId>Andromeda</PackageId>
+    <Version>1.0.0-beta</Version>
+    <Authors>Vorlias</Authors>
+    <Company>Vorlias</Company>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

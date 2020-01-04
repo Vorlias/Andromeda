@@ -9,6 +9,7 @@ using SFML.System;
 using Andromeda.System;
 using Andromeda.System.Utility;
 using Andromeda.System;
+using Andromeda.Debugging;
 
 namespace Andromeda.Entities.Components
 {
@@ -30,10 +31,22 @@ namespace Andromeda.Entities.Components
     [DisallowMultiple]
     public class Camera : Component, IUpdatableComponent
     {
+
+        public bool DebugEnabled { get; set; } = false;
+
         View view;
         public View View
         {
-            get => view;
+            get
+            {
+                if (view == null)
+                {
+                    DebugConsole.WriteEngine("Create view because does not exist!");
+                    CreateViewIfNotExist();
+                }
+
+                return view;
+            }
         }
 
         CameraType cameraType = CameraType.World;
@@ -44,12 +57,12 @@ namespace Andromeda.Entities.Components
             {
                 if (value == CameraType.Interface)
                 {
-                    updatePriority = UpdatePriority.Interface - 1;
+                    UpdatePriority = UpdatePriority.Interface - 1;
                     cameraType = value;
                 }
                 else
                 {
-                    updatePriority = UpdatePriority.Camera;
+                    UpdatePriority = UpdatePriority.Camera;
                     cameraType = value;
                 }
             }
@@ -78,8 +91,7 @@ namespace Andromeda.Entities.Components
             get => Entity.Transform.Position - View.Center;
         }
 
-        private UpdatePriority updatePriority = UpdatePriority.Camera;
-        public UpdatePriority UpdatePriority => updatePriority;
+        public UpdatePriority UpdatePriority { get; private set; } = UpdatePriority.Camera;
 
         public RenderOrder RenderOrder
         {
@@ -96,12 +108,12 @@ namespace Andromeda.Entities.Components
 
         public void AfterUpdate()
         {
-            
+
         }
 
         public void BeforeUpdate()
         {
-            
+
         }
 
         /// <summary>
@@ -113,7 +125,7 @@ namespace Andromeda.Entities.Components
             Entity.Transform.Rotation = 0;
         }
 
-        public void Update()
+        protected void CreateViewIfNotExist()
         {
             var application = StateApplication.Application;
             var window = application.Window;
@@ -122,7 +134,9 @@ namespace Andromeda.Entities.Components
             if (cameraType == CameraType.Interface)
             {
                 if (view == null)
+                {
                     view = new View(application.InterfaceView);
+                }
 
                 view.Rotation = 0;
                 view.Center = application.Window.Size.ToFloat() / 2;
@@ -130,7 +144,9 @@ namespace Andromeda.Entities.Components
             else
             {
                 if (view == null)
+                {
                     view = new View(application.WorldView);
+                }
 
                 if (GameResolution.Enabled)
                 {
@@ -143,8 +159,17 @@ namespace Andromeda.Entities.Components
                 view.Center = WorldPosition;
                 view.Rotation = Entity.Transform.LocalRotation;
             }
-                
-            application.Window.SetView(view);
+
+
+        }
+
+        public void Update()
+        {
+
+            CreateViewIfNotExist();
+
+            if (Entity.GameState != null)
+                Entity.GameState.Application.Window.SetView(view);
         }
 
         public Vector2f ScreenToWorldPoint(Vector2f screenPoint)

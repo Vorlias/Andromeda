@@ -51,7 +51,6 @@ namespace Andromeda.Entities
         public override void OnCreate()
         {
             // Add a UITransform
-            AddComponent<UITransform>();
         }
 
         public override void OnParentChanged(EntityContainer newParent)

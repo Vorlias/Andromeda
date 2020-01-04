@@ -77,7 +77,7 @@ namespace Andromeda.Entities.Components
                 {
                     Position = Entity.Transform.Position,
                     Scale = new Vector2f(totalSize.X / texture.Size.X, totalSize.Y / texture.Size.Y),
-                    Color = Color
+                    Color = new Color(Color.R, Color.G, Color.B, (byte)(Color.A * (1-Transparency)) )
                 };
 
                 target.Draw(sprite);
